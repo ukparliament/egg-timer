@@ -1,10 +1,13 @@
+drop table if exists dissolution_days;
+drop table if exists prorogation_days;
 drop table if exists sitting_dates;
 drop table if exists adjournment_days;
 drop table if exists non_sitting_days;
 drop table if exists sitting_days;
 drop table if exists sessions;
-drop table if exists prorogations;
+drop table if exists prorogation_periods;
 drop table if exists parliament_periods;
+drop table if exists dissolution_periods;
 drop table if exists houses;
 drop table if exists dates;
 
@@ -15,7 +18,14 @@ create table parliament_periods (
 	end_on date null,
 	primary key (id)
 );
-create table prorogations (
+create table dissolution_periods (
+	id serial,
+	number int not null,
+	start_on date not null,
+	end_on date null,
+	primary key (id)
+);
+create table prorogation_periods (
 	id serial,
 	number int not null,
 	start_on date not null,
@@ -76,6 +86,22 @@ create table sitting_dates (
 	sitting_day_id int not null,
 	date_id int not null,
 	constraint fk_sitting_day foreign key (sitting_day_id) references sitting_days(id),
+	constraint fk_date foreign key (date_id) references dates(id),
+	primary key (id)
+);
+create table prorogation_days (
+	id serial,
+	dissolution_period_id int not null,
+	date_id int not null,
+	constraint fk_dissolution_period foreign key (dissolution_period_id) references dissolution_periods(id),
+	constraint fk_date foreign key (date_id) references dates(id),
+	primary key (id)
+);
+create table dissolution_days (
+	id serial,
+	prorogation_period_id int not null,
+	date_id int not null,
+	constraint fk_prorogation_period foreign key (prorogation_period_id) references prorogation_periods(id),
 	constraint fk_date foreign key (date_id) references dates(id),
 	primary key (id)
 );
