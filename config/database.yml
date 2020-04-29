@@ -1,0 +1,6 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: parliament_calendar
+  host: localhost
+  pool: 5

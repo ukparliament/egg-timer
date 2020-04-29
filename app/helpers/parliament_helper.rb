@@ -1,0 +1,2 @@
+module ParliamentHelper
+end
