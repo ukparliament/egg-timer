@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 0) do
     t.date "date", null: false
   end
 
+  create_table "dissolution_days", force: :cascade do |t|
+    t.integer "prorogation_period_id", null: false
+    t.integer "date_id",               null: false
+  end
+
+  create_table "dissolution_periods", force: :cascade do |t|
+    t.integer "number",   null: false
+    t.date    "start_on", null: false
+    t.date    "end_on"
+  end
+
   create_table "houses", force: :cascade do |t|
     t.string "name", limit: 50, null: false
   end
@@ -42,7 +53,12 @@ ActiveRecord::Schema.define(version: 0) do
     t.date    "end_on"
   end
 
-  create_table "prorogations", force: :cascade do |t|
+  create_table "prorogation_days", force: :cascade do |t|
+    t.integer "dissolution_period_id", null: false
+    t.integer "date_id",               null: false
+  end
+
+  create_table "prorogation_periods", force: :cascade do |t|
     t.integer "number",               null: false
     t.date    "start_on",             null: false
     t.date    "end_on"
@@ -69,10 +85,14 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "adjournment_days", "dates", name: "fk_date"
   add_foreign_key "adjournment_days", "houses", name: "fk_house"
   add_foreign_key "adjournment_days", "sessions", name: "fk_session"
+  add_foreign_key "dissolution_days", "dates", name: "fk_date"
+  add_foreign_key "dissolution_days", "prorogation_periods", name: "fk_prorogation_period"
   add_foreign_key "non_sitting_days", "dates", name: "fk_date"
   add_foreign_key "non_sitting_days", "houses", name: "fk_house"
   add_foreign_key "non_sitting_days", "sessions", name: "fk_session"
-  add_foreign_key "prorogations", "parliament_periods", name: "fk_parliament_period"
+  add_foreign_key "prorogation_days", "dates", name: "fk_date"
+  add_foreign_key "prorogation_days", "dissolution_periods", name: "fk_dissolution_period"
+  add_foreign_key "prorogation_periods", "parliament_periods", name: "fk_parliament_period"
   add_foreign_key "sessions", "parliament_periods", name: "fk_parliament_period"
   add_foreign_key "sitting_dates", "dates", name: "fk_date"
   add_foreign_key "sitting_dates", "sitting_days", name: "fk_sitting_day"
