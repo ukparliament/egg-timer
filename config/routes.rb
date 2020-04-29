@@ -6,11 +6,20 @@ Rails.application.routes.draw do
   root 'home#index'
   
   
-  get 'parliaments' => 'parliament#index', as: :parliament_list
-  get 'parliaments/:parliament' => 'parliament#show', as: :parliament_show
+  get 'parliament-periods' => 'parliament#index', as: :parliament_list
+  get 'parliament-periods/:parliament' => 'parliament#show', as: :parliament_show
+  
+  get 'dissolution-periods' => 'dissolution_period#index', as: :dissolution_period_list
+  get 'dissolution-periods/:dissolution_period' => 'dissolution_period#show', as: :dissolution_period_show
   
   get 'sessions' => 'session#index', as: :session_list
   get 'sessions/:session' => 'session#show', as: :session_show
+  
+  
+  
+  
+  
+  
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
