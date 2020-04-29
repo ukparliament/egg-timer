@@ -1,8 +1,9 @@
 require 'csv'
 
-task :import => [
+task :setup => [
   :import_parliaments,
-  :import_sessions
+  :import_sessions,
+  :populate_dissolution_periods
 ]
 
 task :import_parliaments => :environment do
@@ -25,5 +26,16 @@ task :import_sessions => :environment do
     parliament_period = ParliamentPeriod.find_by number: row[0]
     session.parliament_period = parliament_period
     session.save
+  end
+end
+task :populate_dissolution_periods => :environment do
+  puts "populating dissolution periods from parliament periods"
+  parliament_periods = ParliamentPeriod.all.where( 'end_on is not null' ).order( 'start_on' )
+  parliament_periods.each do |parliament_period|
+    dissolution_period = DissolutionPeriod.new
+    dissolution_period.number = parliament_period.number
+    dissolution_period.start_on = parliament_period.end_on + 1.day
+    dissolution_period.end_on = parliament_period.following_parliament_period.start_on - 1.day
+    dissolution_period.save
   end
 end
