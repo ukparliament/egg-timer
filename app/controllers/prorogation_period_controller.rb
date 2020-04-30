@@ -2,6 +2,7 @@ class ProrogationPeriodController < ApplicationController
   
   def index
     @prorogation_periods = ProrogationPeriod.all.order( 'start_on desc' )
+    @title = "Prorogation periods"
   end
   
   def show

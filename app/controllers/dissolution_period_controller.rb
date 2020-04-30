@@ -2,6 +2,7 @@ class DissolutionPeriodController < ApplicationController
   
   def index
     @dissolution_periods = DissolutionPeriod.all.order( 'number desc' )
+    @title = "Dissolution periods"
   end
   
   def show
