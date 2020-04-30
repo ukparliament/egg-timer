@@ -12,7 +12,7 @@ authorizer.fetch_access_token!
 service = Google::Apis::CalendarV3::CalendarService.new
 service.authorization = authorizer
 
-calendar_id = 'primary'
+calendar_id = '20n14bks46tvd2k5rse3jmsfb4@group.calendar.google.com'
 response = service.list_events(calendar_id,
                                max_results: 10,
                                single_events: true,
