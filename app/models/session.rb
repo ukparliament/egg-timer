@@ -23,7 +23,7 @@ class Session < ActiveRecord::Base
     dates = ''
     dates = dates + self.start_on.strftime( '%-d %B %Y' )
     dates = dates + ' - '
-    dates = dates + self.start_on.strftime( '%-d %B %Y' ) if self.end_on
+    dates = dates + self.end_on.strftime( '%-d %B %Y' ) if self.end_on
     dates
   end
   
