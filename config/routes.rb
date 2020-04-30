@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'sessions' => 'session#index', as: :session_list
   get 'sessions/:session' => 'session#show', as: :session_show
   
+  get 'prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
+  get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
+  
   
   
   
