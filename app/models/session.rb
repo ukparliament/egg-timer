@@ -2,15 +2,6 @@ class Session < ActiveRecord::Base
   
   belongs_to :parliament_period
   
-  def label
-    label = ''
-    label = self.number.to_s
-    label = label + ' (' + self.start_on.strftime( '%e %B %Y' ) + ' - '
-    label = label + self.end_on.strftime( '%e %B %Y' ) if self.end_on
-    label = label + ')'
-    label
-  end
-  
   def label_with_parliament
     label = 'Parliament '
     label = label + self.parliament_period.number.to_s
