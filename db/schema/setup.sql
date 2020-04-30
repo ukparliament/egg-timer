@@ -55,24 +55,16 @@ create table dates (
 );
 create table sitting_days (
 	id serial,
+	google_event_id varchar(255) not null,
 	session_id int not null,
 	house_id int not null,
 	constraint fk_session foreign key (session_id) references sessions(id),
 	constraint fk_house foreign key (house_id) references houses(id),
-	primary key (id)
-);
-create table non_sitting_days (
-	id serial,
-	session_id int not null,
-	house_id int not null,
-	date_id int not null,
-	constraint fk_session foreign key (session_id) references sessions(id),
-	constraint fk_house foreign key (house_id) references houses(id),
-	constraint fk_date foreign key (date_id) references dates(id),
 	primary key (id)
 );
 create table adjournment_days (
 	id serial,
+	google_event_id varchar(255) not null,
 	session_id int not null,
 	house_id int not null,
 	date_id int not null,
@@ -83,6 +75,7 @@ create table adjournment_days (
 );
 create table sitting_dates (
 	id serial,
+	google_event_id varchar(255) not null,
 	sitting_day_id int not null,
 	date_id int not null,
 	constraint fk_sitting_day foreign key (sitting_day_id) references sitting_days(id),
@@ -91,6 +84,7 @@ create table sitting_dates (
 );
 create table prorogation_days (
 	id serial,
+	google_event_id varchar(255) not null,
 	dissolution_period_id int not null,
 	date_id int not null,
 	constraint fk_dissolution_period foreign key (dissolution_period_id) references dissolution_periods(id),
@@ -99,6 +93,7 @@ create table prorogation_days (
 );
 create table dissolution_days (
 	id serial,
+	google_event_id varchar(255) not null,
 	prorogation_period_id int not null,
 	date_id int not null,
 	constraint fk_prorogation_period foreign key (prorogation_period_id) references prorogation_periods(id),
