@@ -45,3 +45,4 @@ group :development do
   gem 'spring'
 end
 
+gem 'google-api-client', '~> 0.34'
