@@ -3,7 +3,7 @@
 <head>
   <title>Parliament Calendar</title>
   <style>
-  body {font-family:system-ui;padding:1rem;margin:auto;max-width:38rem;}  
+  body {line-height:1.4;font-family:system-ui;padding:1rem;margin:auto;max-width:38rem;}  
   img {
   max-width:100%;
 max-height:100%;
@@ -12,7 +12,14 @@ max-height:100%;
       <meta name="viewport" content="width=device-width">
 </head>
 <body>
-<header><nav></nav>
+<header><nav>
+<p><a href="/">Parliament Calendar</a></p>
+<p>
+Periods &mdash; <%= link_to( 'Parliaments', parliament_list_url )  %>
+<%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
+</p>
+
+</nav>
 
 <h1>Parliament Calendar</h1>
 </header>
