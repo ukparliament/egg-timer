@@ -1,0 +1,2 @@
+module ProrogationPeriodHelper
+end
