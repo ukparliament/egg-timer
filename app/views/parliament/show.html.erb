@@ -1,6 +1,12 @@
 <%= content_tag( 'h1', @parliament.label ) %>
 <%= content_tag( 'p', @parliament.dates ) %>
+
 <%= content_tag( 'h2', 'Sessions' ) %>
 <ol>
 	<%= render :partial => 'session/session', :collection => @parliament.sessions %>
+</ol>
+
+<%= content_tag( 'h2', 'Prorogations' ) %>
+<ol>
+	<%= render :partial => 'prorogation_period/prorogation_period', :collection => @parliament.prorogation_periods %>
 </ol>
