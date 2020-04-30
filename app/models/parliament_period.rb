@@ -1,6 +1,7 @@
 class ParliamentPeriod < ActiveRecord::Base
   
   has_many :sessions, -> { order( 'start_on desc' ) }
+  has_many :prorogation_periods, -> { order( 'start_on desc' ) }
   
   def label
     label = 'Parliament '
