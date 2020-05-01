@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get 'prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
   get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
   
+  get 'houses' => 'house#index', as: :house_list
+  get 'houses/:house' => 'house#show', as: :house_show
+  
   
   
   
