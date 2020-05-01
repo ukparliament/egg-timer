@@ -4,7 +4,8 @@ class ParliamentPeriod < ActiveRecord::Base
   has_many :prorogation_periods, -> { order( 'start_on desc' ) }
   
   def label
-    self.number.ordinalize + " Parliament"
+    label = self.number.ordinalize + " Parliament"
+    label
   end
   
   def dates
