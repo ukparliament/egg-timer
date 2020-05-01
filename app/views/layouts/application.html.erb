@@ -3,33 +3,76 @@
 <head>
   <title>Parliament Calendar</title>
   <style>
+  html {
+  font-size: 16px;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+  }
+}
+@media screen and (min-width: 1000px) {
+  html {
+    font-size: 22px;
+  }
+} 
   body {line-height:1.4;font-family:system-ui;padding:1rem;margin:auto;max-width:38rem;}  
   img {
   max-width:100%;
 max-height:100%;
 }
+a {text-decoration:none;}
 h1 {font-weight: normal;}
+main {border-top:1pt solid gray;
+border-bottom:1pt solid gray;}
+footer {padding:1rem 0;color:gray;}
   </style>
       <meta name="viewport" content="width=device-width">
 </head>
 <body>
-<header><nav>
-<p><a href="/">Parliament Calendar</a> &rarr; <strong><%= @title || "Home" %></strong></p>
-<p>
+<header>
+
+
+<nav>
+
+<strong><a href="/">Parliament Calendar</a></strong>
+&middot;
 <%= link_to( 'Parliaments', parliament_list_url )  %>
+&middot;
 <%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
+&middot;
 <%= link_to( 'Sessions', session_list_url )  %>
+&middot;
 <%= link_to( 'Prorogations', prorogation_period_list_url )  %>
-</p>
+
 
 </nav>
 
 <h1><%= @title || "Parliament Calendar" %></h1>
+
 </header>
+
 <main>
 <%= yield %>
 </main>
+
 <footer>
+
+<nav>
+<a href="http://www.legislation.gov.uk/new">Legislation</a>
+&middot;
+<a href="https://calendar.parliament.uk">Parliament</a> &middot; <a href="https://www.theyworkforyou.com/calendar/">TheyWorkForYou</a>
+&middot;
+<a href="https://www.gov.uk/bank-holidays">Bank holidays</a>
+&middot;
+<a href="https://parliamentlive.tv/Guide">Parliamentlive.tv</a>
+&middot;
+<a href="https://calendar.google.com/">Google</a></nav>
+
+<p>
+<time><%= Time.now.in_time_zone('London') %></time>
+</p>
+
 </footer>
 </body>
 </html>
