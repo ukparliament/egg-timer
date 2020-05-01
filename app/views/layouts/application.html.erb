@@ -22,6 +22,9 @@
 max-height:100%;
 }
 h1 {font-weight: normal;}
+main {border-top:1pt solid gray;
+border-bottom:1pt solid gray;}
+footer {padding:1rem 0;color:gray;}
   </style>
       <meta name="viewport" content="width=device-width">
 </head>
@@ -37,12 +40,19 @@ h1 {font-weight: normal;}
 
 </nav>
 
+
 <h1><%= @title || "Parliament Calendar" %></h1>
 </header>
+
 <main>
 <%= yield %>
 </main>
+
 <footer>
+
+<time><%= Time.now.in_time_zone('London') %></time>
+
+<p><a href="https://calendar.parliament.uk">calendar.parliament.uk</a></p>
 </footer>
 </body>
 </html>
