@@ -4,7 +4,9 @@ task :setup => [
   :import_parliaments,
   :import_sessions,
   :populate_dissolution_periods,
-  :populate_prorogation_periods
+  :populate_prorogation_periods,
+  :import_houses,
+  :populate_calendar_dates
 ]
 
 task :import_parliaments => :environment do
@@ -50,5 +52,21 @@ task :populate_prorogation_periods => :environment do
     prorogation_period.end_on = session.following_session.start_on - 1.day
     prorogation_period.parliament_period = session.parliament_period
     prorogation_period.save
+  end
+end
+task :import_houses => :environment do
+  puts "importing houses"
+  CSV.foreach( 'db/data/houses.csv' ) do |row|
+    house = House.new
+    house.name = row[0]
+    house.save
+  end
+end
+task :populate_calendar_dates => :environment do
+  puts "populating dates"
+  (Date.new(1800, 01, 01)..Date.new(2800, 01, 01)).each do |date|
+    calendar_date = CalendarDate.new
+    calendar_date.date = date
+    calendar_date.save
   end
 end
