@@ -61,6 +61,8 @@ task :sync_commons_sitting_days => :environment do
       puts "creating event #{event.id}"
       start_date = ( event.start.date || event.start.date_time ).to_date
       end_date = ( event.end.date || event.end.date_time ).to_date
+      # compensate for all day events ending next 
+      end_date = end_date - 1.day if start_date != end_date
       session = Session.all.where( "start_on <= ?", start_date ).where( "end_on >= ?", end_date ).first
       unless session
         session = Session.all.where( "start_on <= ?", start_date ).where( "end_on is null" ).first
@@ -140,6 +142,8 @@ task :sync_lords_sitting_days => :environment do
       puts "creating event #{event.id}"
       start_date = ( event.start.date || event.start.date_time ).to_date
       end_date = ( event.end.date || event.end.date_time ).to_date
+      # compensate for all day events ending next 
+      end_date = end_date - 1.day if start_date != end_date
       session = Session.all.where( "start_on <= ?", start_date ).where( "end_on >= ?", end_date ).first
       unless session
         session = Session.all.where( "start_on <= ?", start_date ).where( "end_on is null" ).first
