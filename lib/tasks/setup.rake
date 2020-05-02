@@ -64,7 +64,7 @@ task :import_houses => :environment do
 end
 task :populate_calendar_dates => :environment do
   puts "populating dates"
-  (Date.new(1800, 01, 01)..Date.new(2800, 01, 01)).each do |date|
+  (Date.new(2020, 01, 01)..Date.new(2022, 01, 01)).each do |date|
     calendar_date = CalendarDate.new
     calendar_date.date = date
     calendar_date.save
