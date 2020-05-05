@@ -27,7 +27,7 @@ class Session < ActiveRecord::Base
     dates
   end
   
-  def following_session
-    Session.all.where( "start_on > ?", self.end_on ).order( 'start_on' ).first
+  def following_session_in_parliament
+    Session.all.where( "start_on > ?", self.end_on ).where( parliament_period_id: self.parliament_period_id ).order( 'start_on' ).first
   end
 end
