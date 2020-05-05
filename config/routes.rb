@@ -21,6 +21,12 @@ Rails.application.routes.draw do
   get 'houses' => 'house#index', as: :house_list
   get 'houses/:house' => 'house#show', as: :house_show
   
+  get 'calculator' => 'calculator#index', as: :calculator_form
+  get 'calculator/:calculate' => 'calculator#calculate', as: :calculator_calculate
+  
+  get 'meta' => 'meta#index', as: :meta_list
+  get 'meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
+  
   
   
   
