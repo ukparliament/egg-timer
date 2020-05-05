@@ -107,4 +107,4 @@ class CalculatorController < ApplicationController
     
     
   end
-  ßend
+end
