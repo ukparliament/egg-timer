@@ -46,12 +46,23 @@ task :populate_prorogation_periods => :environment do
   puts "populating prorogation periods from sessions"
   sessions = Session.all.where( 'end_on is not null' ).order( 'start_on' )
   sessions.each do |session|
-    prorogation_period = ProrogationPeriod.new
-    prorogation_period.number = session.number
-    prorogation_period.start_on = session.end_on + 1.day
-    prorogation_period.end_on = session.following_session.start_on - 1.day
-    prorogation_period.parliament_period = session.parliament_period
-    prorogation_period.save
+    # if there is a following session in the same parliament insert a prorogation between end of this session and start of this one
+    if session.following_session_in_parliament
+      prorogation_period = ProrogationPeriod.new
+      prorogation_period.number = session.number
+      prorogation_period.start_on = session.end_on + 1.day
+      prorogation_period.end_on = session.following_session_in_parliament.start_on - 1.day
+      prorogation_period.parliament_period = session.parliament_period
+      prorogation_period.save
+    # If there's no following session in the same parliament but this session ends before parliament ends insert a prorogation between end of this session and end of parliament
+    elsif session.end_on < session.parliament_period.end_on
+      prorogation_period = ProrogationPeriod.new
+      prorogation_period.number = session.number
+      prorogation_period.start_on = session.end_on + 1.day
+      prorogation_period.end_on = session.parliament.end_on
+      prorogation_period.parliament_period = session.parliament_period
+      prorogation_period.save
+    end
   end
 end
 task :import_houses => :environment do
