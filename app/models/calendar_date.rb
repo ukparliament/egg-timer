@@ -5,11 +5,13 @@ class CalendarDate < ActiveRecord::Base
   end
   
   def first_joint_sitting_date
-    next_date = self.next_date
-    unless next_date.is_joint_sitting_day?
-      next_date.first_joint_sitting_date
-    else
-      next_date
+    if self.next_date
+      next_date = self.next_date
+      unless next_date.is_joint_sitting_day?
+        next_date.first_joint_sitting_date
+      else
+        next_date
+      end
     end
   end
   
