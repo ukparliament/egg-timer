@@ -1,7 +1,7 @@
 class MetaController < ApplicationController
   
   def index
-  	
+  	@title = "About this application"
   end
   
   def calendar_sync
