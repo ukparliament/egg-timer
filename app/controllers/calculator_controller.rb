@@ -22,25 +22,29 @@ class CalculatorController < ApplicationController
       # Count starts first sitting day after laying
       # Find the first joint sitting day following the start date (laying date)
       # For a PNSI the start date is the day of laying
-      @date = @start_date.first_joint_sitting_date
+      if @start_date.first_joint_sitting_date
+        @date = @start_date.first_joint_sitting_date
       
-      # Count 10 Lords sitting days
-      # Count 10 Commons sitting days
-      # Keep looping through consequitive dates until both the Commons and the Lords have sat for the number of days set
-      # Which for a PNSI is 10
-      while ( ( commons_day_count <= day_count ) and ( lords_day_count <= day_count ) ) do
-        # Go to next date
+        # Count 10 Lords sitting days
+        # Count 10 Commons sitting days
+        # Keep looping through consequitive dates until both the Commons and the Lords have sat for the number of days set
+        # Which for a PNSI is 10
+        while ( ( commons_day_count <= day_count ) and ( lords_day_count <= day_count ) ) do
+          # Go to next date
       
-        if @date.next_date
-          @date = @date.next_date
-        else
-          @error_message = 'ran out of calendar'
-          break
-        end
+          if @date.next_date
+            @date = @date.next_date
+          else
+            @error_message = 'ran out of calendar'
+            break
+          end
         
-        # Add one to the House count if that House sat that day
-        lords_day_count +=1 if @date.is_lords_sitting_day?
-        commons_day_count+=1 if @date.is_commons_sitting_day?
+          # Add one to the House count if that House sat that day
+          lords_day_count +=1 if @date.is_lords_sitting_day?
+          commons_day_count+=1 if @date.is_commons_sitting_day?
+        end
+      else
+        @error_message = 'ran out of calendar'
       end
     end
     
