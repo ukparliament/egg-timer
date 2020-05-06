@@ -59,7 +59,7 @@ task :populate_prorogation_periods => :environment do
       prorogation_period = ProrogationPeriod.new
       prorogation_period.number = session.number
       prorogation_period.start_on = session.end_on + 1.day
-      prorogation_period.end_on = session.parliament.end_on
+      prorogation_period.end_on = session.parliament_period.end_on
       prorogation_period.parliament_period = session.parliament_period
       prorogation_period.save
     end
