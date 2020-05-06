@@ -9,7 +9,8 @@ body {line-height:1.4;font-family:system-ui;padding:1rem;margin:auto;max-width:4
 max-height:100%;
 }
 ol {list-style-type: none;padding:0;margin:0;}
-li {margin-bottom:0.25rem;}
+ul#meta {list-style-type: none;padding:0;margin:0;}
+ul#meta li {margin:1rem 0;}
 a {text-decoration:none;}
 h1 {font-weight: normal;}
 main {padding:2rem 0;}
@@ -45,7 +46,9 @@ footer {}
 </main>
 
 <footer>
-
+<p>
+<time><%= Time.now.in_time_zone('London') %></time>
+</p>
 <nav>
 <a href="http://www.legislation.gov.uk/new">Legislation</a>
 &middot;
@@ -57,9 +60,7 @@ footer {}
 &middot;
 <a href="https://calendar.google.com/">Google</a></nav>
 
-<p>
-<time><%= Time.now.in_time_zone('London') %></time>
-</p>
+
 
 </footer>
 </body>
