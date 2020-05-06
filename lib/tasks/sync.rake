@@ -15,9 +15,6 @@ task :sync_lords_sitting_days => :environment do
   sync_sitting_days( 'o26tfi8b5o78cborja7utgpcb8@group.calendar.google.com', 2 )
 end
 
-
-
-
 def sync_sitting_days( calendar_id, house_id )
   scope = 'https://www.googleapis.com/auth/calendar'
   authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
