@@ -1,3 +1,8 @@
+# HoC adjournment days calendar: ikdqq0rcg07bbs64g7aeqqlkt4@group.calendar.google.com
+# HoL adjournment days calendar: ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com
+
+
+
 require 'google/apis/calendar_v3'
 require 'googleauth'
 
