@@ -7,4 +7,8 @@ class MetaController < ApplicationController
   def calendar_sync
   	@title = "How the calendar uses the information you create"
   end
+  
+  def schema
+  	@title = "Database schema"
+  end
 end
