@@ -10,7 +10,7 @@ class CalculatorController < ApplicationController
     day_count = params["day-count"].to_i
     
     # Find the start date in the calendar date table - if exists
-    if CalendarDate.find_by_date( start_date )
+    if CalendarDate.all.where( 'date = ?, start_date ).first
       @start_date = CalendarDate.find_by_date( start_date )
     
       # Calculate the anticipated end date for a Proposed Statutory Instrument (PNSI)
