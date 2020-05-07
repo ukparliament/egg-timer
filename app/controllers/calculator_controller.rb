@@ -10,7 +10,7 @@ class CalculatorController < ApplicationController
     day_count = params["day-count"].to_i
     
     # Find the start date in the calendar date table - if exists
-    if CalendarDate.all.where( 'date = ?, start_date ).first
+    if CalendarDate.all.where( 'date = ?', start_date ).first
       @start_date = CalendarDate.find_by_date( start_date )
     
       # Calculate the anticipated end date for a Proposed Statutory Instrument (PNSI)
@@ -29,13 +29,13 @@ class CalculatorController < ApplicationController
           # Count 10 Commons sitting days
           # Keep looping through consecutive dates until both the Commons and the Lords have sat for the number of days set
           # Which for a PNSI is 10
-          # Do this loop until it's counted at least 10 days in the commons and at least 10 days in the lords
+          # Do this loop until it has counted at least 10 days in the commons and at least 10 days in the lords
           while ( ( commons_day_count <= day_count ) and ( lords_day_count <= day_count ) ) do
             # Go to next date if there is one
             if @date.next_date
               @date = @date.next_date
             else
-              # If there isn't a next date show error message and stop looping
+              # If there is no next date show error message and stop looping
               @error_message = "Ooops. We've run out of calendar."
               break
             end
@@ -45,15 +45,15 @@ class CalculatorController < ApplicationController
             commons_day_count+=1 if @date.is_commons_sitting_day?
           end
       
-        # if there's no future joint sitting date raise an error
+        # If there is no future joint sitting date raise an error
         else
           @error_message = "Ooops. We've run out of calendar."
         end
       end
-    end
   
-  # If the start date can't be found
-  else
-    @error_message = "Ooops. We've run out of calendar."
+    # If the start date cannot be found
+    else
+      @error_message = "Ooops. We've run out of calendar."
+    end
   end
 end
