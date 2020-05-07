@@ -1,15 +1,24 @@
+# # This is our calculation code!
 class CalculatorController < ApplicationController
   
+  # Set a title for the page people see.
   def index
+  	@title = "Calculate scrutiny periods"
   end
   
+  # In order to calculate the scrutiny period, we need:
   def calculate
-    # Get the procedure, date to start calculating from and number of 'days' to count from the form
+
+	# * the type of the procedure itself, which we refer to by a number
     procedure = params["procedure"].to_i
+    
+    # * the start date, for example: "2020-05-06"
     start_date = params["start-date"]
+    
+    # * the number of days to count
     @day_count = params["day-count"].to_i
     
-    # Find the start date in the calendar date table - if exists
+	# If the start date is in our calendar dates list ...
     if CalendarDate.all.where( 'date = ?', start_date ).first
       @start_date = CalendarDate.find_by_date( start_date )
     
@@ -39,19 +48,21 @@ class CalculatorController < ApplicationController
               @error_message = "Ooops. We've run out of calendar."
               break
             end
-        
-            # Add one to the House count if that House sat that day
+        	
+			# Add one to the House count if that House sat that day
+            
             lords_day_count +=1 if @date.is_lords_sitting_day?
             commons_day_count+=1 if @date.is_commons_sitting_day?
           end
-      
-        # If there is no future joint sitting date raise an error
+      	
+		# If there is no future joint sitting date raise an error
         else
           @error_message = "Ooops. We've run out of calendar."
         end
       end
   
-    # If the start date cannot be found
+    # If the start date isn't in our calendar dates list, we can't calculate the scrutiny period.
+    
     else
       @error_message = "Ooops. We've run out of calendar."
     end
