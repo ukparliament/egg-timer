@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   
   get 'meta' => 'meta#index', as: :meta_list
   get 'meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
+  get 'meta/schema' => 'meta#schema', as: :meta_schema
   
   
   
