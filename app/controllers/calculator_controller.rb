@@ -7,7 +7,7 @@ class CalculatorController < ApplicationController
     # Get the procedure, date to start calculating from and number of 'days' to count from the form
     procedure = params["procedure"].to_i
     start_date = params["start-date"]
-    day_count = params["day-count"].to_i
+    @day_count = params["day-count"].to_i
     
     # Find the start date in the calendar date table - if exists
     if CalendarDate.all.where( 'date = ?', start_date ).first
@@ -30,7 +30,7 @@ class CalculatorController < ApplicationController
           # Keep looping through consecutive dates until both the Commons and the Lords have sat for the number of days set
           # Which for a PNSI is 10
           # Do this loop until it has counted at least 10 days in the commons and at least 10 days in the lords
-          while ( ( commons_day_count <= day_count ) and ( lords_day_count <= day_count ) ) do
+          while ( ( commons_day_count <= @day_count ) and ( lords_day_count <= @day_count ) ) do
             # Go to next date if there is one
             if @date.next_date
               @date = @date.next_date
