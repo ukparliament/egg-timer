@@ -1,5 +1,5 @@
 <% if @error_message -%>
-	<%= content_tag( 'p', "Ooops. We've run out of calendar." ) %>
+	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
 	<%= content_tag( 'p', 'The anticipated end date of the scrutiny period is:')%>
 	<%= content_tag( 'p', @date.date.strftime( '%A, %-d %B %Y') ) %>
