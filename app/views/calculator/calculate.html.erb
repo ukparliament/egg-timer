@@ -1,7 +1,7 @@
 <% if @error_message -%>
 	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
-	<%= content_tag( 'p', 'The anticipated end date of the scrutiny period is:')%>
+	<%= content_tag( 'p', "For a scrutiny period of #{@day_count} days, starting from #{@start_date.date.strftime( '%-d %B %Y') }, he anticipated end date of the scrutiny period is:" )%>
 	<%= content_tag( 'p', @date.date.strftime( '%A, %-d %B %Y') ) %>
 	<%= content_tag( 'p', 'The anticipated end date of the scrutiny period will need to be recalculated if sitting days change within that period.' ) %>
 <% end -%>
