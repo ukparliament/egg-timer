@@ -3,5 +3,5 @@
 <% else -%>
 	<%= content_tag( 'p', 'The anticipated end date of the scrutiny period is:')%>
 	<%= content_tag( 'p', @date.date.strftime( '%A, %-d %B %Y') ) %>
-	<%= content_tag( 'p', 'Note that this date is likely to change if sitting days change.' ) %>
+	<%= content_tag( 'p', 'The anticipated end date of the scrutiny period will need to be recalculated if sitting days change within that period.' ) %>
 <% end -%>
