@@ -8,7 +8,7 @@ class CalculatorController < ApplicationController
   
   # In order to calculate the scrutiny period, we need:
   def calculate
-
+	@title = "Calculated scrutiny period"
 	# * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i
     
