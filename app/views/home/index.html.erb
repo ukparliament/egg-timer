@@ -1,26 +1,39 @@
 <form action="calculator/calculate" method="GET" id="calculator">
 
+<div>
 <p>
-<%= content_tag( 'label', 'Procedure', :for => 'procedure' ) %>			
+<%= content_tag( 'label', 'Procedure', :for => 'procedure' ) %>	
+</p>
+<p>		
 <select id="procedure" name="procedure">
+
 <option value="1">Proposed Negative Statutory Instrument</option>
 </select>
 </p>
-	
+	</div>
+	<div>
 <p>
 <%= content_tag( 'label', 'Scrutiny start date: YYYY-MM-DD', :for => 'start-date' ) %>
-<input type="date" name="start-date" id="start-date">
-<small>
 </p>
-
+<p>	
+<input type="date" name="start-date" id="start-date">
+</p>
+</div>
+	<div>
 <p>
 <%= content_tag( 'label', 'Day count', :for => 'day-count' ) %>
+</p>
+<p>	
 <input type="number" name="day-count" id="day-count">
 </p>
-
+</div>
+	<div>
 <p>
 <label for="calculate">Scrutiny period end date ...</label>
+</p>
+<p>	
 <input type="submit" id="calculate" value="Calculate">
 </p>
-
+</div>
+	
 </form>
