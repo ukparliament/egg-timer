@@ -27,6 +27,8 @@ footer {}
 
 <strong><a href="/">Parliament Calendar</a></strong>
 &middot;
+<%= link_to( 'More about this application', meta_list_url )  %>
+<br>
 <%= link_to( 'Parliaments', parliament_list_url )  %>
 &middot;
 <%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
@@ -34,10 +36,6 @@ footer {}
 <%= link_to( 'Sessions', session_list_url )  %>
 &middot;
 <%= link_to( 'Prorogations', prorogation_period_list_url )  %>
-<br>
-<%= link_to( 'More about this application', meta_list_url )  %>
-
-
 </nav>
 
 <h1><%= @title || "Parliament Calendar" %></h1>
@@ -52,16 +50,6 @@ footer {}
 <p>
 <time><%= Time.now.in_time_zone('London') %></time>
 </p>
-<nav>
-<a href="http://www.legislation.gov.uk/new">Legislation</a>
-&middot;
-<a href="https://calendar.parliament.uk">Parliament</a> &middot; <a href="https://www.theyworkforyou.com/calendar/">TheyWorkForYou</a>
-&middot;
-<a href="https://www.gov.uk/bank-holidays">Bank holidays</a>
-&middot;
-<a href="https://parliamentlive.tv/Guide">Parliamentlive.tv</a>
-&middot;
-<a href="https://calendar.google.com/">Google</a></nav>
 
 
 
