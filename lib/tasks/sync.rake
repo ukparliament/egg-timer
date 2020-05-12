@@ -1,8 +1,3 @@
-# HoC adjournment days calendar: 
-# HoL adjournment days calendar: ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com
-
-
-
 require 'google/apis/calendar_v3'
 require 'googleauth'
 
@@ -23,6 +18,10 @@ end
 task :sync_commons_adjournment_days => :environment do
   puts "syncing commons adjournment days"
   sync_adjournment_days( 'ikdqq0rcg07bbs64g7aeqqlkt4@group.calendar.google.com', 1 )
+end
+task :sync_lords_adjournment_days => :environment do
+  puts "syncing lords adjournment days"
+  sync_adjournment_days( 'ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com', 2 )
 end
 
 
