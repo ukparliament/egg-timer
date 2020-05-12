@@ -6,7 +6,9 @@ task :setup => [
   :populate_dissolution_periods,
   :populate_prorogation_periods,
   :import_houses,
-  :populate_calendar_dates
+  :populate_calendar_dates,
+  :populate_dissolution_days,
+  :populate_prorogation_days
 ]
 
 task :import_parliaments => :environment do
@@ -75,9 +77,37 @@ task :import_houses => :environment do
 end
 task :populate_calendar_dates => :environment do
   puts "populating dates"
-  (Date.new(2020, 01, 01)..Date.new(2022, 01, 01)).each do |date|
+  (Date.new(1800, 01, 01)..Date.new(2022, 01, 01)).each do |date|
     calendar_date = CalendarDate.new
     calendar_date.date = date
     calendar_date.save
+  end
+end
+task :populate_dissolution_days => :environment do
+  puts "populating dissolution days from dissolution periods"
+  calendar_dates = CalendarDate.all
+  calendar_dates.each do |calendar_date|
+    # Check if date is during dissolation
+    dissolution_period = DissolutionPeriod.all.where( 'start_on <= ?', calendar_date.date ).where( 'end_on >= ?', calendar_date.date ).first
+    if dissolution_period
+      dissolution_day = DissolutionDay.new
+      dissolution_day.dissolution_period = dissolution_period
+      dissolution_day.calendar_date = calendar_date
+      dissolution_day.save
+    end
+  end
+end
+task :populate_prorogation_days => :environment do
+  puts "populating prorogation days from prorogation periods"
+  calendar_dates = CalendarDate.all
+  calendar_dates.each do |calendar_date|
+    # Check if date is during prorogation
+    prorogation_period = ProrogationPeriod.all.where( 'start_on <= ?', calendar_date.date ).where( 'end_on >= ?', calendar_date.date ).first
+    if prorogation_period
+      prorogation_day = ProrogationDay.new
+      prorogation_day.prorogation_period = prorogation_period
+      prorogation_day.calendar_date = calendar_date
+      prorogation_day.save
+    end
   end
 end
