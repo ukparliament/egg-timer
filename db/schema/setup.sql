@@ -83,19 +83,19 @@ create table sitting_dates (
 );
 create table prorogation_days (
 	id serial,
-	google_event_id varchar(255) not null,
-	dissolution_period_id int not null,
+	google_event_id varchar(255),
+	prorogation_period_id int not null,
 	calendar_date_id int not null,
-	constraint fk_dissolution_period foreign key (dissolution_period_id) references dissolution_periods(id),
+	constraint fk_prorogation_period foreign key (prorogation_period_id) references prorogation_periods(id),
 	constraint fk_calendar_date foreign key (calendar_date_id) references calendar_dates(id),
 	primary key (id)
 );
 create table dissolution_days (
 	id serial,
-	google_event_id varchar(255) not null,
-	prorogation_period_id int not null,
+	google_event_id varchar(255),
+	dissolution_period_id int not null,
 	calendar_date_id int not null,
-	constraint fk_prorogation_period foreign key (prorogation_period_id) references prorogation_periods(id),
+	constraint fk_dissolution_period foreign key (dissolution_period_id) references dissolution_periods(id),
 	constraint fk_calendar_date foreign key (calendar_date_id) references calendar_dates(id),
 	primary key (id)
 );
