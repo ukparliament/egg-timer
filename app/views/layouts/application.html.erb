@@ -15,7 +15,26 @@ a {text-decoration:none;}
 h1 {font-weight: normal;}
 h2 {font-weight: normal;padding-top:1rem;}
 main {padding:1.5rem 0;}
-footer {}
+footer {border-top:thin dotted gray;}
+form#calculator {
+width:100%;
+}
+form#calculator input {
+font-size:larger;
+font-family: monospace;
+padding:0.25rem;
+font-weight:bold;
+}
+
+form#calculator label {
+  font-weight: bold;
+}
+
+form#calculator div {
+  background-color: lightsteelblue;
+  padding:0.5rem 1rem;
+  margin:0.75rem 0;
+}
   </style>
       <meta name="viewport" content="width=device-width">
 </head>
@@ -25,8 +44,8 @@ footer {}
 
 <nav>
 
-<strong><a href="/">Parliament Calendar</a></strong>
-&middot;
+<strong><a href="/">Calculate scrutiny period</a></strong>
+<br>
 <%= link_to( 'Parliaments', parliament_list_url )  %>
 &middot;
 <%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
@@ -34,10 +53,6 @@ footer {}
 <%= link_to( 'Sessions', session_list_url )  %>
 &middot;
 <%= link_to( 'Prorogations', prorogation_period_list_url )  %>
-&middot;
-<%= link_to( 'Meta', meta_list_url )  %>
-
-
 </nav>
 
 <h1><%= @title || "Parliament Calendar" %></h1>
@@ -49,22 +64,7 @@ footer {}
 </main>
 
 <footer>
-<p>
-<time><%= Time.now.in_time_zone('London') %></time>
-</p>
-<nav>
-<a href="http://www.legislation.gov.uk/new">Legislation</a>
-&middot;
-<a href="https://calendar.parliament.uk">Parliament</a> &middot; <a href="https://www.theyworkforyou.com/calendar/">TheyWorkForYou</a>
-&middot;
-<a href="https://www.gov.uk/bank-holidays">Bank holidays</a>
-&middot;
-<a href="https://parliamentlive.tv/Guide">Parliamentlive.tv</a>
-&middot;
-<a href="https://calendar.google.com/">Google</a></nav>
-
-
-
+<p><%= link_to( 'About this application', meta_list_url )  %></p>
 </footer>
 </body>
 </html>
