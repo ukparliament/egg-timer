@@ -18,7 +18,7 @@ class CalculatorController < ApplicationController
     # * the **number of days** to count
     @day_count = params["day-count"].to_i
     
-	# If the start date is in our calendar dates list ...
+	  # If the start date is in our calendar dates list ...
     if CalendarDate.all.where( 'date = ?', start_date ).first
       @start_date = CalendarDate.find_by_date( start_date )
     
@@ -56,6 +56,41 @@ class CalculatorController < ApplicationController
 		# If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
         else
           @error_message = "Ooops. We've run out of calendar."
+        end
+      end
+      
+    # ... we can calculate the **anticipated end date** for a Commons only Statutory Instrument:
+      if procedure == 2
+        
+        # get ready to count days off in the House of Commons only
+        day_count = 0
+        
+        # counting of "sitting days" starts on day of laying
+        @date = @start_date
+        
+        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+        while ( day_count <= @day_count ) do
+          
+          
+        
+          # If we have found a date that matches the criteria in the calendar, **success!**
+          if @date.next_date
+            @date = @date.next_date
+          else
+            # If we haven't found a date in the calendar, ...
+            @error_message = "Ooops. We've run out of calendar."
+            # ... __we give up__.
+            break
+          end
+          
+          # If the Commons sat on the date we've found, we add another day to the count.
+          if @date.is_commons_sitting_day?
+            day_count +=1 
+          
+          # If the Commons was adjourned and was adjourned for a period of not more than 4 days, we add another day to the count.
+          elsif @date.is_commons_short_adjournment?
+            day_count +=1
+          end
         end
       end
   
