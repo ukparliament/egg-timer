@@ -46,15 +46,17 @@ class CalendarDate < ActiveRecord::Base
     sitting_day_flag
   end
   
-  def is_commons_short_adjournment?
+  def is_commons_short_adjournment?( maximum_day_count )
     is_commons_short_adjournment = false
-    # if this day is an adjournment day in the Commons
+    # If this day is an adjournment day in the Commons...
     if self.is_commons_adjournment_day?
+      
+      # Set the adjournment day count to start at 1
       adjournment_day_count = 1
       
-      # Cycle through the next four days
+      # Cycle through the following days according to the maximum day count passed in.
       date = self
-      for i in ( 1..4 )
+      for i in ( 1..maximum_day_count )
         
         # Go forward one day
         date = date.next_date
@@ -73,11 +75,11 @@ class CalendarDate < ActiveRecord::Base
         end
       end
       
-      # Cycle through the previous four days
+      # Cycle through the preceding days according to the maximum day count passed in.
       date = self
-      for i in ( 1..4 )
+      for i in ( 1..maximum_day_count )
         
-        # Go forward one day
+        # Go back one day
         date = date.previous_date
         
         # If this is an adjournment day in the Commons
@@ -89,13 +91,13 @@ class CalendarDate < ActiveRecord::Base
         # If it's not an adjournment day...
         else  
           
-          # ...stop cycling forward
+          # ...stop cycling backward.
           break
         end
       end
 
-      # If there's more than four adjournment days...
-      if adjournment_day_count > 4
+      # If there's more than the maximum number of adjournment days passed in...
+      if adjournment_day_count > maximum_day_count
       
         # this is not a short adjournment and does not count on the clock
         is_commons_short_adjournment = false
