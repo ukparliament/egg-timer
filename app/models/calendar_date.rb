@@ -4,6 +4,10 @@ class CalendarDate < ActiveRecord::Base
     CalendarDate.all.where( 'date > ?', self.date ).order( 'date asc' ).first
   end
   
+  def previous_date
+    CalendarDate.all.where( 'date < ?', self.date ).order( 'date desc' ).first
+  end
+  
   def first_joint_sitting_date
     if self.next_date
       next_date = self.next_date
@@ -28,10 +32,81 @@ class CalendarDate < ActiveRecord::Base
     sitting_day_flag
   end
   
+  def is_commons_adjournment_day?
+    is_commons_adjournment_day = false
+    adjournment_day = AdjournmentDay.all.where( house_id: 1).where( calendar_date_id: self.id).first
+    is_commons_adjournment_day = true if adjournment_day
+    is_commons_adjournment_day
+  end
+  
   def is_lords_sitting_day?
     sitting_day_flag = false
     sitting_day = SittingDay.all.joins( 'as sdays, sitting_dates as sdates' ).select( 'sdays.*' ).where( 'sdays.house_id = 2' ).where( 'sdates.sitting_day_id = sdays.id' ).where( 'sdates.calendar_date_id = ?', self.id ).order('sdays.id').first
     sitting_day_flag= true if sitting_day
     sitting_day_flag
+  end
+  
+  def is_commons_short_adjournment?
+    is_commons_short_adjournment = false
+    # if this day is an adjournment day in the Commons
+    if self.is_commons_adjournment_day?
+      adjournment_day_count = 1
+      
+      # Cycle through the next four days
+      date = self
+      for i in ( 1..4 )
+        
+        # Go forward one day
+        date = date.next_date
+        
+        # If this is an adjournment day in the Commons
+        if date.is_commons_adjournment_day?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling forward
+          break
+        end
+      end
+      
+      # Cycle through the previous four days
+      date = self
+      for i in ( 1..4 )
+        
+        # Go forward one day
+        date = date.previous_date
+        
+        # If this is an adjournment day in the Commons
+        if date.is_commons_adjournment_day?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling forward
+          break
+        end
+      end
+
+      # If there's more than four adjournment days...
+      if adjournment_day_count > 4
+      
+        # this is not a short adjournment and does not count on the clock
+        is_commons_short_adjournment = false
+      
+      # If this is 4 or more days adjournment...
+      else  
+      
+        # this is a short adjournemtn and does count on the clock
+        is_commons_short_adjournment = true
+      end
+      is_commons_short_adjournment
+    end
   end
 end
