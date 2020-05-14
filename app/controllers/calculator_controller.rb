@@ -88,7 +88,8 @@ class CalculatorController < ApplicationController
             day_count +=1 
           
           # If the Commons was adjourned and was adjourned for a period of not more than 4 days, we add another day to the count.
-          elsif @date.is_commons_short_adjournment?
+          # Passing in the maximum number of days that counts as short in this case
+          elsif @date.is_commons_short_adjournment?( 4 )
             day_count +=1
           end
         end
