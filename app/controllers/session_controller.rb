@@ -8,5 +8,7 @@ class SessionController < ApplicationController
   def show
     session = params[:session]
     @session = Session.find( session )
+    @houses = House.all
+    @title = @session.label_with_parliament
   end
 end
