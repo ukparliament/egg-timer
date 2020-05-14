@@ -1,2 +1,6 @@
-<%= content_tag( 'h1', @session.label_with_parliament) %>
 <%= content_tag( 'p', @session.dates) %>
+
+<%= content_tag( 'h2', 'Houses' ) %>
+<ol>
+	<%= render :partial => 'session_house/house', :collection => @houses %>
+</ol>
