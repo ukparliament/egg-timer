@@ -1,0 +1,9 @@
+<%= content_tag( 'h2', 'Sitting days' ) %>
+<ol>
+	<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days_in_session( @session ) %>
+</ol>
+
+<%= content_tag( 'h2', 'Adjournment days' ) %>
+<ol>
+	<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.adjournment_days_in_session( @session ) %>
+</ol>
