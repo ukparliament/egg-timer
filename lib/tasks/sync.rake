@@ -45,7 +45,7 @@ def sync_sitting_days( calendar_id, house_id )
       # if this is an edit (has it been updated since created) delete it's previous incarnation
       delete_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes
       
-      # create (new) sitting day and sitting dates
+      # create (new) sitting day
       puts "creating event #{event.id}"
       start_date = ( event.start.date || event.start.date_time ).to_date
       end_date = ( event.end.date || event.end.date_time ).to_date
@@ -54,25 +54,19 @@ def sync_sitting_days( calendar_id, house_id )
       end_date = end_date - 1.day unless event.end.date_time
       
       # find the session this event is in
-      session = Session.all.where( "start_on <= ?", start_date ).where( "end_on >= ?", end_date ).first
+      session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
       unless session
-        session = Session.all.where( "start_on <= ?", start_date ).where( "end_on is null" ).first
+        
+        # find the session that's not yet ended if the event isn't in a different session
+        session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
         if session
           sitting_day = SittingDay.new
+          sitting_day.start_date = start_date
+          sitting_day.end_date = end_date
           sitting_day.google_event_id = event.id
           sitting_day.session = session
           sitting_day.house_id = house_id
           sitting_day.save
-          (start_date..end_date).each do |date|
-            sitting_date = SittingDate.new
-            sitting_date.google_event_id = event.id
-            sitting_date.sitting_day = sitting_day
-            calendar_date = CalendarDate.find_by_date( date )
-            if calendar_date
-              sitting_date.calendar_date = calendar_date
-              sitting_date.save
-            end
-          end
         end
       end
     end
@@ -95,7 +89,7 @@ def sync_adjournment_days( calendar_id, house_id )
       # if this is an edit (has it been updated since created) delete it's previous incarnation
       delete_adjournment_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes
       
-      # create (new) sitting day and sitting dates
+      # create (new) adjournment days
       puts "creating event #{event.id}"
       start_date = ( event.start.date || event.start.date_time ).to_date
       end_date = ( event.end.date || event.end.date_time ).to_date
@@ -107,19 +101,18 @@ def sync_adjournment_days( calendar_id, house_id )
       (start_date..end_date).each do |date|
       
         # find the session this event is in
-        session = Session.all.where( "start_on <= ?", start_date ).where( "end_on >= ?", end_date ).first
+        session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
         unless session
-          session = Session.all.where( "start_on <= ?", start_date ).where( "end_on is null" ).first
+          
+          # find the session that's not yet ended if the event isn't in a different session
+          session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
           if session
             adjournment_day = AdjournmentDay.new
+            adjournment_day.date = date
             adjournment_day.google_event_id = event.id
             adjournment_day.session = session
             adjournment_day.house_id = house_id
-            calendar_date = CalendarDate.find_by_date( date )
-            if calendar_date
-              adjournment_day.calendar_date = calendar_date
-              adjournment_day.save
-            end
+            adjournment_day.save
           end
         end
       end
@@ -140,16 +133,8 @@ end
 # delete any sitting dates and sitting days with a given event id
 def delete_sitting_days( event_id )
   puts "deleting event #{event_id}"
-  # sitting date deletions
-  sitting_dates = SittingDate.all.where( "google_event_id = ?", event_id )
-  sitting_dates.each do |sitting_date|
-    sitting_date.destroy
-  end
-  # sitting day deletions < should probably have a before delete action in the sitting day model that cascade deletes sitting dates
-  sitting_days = SittingDay.all.where( "google_event_id = ?", event_id )
-  sitting_days.each do |sitting_day|
-    sitting_day.destroy
-  end
+  sitting_day = SittingDay.all.where( "google_event_id = ?", event_id ).first
+  sitting_day.destroy if sitting_day
 end
 
 # Get a list of changed events from a calendar (created, updated and deleted)
