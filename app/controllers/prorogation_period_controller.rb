@@ -1,7 +1,7 @@
 class ProrogationPeriodController < ApplicationController
   
   def index
-    @prorogation_periods = ProrogationPeriod.all.order( 'start_on desc' )
+    @prorogation_periods = ProrogationPeriod.all.order( 'start_date desc' )
     @title = "Prorogation periods"
   end
   
