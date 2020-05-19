@@ -5,8 +5,8 @@ class ProrogationPeriod < ActiveRecord::Base
   def label
     label = ''
     label = self.number.to_s
-    label = label + ' (' + self.start_on.strftime( '%e %B %Y' ) + ' - '
-    label = label + self.end_on.strftime( '%e %B %Y' ) if self.end_on
+    label = label + ' (' + self.start_date.strftime( '%e %B %Y' ) + ' - '
+    label = label + self.end_date.strftime( '%e %B %Y' ) if self.end_date
     label = label + ')'
     label
   end
@@ -21,9 +21,9 @@ class ProrogationPeriod < ActiveRecord::Base
   
   def dates
     dates = ''
-    dates = dates + self.start_on.strftime( '%-d %B %Y' )
+    dates = dates + self.start_date.strftime( '%-d %B %Y' )
     dates = dates + ' - '
-    dates = dates + self.end_on.strftime( '%-d %B %Y' ) if self.end_on
+    dates = dates + self.end_date.strftime( '%-d %B %Y' ) if self.end_date
     dates
   end
 end
