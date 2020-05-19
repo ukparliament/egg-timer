@@ -15,89 +15,88 @@ class CalculatorController < ApplicationController
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
     
-    # * the **number of days** to count
-    @day_count = params["day-count"].to_i
-    
-	  # If the start date is in our calendar dates list ...
-    if CalendarDate.all.where( 'date = ?', start_date ).first
-      @start_date = CalendarDate.find_by_date( start_date )
-    
-      # ... we can calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
+    # Check that all the parameters have been provided by the form
+    # And if not throw an error
+    if params['start-date'].blank? or params['day-count'].blank? or params['day-count'].to_i == 0
+	    @title = "Sorry, there was not enough information provided."
+      render :template => 'calculator/not_enough_information'
       
+    # If the form did provide all the required information, do the calculation.
+    else
+      
+      # * the **number of days** to count
+      @day_count = params["day-count"].to_i
+    
+  	  # Make the date passed into a date the code understands...
+      @start_date = Date.parse( start_date )
+      
+      # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
       if procedure == 1
-      	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
-        commons_day_count = 0
-        lords_day_count = 0
-      
-        # We start counting on the **first joint sitting day** after the instrument is laid.
+    
+        # We start counting on the **first day when both Houses are sitting** after the instrument is laid.
         # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
-        if @start_date.first_joint_sitting_date
-          @date = @start_date.first_joint_sitting_date
+        if @start_date.next_day.first_joint_sitting_day
+          @clock_date = @start_date.next_day.first_joint_sitting_day
+        
+
+        	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
+          # The first joint sitting day counts as day 1, so we count from 1, not 0
+          commons_day_count = 1
+          lords_day_count = 1
           
-          # ... we look at each of our calendar dates, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
+          # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
           while ( ( commons_day_count <= @day_count ) and ( lords_day_count <= @day_count ) ) do
-          
-            # If we have found a date that matches the criteria in the calendar, **success!**
-            if @date.next_date
-              @date = @date.next_date
-            else
-              # If we haven't found a date in the calendar, ...
-              @error_message = "Ooops. We've run out of calendar."
-              # ... __we give up__.
+      
+            # Go to the next day**
+            @clock_date = @clock_date.next_day
+    	
+            # If the Lords sat on the date we've found, we add another day to the count.
+            lords_day_count +=1 if @clock_date.is_lords_sitting_day?
+            # If the Commons sat on the date we've found, we add another day to the count.
+            commons_day_count+=1 if @clock_date.is_commons_sitting_day?
+        
+            # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+            # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+            if @clock_date.is_unannounced?
+              @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
               break
             end
-        	
-            # If the Lords sat on the date we've found, we add another day to the count.
-            lords_day_count +=1 if @date.is_lords_sitting_day?
-            # If the Commons sat on the date we've found, we add another day to the count.
-            commons_day_count+=1 if @date.is_commons_sitting_day?
           end
-      	
-		# If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
+    	
+  	# If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
         else
-          @error_message = "Ooops. We've run out of calendar."
+          @error_message = "An anticipated end date can’t be shown. The next joint sitting day should be set in the calendar in order for the anticipated end date to be calculated."
         end
       end
-      
+    
     # ... we can calculate the **anticipated end date** for a Commons only Statutory Instrument:
       if procedure == 2
+      
+        # Counting of "sitting days" starts on day of laying
+        @clock_date = @start_date
         
-        # get ready to count days off in the House of Commons only
-        day_count = 0
-        
-        # counting of "sitting days" starts on day of laying
-        @date = @start_date
-        
+        # Get ready to count days off in the House of Commons only
+        # Clock starts on day of laying so start from 1
+        day_count = 1
+      
         # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
         while ( day_count <= @day_count ) do
           
-          
         
-          # If we have found a date that matches the criteria in the calendar, **success!**
-          if @date.next_date
-            @date = @date.next_date
-          else
-            # If we haven't found a date in the calendar, ...
-            @error_message = "Ooops. We've run out of calendar."
-            # ... __we give up__.
-            break
-          end
-          
           # If the Commons sat on the date we've found, we add another day to the count.
-          if @date.is_commons_sitting_day?
-            day_count +=1 
-          
+          if @clock_date.is_commons_sitting_day?
+            day_count +=1
+        
           # If the Commons was adjourned and was adjourned for a period of not more than 4 days, we add another day to the count.
           # Passing in the maximum number of days that counts as short in this case
-          elsif @date.is_commons_short_adjournment?( 4 )
+          elsif @clock_date.is_commons_short_adjournment?( 4 )
             day_count +=1
           end
+          
+          # Skip to the next calendar day and count again
+          @clock_date = @clock_date.next_day
         end
       end
-  
-    # If the **start date** isn't in our calendar dates list, we can't calculate the scrutiny period - and we show an error message.
-    else
-      @error_message = "Ooops. We've run out of calendar."
     end
   end
 end
