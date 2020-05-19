@@ -1,7 +1,7 @@
 class SessionController < ApplicationController
   
   def index
-    @sessions = Session.all.order( 'start_on desc' )
+    @sessions = Session.all.order( 'start_date desc' )
     @title = "Sessions"
   end
   
