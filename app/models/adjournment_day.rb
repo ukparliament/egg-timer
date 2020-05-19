@@ -5,7 +5,7 @@ class AdjournmentDay < ActiveRecord::Base
   
   def label
     label = ''
-    label = label + self.calendar_date.date.strftime( '%-d %B %Y' )
+    label = label + self.date.strftime( '%-d %B %Y' )
     label
   end
 end
