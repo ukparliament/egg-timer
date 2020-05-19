@@ -7,10 +7,10 @@ class SittingDay < ActiveRecord::Base
   
   def label
     label = ''
-    label = label + self.sitting_dates.first.calendar_date.date.strftime( '%-d %B %Y' )
-    if self.sitting_dates.size > 1
+    label = label + self.start_date.strftime( '%-d %B %Y' )
+    if self.end_date != self.end_date
       label = label + ' - '
-      label = label + self.sitting_dates.last.calendar_date.date.strftime( '%-d %B %Y' )
+      label = label + self.end_date.strftime( '%-d %B %Y' )
     end
     label
   end
