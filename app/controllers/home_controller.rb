@@ -2,6 +2,6 @@ class HomeController < ApplicationController
   
   def index
   	@title = "Calculate scrutiny period"
-    @procedures = Procedure.all.where( 'active is true' )
+    @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
 end
