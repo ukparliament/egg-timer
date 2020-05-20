@@ -39,19 +39,11 @@ class Date
     is_sitting_day_flag
   end
   
-  # checks if a date is a bicameral sitting day
+  # checks if a date is a sitting day in both Houses
   def is_joint_sitting_day?
     is_joint_sitting_day_flag = false
     is_joint_sitting_day_flag = true if self.is_commons_sitting_day? and self.is_lords_sitting_day?
     is_joint_sitting_day_flag
-  end
-  
-  # check if either house is sitting on a day
-  def is_sitting_day?
-    sitting_day_flag = false
-    sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).first
-    sitting_day_flag= true if sitting_day
-    sitting_day_flag
   end
   
   # check if either house is adjourned on a day
@@ -100,6 +92,14 @@ class Date
     sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
     sitting_day_flag= true if sitting_day
     sitting_day_flag
+  end
+  
+  # check if the lords is adjourned on a day
+  def is_lords_adjournment_day?
+    adjournment_day_flag = false
+    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
+    adjournment_day_flag= true if adjournment_day
+    adjournment_day_flag
   end
   
   def is_unannounced?
@@ -241,6 +241,74 @@ class Date
         is_short_adjournment = true
       end
       is_short_adjournment
+    end
+  end
+  
+  # Checks if this is a short adjournment date in one or both Houses
+  # The definition of "short is adjustable" by passing in a maximum number of days to count as "short"
+  def is_either_house_short_adjournment?( maximum_day_count )
+    
+    # Check if this is an adjournnment day in one or both Houses
+    if self.is_commons_adjournment_day? or self.is_lords_adjournment_day?
+      
+      # Set the adjournment day count to start at 1
+      adjournment_day_count = 1
+      
+      # Cycle through the following days according to the maximum day count passed in.
+      date = self
+      for i in ( 1..maximum_day_count )
+        
+        # Go forward one day
+        date = date.next_day
+        
+        # If this is an adjournment day in the Commons or the Lords
+        if date.is_commons_adjournment_day? or date.is_lords_adjournment_day?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling forward
+          break
+        end
+      end
+      
+      # Cycle through the preceding days according to the maximum day count passed in.
+      date = self
+      for i in ( 1..maximum_day_count )
+        
+        # Go back one day
+        date = date.prev_day
+        
+        # If this is an adjournment day in the Commons or the Lords
+        if date.is_commons_adjournment_day? or date.is_lords_adjournment?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling backward.
+          break
+        end
+      end
+
+      # If there's more than the maximum number of adjournment days passed in...
+      if adjournment_day_count > maximum_day_count
+      
+        # ...this is not a short adjournment and does not count on the clock
+        is_either_house_short_adjournment = false
+      
+      # If this is 4 or more days adjournment...
+      else  
+      
+        # ....this is a short adjournnment and does count on the clock
+        is_either_house_short_adjournment = true
+      end
+      is_either_house_short_adjournment
     end
   end
 end
