@@ -11,6 +11,7 @@ class CalculatorController < ApplicationController
 	@title = "Calculated scrutiny period"
 	# * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i
+    @procedure_number = procedure
     
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
