@@ -31,6 +31,11 @@ Rails.application.routes.draw do
   get 'meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
   get 'meta/schema' => 'meta#schema', as: :meta_schema
   
+  # hack to let us switch procedures on and off
+  get 'procedures' => 'procedure#index', as: :procedure_list
+  get 'procedures/:procedure' => 'procedure#show', as: :procedure_show
+  get 'procedures/:procedure/flip' => 'procedure#flip', as: :procedure_flip
+  
   
   
   
