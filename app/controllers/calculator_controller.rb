@@ -62,7 +62,7 @@ class CalculatorController < ApplicationController
             # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
             # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
             if @clock_date.is_unannounced?
-              @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
+              @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
               break
             end
           end
@@ -100,7 +100,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
+            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
             break
           
           # Otherwise, continue to the next day and count again
@@ -138,7 +138,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
+            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
             break
           
           # Otherwise, continue to the next day and count again
@@ -178,7 +178,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
+            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar. "
             break
           
           # Otherwise, continue to the next day and count again
