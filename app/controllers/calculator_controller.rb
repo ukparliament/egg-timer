@@ -45,7 +45,7 @@ class CalculatorController < ApplicationController
           lords_day_count = 1
           
           # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
-          while ( ( commons_day_count <= @day_count ) and ( lords_day_count <= @day_count ) ) do
+          while ( ( commons_day_count < @day_count ) and ( lords_day_count < @day_count ) ) do
       
             # Go to the next day**
             @clock_date = @clock_date.next_day
@@ -69,7 +69,7 @@ class CalculatorController < ApplicationController
         end
       end
     
-      # ... we can calculate the **anticipated end date** for a Commons only Statutory Instrument:
+      # ... we can calculate the **anticipated end date** for a Commons only negative Statutory Instrument
       if procedure == 2
       
         # Counting of "sitting days" starts on day of laying
@@ -80,7 +80,7 @@ class CalculatorController < ApplicationController
         day_count = 1
       
         # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count <= @day_count ) do
+        while ( day_count < @day_count ) do
           
         
           # If the Commons sat on the date we've found, we add another day to the count.
@@ -107,9 +107,7 @@ class CalculatorController < ApplicationController
         end
       end
       
-
-    
-      # ... we can calculate the **anticipated end date** for a Commons and Lords Statutory Instrument:
+      # ... we can calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument
       if procedure == 3
       
         # Counting of "sitting days" starts on day of laying
@@ -120,7 +118,7 @@ class CalculatorController < ApplicationController
         day_count = 1
       
         # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count <= @day_count ) do
+        while ( day_count < @day_count ) do
           
         
           # If the Commons or the Lords sat on the date we've found, we add another day to the count.
@@ -130,6 +128,46 @@ class CalculatorController < ApplicationController
           # If the Commons and the Lords were both adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
           # Passing in the maximum number of days that counts as short in this case
           elsif @clock_date.is_short_adjournment?( 4 )
+            day_count +=1
+          end
+          
+          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+          if @clock_date.is_unannounced?
+            @error_message = "An anticipated end date can’t be shown. Enough future sitting dates should be set in the calendar in order for the anticipated end date to be calculated."
+            break
+          
+          # Otherwise, continue to the next day and count again
+          else
+            # Skip to the next calendar day and count again
+            @clock_date = @clock_date.next_day
+          end
+        end
+      end
+      
+      # ... we can calculate the **anticipated end date** for a Commons only made affirmative Statutory Instrument
+      
+      # ... we can calculate the **anticipated end date** for a Commons and Lords made affirmative Statutory Instrument
+      if procedure == 5
+      
+        # Counting of "sitting days" starts on day of making
+        @clock_date = @start_date
+        
+        # Get ready to count days off in the House of Commons and House of Lords
+        # Clock starts on day of making so start from 1
+        day_count = 1
+      
+        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+        while ( day_count < @day_count ) do
+          
+        
+          # If the Commons and the Lords sat on the date we've found, we add another day to the count.
+          if @clock_date.is_commons_sitting_day? and @clock_date.is_lords_sitting_day?
+            day_count +=1
+        
+          # If either the Commons or the Lords were adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
+          # Passing in the maximum number of days that counts as short in this case
+          elsif @clock_date.is_either_house_short_adjournment?( 4 )
             day_count +=1
           end
           
