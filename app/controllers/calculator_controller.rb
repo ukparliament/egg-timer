@@ -12,7 +12,6 @@ class CalculatorController < ApplicationController
 	@title = "Calculated scrutiny period"
 	# * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i
-    @procedure = Procedure.find( procedure )
     
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
@@ -25,6 +24,9 @@ class CalculatorController < ApplicationController
       
     # If the form did provide all the required information, do the calculation.
     else
+      
+      # Find the procedure
+      @procedure = Procedure.find( procedure )
       
       # * the **number of days** to count
       @day_count = params["day-count"].to_i
