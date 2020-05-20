@@ -7,7 +7,8 @@ task :setup => [
   :populate_prorogation_periods,
   :import_houses,
   :populate_dissolution_days,
-  :populate_prorogation_days
+  :populate_prorogation_days,
+  :import_procedures
 ]
 
 task :import_parliaments => :environment do
@@ -97,5 +98,15 @@ task :populate_prorogation_days => :environment do
       prorogation_day.prorogation_period = prorogation_period
       prorogation_day.save
     end
+  end
+end
+task :import_procedures => :environment do
+  puts "importing procedures"
+  CSV.foreach( 'db/data/procedures.csv' ) do |row|
+    procedure = Procedure.new
+    procedure.display_order = row[0]
+    procedure.name = row[1]
+    procedure.active = row[2]
+    procedure.save
   end
 end
