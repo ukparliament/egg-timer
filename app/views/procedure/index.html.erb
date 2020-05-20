@@ -1,0 +1,11 @@
+<table>
+	<thead>
+		<tr>
+			<%= content_tag( 'td', 'Procedure' ) %>
+			<%= content_tag( 'td', 'Active' ) %>
+		</tr>
+	</thead>
+	<tbody>
+		<%= render :partial => 'procedure', :collection => @procedures %>
+	</tbody>
+</table>
