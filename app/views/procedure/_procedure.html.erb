@@ -1,0 +1,4 @@
+<tr>
+	<%= content_tag( 'td', link_to( procedure.name, procedure_show_url( :procedure => procedure ) ) ) %>
+	<%= content_tag( 'td', link_to( procedure.active_label, procedure_flip_url( :procedure => procedure ) ) ) %>
+</tr>
