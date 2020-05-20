@@ -1,23 +1,36 @@
+<form action="calculator/calculate" method="GET">
 
-<!-- replace with form on the index page? -->
-
-<form action="calculator/calculate" method="GET" id="calculator">
+<fieldset>
+<legend>Procedure</legend>
 
 <p>
-<%= content_tag( 'label', 'Procedure', :for => 'procedure' ) %>
-<select id="procedure" name="procedure">
-<option value="1">Proposed Negative Statutory Instrument</option>
-<option value="2">Statutory Instrument praying period (Commons only)</option>
-<option value="3">Statutory Instrument praying period (Commons and Lords)</option>
-<option value="5">Statutory Instrument approval period (Commons and Lords)</option>
-</select>
+<input type="radio" id="pnsi" name="procedure" value="1">
+<label for="pnsi">Proposed Negative Statutory Instrument</label>
 </p>
-	
+
 <p>
-<%= content_tag( 'label', 'Scrutiny start date: YYYY-MM-DD', :for => 'start-date' ) %>
+<input type="radio" id="sippc" name="procedure" value="2">
+<label for="sippc">Statutory Instrument praying period (Commons only)</label>
+</p>
+
+<p>
+<input type="radio" id="sippcl" name="procedure" value="3">
+<label for="sippcl">Statutory Instrument praying period (Commons and Lords)</label>
+</p>
+
+<p>
+<input type="radio" id="siapcl" name="procedure" value="5">
+<label for="siapcl">Statutory Instrument approval period (Commons and Lords)</label>
+</p>
+
+</fieldset>
+
+<p>
+<%= content_tag( 'label', 'Scrutiny start date (YYYY-MM-DD)', :for => 'start-date' ) %>
 <input type="date" name="start-date" id="start-date">
-<small>
+
 </p>
+
 
 <p>
 <%= content_tag( 'label', 'Day count', :for => 'day-count' ) %>
@@ -25,8 +38,8 @@
 </p>
 
 <p>
-<label for="calculate">Scrutiny period end date ...</label>
-<input type="submit" id="calculate" value="Calculate">
-</p>
 
+<!-- <label for="calculate">Calculate scrutiny period end date</label> -->
+<input type="submit" id="calculate" value="Calculate">
+</p>	
 </form>
