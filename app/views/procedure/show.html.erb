@@ -1,0 +1,2 @@
+<%= content_tag( 'h2', @procedure.name ) %>
+<%= content_tag( 'p', "Active: #{link_to( @procedure.active_label, procedure_flip_url ) }".html_safe ) %>
