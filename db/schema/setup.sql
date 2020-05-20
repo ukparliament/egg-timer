@@ -90,3 +90,12 @@ create table sync_tokens (
 	token varchar(255) not null,
 	primary key (id)
 );
+
+drop table if exists procedures;
+create table procedures (
+	id serial,
+	display_order int not null,
+	name varchar(255) not null,
+	active boolean not null,
+	primary key (id)
+);
