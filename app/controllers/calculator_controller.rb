@@ -4,6 +4,7 @@ class CalculatorController < ApplicationController
   # Set a title for the page people see.
   def index
   	@title = "Calculate scrutiny periods"
+    @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
   
   # In order to calculate the scrutiny period, we need:
