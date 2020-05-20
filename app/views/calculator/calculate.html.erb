@@ -2,14 +2,31 @@
 	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
 
-<p>For a scrutiny period of <strong><%= @day_count %> days</strong>, starting from  <strong><%= @start_date.strftime( '%-d %B %Y') %></strong> &mdash;</p>
 
-<p>&mdash; the <u>anticipated</u> end date of the scrutiny period is:</p>
+<p>The <u>anticipated</u> end date of the scrutiny period is:</p>
 
-	<strong><big><time><%= @clock_date.strftime( '%A, %-d %B %Y') %></time></big></strong>
+	<strong><big><time><%= @clock_date.strftime( '%A %-d %B %Y') %></time></big></strong>
 	
-	<p>If sitting days change within that period, the end date of the scrutiny period will need to be recalculated.</p>
 	
+	
+
+<ul>
+
+	<li>With procedure type <%= @procedure_number %></li>
+	
+	<li>For a scrutiny period of <strong><%= @day_count %> days</strong></li>
+	
+	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong></li>
+	
+	
+	
+	</ul>
+
+
+	
+<p>If sitting days change within that period, the end date of the scrutiny period will need to be <a href="/">recalculated</a>.</p>
+
+
 	
 	
 <% end -%>
