@@ -1,27 +1,15 @@
+<% @procedures.each do |proc| %>
+<%= proc.name %>
+<% end -%>
+
+
+
 <form action="calculator/calculate" method="GET">
 
 <fieldset>
 <legend>Procedure</legend>
 
-<p>
-<input type="radio" id="pnsi" name="procedure" value="1">
-<label for="pnsi">Proposed Negative Statutory Instrument</label>
-</p>
-
-<p>
-<input type="radio" id="sippc" name="procedure" value="2">
-<label for="sippc">Statutory Instrument praying period (Commons only)</label>
-</p>
-
-<p>
-<input type="radio" id="sippcl" name="procedure" value="3">
-<label for="sippcl">Statutory Instrument praying period (Commons and Lords)</label>
-</p>
-
-<p>
-<input type="radio" id="siapcl" name="procedure" value="5">
-<label for="siapcl">Statutory Instrument approval period (Commons and Lords)</label>
-</p>
+<%= render :partial => 'calculator/procedure', :collection => @procedures %>
 
 </fieldset>
 
