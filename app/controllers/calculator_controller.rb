@@ -12,7 +12,7 @@ class CalculatorController < ApplicationController
 	@title = "Calculated scrutiny period"
 	# * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i
-    @procedure_number = procedure
+    @procedure = Procedure.find( procedure )
     
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
@@ -33,7 +33,7 @@ class CalculatorController < ApplicationController
       @start_date = Date.parse( start_date )
       
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
-      if procedure == 3
+      if @procedure.id == 3
     
         # We start counting on the **first day when both Houses are sitting** after the instrument is laid.
         # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
@@ -72,7 +72,7 @@ class CalculatorController < ApplicationController
       end
     
       # ... we can calculate the **anticipated end date** for a Commons only negative Statutory Instrument
-      if procedure == 5
+      if @procedure.id == 5
       
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
@@ -110,7 +110,7 @@ class CalculatorController < ApplicationController
       end
       
       # ... we can calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument
-      if procedure == 6
+      if @procedure.id == 6
       
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
@@ -150,7 +150,7 @@ class CalculatorController < ApplicationController
       # ... we can calculate the **anticipated end date** for a Commons only made affirmative Statutory Instrument
       
       # ... we can calculate the **anticipated end date** for a Commons and Lords made affirmative Statutory Instrument
-      if procedure == 8
+      if @procedure.id == 8
       
         # Counting of "sitting days" starts on day of making
         @clock_date = @start_date
