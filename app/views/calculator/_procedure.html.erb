@@ -1,0 +1,4 @@
+<p>
+<input type="radio" id="procedure-<%= procedure.id %>" name="procedure" value="<%= procedure.id %>">
+<%= content_tag( 'label', procedure.name, :for => "procedure-#{procedure.id}" ) %>
+</p>
