@@ -2,56 +2,42 @@
 <html lang="en-gb">
 <head>
   <title>Parliament Calendar</title>
-      <meta name="viewport" content="width=device-width">
-      <link rel="stylesheet" href="/light.min.css">
-<style>
-:root {
-  --background-body: #fff;
-  --background: #efefef;
-  --background-alt: #f7f7f7;
-  --selection: #9e9e9e;
-  --text-main: #363636;
-  --text-bright: #000;
-  --text-muted: #999;
-  --links: #0076d1;
-  --focus: #0096bf;
-  --border: #dbdbdb;
-  --code: #000;
-  --animation-duration: 0.1s;
-  --button-hover: #ddd;
-  --scrollbar-thumb: color-mod(var(--button-hover) lightness(-3%));
-  --scrollbar-thumb-hover: color-mod(var(--button-hover) lightness(-10%));
-  --form-placeholder: #949494;
-  --form-text: #000;
-  --variable: #39a33c;
-  --highlight: #ff0;
-  --select-arrow: svg-load('./assets/select-arrow.svg', fill: #161f27);
-}
-main {
-padding:2rem 0;
-}
-h1 {font-weight:normal;}
-</style>
+      <meta name="viewport" content="width=device-width">      
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+            <style>
+            body.development {border-bottom:4em solid pink;}
+            </style>
 </head>
-<body>
+<body class="<%= Rails.env %>">
 <header>
 <nav>
 <p>
-<a href="/">Calculate scrutiny period</a>
-<br>
-<%= link_to( 'Parliaments', parliament_list_url )  %>
-&middot;
-<%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
-&middot;
-<%= link_to( 'About this application', meta_list_url )  %>
+Parliament calendar &mdash; <a href="/">Calculate scrutiny period</a>
+&mdash;
+<%= link_to( 'Procedures', procedure_list_url )  %>
 </p>
 
 </nav>
 
-<h1><%= @title || "Parliament Calendar" %></h1>
+<h1 style="font-weight:normal;"><%= @title || "Parliament Calendar" %></h1>
 </header>
-<main>
+<main style="padding:2rem 0;">
 <%= yield %>
 </main>
+
+<footer>
+<nav>
+<p>
+<%= link_to( 'Parliaments', parliament_list_url )  %>
+&mdash;
+<%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
+&mdash;
+<%= link_to( 'About this application', meta_list_url )  %>
+</p>
+
+</nav>
+</footer>
+
+
 </body>
 </html>

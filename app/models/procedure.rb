@@ -7,4 +7,8 @@ class Procedure < ActiveRecord::Base
       active_status = 'False'
     end
   end
+  
+  def status_label
+  	self.active ? "Hide" : "Show"
+  end
 end
