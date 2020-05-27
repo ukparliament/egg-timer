@@ -16,13 +16,7 @@ h1 {font-weight:normal;}
 <header>
 <nav>
 <p>
-<a href="/">Calculate scrutiny period</a>
-<br>
-<%= link_to( 'Parliaments', parliament_list_url )  %>
-&middot;
-<%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
-&middot;
-<%= link_to( 'About this application', meta_list_url )  %>
+Parliament calendar &mdash; <a href="/">Calculate scrutiny period</a>
 </p>
 
 </nav>
@@ -32,5 +26,20 @@ h1 {font-weight:normal;}
 <main>
 <%= yield %>
 </main>
+
+<footer>
+<nav>
+<p>
+<%= link_to( 'Parliaments', parliament_list_url )  %>
+&mdash;
+<%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
+&mdash;
+<%= link_to( 'About this application', meta_list_url )  %>
+</p>
+
+</nav>
+</footer>
+
+
 </body>
 </html>
