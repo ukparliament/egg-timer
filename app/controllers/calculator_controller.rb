@@ -11,14 +11,14 @@ class CalculatorController < ApplicationController
   def calculate
 	@title = "Calculated scrutiny period"
 	# * the **type of the procedure** itself, which we refer to by a number
-    procedure = params["procedure"].to_i
+    procedure = params["procedure"].to_i if params["procedure"]
     
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
     
     # Check that all the parameters have been provided by the form
     # And if not throw an error
-    if params['start-date'].blank? or params['day-count'].blank? or params['day-count'].to_i == 0
+    if params['start-date'].blank? or params['day-count'].blank? or params['day-count'].to_i == 0 or procedure.nil?
 	    @title = "Sorry, there was not enough information provided."
       render :template => 'calculator/not_enough_information'
       
