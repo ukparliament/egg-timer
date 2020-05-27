@@ -4,26 +4,22 @@
   <title>Parliament Calendar</title>
       <meta name="viewport" content="width=device-width">      
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
-<style>
-main {
-padding:2rem 0;
-}
-h1 {font-weight:normal;}
-</style>
-
 </head>
 <body>
 <header>
 <nav>
 <p>
 Parliament calendar &mdash; <a href="/">Calculate scrutiny period</a>
+&mdash;
+<%= link_to( 'Procedures', procedure_list_url )  %>
+
 </p>
 
 </nav>
 
-<h1><%= @title || "Parliament Calendar" %></h1>
+<h1 style="font-weight:normal;"><%= @title || "Parliament Calendar" %></h1>
 </header>
-<main>
+<main style="padding:2rem 0;">
 <%= yield %>
 </main>
 
