@@ -150,6 +150,42 @@ class CalculatorController < ApplicationController
       end
       
       # ... we can calculate the **anticipated end date** for a Commons only made affirmative Statutory Instrument
+      if @procedure.id == 7
+      
+        # Counting of "sitting days" starts on day of making
+        @clock_date = @start_date
+        
+        # Get ready to count days off in the House of Commons only
+        # Clock starts on day of making so start from 1
+        day_count = 1
+      
+        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+        while ( day_count < @day_count ) do
+          
+        
+          # If the Commons sat on the date we've found, we add another day to the count.
+          if @clock_date.is_commons_sitting_day?
+            day_count +=1
+        
+          # If either the Commons were adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
+          # Passing in the maximum number of days that counts as short in this case
+          elsif @clock_date.is_commons_short_adjournment?( 4 )
+            day_count +=1
+          end
+          
+          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+          if @clock_date.is_unannounced?
+            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar. "
+            break
+          
+          # Otherwise, continue to the next day and count again
+          else
+            # Skip to the next calendar day and count again
+            @clock_date = @clock_date.next_day
+          end
+        end
+      end
       
       # ... we can calculate the **anticipated end date** for a Commons and Lords made affirmative Statutory Instrument
       if @procedure.id == 8
