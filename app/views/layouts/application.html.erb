@@ -4,15 +4,17 @@
   <title>Parliament Calendar</title>
       <meta name="viewport" content="width=device-width">      
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+            <style>
+            body.development {border-bottom:4em solid pink;}
+            </style>
 </head>
-<body>
+<body class="<%= Rails.env %>">
 <header>
 <nav>
 <p>
 Parliament calendar &mdash; <a href="/">Calculate scrutiny period</a>
 &mdash;
 <%= link_to( 'Procedures', procedure_list_url )  %>
-
 </p>
 
 </nav>
