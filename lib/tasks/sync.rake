@@ -54,20 +54,21 @@ def sync_sitting_days( calendar_id, house_id )
       end_date = end_date - 1.day unless event.end.date_time
       
       # find the session this event is in
+      # Where the start date of the event is on or after the start of the session and the end date of the event is before or on the end date of the session
       session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
       unless session
         
         # find the session that's not yet ended if the event isn't in a different session
         session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
-        if session
-          sitting_day = SittingDay.new
-          sitting_day.start_date = start_date
-          sitting_day.end_date = end_date
-          sitting_day.google_event_id = event.id
-          sitting_day.session = session
-          sitting_day.house_id = house_id
-          sitting_day.save
-        end
+      end
+      if session
+        sitting_day = SittingDay.new
+        sitting_day.start_date = start_date
+        sitting_day.end_date = end_date
+        sitting_day.google_event_id = event.id
+        sitting_day.session = session
+        sitting_day.house_id = house_id
+        sitting_day.save
       end
     end
   end
@@ -106,14 +107,14 @@ def sync_adjournment_days( calendar_id, house_id )
           
           # find the session that's not yet ended if the event isn't in a different session
           session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
-          if session
-            adjournment_day = AdjournmentDay.new
-            adjournment_day.date = date
-            adjournment_day.google_event_id = event.id
-            adjournment_day.session = session
-            adjournment_day.house_id = house_id
-            adjournment_day.save
-          end
+        end
+        if session
+          adjournment_day = AdjournmentDay.new
+          adjournment_day.date = date
+          adjournment_day.google_event_id = event.id
+          adjournment_day.session = session
+          adjournment_day.house_id = house_id
+          adjournment_day.save
         end
       end
     end
