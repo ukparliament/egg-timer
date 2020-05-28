@@ -172,7 +172,6 @@ end
 
 # authorise to grab events from google calendar
 def authorise_calendar_access
-  
   scope = 'https://www.googleapis.com/auth/calendar'
   authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
     json_key_io: File.open('google-credentials.json'),
