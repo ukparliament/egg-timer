@@ -176,6 +176,7 @@ def authorise_calendar_access
   puts File.open('google-credentials.json')
   puts File.read('google-credentials.json')
   puts "*************"
+  
   scope = 'https://www.googleapis.com/auth/calendar'
   authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
     json_key_io: File.open('google-credentials.json'),
