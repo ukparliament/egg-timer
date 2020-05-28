@@ -1,7 +1,7 @@
 <form action="calculator/calculate" method="GET">
 
 <fieldset>
-<legend>Procedure</legend>
+<legend>Set a procedure</legend>
 
 <%= render :partial => 'calculator/procedure', :collection => @procedures %>
 
@@ -24,6 +24,6 @@
 <p>
 
 <!-- <label for="calculate">Calculate scrutiny period end date</label> -->
-<input type="submit" id="calculate" value="Calculate">
+<button type="submit" id="calculate">Calculate</button>
 </p>	
 </form>
