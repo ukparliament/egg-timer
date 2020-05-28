@@ -1,16 +1,19 @@
 # # Calculating the scrutiny period
 class CalculatorController < ApplicationController
   
+  # This is the code to generate the form that people can fill in.
   # Set a title for the page people see.
   def index
   	@title = "Calculate scrutiny periods"
     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
   
+  # Having filled in the form and pressed 'Calculate' this code runs to do the calculation.
   # In order to calculate the scrutiny period, we need:
   def calculate
-	@title = "Calculated scrutiny period"
-	# * the **type of the procedure** itself, which we refer to by a number
+	  @title = "Calculated scrutiny period"
+    
+	  # * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i if params["procedure"]
     
     # * the **start date**, for example: "2020-05-06"
@@ -25,13 +28,13 @@ class CalculatorController < ApplicationController
     # If the form did provide all the required information, do the calculation.
     else
       
-      # Find the procedure
+      # * find the procedure in the database
       @procedure = Procedure.find( procedure )
       
       # * the **number of days** to count
       @day_count = params["day-count"].to_i
-    
-  	  # Make the date passed into a date the code understands...
+      
+      # * make the date passed into a date the code understands...
       @start_date = Date.parse( start_date )
       
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
@@ -51,7 +54,7 @@ class CalculatorController < ApplicationController
           # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
           while ( ( commons_day_count < @day_count ) and ( lords_day_count < @day_count ) ) do
       
-            # Go to the next day**
+            # Go to the **next day**
             @clock_date = @clock_date.next_day
     	
             # If the Lords sat on the date we've found, we add another day to the count.
@@ -62,14 +65,18 @@ class CalculatorController < ApplicationController
             # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
             # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
             if @clock_date.is_unannounced?
-              @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
+              
+              # This error message is displayed to users.
+              @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
               break
             end
           end
     	
   	# If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
         else
-          @error_message = "An anticipated end date can’t be shown. The next joint sitting day should be set in the calendar in order for the anticipated end date to be calculated."
+          
+          # This error message is displayed to users.
+          @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
         end
       end
     
@@ -79,7 +86,8 @@ class CalculatorController < ApplicationController
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
         
-        # Get ready to count days off in the House of Commons only
+        # Get ready to count days in the House of Commons only
+        
         # Clock starts on day of laying so start from 1
         day_count = 1
       
@@ -100,7 +108,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
+            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
             break
           
           # Otherwise, continue to the next day and count again
@@ -117,20 +125,19 @@ class CalculatorController < ApplicationController
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
         
-        # Get ready to count days off in the House of Commons and House of Lords
+        # Get ready to count days in the House of Commons and House of Lords
         # Clock starts on day of laying so start from 1
         day_count = 1
       
         # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
         while ( day_count < @day_count ) do
           
-        
-          # If the Commons or the Lords sat on the date we've found, we add another day to the count.
+          # If the Commons **or** the Lords sat on the date we've found, we add another day to the count.
           if @clock_date.is_commons_sitting_day? or @clock_date.is_lords_sitting_day?
             day_count +=1
         
           # If the Commons and the Lords were both adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
-          # Passing in the maximum number of days that counts as short in this case
+          # Providing the maximum number of days that counts as a short adjournment. In this case 4
           elsif @clock_date.is_short_adjournment?( 4 )
             day_count +=1
           end
@@ -138,7 +145,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar."
+            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
             break
           
           # Otherwise, continue to the next day and count again
@@ -154,8 +161,7 @@ class CalculatorController < ApplicationController
       
         # Counting of "sitting days" starts on day of making
         @clock_date = @start_date
-        
-        # Get ready to count days off in the House of Commons only
+        # Get ready to count days in the House of Commons only
         # Clock starts on day of making so start from 1
         day_count = 1
       
@@ -176,7 +182,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar. "
+            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
             break
           
           # Otherwise, continue to the next day and count again
@@ -193,7 +199,7 @@ class CalculatorController < ApplicationController
         # Counting of "sitting days" starts on day of making
         @clock_date = @start_date
         
-        # Get ready to count days off in the House of Commons and House of Lords
+        # Get ready to count days in the House of Commons and House of Lords
         # Clock starts on day of making so start from 1
         day_count = 1
       
@@ -214,7 +220,7 @@ class CalculatorController < ApplicationController
           # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
           # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
           if @clock_date.is_unannounced?
-            @error_message = "In order for an anticipated end date to be calculated, more future sitting dates should be set in the calendar. "
+            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
             break
           
           # Otherwise, continue to the next day and count again
