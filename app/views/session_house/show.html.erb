@@ -3,6 +3,11 @@
 	<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days_in_session( @session ) %>
 </ol>
 
+<%= content_tag( 'h2', 'Virtual sitting days' ) %>
+<ol>
+	<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.virtual_sitting_days_in_session( @session ) %>
+</ol>
+
 <%= content_tag( 'h2', 'Adjournment days' ) %>
 <ol>
 	<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.adjournment_days_in_session( @session ) %>
