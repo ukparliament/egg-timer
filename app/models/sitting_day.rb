@@ -1,9 +1,6 @@
 class SittingDay < ActiveRecord::Base
   
   belongs_to :session
-  has_many :sitting_dates
-  has_many :calendar_dates,
-    through: :sitting_dates
   
   def label
     label = ''
