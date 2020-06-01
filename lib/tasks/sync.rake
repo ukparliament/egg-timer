@@ -32,7 +32,6 @@ end
 
 
 
-
 def sync_sitting_days( calendar_id, house_id )
   
   # authorise to grab events from google calendar
