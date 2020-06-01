@@ -1,6 +1,7 @@
 drop table if exists dissolution_days;
 drop table if exists prorogation_days;
 drop table if exists adjournment_days;
+drop table if exists virtual_sitting_days;
 drop table if exists sitting_days;
 drop table if exists sessions;
 drop table if exists prorogation_periods;
@@ -46,6 +47,17 @@ create table houses (
 	primary key (id)
 );
 create table sitting_days (
+	id serial,
+	start_date date not null,
+	end_date date not null,
+	google_event_id varchar(255) not null,
+	session_id int not null,
+	house_id int not null,
+	constraint fk_session foreign key (session_id) references sessions(id),
+	constraint fk_house foreign key (house_id) references houses(id),
+	primary key (id)
+);
+create table virtual_sitting_days (
 	id serial,
 	start_date date not null,
 	end_date date not null,
