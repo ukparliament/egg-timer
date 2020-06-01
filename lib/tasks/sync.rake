@@ -9,6 +9,8 @@ task :sync => [
   :sync_lords_adjournment_days
 ]
 
+
+
 task :sync_commons_sitting_days => :environment do
   puts "syncing commons sitting days"
   sync_sitting_days( '20n14bks46tvd2k5rse3jmsfb4@group.calendar.google.com', 1 )
