@@ -7,6 +7,10 @@ class House < ActiveRecord::Base
     SittingDay.all.where( house_id: self.id ).where( session_id: session.id ).order( 'start_date asc' )
   end
   
+  def virtual_sitting_days_in_session( session )
+    VirtualSittingDay.all.where( house_id: self.id ).where( session_id: session.id ).order( 'start_date asc' )
+  end
+  
   def adjournment_days_in_session( session )
     AdjournmentDay.all.where( house_id: self.id ).where( session_id: session.id ).order( 'date asc' )
   end
