@@ -215,7 +215,7 @@ class Date
         date = date.prev_day
         
         # If this is an adjournment day in the Commons and the Lords
-        if date.is_commons_adjournment_day? and date.is_lords_adjournment?
+        if date.is_commons_adjournment_day? and date.is_lords_adjournment_day?
           
           # Add one to the adjournment day count
           adjournment_day_count +=1
