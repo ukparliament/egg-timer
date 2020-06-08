@@ -37,8 +37,13 @@ class CalculatorController < ApplicationController
       # * make the date passed into a date the code understands...
       @start_date = Date.parse( start_date )
       
+      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders, Public Bodies Orders and treaty period A
+      if @procedure.id == 1 or @procedure.id == 2 or @procedure.id == 4 or @procedure.id == 9  
+      
+        ##### call calculation style 1
+      
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
-      if @procedure.id == 3
+      elsif @procedure.id == 3
     
         # We start counting on the **first day when both Houses are sitting** after the instrument is laid.
         # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
@@ -78,7 +83,7 @@ class CalculatorController < ApplicationController
           # This error message is displayed to users.
           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
         end
-      end
+        
 
 
 
@@ -86,7 +91,7 @@ class CalculatorController < ApplicationController
 
     
       # ... we can calculate the **anticipated end date** for a Commons only negative Statutory Instrument
-      if @procedure.id == 5
+      elsif @procedure.id == 5
       
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
@@ -122,10 +127,10 @@ class CalculatorController < ApplicationController
             @clock_date = @clock_date.next_day
           end
         end
-      end
+        
       
       # ... we can calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument
-      if @procedure.id == 6
+      elsif @procedure.id == 6
       
         # Counting of "sitting days" starts on day of laying
         @clock_date = @start_date
@@ -159,10 +164,10 @@ class CalculatorController < ApplicationController
             @clock_date = @clock_date.next_day
           end
         end
-      end
+        
       
       # ... we can calculate the **anticipated end date** for a Commons only made affirmative Statutory Instrument
-      if @procedure.id == 7
+      elsif @procedure.id == 7
       
         # Counting of "sitting days" starts on day of making
         @clock_date = @start_date
@@ -196,10 +201,10 @@ class CalculatorController < ApplicationController
             @clock_date = @clock_date.next_day
           end
         end
-      end
+        
       
       # ... we can calculate the **anticipated end date** for a Commons and Lords made affirmative Statutory Instrument
-      if @procedure.id == 8
+      elsif @procedure.id == 8
       
         # Counting of "sitting days" starts on day of making
         @clock_date = @start_date
