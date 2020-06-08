@@ -45,10 +45,11 @@ class Date
   # it might be that this calendar day is a continuation of a previous day's virtual sitting
   # so in a parliament sense it did not "sit" on this day
   def is_the_commons_virtual_sitting?
-    sitting_day_flag = false
-    sitting_day = VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
-    sitting_day_flag= true if sitting_day
-    sitting_day_flag
+    # sitting_day_flag = false
+#     sitting_day = VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+#     sitting_day_flag= true if sitting_day
+#     sitting_day_flag
+    VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
   
   # check if this was a parliamentary virtual sitting day for the commons
