@@ -80,6 +80,37 @@ class Date
     sitting_day_flag
   end
   
+  # checks if either House is sitting on a day
+  # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
+  # so in a parliament sense that House did not "sit" on this day
+  def is_either_house_sitting?
+    is_sitting_day_flag = false
+    is_sitting_day_flag = true if self.is_the_commons_sitting? or self.is_the_lords_sitting?
+    is_sitting_day_flag
+  end
+  
+  # checks if both Houses are sitting on a day
+  # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
+  # so in a parliament sense that House did not "sit" on this day
+  def are_both_houses_sitting?
+    is_sitting_day_flag = false
+    is_sitting_day_flag = true if self.is_the_commons_sitting? and self.is_the_lords_sitting?
+    is_sitting_day_flag
+  end
+  
+  
+  
+  
+  
+  
+  
+  # checks if a date is a sitting day in both Houses
+  def is_joint_sitting_day?
+    is_joint_sitting_day_flag = false
+    is_joint_sitting_day_flag = true if self.is_commons_sitting_day? and self.is_lords_sitting_day?
+    is_joint_sitting_day_flag
+  end
+  
   
   
   
@@ -126,19 +157,7 @@ class Date
     end
   end
   
-  # checks if a date is a sitting day in either House
-  def is_sitting_day?
-    is_sitting_day_flag = false
-    is_sitting_day_flag = true if self.is_commons_sitting_day? or self.is_lords_sitting_day?
-    is_sitting_day_flag
-  end
-  
-  # checks if a date is a sitting day in both Houses
-  def is_joint_sitting_day?
-    is_joint_sitting_day_flag = false
-    is_joint_sitting_day_flag = true if self.is_commons_sitting_day? and self.is_lords_sitting_day?
-    is_joint_sitting_day_flag
-  end
+
   
   # check if either house is adjourned on a day
   def is_adjournment_day?
