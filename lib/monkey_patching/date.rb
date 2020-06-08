@@ -84,9 +84,10 @@ class Date
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
   # so in a parliament sense that House did not "sit" on this day
   def is_either_house_sitting?
-    is_sitting_day_flag = false
-    is_sitting_day_flag = true if self.is_the_commons_sitting? or self.is_the_lords_sitting?
-    is_sitting_day_flag
+#     is_sitting_day_flag = false
+#     is_sitting_day_flag = true if self.is_the_commons_sitting? or self.is_the_lords_sitting?
+#     is_sitting_day_flag
+    self.is_the_commons_sitting? or self.is_the_lords_sitting?
   end
   
   # checks if both Houses are sitting on a day
