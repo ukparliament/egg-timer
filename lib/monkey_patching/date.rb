@@ -54,10 +54,11 @@ class Date
   # check if this was a parliamentary virtual sitting day for the commons
   # does not include dates for which the commons continued sitting virtually from a previous day
   def is_commons_parliamentary_sitting_day?
-    sitting_day_flag = false
-    sitting_day = VirtualSittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
-    sitting_day_flag= true if sitting_day
-    sitting_day_flag
+    # sitting_day_flag = false
+#     sitting_day = VirtualSittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
+#     sitting_day_flag= true if sitting_day
+#     sitting_day_flag
+     VirtualSittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
   end
   
   # check if the lords is sitting virtually on a day
