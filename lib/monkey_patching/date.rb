@@ -98,7 +98,18 @@ class Date
     is_sitting_day_flag
   end
   
+  # wtf we call these?
   
+  def is_either_house_parliamentary_sitting?
+    is_sitting_day_flag = false
+    is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
+    is_sitting_day_flag
+  end
+  def are_both_houses_parliamentary_sitting?
+    is_sitting_day_flag = false
+    is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
+    is_sitting_day_flag
+  end
   
   
   
