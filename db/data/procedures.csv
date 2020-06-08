@@ -1,10 +1,10 @@
-1,Legislative Reform Order approval period,false
-2,Localism Order approval period,false
+1,Legislative Reform Order approval period,true
+2,Localism Order approval period,true
 3,Proposed Negative Statutory Instrument committee sifting period,true
-4,Public Bodies Order approval period,false
+4,Public Bodies Order approval period,true
 5,Statutory Instrument praying period (Commons only),true
 6,Statutory Instrument praying period (Commons and Lords),true
-7,Statutory Instrument approval period (Commons only),false
-8,Statutory Instrument approval period (Commons and Lords),true
-9,Treaty objection period A,false
-10,Treaty objection period B,false
+7,"Statutory Instrument approval period (Commons and Lords, both Houses sitting)",true
+8,"Statutory Instrument approval period (Commons and Lords, either House sitting)",true
+9,Treaty objection period A,true
+10,Treaty objection period B,true
