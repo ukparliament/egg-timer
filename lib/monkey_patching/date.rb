@@ -155,6 +155,11 @@ class Date
     dissolution_day_flag
   end
   
+  # used to check if nothing has yet been announced 
+  # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
+  # or a day during a prorogation or dissolution
+  # we use this to check if we've "run out of calendar" so we don't keep cycling into future days and loop infinitely
+  # this is our event horizon
   def is_unannounced?
     is_unannounced = true
     is_unannounced = false if self.is_the_commons_sitting? or self.is_the_lords_sitting? or self.is_the_commons_virtual_sitting? or self.is_the_lords_virtual_sitting? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
