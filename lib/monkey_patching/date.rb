@@ -93,66 +93,74 @@ class Date
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
   # so in a parliament sense that House did not "sit" on this day
   def is_joint_sitting?
-    is_sitting_day_flag = false
-    is_sitting_day_flag = true if self.is_the_commons_sitting? and self.is_the_lords_sitting?
-    is_sitting_day_flag
+    # is_sitting_day_flag = false
+#     is_sitting_day_flag = true if self.is_the_commons_sitting? and self.is_the_lords_sitting?
+#     is_sitting_day_flag
+      self.is_the_commons_sitting? and self.is_the_lords_sitting?
   end
   
   # checks if this is a parliamentary sitting day for one or both Houses
   # does not include days continued from previous sitting days
   def is_either_house_parliamentary_sitting?
-    is_sitting_day_flag = false
-    is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
-    is_sitting_day_flag
+    # is_sitting_day_flag = false
+#     is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
+#     is_sitting_day_flag
+    self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
   end
   
   # checks if this is a parliamentary sitting day for both Houses
   # does not include days continued from previous sitting days
   def is_joint_parliamentary_sitting?
-    is_sitting_day_flag = false
-    is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
-    is_sitting_day_flag
+    # is_sitting_day_flag = false
+#     is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
+#     is_sitting_day_flag
+    self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
   end
   
   # check if either house is adjourned on a day
   # returns true if one or both Houses are adjourned
   def is_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date = ?',  self ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
+    # adjournment_day_flag = false
+#     adjournment_day = AdjournmentDay.all.where( 'date = ?',  self ).first
+#     adjournment_day_flag= true if adjournment_day
+#     adjournment_day_flag
+    AdjournmentDay.all.where( 'date = ?',  self ).first
   end
   
   # check if the commons is adjourned on a day
   def is_commons_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
+    # adjournment_day_flag = false
+#     adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
+#     adjournment_day_flag= true if adjournment_day
+#     adjournment_day_flag
+    AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
   end
   
   # check if the lords is adjourned on a day
   def is_lords_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
+    # adjournment_day_flag = false
+#     adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
+#     adjournment_day_flag= true if adjournment_day
+#     adjournment_day_flag
+     AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
   end
   
   # check if parliament is prorogued on a day
   def is_prorogation_day?
-    prorogation_day_flag = false
-    prorogation_day = ProrogationDay.all.where( 'date = ?',  self ).first
-    prorogation_day_flag= true if prorogation_day
-    prorogation_day_flag
+    # prorogation_day_flag = false
+#     prorogation_day = ProrogationDay.all.where( 'date = ?',  self ).first
+#     prorogation_day_flag= true if prorogation_day
+#     prorogation_day_flag
+    ProrogationDay.all.where( 'date = ?',  self ).first
   end
   
   # check if parliament is dissolved on a day
   def is_dissolution_day?
-    dissolution_day_flag = false
-    dissolution_day = DissolutionDay.all.where( 'date = ?',  self ).first
-    dissolution_day_flag= true if dissolution_day
-    dissolution_day_flag
+    # dissolution_day_flag = false
+#     dissolution_day = DissolutionDay.all.where( 'date = ?',  self ).first
+#     dissolution_day_flag= true if dissolution_day
+#     dissolution_day_flag
+    DissolutionDay.all.where( 'date = ?',  self ).first
   end
   
   # used to check if nothing has yet been announced 
