@@ -92,35 +92,78 @@ class Date
   # checks if both Houses are sitting on a day
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
   # so in a parliament sense that House did not "sit" on this day
-  def are_both_houses_sitting?
+  def is_joint_sitting?
     is_sitting_day_flag = false
     is_sitting_day_flag = true if self.is_the_commons_sitting? and self.is_the_lords_sitting?
     is_sitting_day_flag
   end
   
-  # wtf we call these?
-  
+  # checks if this is a parliamentary sitting day for one or both Houses
+  # does not include days continued from previous sitting days
   def is_either_house_parliamentary_sitting?
     is_sitting_day_flag = false
     is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
     is_sitting_day_flag
   end
-  def are_both_houses_parliamentary_sitting?
+  
+  # checks if this is a parliamentary sitting day for both Houses
+  # does not include days continued from previous sitting days
+  def is_joint_parliamentary_sitting?
     is_sitting_day_flag = false
     is_sitting_day_flag = true if self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
     is_sitting_day_flag
   end
   
-  
-  
-  
-  
-  # checks if a date is a sitting day in both Houses
-  def is_joint_sitting_day?
-    is_joint_sitting_day_flag = false
-    is_joint_sitting_day_flag = true if self.is_commons_sitting_day? and self.is_lords_sitting_day?
-    is_joint_sitting_day_flag
+  # check if either house is adjourned on a day
+  # returns true if one or both Houses are adjourned
+  def is_adjournment_day?
+    adjournment_day_flag = false
+    adjournment_day = AdjournmentDay.all.where( 'date = ?',  self ).first
+    adjournment_day_flag= true if adjournment_day
+    adjournment_day_flag
   end
+  
+  # check if the commons is adjourned on a day
+  def is_commons_adjournment_day?
+    adjournment_day_flag = false
+    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
+    adjournment_day_flag= true if adjournment_day
+    adjournment_day_flag
+  end
+  
+  # check if the lords is adjourned on a day
+  def is_lords_adjournment_day?
+    adjournment_day_flag = false
+    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
+    adjournment_day_flag= true if adjournment_day
+    adjournment_day_flag
+  end
+  
+  # check if parliament is prorogued on a day
+  def is_prorogation_day?
+    prorogation_day_flag = false
+    prorogation_day = ProrogationDay.all.where( 'date = ?',  self ).first
+    prorogation_day_flag= true if prorogation_day
+    prorogation_day_flag
+  end
+  
+  # check if parliament is dissolved on a day
+  def is_dissolution_day?
+    dissolution_day_flag = false
+    dissolution_day = DissolutionDay.all.where( 'date = ?',  self ).first
+    dissolution_day_flag= true if dissolution_day
+    dissolution_day_flag
+  end
+  
+  def is_unannounced?
+    is_unannounced = true
+    is_unannounced = false if self.is_the_commons_sitting? or self.is_the_lords_sitting? or self.is_the_commons_virtual_sitting? or self.is_the_lords_virtual_sitting? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+    is_unannounced
+  end
+  
+
+  
+  
   
   
   
@@ -131,19 +174,6 @@ class Date
   
   
   
-  
-  
-  
-  
-  
-  # cycles to get first sitting day in either House
-  def first_sitting_day
-    unless self.is_sitting_day?
-      self.next_day.first_sitting_day
-    else
-      self
-    end
-  end
   
   # cycles to get first joint sitting day
   def first_joint_sitting_day
@@ -168,31 +198,22 @@ class Date
     end
   end
   
+  
+  
+  # cycles to get first sitting day in either House
+  #def first_sitting_day
+    #unless self.is_sitting_day?
+      #self.next_day.first_sitting_day
+      #else
+      #self
+      #end
+  #end
+  
 
   
-  # check if either house is adjourned on a day
-  def is_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date = ?',  self ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
-  end
+
   
-  # check if parliament is prorogued on a day
-  def is_prorogation_day?
-    prorogation_day_flag = false
-    prorogation_day = ProrogationDay.all.where( 'date = ?',  self ).first
-    prorogation_day_flag= true if prorogation_day
-    prorogation_day_flag
-  end
-  
-  # check if parliament is dissolved on a day
-  def is_dissolution_day?
-    dissolution_day_flag = false
-    dissolution_day = DissolutionDay.all.where( 'date = ?',  self ).first
-    dissolution_day_flag= true if dissolution_day
-    dissolution_day_flag
-  end
+
   
 
 
@@ -206,35 +227,9 @@ class Date
   
   
   
-  # check if the commons is adjourned on a day
-  def is_commons_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
-  end
+
   
-  # check if the lords is sitting on a day
-  def is_lords_sitting_day?
-    sitting_day_flag = false
-    sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
-    sitting_day_flag= true if sitting_day
-    sitting_day_flag
-  end
-  
-  # check if the lords is adjourned on a day
-  def is_lords_adjournment_day?
-    adjournment_day_flag = false
-    adjournment_day = AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
-    adjournment_day_flag= true if adjournment_day
-    adjournment_day_flag
-  end
-  
-  def is_unannounced?
-    is_unprogrammed = true
-    is_unprogrammed = false if self.is_sitting_day? if self.is_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
-    is_unprogrammed
-  end
+
   
   # Checks if this is a short adjournment date in the Commons
   # The definition of "short is adjustable" by passing in a maximum number of days to count as "short"
