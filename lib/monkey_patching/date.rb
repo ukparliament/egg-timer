@@ -1,5 +1,59 @@
 class Date
   
+  # check if the commons is sitting on a day
+  # naive. this is really did the commons sit on this calendar day
+  # it might be that this calendar day is a continuation of a previous day's sitting
+  # so in a parliament sense it did not "sit" on this day
+  def is_the_commons_sitting?
+    sitting_day_flag = false
+    sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+    sitting_day_flag= true if sitting_day
+    sitting_day_flag
+  end
+  
+  # check if this was a parliamentary sitting day for the commons
+  # does not include dates for which the commons continued sitting from a previous day
+  def is_commons_parliamentary_sitting_day?
+    sitting_day_flag = false
+    sitting_day = SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
+    sitting_day_flag= true if sitting_day
+    sitting_day_flag
+  end
+  
+  # check if the lords is sitting on a day
+  # naive. this is really did the lords sit on this calendar day
+  # it might be that this calendar day is a continuation of a previous day's sitting
+  # so in a parliament sense it did not "sit" on this day
+  def is_the_lords_sitting?
+    sitting_day_flag = false
+    sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+    sitting_day_flag= true if sitting_day
+    sitting_day_flag
+  end
+  
+  # check if this was a parliamentary sitting day for the lords
+  # does not include dates for which the lords continued sitting from a previous day
+  def is_lords_parliamentary_sitting_day?
+    sitting_day_flag = false
+    sitting_day = SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 2 ).first
+    sitting_day_flag= true if sitting_day
+    sitting_day_flag
+  end
+  
+  
+  
+  
+  
+  # edited to here
+  
+  
+  
+  
+  
+  
+  
+  
+  
   # cycles to get first sitting day in either House
   def first_sitting_day
     unless self.is_sitting_day?
@@ -70,13 +124,17 @@ class Date
     dissolution_day_flag
   end
   
-  # check if the commons is sitting on a day
-  def is_commons_sitting_day?
-    sitting_day_flag = false
-    sitting_day = SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
-    sitting_day_flag= true if sitting_day
-    sitting_day_flag
-  end
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   # check if the commons is adjourned on a day
   def is_commons_adjournment_day?
@@ -104,7 +162,7 @@ class Date
   
   def is_unannounced?
     is_unprogrammed = true
-    is_unprogrammed = false if self.is_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+    is_unprogrammed = false if self.is_sitting_day? if self.is_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
     is_unprogrammed
   end
   
