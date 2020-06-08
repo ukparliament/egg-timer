@@ -79,6 +79,11 @@ class CalculatorController < ApplicationController
           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
         end
       end
+
+
+
+
+
     
       # ... we can calculate the **anticipated end date** for a Commons only negative Statutory Instrument
       if @procedure.id == 5
@@ -233,3 +238,26 @@ class CalculatorController < ApplicationController
     end
   end
 end
+
+# Calculation style 1
+# A method for calculating based on "bums on seats" in both Houses
+# Where both Houses must be sitting to count (Commons AND Lords)
+# Used for treaty period A, LROs, LOs, PBOs
+
+# Calculation style 2
+# A method for calculating based on "bums on seats" in Commons only
+# Used for treaty period B
+
+# Calculation style 3
+# Used for Commons only negative SIs
+# Counts through short adjournments (not bums on seats)
+
+# Calculation style 4
+# Used for Commons and Lords negative SIs and some Commons and Lords affirmative SIs
+# Counts when Commons OR Lords are sitting
+# Counts through short adjournments (not bums on seats)
+
+# Calculation style 5
+# Used for some Commons and Lords affirmative SIs
+# Counts when Commons AND Lords are sitting
+# Counts through short adjournments (not bums on seats)
