@@ -82,7 +82,7 @@ class CalculatorController < ApplicationController
         else
           
           # This error message is displayed to users.
-          @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+          @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced. Can't find a joint sitting day"
         end
         
 
