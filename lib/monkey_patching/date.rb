@@ -132,8 +132,8 @@ class Date
     else
       
       # ...if this is not a joint sitting day, go check the next one
-      unless self.is_joint_parliamentary_sitting
-        self.next_day.first_joint_sitting_day
+      unless self.is_joint_parliamentary_sitting?
+        self.next_day.first_joint_parliamentary_sitting_day
         
       # ..if this is a joint sitting day, return it
       else
