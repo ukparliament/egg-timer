@@ -68,7 +68,7 @@ class Date
   
   # checks if this is a parliamentary sitting day for both Houses
   # does not include days continued from previous sitting days
-  def is_joint_parliamentary_sitting?
+  def is_joint_parliamentary_sitting_day?
     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
   end
   
@@ -132,7 +132,7 @@ class Date
     else
       
       # ...if this is not a joint sitting day, go check the next one
-      unless self.is_joint_parliamentary_sitting?
+      unless self.is_joint_parliamentary_sitting_day?
         self.next_day.first_joint_parliamentary_sitting_day
         
       # ..if this is a joint sitting day, return it
