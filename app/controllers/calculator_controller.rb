@@ -272,7 +272,7 @@ def bicameral_parliamentary_days_calculation( date, target_day_count )
       break
     end
   end
-  date
+  @clock_date = date
 end
 
 # Calculation style 2
