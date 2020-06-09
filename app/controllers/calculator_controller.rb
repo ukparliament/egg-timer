@@ -66,7 +66,7 @@ class CalculatorController < ApplicationController
             # If the Lords sat on the date we've found, we add another day to the count.
             lords_day_count +=1 if @clock_date.is_lords_parliamentary_sitting_day?
             # If the Commons sat on the date we've found, we add another day to the count.
-            commons_day_count+=1 if @clock_date.is_commonss_parliamentary_sitting_day?
+            commons_day_count+=1 if @clock_date.is_commons_parliamentary_sitting_day?
         
             # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
             # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
