@@ -82,7 +82,7 @@ class CalculatorController < ApplicationController
         else
           
           # This error message is displayed to users.
-          @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced. Can't find a joint sitting day"
+          @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
         end
         
 
@@ -249,6 +249,30 @@ end
 # A method for calculating based on "bums on seats" in both Houses
 # Where both Houses must be sitting to count (Commons AND Lords)
 # Used for treaty period A, LROs, LOs, PBOs
+def bicameral_parliamentary_days_calculation( date, target_day_count )
+  # days start counting from 1
+  day_count = 1
+  
+  # ... we look at subsequent days, ensuring that we've counted at least the set number of joint parliamentary sitting days.
+  while ( day_count < target_day_count ) do
+    
+    # Go to the next day
+    date = date.next_day
+    
+    # Add 1 to the day count if this is a joint parliamentary sitting day
+    day_count +=1 if @date.is_joint_parliamentary_sitting_day?
+    
+    # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+    # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+    if @clock_date.is_unannounced?
+      
+      # This error message is displayed to users.
+      @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      break
+    end
+  end
+  date
+end
 
 # Calculation style 2
 # A method for calculating based on "bums on seats" in Commons only
