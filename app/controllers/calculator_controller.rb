@@ -41,6 +41,7 @@ class CalculatorController < ApplicationController
       if @procedure.id == 1 or @procedure.id == 2 or @procedure.id == 4 or @procedure.id == 9  
       
         ##### call calculation style 1
+        bicameral_parliamentary_days_calculation( @start_date, @day_count )
       
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
       elsif @procedure.id == 3
