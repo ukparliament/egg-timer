@@ -261,11 +261,11 @@ def bicameral_parliamentary_days_calculation( date, target_day_count )
     date = date.next_day
     
     # Add 1 to the day count if this is a joint parliamentary sitting day
-    day_count +=1 if @date.is_joint_parliamentary_sitting_day?
+    day_count +=1 if date.is_joint_parliamentary_sitting_day?
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if @clock_date.is_unannounced?
+    if date.is_unannounced?
       
       # This error message is displayed to users.
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
