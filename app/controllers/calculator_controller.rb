@@ -47,8 +47,8 @@ class CalculatorController < ApplicationController
     
         # We start counting on the **first day when both Houses are sitting** after the instrument is laid.
         # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
-        if @start_date.next_day.first_joint_sitting_day
-          @clock_date = @start_date.next_day.first_joint_sitting_day
+        if @start_date.next_day.first_joint_parliamentary_sitting_day
+          @clock_date = @start_date.next_day.first_joint_parliamentary_sitting_day
         
 
         	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
@@ -62,10 +62,11 @@ class CalculatorController < ApplicationController
             # Go to the **next day**
             @clock_date = @clock_date.next_day
     	
+            # PNSIs use parliamentary sitting days and no naive calendar days
             # If the Lords sat on the date we've found, we add another day to the count.
-            lords_day_count +=1 if @clock_date.is_lords_sitting_day?
+            lords_day_count +=1 if @clock_date.is_lords_parliamentary_sitting_day?
             # If the Commons sat on the date we've found, we add another day to the count.
-            commons_day_count+=1 if @clock_date.is_commons_sitting_day?
+            commons_day_count+=1 if @clock_date.is_commonss_parliamentary_sitting_day?
         
             # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
             # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
