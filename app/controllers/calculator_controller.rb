@@ -258,7 +258,7 @@ def bicameral_parliamentary_days_calculation( clock_date, target_day_count )
   while ( day_count < target_day_count ) do
     
     # Go to the next day
-    @clock_date = @clock_date.next_day
+    clock_date = clock_date.next_day
     
     # Add 1 to the day count if this is a joint parliamentary sitting day
     day_count +=1 if date.is_joint_parliamentary_sitting_day?
