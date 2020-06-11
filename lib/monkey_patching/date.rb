@@ -2,26 +2,26 @@ class Date
   
   # METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
   
-  # check if the commons is sitting on a day
-  # naive. this is really did the commons sit on this calendar day
+  # check if this is a praying sitting day in the commons
+  # naive version of "sitting day". this is really did the commons sit on this calendar day
   # it might be that this calendar day is a continuation of a previous day's sitting
   # so in a parliament sense it did not "sit" on this day
-  def is_the_commons_sitting?
+  def is_commons_praying_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+  end
+  
+  # check if this is a praying sitting day in the lords
+  # naive version of "sitting day". this is really did the commons sit on this calendar day
+  # it might be that this calendar day is a continuation of a previous day's sitting
+  # so in a parliament sense it did not "sit" on this day
+  def is_lords_praying_sitting_day?
+    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
   # check if this was a parliamentary sitting day for the commons
   # does not include dates for which the commons continued sitting from a previous day
   def is_commons_parliamentary_sitting_day?
     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
-  end
-  
-  # check if the lords is sitting on a day
-  # naive. this is really did the lords sit on this calendar day
-  # it might be that this calendar day is a continuation of a previous day's sitting
-  # so in a parliament sense it did not "sit" on this day
-  def is_the_lords_sitting?
-    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
   # check if this was a parliamentary sitting day for the lords
@@ -34,7 +34,7 @@ class Date
   # naive. this is really did the commons sit virtually on this calendar day
   # it might be that this calendar day is a continuation of a previous day's virtual sitting
   # so in a parliament sense it did not "sit" on this day
-  def is_the_commons_virtual_sitting?
+  def is_commons_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
   
@@ -42,27 +42,27 @@ class Date
   # naive. this is really did the lords sit virtually on this calendar day
   # it might be that this calendar day is a continuation of a previous day's virtual sitting
   # so in a parliament sense it did not "sit" on this day
-  def is_the_lords_virtual_sitting?
+  def is_lords_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
   # checks if either House is sitting on a day
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
   # so in a parliament sense that House did not "sit" on this day
-  def is_either_house_sitting?
-    self.is_the_commons_sitting? or self.is_the_lords_sitting?
+  def is_either_house_praying_sitting_day?
+    self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day?
   end
   
   # checks if both Houses are sitting on a day
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
   # so in a parliament sense that House did not "sit" on this day
-  def is_joint_sitting?
-    self.is_the_commons_sitting? and self.is_the_lords_sitting?
+  def is_joint_praying_sitting_day?
+    self.is_commons_praying_sitting_day? and self.is_lords_praying_sitting_day?
   end
   
   # checks if this is a parliamentary sitting day for one or both Houses
   # does not include days continued from previous sitting days
-  def is_either_house_parliamentary_sitting?
+  def is_either_house_parliamentary_sitting_day?
     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
   end
   
@@ -98,6 +98,13 @@ class Date
     DissolutionDay.all.where( 'date = ?',  self ).first
   end
   
+  # used to check if something / anything has been announced for a date.
+  # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
+  # or a day during a prorogation or dissolution
+  def is_announced?
+    self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+  end
+  
   # used to check if nothing has yet been announced 
   # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
   # or a day during a prorogation or dissolution
@@ -105,13 +112,6 @@ class Date
   # this is our event horizon
   def is_unannounced?
     !self.is_announced?
-  end
-  
-  # used to check if something / anything has been announced for a date.
-  # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
-  # or a day during a prorogation or dissolution
-  def is_announced?
-    self.is_the_commons_sitting? or self.is_the_lords_sitting? or self.is_the_commons_virtual_sitting? or self.is_the_lords_virtual_sitting? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
   end
   
   # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
