@@ -5,14 +5,14 @@
 
 <p>The <u>anticipated</u> end date of the scrutiny period is:</p>
 
-	<strong><big><time><%= @clock_date.strftime( '%A %-d %B %Y') %></time></big></strong>
+	<strong><big><time><%= @end_date.strftime( '%A %-d %B %Y') %></time></big></strong>
 	
 	
 	
 
 <ul>
 
-	<li>With procedure type <%= @procedure.name %></li>
+	<li>With procedure type <strong><%= @procedure.name %></strong></li>
 	
 	<li>For a scrutiny period of <strong><%= @day_count %> days</strong></li>
 	
