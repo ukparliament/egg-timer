@@ -261,7 +261,7 @@ def bicameral_first_to_ten_calculation( clock_date, target_day_count )
     lords_day_count = 1
     
     # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
-    while ( ( commons_day_count < day_count ) and ( lords_day_count < day_count ) ) do
+    while ( ( commons_day_count < target_day_count ) and ( lords_day_count < target_day_count ) ) do
 
       # Go to the **next day**
       clock_date = clock_date.next_day
