@@ -48,6 +48,12 @@ class CalculatorController < ApplicationController
         
         #### call calculation style 2
         bicameral_first_to_ten_calculation( @start_date, @day_count )
+      
+      # Calculate the **anticipated end date** for treaty period B:
+      elsif @procedure.id == 10
+        
+        #### call calculation style 3
+        commons_parliamentary_days_calculation( @start_date, @day_count )
         
     
         
@@ -296,6 +302,32 @@ end
 # Calculation style 3
 # A method for calculating based on "bums on seats" in Commons only
 # Used for treaty period B
+def commons_parliamentary_days_calculation( clock_date, target_day_count )
+  # days start counting from 1
+  day_count = 1
+  
+  # ... we look at subsequent days, ensuring that we've counted at least the set number of commons parliamentary sitting days.
+  while ( day_count < target_day_count ) do
+    
+    # Go to the next day
+    clock_date = clock_date.next_day
+    
+    # Add 1 to the day count if this is a joint parliamentary sitting day
+    day_count +=1 if clock_date.is_commons_parliamentary_sitting_day?
+    
+    # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+    # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+    if clock_date.is_unannounced?
+      
+      # This error message is displayed to users.
+      @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      break
+    end
+  end
+  
+  # Set for display on page
+  @clock_date = clock_date
+end
 
 # Calculation style 4
 # Used for Commons only negative SIs
