@@ -250,7 +250,7 @@ end
 # A method for calculating based on "bums on seats" in both Houses
 # Where both Houses must be sitting to count (Commons AND Lords)
 # Used for treaty period A, LROs, LOs, PBOs
-def bicameral_parliamentary_days_calculation( @clock_date, target_day_count )
+def bicameral_parliamentary_days_calculation( clock_date, target_day_count )
   # days start counting from 1
   day_count = 1
   
@@ -272,6 +272,9 @@ def bicameral_parliamentary_days_calculation( @clock_date, target_day_count )
       break
     end
   end
+  
+  # Set for display on page
+  @clock_date = clock_date
 end
 
 # Calculation style 2
