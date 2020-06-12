@@ -55,164 +55,11 @@ class CalculatorController < ApplicationController
         #### call calculation style 3
         @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
         
-    
-        
-        
-
-
-
-
-
-    
-      # ... we can calculate the **anticipated end date** for a Commons only negative Statutory Instrument
+      # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument
       elsif @procedure.id == 5
-      
-        # Counting of "sitting days" starts on day of laying
-        @clock_date = @start_date
         
-        # Get ready to count days in the House of Commons only
-        
-        # Clock starts on day of laying so start from 1
-        day_count = 1
-      
-        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count < @day_count ) do
-          
-        
-          # If the Commons sat on the date we've found, we add another day to the count.
-          if @clock_date.is_commons_sitting_day?
-            day_count +=1
-        
-          # If the Commons was adjourned and was adjourned for a period of not more than 4 days, we add another day to the count.
-          # Passing in the maximum number of days that counts as short in this case
-          elsif @clock_date.is_commons_short_adjournment?( 4 )
-            day_count +=1
-          end
-          
-          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-          if @clock_date.is_unannounced?
-            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-            break
-          
-          # Otherwise, continue to the next day and count again
-          else
-            # Skip to the next calendar day and count again
-            @clock_date = @clock_date.next_day
-          end
-        end
-        
-      
-      # ... we can calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument
-      elsif @procedure.id == 6
-      
-        # Counting of "sitting days" starts on day of laying
-        @clock_date = @start_date
-        
-        # Get ready to count days in the House of Commons and House of Lords
-        # Clock starts on day of laying so start from 1
-        day_count = 1
-      
-        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count < @day_count ) do
-          
-          # If the Commons **or** the Lords sat on the date we've found, we add another day to the count.
-          if @clock_date.is_commons_sitting_day? or @clock_date.is_lords_sitting_day?
-            day_count +=1
-        
-          # If the Commons and the Lords were both adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
-          # Providing the maximum number of days that counts as a short adjournment. In this case 4
-          elsif @clock_date.is_short_adjournment?( 4 )
-            day_count +=1
-          end
-          
-          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-          if @clock_date.is_unannounced?
-            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-            break
-          
-          # Otherwise, continue to the next day and count again
-          else
-            # Skip to the next calendar day and count again
-            @clock_date = @clock_date.next_day
-          end
-        end
-        
-      
-      # ... we can calculate the **anticipated end date** for a Commons only made affirmative Statutory Instrument
-      elsif @procedure.id == 7
-      
-        # Counting of "sitting days" starts on day of making
-        @clock_date = @start_date
-        # Get ready to count days in the House of Commons only
-        # Clock starts on day of making so start from 1
-        day_count = 1
-      
-        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count < @day_count ) do
-          
-        
-          # If the Commons sat on the date we've found, we add another day to the count.
-          if @clock_date.is_commons_sitting_day?
-            day_count +=1
-        
-          # If either the Commons were adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
-          # Passing in the maximum number of days that counts as short in this case
-          elsif @clock_date.is_commons_short_adjournment?( 4 )
-            day_count +=1
-          end
-          
-          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-          if @clock_date.is_unannounced?
-            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-            break
-          
-          # Otherwise, continue to the next day and count again
-          else
-            # Skip to the next calendar day and count again
-            @clock_date = @clock_date.next_day
-          end
-        end
-        
-      
-      # ... we can calculate the **anticipated end date** for a Commons and Lords made affirmative Statutory Instrument
-      elsif @procedure.id == 8
-      
-        # Counting of "sitting days" starts on day of making
-        @clock_date = @start_date
-        
-        # Get ready to count days in the House of Commons and House of Lords
-        # Clock starts on day of making so start from 1
-        day_count = 1
-      
-        # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
-        while ( day_count < @day_count ) do
-          
-        
-          # If the Commons and the Lords sat on the date we've found, we add another day to the count.
-          if @clock_date.is_commons_sitting_day? and @clock_date.is_lords_sitting_day?
-            day_count +=1
-        
-          # If either the Commons or the Lords were adjourned and were adjourned for a period of not more than 4 days, we add another day to the count.
-          # Passing in the maximum number of days that counts as short in this case
-          elsif @clock_date.is_either_house_short_adjournment?( 4 )
-            day_count +=1
-          end
-          
-          # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-          # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-          if @clock_date.is_unannounced?
-            @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-            break
-          
-          # Otherwise, continue to the next day and count again
-          else
-            # Skip to the next calendar day and count again
-            @clock_date = @clock_date.next_day
-          end
-        end
+        #### call calculation style 4
+        @end_date = commons_praying_days_calculation( @start_date, @day_count )
       end
     end
   end
@@ -332,6 +179,34 @@ end
 # Calculation style 4
 # Used for Commons only negative SIs
 # Counts through short adjournments (not bums on seats)
+def commons_praying_days_calculation( date, target_day_count )
+  
+  # Get ready to count praying days in the House of Commons only
+  # Clock starts on day of laying so start from 1
+  day_count = 1
+
+  # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+  while ( day_count < target_day_count ) do
+    
+    # If the date we've found was a Commons praying day, we add another day to the count.
+    day_count +=1 if date.is_commons_praying_day?
+    
+    # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+    # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+    if date.is_unannounced?
+      @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      break
+    
+    # Otherwise, continue to the next day and count again
+    else
+      # Skip to the next calendar day and count again
+      date = date.next_day
+    end
+  end
+  
+  # Return date for display on page
+  date
+end
 
 # Calculation style 5
 # Used for Commons and Lords negative SIs and some Commons and Lords affirmative SIs
