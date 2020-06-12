@@ -191,6 +191,83 @@ class Date
     self.is_commons_praying_sitting_day? or self.is_commons_praying_adjournment_day?( 4 )
   end
   
+  # Checks if this is a praying adjournment day in the Lords
+  # Praying adjournment days are during short periods of adjournment
+  # The definition of "short is adjustable" by passing in a maximum number of days to count as "short"
+  # In all cases we know of, it is a period of not more than 4 days adjourned
+  def is_lords_praying_adjournment_day?( maximum_day_count )
+    
+    # Check if this is an adjournnment day
+    if self.is_lords_adjournment_day?
+      
+      # Set the adjournment day count to start at 1
+      adjournment_day_count = 1
+      
+      # Cycle through the following days according to the maximum day count passed in.
+      date = self
+      for i in ( 1..maximum_day_count )
+        
+        # Go forward one day
+        date = date.next_day
+        
+        # If this is an adjournment day in the Lords
+        if date.is_lords_adjournment_day?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling forward
+          break
+        end
+      end
+      
+      # Cycle through the preceding days according to the maximum day count passed in.
+      date = self
+      for i in ( 1..maximum_day_count )
+        
+        # Go back one day
+        date = date.prev_day
+        
+        # If this is an adjournment day in the Lords
+        if date.is_lords_adjournment_day?
+          
+          # Add one to the adjournment day count
+          adjournment_day_count +=1
+        
+        # If it's not an adjournment day...
+        else  
+          
+          # ...stop cycling backward.
+          break
+        end
+      end
+
+      # If there's more than the maximum number of adjournment days passed in...
+      if adjournment_day_count > maximum_day_count
+      
+        # ...this is not a short adjournment and does not count on the clock
+        is_lords_short_adjournment = false
+      
+      # If this is 4 or more days adjournment...
+      else
+      
+        # ....this is a short adjournnment and does count on the clock
+        is_lords_short_adjournment = true
+      end
+      is_lords_short_adjournment
+    end
+  end
+  
+  # Checks if this is a lords praying day
+  # A day is a Lords praying day if it's either a Lords praying sitting day or a Lords praying adjournment day
+  # We define a Lords praying adjournment day as being one day in a series of not more than 4 days for which the Lords is adjourned
+  def is_lords_praying_day?
+    self.is_lords_praying_sitting_day? or self.is_lords_praying_adjournment_day?( 4 )
+  end
+  
   # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
   
   
