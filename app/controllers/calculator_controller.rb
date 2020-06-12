@@ -63,7 +63,20 @@ class CalculatorController < ApplicationController
       
         #### call calculation style 4
         @end_date = commons_praying_days_calculation( @start_date, @day_count )
-      else
+        
+       # Calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
+       when 6, 8
+         
+         #### call calculation style 5
+         @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count )
+        
+       # Calculate the **anticipated end date** for a Commons and Lords affirmative Statutory Instrument where both Houses sitting
+       when 7
+         
+         #### call calculation style 6
+         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
+       
+       else
         @error_message = "Sorry, this procedure is not currently supported."
       end
     end
@@ -217,8 +230,12 @@ end
 # Used for Commons and Lords negative SIs and some Commons and Lords affirmative SIs
 # Counts when Commons OR Lords are sitting
 # Counts through short adjournments (not bums on seats)
+def bicameral_praying_days_calculation_either_house_sitting( date, target_day_count )
+end
 
 # Calculation style 6
 # Used for some Commons and Lords affirmative SIs
 # Counts when Commons AND Lords are sitting
 # Counts through short adjournments (not bums on seats)
+def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_count )
+end
