@@ -260,8 +260,34 @@ def bicameral_praying_days_calculation_either_house_sitting( date, target_day_co
 end
 
 # Calculation style 6
-# Used for some Commons and Lords affirmative SIs
+# Used for some Commons and Lords made affirmative SIs
 # Counts when Commons AND Lords are sitting
 # Counts through short adjournments (not bums on seats)
 def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_count )
+  
+  # Get ready to count praying days in the House of Commons and House of Lords
+  # Clock starts on day of laying so start from 1
+  day_count = 1
+
+  # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+  while ( day_count < target_day_count ) do
+    
+    # If the date we've found was both a Commons and a Lords praying day, we add another day to the count.
+    day_count +=1 if date.is_commons_praying_day? and date.is_lords_praying_day?
+    
+    # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+    # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+    if date.is_unannounced?
+      @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      break
+    
+    # Otherwise, continue to the next day and count again
+    else
+      # Skip to the next calendar day and count again
+      date = date.next_day
+    end
+  end
+  
+  # Return date for display on page
+  date
 end
