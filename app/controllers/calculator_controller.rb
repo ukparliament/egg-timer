@@ -37,29 +37,34 @@ class CalculatorController < ApplicationController
       # * make the date passed into a date the code understands...
       @start_date = Date.parse( start_date )
       
-      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders, Public Bodies Orders and treaty period A
-      if @procedure.id == 1 or @procedure.id == 2 or @procedure.id == 4 or @procedure.id == 9  
-      
+      # Depending upon the procedure specified, we run the appropriate calculation
+      case @procedure.id
+        
+      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders, Public Bodies Orders and treaty period A:
+      when 1, 2, 4, 9
+        
         ##### call calculation style 1
         @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
       
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
-      elsif @procedure.id == 3
+      when 3
         
         #### call calculation style 2
         @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
-      
-      # Calculate the **anticipated end date** for treaty period B:
-      elsif @procedure.id == 10
         
+      # Calculate the **anticipated end date** for treaty period B:
+      when 10
+      
         #### call calculation style 3
         @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument
-      elsif @procedure.id == 5
-        
+      when 5
+      
         #### call calculation style 4
         @end_date = commons_praying_days_calculation( @start_date, @day_count )
+      else
+        @error_message = "Sorry, this procedure is not currently supported"
       end
     end
   end
