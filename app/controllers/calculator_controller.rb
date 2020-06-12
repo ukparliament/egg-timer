@@ -64,7 +64,7 @@ class CalculatorController < ApplicationController
         #### call calculation style 4
         @end_date = commons_praying_days_calculation( @start_date, @day_count )
       else
-        @error_message = "Sorry, this procedure is not currently supported"
+        @error_message = "Sorry, this procedure is not currently supported."
       end
     end
   end
