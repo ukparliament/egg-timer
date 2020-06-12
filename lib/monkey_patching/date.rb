@@ -114,55 +114,11 @@ class Date
     !self.is_announced?
   end
   
-  # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
-  
-  
-  # cycles to get first joint sitting day
-  # used for pnsis where the clock starts ticking from the first joint sitting day
-  # pnsis use parliamentary sitting days
-  def first_joint_parliamentary_sitting_day
-    
-    # If this is an as yet unannounced day...
-    if self.is_unannounced?
-      
-      # ...give up finding a first joint sitting day
-      return nil
-    
-    # If this isn't an as yet unnanounced day...
-    else
-      
-      # ...if this is not a joint sitting day, go check the next one
-      unless self.is_joint_parliamentary_sitting_day?
-        self.next_day.first_joint_parliamentary_sitting_day
-        
-      # ..if this is a joint sitting day, return it
-      else
-        self
-      end
-    end
-  end
-  
-
-  
-
-  
-
-  
-
-
-  
-  
-  
-  # edited to here
-  
-  
-
-  
-
-  
-  # Checks if this is a short adjournment date in the Commons
+  # Checks if this is a praying adjournment day in the Commons
+  # Praying adjournment days are during short periods of adjournment
   # The definition of "short is adjustable" by passing in a maximum number of days to count as "short"
-  def is_commons_short_adjournment?( maximum_day_count )
+  # In all cases we know of, it is a period of not more than 4 days adjourned
+  def is_commons_praying_adjournment_day?( maximum_day_count )
     
     # Check if this is an adjournnment day
     if self.is_commons_adjournment_day?
@@ -219,7 +175,7 @@ class Date
         is_commons_short_adjournment = false
       
       # If this is 4 or more days adjournment...
-      else  
+      else
       
         # ....this is a short adjournnment and does count on the clock
         is_commons_short_adjournment = true
@@ -227,6 +183,65 @@ class Date
       is_commons_short_adjournment
     end
   end
+  
+  # Checks if this is a commons praying day
+  # A day is a Commons praying day if it's either a Commons praying sitting day or a Commons praying adjournment day
+  # We define a Commons praying adjournment day as being one day in a series of not more than 4 days for which the Commons is adjourned
+  def is_commons_praying_day?
+    self.is_commons_praying_sitting_day? or self.is_commons_praying_adjournment_day?( 4 )
+  end
+  
+  # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
+  
+  
+  # cycles to get first joint sitting day
+  # used for pnsis where the clock starts ticking from the first joint sitting day
+  # pnsis use parliamentary sitting days
+  def first_joint_parliamentary_sitting_day
+    
+    # If this is an as yet unannounced day...
+    if self.is_unannounced?
+      
+      # ...give up finding a first joint sitting day
+      return nil
+    
+    # If this isn't an as yet unnanounced day...
+    else
+      
+      # ...if this is not a joint sitting day, go check the next one
+      unless self.is_joint_parliamentary_sitting_day?
+        self.next_day.first_joint_parliamentary_sitting_day
+        
+      # ..if this is a joint sitting day, return it
+      else
+        self
+      end
+    end
+  end
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  
+  # edited to here
+  
+  
+
+  
+
+  
+
+  
+  
+  ###############
+  
   
   # Checks if this is a short adjournment date in both Houses
   # The definition of "short is adjustable" by passing in a maximum number of days to count as "short"
@@ -264,7 +279,7 @@ class Date
       for i in ( 1..maximum_day_count )
         
         # Go back one day
-        date = date.prev_day
+          date = date.prev_day
         
         # If this is an adjournment day in the Commons and the Lords
         if date.is_commons_adjournment_day? and date.is_lords_adjournment_day?
