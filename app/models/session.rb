@@ -30,4 +30,8 @@ class Session < ActiveRecord::Base
   def following_session_in_parliament
     Session.all.where( "start_date > ?", self.end_date ).where( parliament_period_id: self.parliament_period_id ).order( 'start_date' ).first
   end
+  
+  def date_range
+    ( ( self.start_date )...( self.end_date ) ).to_a
+  end
 end
