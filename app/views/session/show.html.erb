@@ -4,3 +4,17 @@
 <ol>
 	<%= render :partial => 'session_house/house', :collection => @houses %>
 </ol>
+
+<%= content_tag( 'h2', 'Dates' ) %>
+<table>
+	<thead>
+		<tr>
+			<%= content_tag( 'td', 'Date' ) %>
+			<%= content_tag( 'td', 'House of Commons' ) %>
+			<%= content_tag( 'td', 'House of Lords' ) %>
+		</tr>
+	</thead>
+	<tbody>
+		<%= render :partial => 'date', :collection => @session.date_range %>
+	</tbody>
+</table>
