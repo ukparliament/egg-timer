@@ -1,6 +1,9 @@
 class Session < ActiveRecord::Base
   
   belongs_to :parliament_period
+  has_many :sitting_days, -> { order( 'start_date asc' ) }
+  has_many :virtual_sitting_days, -> { order( 'start_date asc' ) }
+  has_many :adjournment_days, -> { order( 'date asc' ) }
   
   def label
     label = ''
@@ -32,6 +35,29 @@ class Session < ActiveRecord::Base
   end
   
   def date_range
-    ( ( self.start_date )...( self.end_date ) ).to_a
+    # If the session has an end date create a range up to that
+    if self.end_date
+      ( ( self.start_date )..( self.end_date ) ).to_a
+      
+    # If the session has no end date - meaning it's the current session - create a range up to the final announced day
+    else
+      ( (self.start_date)..( self.final_announced_day ) ).to_a
+    end
+  end
+  
+  def final_announced_day
+    final_announced_days = [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
+  end
+  
+  def final_announced_sitting_day
+    self.sitting_days.last
+  end
+  
+  def final_announced_virtual_sitting_day
+    self.virtual_sitting_days.last
+  end
+  
+  def final_announced_adjournment_day
+    self.adjournment_days.last
   end
 end
