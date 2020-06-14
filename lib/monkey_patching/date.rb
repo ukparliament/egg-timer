@@ -300,6 +300,8 @@ class Date
   def commons_day_type
     if self.is_commons_parliamentary_sitting_day?
       day_type = 'Sitting day'
+    elsif self.is_commons_virtual_sitting_day?
+      day_type = 'Virtual sitting day'
     elsif self.is_commons_praying_sitting_day?
       day_type = "Sitting praying day"
     elsif is_commons_adjournment_day?
@@ -312,6 +314,8 @@ class Date
   def lords_day_type
     if self.is_lords_parliamentary_sitting_day?
       day_type = 'Sitting day'
+    elsif self.is_lords_virtual_sitting_day?
+      day_type = 'Virtual sitting day'
     elsif self.is_lords_praying_sitting_day?
       day_type = "Sitting praying day"
     elsif is_lords_adjournment_day?
