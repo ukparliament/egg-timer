@@ -46,7 +46,7 @@ class Session < ActiveRecord::Base
   end
   
   def final_announced_day
-    final_announced_days = [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
+    [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
   end
   
   def final_announced_sitting_day
