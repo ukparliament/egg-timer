@@ -134,7 +134,7 @@ class Date
         date = date.next_day
         
         # If this is an adjournment day in the Commons
-        if date.is_commons_adjournment_day?
+        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
           
           # Add one to the adjournment day count
           adjournment_day_count +=1
@@ -155,7 +155,7 @@ class Date
         date = date.prev_day
         
         # If this is an adjournment day in the Commons
-        if date.is_commons_adjournment_day?
+        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
           
           # Add one to the adjournment day count
           adjournment_day_count +=1
@@ -211,7 +211,7 @@ class Date
         date = date.next_day
         
         # If this is an adjournment day in the Lords
-        if date.is_lords_adjournment_day?
+        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
           
           # Add one to the adjournment day count
           adjournment_day_count +=1
@@ -232,7 +232,7 @@ class Date
         date = date.prev_day
         
         # If this is an adjournment day in the Lords
-        if date.is_lords_adjournment_day?
+        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
           
           # Add one to the adjournment day count
           adjournment_day_count +=1
