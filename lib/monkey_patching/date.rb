@@ -80,12 +80,12 @@ class Date
   
   # check if the commons is adjourned on a day
   def is_commons_adjournment_day?
-    AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 1 ).first
+    AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 1 ).first
   end
   
   # check if the lords is adjourned on a day
   def is_lords_adjournment_day?
-    AdjournmentDay.all.where( 'date <= ?',  self ).where( house_id: 2 ).first
+    AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 2 ).first
   end
   
   # check if parliament is prorogued on a day
