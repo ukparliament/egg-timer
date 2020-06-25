@@ -198,12 +198,18 @@ end
 # Counts through short adjournments (not bums on seats)
 def commons_praying_days_calculation( date, target_day_count )
   
-  # Get ready to count praying days in the House of Commons only
-  # Clock starts on day of laying so start from 1
+  # Get ready to count praying days in the House of Commons
+  # If this is not a praying day for the Commons find the first praying day and start counting from there
+  date = date.first_commons_praying_day unless date.is_commons_praying_day?
+  
+  # We've found the first praying day so start from 1
   day_count = 1
 
   # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
   while ( day_count < target_day_count ) do
+    
+    # Skip to the next calendar day
+    date = date.next_day
     
     # If the date we've found was a Commons praying day, we add another day to the count.
     day_count +=1 if date.is_commons_praying_day?
@@ -213,11 +219,6 @@ def commons_praying_days_calculation( date, target_day_count )
     if date.is_unannounced?
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
       break
-    
-    # Otherwise, continue to the next day and count again
-    else
-      # Skip to the next calendar day and count again
-      date = date.next_day
     end
   end
   
@@ -232,25 +233,26 @@ end
 def bicameral_praying_days_calculation_either_house_sitting( date, target_day_count )
   
   # Get ready to count praying days in the House of Commons or House of Lords
-  # Clock starts on day of laying so start from 1
+  # If this is not a praying day for either House find the first praying day and start counting from there
+  date = date.first_praying_day_in_either_house unless date.is_either_house_praying_day?
+  
+  # We've found the first praying day so start from 1
   day_count = 1
 
   # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
   while ( day_count < target_day_count ) do
     
+    # Skip to the next calendar day
+    date = date.next_day
+    
     # If the date we've found was either a Commons or a Lords praying day, we add another day to the count.
-    day_count +=1 if date.is_commons_praying_day? or date.is_lords_praying_day?
+    day_count +=1 if date.is_either_house_praying_day?
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
     if date.is_unannounced?
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
       break
-    
-    # Otherwise, continue to the next day and count again
-    else
-      # Skip to the next calendar day and count again
-      date = date.next_day
     end
   end
   
