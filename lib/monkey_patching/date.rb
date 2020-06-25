@@ -268,8 +268,60 @@ class Date
     self.is_lords_praying_sitting_day? or self.is_lords_praying_adjournment_day?( 4 )
   end
   
+  # Checks if this is a praying day in either House
+  def is_either_house_praying_day?
+    self.is_commons_praying_day? or self.is_lords_praying_day?
+  end
+  
   # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
   
+  # Cycles to get first praying day in either House
+  # Used for negative SIs and some made affirmatives where the clock starts ticking from the first sitting day if the instrument is laid during an long adjournment (> 4 days)
+  def first_praying_day_in_either_house
+    
+    # If this is an as yet unannounced day...
+    if self.is_unannounced?
+      
+      # ...give up finding a first praying day in either House
+      return nil
+    
+    # If this isn't an as yet unnanounced day...
+    else
+      
+      # ...if this is not a praying day in either House, go check the next one
+      unless self.is_either_house_praying_day?
+        self.next_day.first_praying_day_in_either_house
+        
+      # ..if this is a praying day in either House, return it
+      else
+        self
+      end
+    end
+  end
+  
+  # Cycles to get first Commons praying day
+  # Used for negative SIs and some made affirmatives where the clock starts ticking from the first sitting day if the instrument is laid during an long adjournment (> 4 days)
+  def first_commons_praying_day
+    
+    # If this is an as yet unannounced day...
+    if self.is_unannounced?
+      
+      # ...give up finding a first Commons praying day
+      return nil
+    
+    # If this isn't an as yet unnanounced day...
+    else
+      
+      # ...if this is not a praying day in either House, go check the next one
+      unless self.is_commons_praying_day?
+        self.next_day.first_commons_praying_day
+        
+      # ..if this is a praying day in either House, return it
+      else
+        self
+      end
+    end
+  end
   
   # cycles to get first joint sitting day
   # used for pnsis where the clock starts ticking from the first joint sitting day
