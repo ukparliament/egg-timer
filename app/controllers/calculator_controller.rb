@@ -124,7 +124,6 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
   # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
   if date.next_day.first_joint_parliamentary_sitting_day
     date = date.next_day.first_joint_parliamentary_sitting_day
-  
 
   	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
     # The first joint sitting day counts as day 1, so we count from 1, not 0
@@ -132,7 +131,7 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
     lords_day_count = 1
     
     # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
-    while ( ( commons_day_count < target_day_count ) and ( lords_day_count < target_day_count ) ) do
+    while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
 
       # Go to the **next day**
       date = date.next_day
