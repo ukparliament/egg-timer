@@ -93,7 +93,6 @@ task :populate_prorogation_days => :environment do
   prorogation_periods.each do |prorogation_period|
     ( prorogation_period.start_date..prorogation_period.end_date ).each do |date|
       prorogation_day = ProrogationDay.new
-      puts prorogation_day.inspect
       prorogation_day.date = date
       prorogation_day.prorogation_period = prorogation_period
       prorogation_day.save
