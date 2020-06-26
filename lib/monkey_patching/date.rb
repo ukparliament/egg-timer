@@ -275,6 +275,11 @@ class Date
   
   # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
   
+  
+  
+  
+  
+  
   # Cycles to get first praying day in either House
   # Used for negative SIs and some made affirmatives where the clock starts ticking from the first sitting day if the instrument is laid during an long adjournment (> 4 days)
   def first_praying_day_in_either_house
@@ -293,6 +298,30 @@ class Date
         self.next_day.first_praying_day_in_either_house
         
       # ..if this is a praying day in either House, return it
+      else
+        self
+      end
+    end
+  end
+  
+  # cycles to get first joint praying day
+  # used for made affirmatives when both Houses must be sitting
+  def first_joint_praying_day
+    
+    # If this is an as yet unannounced day...
+    if self.is_unannounced?
+      
+      # ...give up finding a first joint sitting day
+      return nil
+    
+    # If this isn't an as yet unnanounced day...
+    else
+      
+      # ...if this is not a joint praying day, go check the next one
+      unless self.is_joint_praying_day?
+        self.next_day.first_joint_praying_day
+        
+      # ..if this is a joint sitting day, return it
       else
         self
       end
@@ -342,6 +371,30 @@ class Date
         self.next_day.first_joint_parliamentary_sitting_day
         
       # ..if this is a joint sitting day, return it
+      else
+        self
+      end
+    end
+  end
+  
+  # cycles to get first House of Commons parliamentary sitting day
+  # Used for treaty period B
+  def first_commons_parliamentary_sitting_day
+    
+    # If this is an as yet unannounced day...
+    if self.is_unannounced?
+      
+      # ...give up finding a first joint sitting day
+      return nil
+    
+    # If this isn't an as yet unnanounced day...
+    else
+      
+      # ...if this is not a House of Commons parliamentary sitting day, go check the next one
+      unless self.is_commons_parliamentary_sitting_day?
+        self.next_day.first_commons_parliamentary_sitting_day
+        
+      # ..if this is a House of Commons parliamentary sitting day, return it
       else
         self
       end
