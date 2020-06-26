@@ -4,7 +4,8 @@
 4,Public Bodies Order approval period,true
 5,Statutory Instrument praying period (Commons only),true
 6,Statutory Instrument praying period (Commons and Lords),true
-7,"Statutory Instrument approval period (Commons and Lords, both Houses sitting)",true
-8,"Statutory Instrument approval period (Commons and Lords, either House sitting)",true
-9,Treaty objection period A,true
-10,Treaty objection period B,true
+7,Statutory Instrument approval period (Commons only),true
+8,"Statutory Instrument approval period (Commons and Lords, both Houses sitting)",true
+9,"Statutory Instrument approval period (Commons and Lords, either House sitting)",true
+10,Treaty objection period A,true
+11,Treaty objection period B,true
