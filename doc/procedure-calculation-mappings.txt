@@ -1,0 +1,11 @@
+  1 | 1 | Legislative Reform Order approval period
+  2 | 1 | Localism Order approval period
+  3 | 2 | Proposed Negative Statutory Instrument committee sifting period
+  4 | 1 | Public Bodies Order approval period
+  5 | 3 | Statutory Instrument praying period (Commons only)
+  6 | 4 | Statutory Instrument praying period (Commons and Lords)
+  7 | 3 | Statutory Instrument approval period (Commons only)
+  8 | 5 | Statutory Instrument approval period (Commons and Lords, both Houses sitting)
+  9 | 4 | Statutory Instrument approval period (Commons and Lords, either House sitting)
+ 10 | 1 | Treaty objection period A
+ 11 | 6 | Treaty objection period B
