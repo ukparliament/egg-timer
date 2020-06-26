@@ -201,7 +201,7 @@ def get_changed_events_from_calendar( service, calendar_id )
   if sync_token
     response = service.list_events(
       calendar_id,
-      max_results: 10000,
+      max_results: 100000,
       single_events: true,
       show_deleted: true,
       sync_token: sync_token.token
@@ -209,7 +209,7 @@ def get_changed_events_from_calendar( service, calendar_id )
   else
     response = service.list_events(
       calendar_id,
-      max_results: 10000,
+      max_results: 100000,
       single_events: true,
       show_deleted: true
     )
