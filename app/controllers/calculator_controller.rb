@@ -88,10 +88,26 @@ end
 # Used for treaty period A, LROs, LOs, PBOs
 def bicameral_parliamentary_days_calculation( date, target_day_count )
   
-  # Get ready to count praying days in the House of Commons
-  # If this is not a parliamentary sitting day for both Houses find the first parliamentary sitting day and start counting from there
-  date = date.first_joint_parliamentary_sitting_day unless date.is_joint_parliamentary_sitting_day?
-  # days start counting from 1
+  # Get ready to count parliamentary sitting days days in both Houses
+  # If this is not a  joint parliamentary sitting day...
+  unless date.is_joint_parliamentary_sitting_day?
+    
+    # If there is a future joint parliamentary sitting day...
+    if date.first_joint_parliamentary_sitting_day 
+      
+      # Set the date to the first joint parliamentary sitting day
+      date = date.first_joint_parliamentary_sitting_day 
+      
+    # If we didn't find any **future joint parliamentary sitting days* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
+    else
+  
+      # This error message is displayed to users.
+      @error_message = "Unable to find a future joint parliamentary sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      return
+    end
+  end
+  
+  # We've found the first joint parliamentary sitting day so start from 1
   day_count = 1
   
   # ... we look at subsequent days, ensuring that we've counted at least the set number of joint parliamentary sitting days.
@@ -102,10 +118,6 @@ def bicameral_parliamentary_days_calculation( date, target_day_count )
     
     # Add 1 to the day count if this is a joint parliamentary sitting day
     day_count +=1 if date.is_joint_parliamentary_sitting_day?
-    
-    puts "*****"
-    puts date
-    puts day_count
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
@@ -127,9 +139,11 @@ end
 # Counted from first joint sitting day, then last House to 10
 def bicameral_first_to_ten_calculation( date, target_day_count )
   
-  # We start counting on the **first day when both Houses are sitting** after the instrument is laid.
+  # We start counting on the **first day when both Houses are sitting** after the instrument is laid and never on the day of laying.
   # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
   if date.next_day.first_joint_parliamentary_sitting_day
+    
+    # We set the date to start counting as the first joint parliamentary sitting day.
     date = date.next_day.first_joint_parliamentary_sitting_day
 
   	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
@@ -138,12 +152,13 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
     lords_day_count = 1
     
     # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
+    # This loop runs whilst the Commons have sat for less than 10 days ***or*** the Lords have sat for less than 10 days. If both Houses have sat for at least 10 days, it stops running.
     while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
 
       # Go to the **next day**
       date = date.next_day
 
-      # PNSIs use parliamentary sitting days and no naive calendar days
+      # PNSIs use parliamentary sitting days and not naive calendar days.
       # If the Lords sat on the date we've found, we add another day to the count.
       lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
       # If the Commons sat on the date we've found, we add another day to the count.
@@ -171,8 +186,8 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
 end
 
 # Calculation style 3
-# Used for Commons only negative SIs
-# Counts through short adjournments (not bums on seats)
+# Used for Commons only negative and affirmative SIs
+# Counts through short adjournments
 def commons_praying_days_calculation( date, target_day_count )
   
   # Get ready to count praying days in the House of Commons
@@ -226,13 +241,28 @@ end
 # Counts through short adjournments (not bums on seats)
 def bicameral_praying_days_calculation_either_house_sitting( date, target_day_count )
   
-  # Get ready to count praying days in the House of Commons or House of Lords
-  # If this is not a praying day for either House find the first praying day and start counting from there
-  date = date.first_praying_day_in_either_house unless date.is_either_house_praying_day?
+  # Get ready to count praying days in both Houses
+  # If this is not a praying day for the Commons or the Lords...
+  unless date.is_commons_praying_day? or date.is_lords_praying_day?
+    
+    # If there is a future praying day in the Commons or the Lords
+    if date.first_praying_day_in_either_house
+      
+      # Set the date to the first praying day in the Commons or the Lords
+      date = date.first_praying_day_in_either_house 
+      
+    # If we didn't find any **future praying day* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
+    else
   
+      # This error message is displayed to users.
+      @error_message = "Unable to find a future praying day in the House of Commons or the House of Lords. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      return
+    end
+  end
+    
   # We've found the first praying day so start from 1
   day_count = 1
-
+  
   # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
   while ( day_count < target_day_count ) do
     
@@ -260,12 +290,34 @@ end
 # Counts through short adjournments (not bums on seats)
 def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_count )
   
-  # Get ready to count praying days in the House of Commons and House of Lords
-  # Clock starts on day of laying so start from 1
+  
+  # Get ready to count praying days in both Houses
+  # If this is not a praying day for the Commons and the Lords...
+  unless date.is_commons_praying_day? and date.is_lords_praying_day?
+    
+    # If there is a future praying day in the Commons or the Lords
+    if date.first_joint_praying_day
+      
+      # Set the date to the first praying day in the Commons and the Lords
+      date = date.first_joint_praying_day 
+      
+    # If we didn't find any **future praying day* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
+    else
+  
+      # This error message is displayed to users.
+      @error_message = "Unable to find a future praying day in the House of Commons and the House of Lords. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      return
+    end
+  end
+    
+  # We've found the first joint praying day so start from 1
   day_count = 1
 
   # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
   while ( day_count < target_day_count ) do
+    
+    # Skip to the next calendar day
+    date = date.next_day
     
     # If the date we've found was both a Commons and a Lords praying day, we add another day to the count.
     day_count +=1 if date.is_commons_praying_day? and date.is_lords_praying_day?
@@ -275,11 +327,6 @@ def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_cou
     if date.is_unannounced?
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
       break
-    
-    # Otherwise, continue to the next day and count again
-    else
-      # Skip to the next calendar day and count again
-      date = date.next_day
     end
   end
   
@@ -291,7 +338,27 @@ end
 # A method for calculating based on "bums on seats" in Commons only
 # Used for treaty period B
 def commons_parliamentary_days_calculation( date, target_day_count )
-  # days start counting from 1
+  
+  # Get ready to count parliamentary sitting days in the House of Commons
+  # If this is not a parliamentary sitting day for the Commons...
+  unless date.is_commons_parliamentary_sitting_day?
+    
+    # If there is a future parliamentary sitting day in the Commons...
+    if date.first_commons_parliamentary_sitting_day
+      
+      # Set the date to the first parliamentary sitting day in the Commons
+      date = date.first_commons_parliamentary_sitting_day 
+      
+    # If we didn't find any **future House of Commons parliamentary sitting day* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
+    else
+  
+      # This error message is displayed to users.
+      @error_message = "Unable to find a future parliamentary sitting day in the House of Commons. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+      return
+    end
+  end
+    
+  # We've found the first parliamentary sitting day in the House of Commons so start from 1
   day_count = 1
   
   # ... we look at subsequent days, ensuring that we've counted at least the set number of commons parliamentary sitting days.
@@ -300,7 +367,7 @@ def commons_parliamentary_days_calculation( date, target_day_count )
     # Go to the next day
     date = date.next_day
     
-    # Add 1 to the day count if this is a joint parliamentary sitting day
+    # Add 1 to the day count if this is a Commons parliamentary sitting day
     day_count +=1 if date.is_commons_parliamentary_sitting_day?
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
