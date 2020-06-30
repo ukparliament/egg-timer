@@ -1,22 +1,27 @@
 class Date
   
-  # METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
+  # A monkey patched Ruby date class to handle UK Parliament specific day types.
   
-  # check if this is a praying sitting day in the commons
-  # naive version of "sitting day". this is really did the commons sit on this calendar day
-  # it might be that this calendar day is a continuation of a previous day's sitting
-  # so in a parliament sense it did not "sit" on this day
+  # A set of methods to work out the type of a given day.
+  
+  # We want to check if this is a praying sitting day in the Commons.
+  # We use a naive version of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
+  # For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. 
+  # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
   def is_commons_praying_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
   
-  # check if this is a praying sitting day in the lords
-  # naive version of "sitting day". this is really did the commons sit on this calendar day
-  # it might be that this calendar day is a continuation of a previous day's sitting
-  # so in a parliament sense it did not "sit" on this day
+  # We want to check if this is a praying sitting day in the Lords.
+  # We use a naive version of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
+  # For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. 
+  # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
   def is_lords_praying_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
+  
+  
+  # edited to here
   
   # check if this was a parliamentary sitting day for the commons
   # does not include dates for which the commons continued sitting from a previous day
