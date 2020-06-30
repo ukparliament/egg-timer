@@ -5,7 +5,7 @@ class Date
   # A set of methods to work out the type of a given day.
   
   # We want to check if this is a praying sitting day in the Commons.
-  # We use a naive version of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
+  # We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
   # For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. 
   # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
   def is_commons_praying_sitting_day?
@@ -13,43 +13,42 @@ class Date
   end
   
   # We want to check if this is a praying sitting day in the Lords.
-  # We use a naive version of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
+  # We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
   # For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. 
   # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
   def is_lords_praying_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
-  
-  # edited to here
-  
-  # check if this was a parliamentary sitting day for the commons
-  # does not include dates for which the commons continued sitting from a previous day
+  # We want to check if this is a parliamentary sitting day in the Commons. 
+  # We use a more strict definition of a sitting day. We don’t include dates for which the Commons continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.
   def is_commons_parliamentary_sitting_day?
     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
   end
   
-  # check if this was a parliamentary sitting day for the lords
-  # does not include dates for which the lords continued sitting from a previous day
+  # We want to check if this is a parliamentary sitting day in the Lords. 
+  # We use a more strict definition of a sitting day. We don’t include dates for which the Lords continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.
   def is_lords_parliamentary_sitting_day?
     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 2 ).first
   end
   
-  # check if the commons is sitting virtually on a day
-  # naive. this is really did the commons sit virtually on this calendar day
-  # it might be that this calendar day is a continuation of a previous day's virtual sitting
-  # so in a parliament sense it did not "sit" on this day
+  # We want to check if this is a virtual sitting day in the Commons: this is a day where all Members of the House sit ‘digitally’, rather than physically.
+  # A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.
+  # As of the end of June 2020, the Commons has had no virtual sitting days.
   def is_commons_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
   
-  # check if the lords is sitting virtually on a day
-  # naive. this is really did the lords sit virtually on this calendar day
-  # it might be that this calendar day is a continuation of a previous day's virtual sitting
-  # so in a parliament sense it did not "sit" on this day
+  # We want to check if this is a virtual sitting day in the Lords: this is a day where all Members of the House sit ‘digitally’, rather than physically.
+  # A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.
   def is_lords_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
+  
+  
+  
+
+  # edited to here
   
   # checks if either House is sitting on a day
   # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
