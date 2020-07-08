@@ -413,7 +413,7 @@ class Date
       day_type = 'Virtual sitting day'
     elsif self.is_commons_praying_sitting_day?
       day_type = "Sitting praying day"
-    elsif self.is_commons_praying_adjournment_day?
+    elsif self.is_commons_praying_adjournment_day?( 4 )
       day_type = 'Praying adjournment day'
     elsif self.is_commons_adjournment_day?
       day_type = 'Adjournment day'
@@ -429,7 +429,7 @@ class Date
       day_type = 'Virtual sitting day'
     elsif self.is_lords_praying_sitting_day?
       day_type = "Sitting praying day"
-    elsif self.is_lords_praying_adjournment_day?
+    elsif self.is_lords_praying_adjournment_day?( 4 )
       day_type = 'Praying adjournment day'
     elsif self.is_lords_adjournment_day?
       day_type = 'Adjournment day'
