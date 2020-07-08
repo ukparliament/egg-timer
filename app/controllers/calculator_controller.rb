@@ -41,7 +41,7 @@ class CalculatorController < ApplicationController
       case @procedure.id
         
       # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders, Public Bodies Orders and treaty period A:
-      when 1, 2, 4, 10
+      when 1, 2, 4
         
         ##### call calculation style 1
         @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
@@ -71,9 +71,15 @@ class CalculatorController < ApplicationController
         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for treaty period B:
+      when 10
+        
+        #### call calculation style 6
+        @end_date = treaty_period_a_calculation( @start_date, @day_count )
+        
+      # Calculate the **anticipated end date** for treaty period B:
       when 11
       
-        #### call calculation style 6
+        #### call calculation style 7
         @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
       else
         @error_message = "Sorry, this procedure is not currently supported."
@@ -85,7 +91,7 @@ end
 # Calculation style 1
 # A method for calculating based on "bums on seats" in both Houses
 # Where both Houses must be sitting to count (Commons AND Lords)
-# Used for treaty period A, LROs, LOs, PBOs
+# Used for LROs, LOs, PBOs
 def bicameral_parliamentary_days_calculation( date, target_day_count )
   
   # Get ready to count parliamentary sitting days days in both Houses
@@ -145,9 +151,6 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
     
     # We set the date to start counting as the first joint parliamentary sitting day.
     date = date.next_day.first_joint_parliamentary_sitting_day
-    
-    puts "******"
-    puts date
 
   	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
     # The first joint sitting day counts as day 1, so we count from 1, not 0
@@ -338,6 +341,53 @@ def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_cou
 end
 
 # Calculation style 6
+# Used for treaty period A
+# A method for calculating based on "bums on seats" in both Houses
+# Where both Houses must be sitting to count (Commons AND Lords)
+# Starts on first joint sitting day following laying
+def treaty_period_a_calculation( date, target_day_count )
+  
+  # We start counting on the **first day when both Houses are sitting** after the instrument is laid and never on the day of laying.
+  # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
+  if date.next_day.first_joint_parliamentary_sitting_day
+  
+    # We set the date to start counting as the first joint parliamentary sitting day.
+    date = date.next_day.first_joint_parliamentary_sitting_day
+
+    # We've found the first joint parliamentary sitting day so start from 1
+    day_count = 1
+  
+    # ... we look at subsequent days, ensuring that we've counted at least the set number of joint parliamentary sitting days.
+    while ( day_count < target_day_count ) do
+    
+      # Go to the next day
+      date = date.next_day
+    
+      # Add 1 to the day count if this is a joint parliamentary sitting day
+      day_count +=1 if date.is_joint_parliamentary_sitting_day?
+    
+      # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+      # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
+      if date.is_unannounced?
+      
+        # This error message is displayed to users.
+        @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+        break
+      end
+    end
+
+  # If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
+  else
+  
+    # This error message is displayed to users.
+    @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+  end
+
+  # Return date for display on page
+  date
+end
+
+# Calculation style 7
 # A method for calculating based on "bums on seats" in Commons only
 # Used for treaty period B
 def commons_parliamentary_days_calculation( date, target_day_count )
