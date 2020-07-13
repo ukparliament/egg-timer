@@ -296,16 +296,15 @@ end
 # Counts through short adjournments (not bums on seats)
 def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_count )
   
-  
   # Get ready to count praying days in both Houses
   # If this is not a praying day for the Commons and the Lords...
-  unless date.is_commons_praying_day? and date.is_lords_praying_day?
+  unless date.is_joint_praying_day?
     
     # If there is a future praying day in the Commons or the Lords
     if date.first_joint_praying_day
       
       # Set the date to the first praying day in the Commons and the Lords
-      date = date.first_joint_praying_day 
+      date = date.first_joint_praying_day
       
     # If we didn't find any **future praying day* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
     else
@@ -326,7 +325,7 @@ def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_cou
     date = date.next_day
     
     # If the date we've found was both a Commons and a Lords praying day, we add another day to the count.
-    day_count +=1 if date.is_commons_praying_day? and date.is_lords_praying_day?
+    day_count +=1 if date.is_joint_praying_day?
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
