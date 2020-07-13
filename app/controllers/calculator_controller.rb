@@ -40,7 +40,7 @@ class CalculatorController < ApplicationController
       # Depending upon the procedure specified, we run the appropriate calculation
       case @procedure.id
         
-      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders, Public Bodies Orders and treaty period A:
+      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders and Public Bodies Orders:
       when 1, 2, 4
         
         ##### call calculation style 1
@@ -52,7 +52,7 @@ class CalculatorController < ApplicationController
         #### call calculation style 2
         @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument
+      # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument and some made affirmatives
       when 5, 7
     
         #### call calculation style 3
@@ -70,7 +70,7 @@ class CalculatorController < ApplicationController
         #### call calculation style 5
         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for treaty period B:
+      # Calculate the **anticipated end date** for treaty period A:
       when 10
         
         #### call calculation style 6
