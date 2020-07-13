@@ -277,6 +277,11 @@ class Date
     self.is_commons_praying_day? or self.is_lords_praying_day?
   end
   
+  # Checks if this is a praying day in both Houses
+  def is_joint_praying_day?
+    self.is_commons_praying_day? and self.is_lords_praying_day?
+  end
+  
   # END OF METHODS TO WORK OUT WHAT TYPE OF DAY THIS IS
   
   
@@ -388,7 +393,7 @@ class Date
     # If this is an as yet unannounced day...
     if self.is_unannounced?
       
-      # ...give up finding a first joint sitting day
+      # ...give up finding a first Commons sitting day
       return nil
     
     # If this isn't an as yet unnanounced day...
