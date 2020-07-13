@@ -125,7 +125,7 @@ class Date
   def is_commons_praying_adjournment_day?( maximum_day_count )
     
     # Check if this is an adjournnment day
-    if self.is_commons_adjournment_day?
+    if self.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
       
       # Set the adjournment day count to start at 1
       adjournment_day_count = 1
@@ -137,7 +137,7 @@ class Date
         # Go forward one day
         date = date.next_day
         
-        # If this is an adjournment day in the Commons
+        # If this is an adjournment day or a virtual sitting day in the Commons
         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
           
           # Add one to the adjournment day count
@@ -158,7 +158,7 @@ class Date
         # Go back one day
         date = date.prev_day
         
-        # If this is an adjournment day in the Commons
+        # If this is an adjournment day or a virtual sitting day in the Commons
         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
           
           # Add one to the adjournment day count
@@ -201,8 +201,8 @@ class Date
   # In all cases we know of, it is a period of not more than 4 days adjourned
   def is_lords_praying_adjournment_day?( maximum_day_count )
     
-    # Check if this is an adjournnment day
-    if self.is_lords_adjournment_day?
+    # Check if this is an adjournnment day or a virtual sitting day
+    if self.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
       
       # Set the adjournment day count to start at 1
       adjournment_day_count = 1
@@ -214,7 +214,7 @@ class Date
         # Go forward one day
         date = date.next_day
         
-        # If this is an adjournment day in the Lords
+        # If this is an adjournment day or a virtual sitting day in the Lords
         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
           
           # Add one to the adjournment day count
@@ -235,7 +235,7 @@ class Date
         # Go back one day
         date = date.prev_day
         
-        # If this is an adjournment day in the Lords
+        # If this is an adjournment day or a virtual sitting day in the Lords
         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
           
           # Add one to the adjournment day count
