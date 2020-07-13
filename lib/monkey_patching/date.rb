@@ -125,7 +125,7 @@ class Date
   def is_commons_praying_adjournment_day?( maximum_day_count )
     
     # Check if this is an adjournnment day
-    if self.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+    if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
       
       # Set the adjournment day count to start at 1
       adjournment_day_count = 1
@@ -202,7 +202,7 @@ class Date
   def is_lords_praying_adjournment_day?( maximum_day_count )
     
     # Check if this is an adjournnment day or a virtual sitting day
-    if self.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+    if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?
       
       # Set the adjournment day count to start at 1
       adjournment_day_count = 1
