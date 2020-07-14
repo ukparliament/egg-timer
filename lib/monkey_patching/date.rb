@@ -441,4 +441,24 @@ class Date
     end
     day_type
   end
+  
+  # Generates a label to say whether it's a praying day in the Commons. Or not
+  def is_commons_praying_day_label
+    if self.is_commons_praying_day?
+      label = 'True'
+    else
+      label = 'False'
+    end
+    label
+  end
+  
+  # Generates a label to say whether it's a praying day in the Lords. Or not
+  def is_lords_praying_day_label
+    if self.is_lords_praying_day?
+      label = 'True'
+    else
+      label = 'False'
+    end
+    label
+  end
 end
