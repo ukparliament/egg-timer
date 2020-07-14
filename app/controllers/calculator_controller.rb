@@ -327,10 +327,6 @@ def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_cou
     # If the date we've found was both a Commons and a Lords praying day, we add another day to the count.
     day_count +=1 if date.is_joint_praying_day?
     
-    puts "*****"
-    puts date
-    puts day_count
-    
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
     if date.is_unannounced?
