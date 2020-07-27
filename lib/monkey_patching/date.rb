@@ -45,78 +45,71 @@ class Date
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
-  
-  
-
-  # edited to here
-  
-  # checks if either House is sitting on a day
-  # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
-  # so in a parliament sense that House did not "sit" on this day
+  # We want to check if this is a praying sitting day in either House.
   def is_either_house_praying_sitting_day?
     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day?
   end
   
-  # checks if both Houses are sitting on a day
-  # naive. it might be that this calendar day is a continuation of a previous day's sitting for one or both Houses
-  # so in a parliament sense that House did not "sit" on this day
+  # We want to check if this is a praying sitting day in both Houses.
   def is_joint_praying_sitting_day?
     self.is_commons_praying_sitting_day? and self.is_lords_praying_sitting_day?
   end
   
-  # checks if this is a parliamentary sitting day for one or both Houses
-  # does not include days continued from previous sitting days
+  # We want to check if this is a parliamentary sitting day in either House.
   def is_either_house_parliamentary_sitting_day?
     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
   end
   
-  # checks if this is a parliamentary sitting day for both Houses
-  # does not include days continued from previous sitting days
+  # We want to check if this is a parliamentary sitting day in both Houses.
   def is_joint_parliamentary_sitting_day?
     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
   end
   
-  # check if either house is adjourned on a day
-  # returns true if one or both Houses are adjourned
+  # We want to check if this is an adjournment day in either House.
   def is_adjournment_day?
     AdjournmentDay.all.where( 'date = ?',  self ).first
   end
   
-  # check if the commons is adjourned on a day
+  # We want to check if this is an adjournment day in the Commons.
   def is_commons_adjournment_day?
     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 1 ).first
   end
   
-  # check if the lords is adjourned on a day
+  # We want to check if this is an adjournment day in the Lords.
   def is_lords_adjournment_day?
     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 2 ).first
   end
   
-  # check if parliament is prorogued on a day
+  # We want to check if Parliament is prorogued on this day.
   def is_prorogation_day?
     ProrogationDay.all.where( 'date = ?',  self ).first
   end
   
-  # check if parliament is dissolved on a day
+  # We want to check if Parliament is dissolved on this day.
   def is_dissolution_day?
     DissolutionDay.all.where( 'date = ?',  self ).first
   end
   
-  # used to check if something / anything has been announced for a date.
-  # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
-  # or a day during a prorogation or dissolution
-  def is_announced?
+  # We want to check if this is a day for which we have something in the calendar.
+  # That might be a parliamentary sitting day, a praying sitting day, a virtual sitting day, an adjournment day, a day within prorogation or a day within dissolution.
+  def is_calendar_populated?
     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
   end
   
-  # used to check if nothing has yet been announced 
-  # whether that be a (naive) sitting day, a (naive) virtual sitting day, an adjournment in one or both houses 
-  # or a day during a prorogation or dissolution
-  # we use this to check if we've "run out of calendar" so we don't keep cycling into future days and loop infinitely
-  # this is our event horizon
-  def is_unannounced?
-    !self.is_announced?
+  # We want to check if this is a day for which we do not have anything in the calendar.
+  # We use this to check if we've "run out of calendar" so we don't keep cycling into future days and loop infinitely.
+  # This is our event horizon.
+  def is_calendar_not_populated?
+    !self.is_calendar_populated?
   end
+  
+  
+  
+  # edited to here
+  
+  
+  
+  
   
   # Checks if this is a praying adjournment day in the Commons
   # Praying adjournment days are during short periods of adjournment
@@ -294,7 +287,7 @@ class Date
   def first_praying_day_in_either_house
     
     # If this is an as yet unannounced day...
-    if self.is_unannounced?
+    if self.is_calendar_not_populated?
       
       # ...give up finding a first praying day in either House
       return nil
@@ -318,7 +311,7 @@ class Date
   def first_joint_praying_day
     
     # If this is an as yet unannounced day...
-    if self.is_unannounced?
+    if self.is_calendar_not_populated?
       
       # ...give up finding a first joint sitting day
       return nil
@@ -342,7 +335,7 @@ class Date
   def first_commons_praying_day
     
     # If this is an as yet unannounced day...
-    if self.is_unannounced?
+    if self.is_calendar_not_populated?
       
       # ...give up finding a first Commons praying day
       return nil
@@ -367,7 +360,7 @@ class Date
   def first_joint_parliamentary_sitting_day
     
     # If this is an as yet unannounced day...
-    if self.is_unannounced?
+    if self.is_calendar_not_populated?
       
       # ...give up finding a first joint sitting day
       return nil
@@ -391,7 +384,7 @@ class Date
   def first_commons_parliamentary_sitting_day
     
     # If this is an as yet unannounced day...
-    if self.is_unannounced?
+    if self.is_calendar_not_populated?
       
       # ...give up finding a first Commons sitting day
       return nil
