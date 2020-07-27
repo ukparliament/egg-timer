@@ -127,7 +127,7 @@ def bicameral_parliamentary_days_calculation( date, target_day_count )
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if date.is_unannounced?
+    if date.is_calendar_not_populated?
       
       # This error message is displayed to users.
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
@@ -172,7 +172,7 @@ def bicameral_first_to_ten_calculation( date, target_day_count )
   
       # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
       # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-      if date.is_unannounced?
+      if date.is_calendar_not_populated?
         
         # This error message is displayed to users.
         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
@@ -229,7 +229,7 @@ def commons_praying_days_calculation( date, target_day_count )
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if date.is_unannounced?
+    if date.is_calendar_not_populated?
       
       # This error message is displayed to users unless an error message was set earlier
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
@@ -280,7 +280,7 @@ def bicameral_praying_days_calculation_either_house_sitting( date, target_day_co
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if date.is_unannounced?
+    if date.is_calendar_not_populated?
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
       break
     end
@@ -329,7 +329,7 @@ def bicameral_praying_days_calculation_both_houses_sitting( date, target_day_cou
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if date.is_unannounced?
+    if date.is_calendar_not_populated?
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
       break
     end
@@ -367,7 +367,7 @@ def treaty_period_a_calculation( date, target_day_count )
     
       # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
       # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-      if date.is_unannounced?
+      if date.is_calendar_not_populated?
       
         # This error message is displayed to users.
         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
@@ -424,7 +424,7 @@ def commons_parliamentary_days_calculation( date, target_day_count )
     
     # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
     # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-    if date.is_unannounced?
+    if date.is_calendar_not_populated?
       
       # This error message is displayed to users.
       @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
