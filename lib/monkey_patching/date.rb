@@ -275,12 +275,13 @@ class Date
   
   # End of set of methods to work out the type of a given day.
   
+
   
-  
+  # A set of methods to find the first day of a given type.
   
   # We want to find the first praying day in either House.
-  # This method is used when an Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first praying sitting day in either House following the laying.
-  # This method is used for negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.
+  # This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first praying sitting day in either House following the laying.
+  # This method is used for bicameral negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.
   def first_praying_day_in_either_house
     
     # If this is a day on which the calendar is not yet populated...
@@ -289,16 +290,16 @@ class Date
       # ...then we cannot find a first praying day so we stop looking.
       return nil
     
-     # If this is a day on which the calendar is populated...
+    # If this is a day on which the calendar is populated...
     else
       
       # ...then if this is not a praying day in either House...
       unless self.is_either_house_praying_day?
         
-        # ...go to the next day and check that.
+        # ...then go to the next day and check that.
         self.next_day.first_praying_day_in_either_house
         
-      # ..then if this is a praying day in either House..
+      # ...then if this is a praying day in either House...
       else
         
         # ...then return this day as the first praying day in either House.
@@ -307,107 +308,134 @@ class Date
     end
   end
   
-  
-      # edited to here
-  
-  # cycles to get first joint praying day
-  # used for made affirmatives when both Houses must be sitting
+  # We want to find the first praying day in both Houses.
+  # This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in both Houses following the laying.
+  # This method is used for bicameral made affirmatives where the enabling legislation specifies that both Houses must be sitting.
   def first_joint_praying_day
     
-    # If this is an as yet unannounced day...
+    # If this is a day on which the calendar is not yet populated...
     if self.is_calendar_not_populated?
       
-      # ...give up finding a first joint sitting day
+      # ...then we cannot find a first praying day so we stop looking.
       return nil
     
-    # If this isn't an as yet unnanounced day...
+    # If this is a day on which the calendar is populated...
     else
       
-      # ...if this is not a joint praying day, go check the next one
+      # ...then if this is not a praying day in both Houses...
       unless self.is_joint_praying_day?
+        
+        # ...then go to the next day and check that.
         self.next_day.first_joint_praying_day
         
-      # ..if this is a joint sitting day, return it
+      # ...then if this is a praying day in both Houses...
       else
+        
+        # ...then return this day as the first praying day in both Houses.
         self
       end
     end
   end
   
-  # Cycles to get first Commons praying day
-  # Used for negative SIs and some made affirmatives where the clock starts ticking from the first sitting day if the instrument is laid during an long adjournment (> 4 days)
+  # We want to find the first praying day in the Commons.
+  # This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in the Commons following the laying.
+  # This method is used for negative or made affirmative SIs - laid in the Commons and not laid in the Lords.
   def first_commons_praying_day
     
-    # If this is an as yet unannounced day...
+    # If this is a day on which the calendar is not yet populated...
     if self.is_calendar_not_populated?
       
-      # ...give up finding a first Commons praying day
+      # ...then we cannot find a first Commons praying day so we stop looking.
       return nil
     
-    # If this isn't an as yet unnanounced day...
+    # If this is a day on which the calendar is populated...
     else
       
-      # ...if this is not a praying day in either House, go check the next one
+      # ...then if this is not a praying day in the Commons...
       unless self.is_commons_praying_day?
+        
+        # ...then go to the next day and check that.
         self.next_day.first_commons_praying_day
         
-      # ..if this is a praying day in either House, return it
+      # ...then if this is a praying day in the Commons...
       else
+        
+        # ...then return this day as the first praying day in the Commons.
         self
       end
     end
   end
   
-  # cycles to get first joint sitting day
-  # used for pnsis where the clock starts ticking from the first joint sitting day
-  # pnsis use parliamentary sitting days
+  # We want to find the first parliamentary sitting day in both Houses.
+  # This method is used when a Proposed Negative Statutory Instrument is laid.
+  # Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.
   def first_joint_parliamentary_sitting_day
     
-    # If this is an as yet unannounced day...
+    # If this is a day on which the calendar is not yet populated...
     if self.is_calendar_not_populated?
       
-      # ...give up finding a first joint sitting day
+      # ...then we cannot find a first parliamentary sitting day in both Houses so we stop looking.
       return nil
     
-    # If this isn't an as yet unnanounced day...
+    # If this is a day on which the calendar is populated...
     else
       
-      # ...if this is not a joint sitting day, go check the next one
+      # ...then if this is not a parliamentary sitting day in both Houses...
       unless self.is_joint_parliamentary_sitting_day?
+        
+        # ...then go to the next day and check that.
         self.next_day.first_joint_parliamentary_sitting_day
         
-      # ..if this is a joint sitting day, return it
+      # ...then if this is a parliamentary sitting day in both Houses...
       else
+        
+        # ...then return this day as the first parliamentary sitting day in both Houses.
         self
       end
     end
   end
   
-  # cycles to get first House of Commons parliamentary sitting day
-  # Used for treaty period B
+  # We want to find the first parliamentary sitting day in the Commons.
+  # This method is used when a motion to not ratify a treaty in either House is approved - and the Government make a statement that the treaty should nonetheless be ratified, triggering treaty scrutiny period B.
+  # Treaty scrutiny period B starts on the first Commons parliamentary sitting day following the date of the Government statement.
   def first_commons_parliamentary_sitting_day
     
-    # If this is an as yet unannounced day...
+    # If this is a day on which the calendar is not yet populated...
     if self.is_calendar_not_populated?
       
-      # ...give up finding a first Commons sitting day
+      # ...then we cannot find a first parliamentary sitting day in the Commons so we stop looking.
       return nil
     
-    # If this isn't an as yet unnanounced day...
+    # If this is a day on which the calendar is populated...
     else
       
-      # ...if this is not a House of Commons parliamentary sitting day, go check the next one
+      # ...then if this is not a parliamentary sitting day in the Commons...
       unless self.is_commons_parliamentary_sitting_day?
+        
+        # ...then go to the next day and check that.
         self.next_day.first_commons_parliamentary_sitting_day
         
-      # ..if this is a House of Commons parliamentary sitting day, return it
+      # ...then if this is a parliamentary sitting day in the Commons...
       else
+        
+        # ...then return this day as the first parliamentary sitting day in the Commons.
         self
       end
     end
   end
   
-  # Generate label for the day type in the Commons in a session
+  # End of set of methods to find the first day of a given type.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Generate label for the day type in the Commons in a session.
   def commons_day_type
     if self.is_commons_parliamentary_sitting_day?
       day_type = 'Sitting day'
@@ -423,7 +451,7 @@ class Date
     day_type
   end
   
-  # Generate label for the day type in the Lords in a session
+  # Generate label for the day type in the Lords in a session.
   def lords_day_type
     if self.is_lords_parliamentary_sitting_day?
       day_type = 'Sitting day'
@@ -439,7 +467,7 @@ class Date
     day_type
   end
   
-  # Generates a label to say whether it's a praying day in the Commons. Or not
+  # Generate a label to say whether it's a praying day in the Commons or not.
   def is_commons_praying_day_label
     if self.is_commons_praying_day?
       label = 'True'
@@ -449,7 +477,7 @@ class Date
     label
   end
   
-  # Generates a label to say whether it's a praying day in the Lords. Or not
+  # Generate a label to say whether it's a praying day in the Lords or not.
   def is_lords_praying_day_label
     if self.is_lords_praying_day?
       label = 'True'
