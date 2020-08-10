@@ -8,6 +8,10 @@ class MetaController < ApplicationController
   	@title = "How the calendar uses the information you create"
   end
   
+  def prorogation_dissolution
+  	@title = "What to do at prorogation and dissolution"
+  end
+  
   def schema
   	@title = "Database schema"
   end
