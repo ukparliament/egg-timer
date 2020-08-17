@@ -28,8 +28,8 @@
 	<%= content_tag( 'li', "Click on 'Heroku Scheduler'." ) %>
 	<%= content_tag( 'li', "Click on the cross with tooltip 'Delete this job'. This will stop the application importing updates from the Google calendars until we've finished." ) %>
 	<%= content_tag( 'li', "Open your terminal and navigate to the application directory." ) %>
-	<%= content_tag( 'li', "Pull the database from Heroku by running 'heroku pg:pull'. This will give you an up to date copy of the database on your machine." ) %>
-	<%= content_tag( 'li', "In your terminal, run 'psql parliament-calendar' to open the database." ) %>
+	<%= content_tag( 'li', "Pull the database from Heroku by running #{content_tag( 'code', 'heroku pg:pull' )}. This will give you an up to date copy of the database on your machine.".html_safe ) %>
+	<%= content_tag( 'li', "In your terminal, run #{content_tag( 'code', 'psql parliament-calendar' )} to open the database.".html_safe ) %>
 </ol>
 
 <%= content_tag( 'h2', 'What to do upon the announcement of prorogation' ) %>
@@ -46,9 +46,15 @@
 
 <ol>
 	<%= content_tag( 'li', "Find the current session. We do this by running #{content_tag( 'code', 'select * from sessions where end_date is null;' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Add an end date to the current session. We do this by running 'update sessions set end_date='DATE' where id = ID; where DATE is the date of prorogation in YYYY-MM-DD format and ID is the ID of current session" ) %>
-	<%= content_tag( 'li', "Find the ID of the current parliament. We do this by running 'select * from parliament_periods order by start_date desc limit 1;'" ) %>
-	<%= content_tag( 'li', "Create the new prorogation. We do this by running 'insert into prorogation_periods (number, start_date, end_date, parliament_period_id) values (NUMBER, 'START_DATE', 'END_DATE', PARLIAMENT_ID);' where NUMBER is the number of the session in the parliament, START_DATE is the day following the prorogation date, END_DATE is either the day before the start date of the next session if the prorogation is followed by a session or the date of dissolution if the prorogation is followed by dissolution and PARLIAMENT_ID is the ID returned from the previous query" ) %>
+	<%= content_tag( 'li', "Add an end date to the current session. We do this by running #{content_tag( 'code', "update sessions set end_date='DATE' where id = ID;" )} where DATE is the date of prorogation in YYYY-MM-DD format and ID is the ID of current session.".html_safe ) %>
+	<%= content_tag( 'li', "Find the ID of the current parliament. We do this by running #{content_tag( 'code', 'select * from parliament_periods order by start_date desc limit 1;')}.".html_safe ) %>
+	
+	
+	<%= content_tag( 'li', "Create the new prorogation. We do this by running #{content_tag( 'code', "insert into prorogation_periods (number, start_date, end_date, parliament_period_id) values (NUMBER, 'START_DATE', 'END_DATE', PARLIAMENT_ID);" )} where NUMBER is the number of the session in the parliament, START_DATE is the day following the prorogation date, END_DATE is either the day before the start date of the next session if the prorogation is followed by a session or the date of dissolution if the prorogation is followed by dissolution and PARLIAMENT_ID is the ID returned from the previous query.".html_safe ) %>
+	
+	
+	
+	
 	<%= content_tag( 'li', "Run a rake task to populate prorogation days from the prorogation period. Note that this script does not exist yet and will need to be written when the next prorogation is announced'" ) %>
 </ol>
 
