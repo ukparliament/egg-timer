@@ -61,8 +61,8 @@
 
 <ol>
 	<%= content_tag( 'li', "Find the number of the current parliament. Do this by running #{content_tag( 'code','select * from parliament_periods order by start_date desc limit 1;' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Create a new dissolution period. Do this by running: #{content_tag( 'code', 'insert into dissolution_periods(number, start_date, end_date) values (NUMBER, 'START_DATE', 'END_DATE');')} where NUMBER is the number of the current parliament, START DATE is the day following the dissolution date as named in the dissolution proclamation and END_DATE is the day before Parliament returns from dissolution as named in the dissolution proclamation." ) %>
-	<%= content_tag( 'li', "Run a rake task to populate dissolution days from the dissolution period. Note that this script does not exist yet and will need to be written when the next dissolution is announced" ) %>
+	<%= content_tag( 'li', "Create a new dissolution period. Do this by running: #{content_tag( 'code', "insert into dissolution_periods(number, start_date, end_date) values (NUMBER, 'START_DATE', 'END_DATE');")} where NUMBER is the number of the current parliament, START DATE is the day following the dissolution date as named in the dissolution proclamation and END_DATE is the day before Parliament returns from dissolution as named in the dissolution proclamation.".html_safe ) %>
+	<%= content_tag( 'li', "Run a rake task to populate dissolution days from the dissolution period. Note that this script does not exist yet and will need to be written when the next dissolution is announced." ) %>
 </ol>
 
 <%= content_tag( 'h2', 'Pushing the data to Heroku' ) %>
