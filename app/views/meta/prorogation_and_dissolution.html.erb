@@ -72,9 +72,9 @@
 <%= content_tag( 'p', "The steps are:" ) %>
 
 <ol>
-	<%= content_tag( 'li', "We need to make sure the database on Heroku is empty before we push our local copy. To do this run 'heroku pg:reset'" ) %>
-	<%= content_tag( 'li', "Running reset will prompt for a password which is the name of the application: 'parliament-calendar'" ) %>
-	<%= content_tag( 'li', "We need to push our local database to Heroku. To do this run 'heroku pg:push parliament_calendar DATABASE_URL'" ) %>
+	<%= content_tag( 'li', "We need to make sure the database on Heroku is empty before we push our local copy. To do this run #{content_tag( 'code', 'heroku pg:reset')}.".html_safe ) %>
+	<%= content_tag( 'li', "This will prompt for a password which is the name of the application: 'parliament-calendar'." ) %>
+	<%= content_tag( 'li', "We need to push our local database to Heroku. To do this run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL')}.".html_safe ) %>
 </ol>
 
 <%= content_tag( 'h2', 'Restarting the syncing script' ) %>
@@ -84,12 +84,12 @@
 <%= content_tag( 'p', "The steps are:" ) %>
 
 <ol>
-	<%= content_tag( 'li', 'Sign into Heroku' ) %>
-	<%= content_tag( 'li', 'Find and navigate to the application (parliament-calendar)' ) %>
-	<%= content_tag( 'li', "Navigate to the 'resources' tab" ) %>
-	<%= content_tag( 'li', "Click on 'Heroku Scheduler'" ) %>
-	<%= content_tag( 'li', "Click on 'Add job'" ) %>
-	<%= content_tag( 'li', "Add a job to run 'rake sync' every 10 minutes and click 'Save'" ) %>
+	<%= content_tag( 'li', 'Sign into Heroku.' ) %>
+	<%= content_tag( 'li', 'Find and navigate to the application (parliament-calendar).' ) %>
+	<%= content_tag( 'li', "Navigate to the 'resources' tab." ) %>
+	<%= content_tag( 'li', "Click on 'Heroku Scheduler'." ) %>
+	<%= content_tag( 'li', "Click on 'Add job'." ) %>
+	<%= content_tag( 'li', "Add a job to run 'rake sync' every 10 minutes and click 'Save'." ) %>
 </ol>
 
 
