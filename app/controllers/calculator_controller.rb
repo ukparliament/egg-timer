@@ -89,16 +89,3 @@ class CalculatorController < ApplicationController
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
