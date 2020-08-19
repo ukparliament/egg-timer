@@ -3,5 +3,6 @@ namespace :util do
   task bers: :environment do
     print `bundle exec rails server`
   end
+  
 
 end
