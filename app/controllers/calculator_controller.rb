@@ -1,4 +1,4 @@
-require 'calculations/BICAMERAL_PARLIAMENTARY_DAYS'
+require 'calculations/bicameral_parliamentary_days'
 #require 'CALCULATIONS/BICAMERAL_FIRST_TO_TEN'
 #require 'CALCULATIONS/COMMONS_PRAYING_DAYS'
 #require 'CALCULATIONS/BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING'
