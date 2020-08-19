@@ -1,6 +1,5 @@
 module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-  
-  # Calculation style 1
+
   # A method for calculating based on "bums on seats" in both Houses
   # Where both Houses must be sitting to count (Commons AND Lords)
   # Used for LROs, LOs, PBOs
