@@ -1,21 +1,21 @@
 require 'calculations/bicameral_parliamentary_days'
-#require 'CALCULATIONS/BICAMERAL_FIRST_TO_TEN'
-#require 'CALCULATIONS/COMMONS_PRAYING_DAYS'
-#require 'CALCULATIONS/BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING'
-#require 'CALCULATIONS/BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING'
-#require 'CALCULATIONS/TREATY_PERIOD_A'
-#require 'CALCULATIONS/COMMONS_PARLIAMENTARY_DAYS'
+require 'calculations/bicameral_first_to_ten'
+require 'calculations/commons_praying_days'
+require 'calculations/bicameral_praying_days_either_house_sitting'
+require 'calculations/bicameral_praying_days_both_houses_sitting'
+require 'calculations/treaty_period_a'
+require 'calculations/commons_parliamentary_days'
 
 # # Calculating the scrutiny period
 class CalculatorController < ApplicationController
   
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-  #include CALCULATION_BICAMERAL_FIRST_TO_TEN
-  #include CALCULATION_COMMONS_PRAYING_DAYS
-  #include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
-  #include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
-  #include CALCULATION_TREATY_PERIOD_A
-  #include CALCULATION_COMMONS_PARLIAMENTARY_DAYS
+  include CALCULATION_BICAMERAL_FIRST_TO_TEN
+  include CALCULATION_COMMONS_PRAYING_DAYS
+  include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
+  include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
+  include CALCULATION_TREATY_PERIOD_A
+  include CALCULATION_COMMONS_PARLIAMENTARY_DAYS
   
   # This is the code to generate the form that people can fill in.
   # Set a title for the page people see.
