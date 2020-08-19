@@ -1,9 +1,11 @@
 require 'CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS'
+require 'CALCULATION_BICAMERAL_FIRST_TO_TEN'
 
 # # Calculating the scrutiny period
 class CalculatorController < ApplicationController
   
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
+  include CALCULATION_BICAMERAL_FIRST_TO_TEN
   
   # This is the code to generate the form that people can fill in.
   # Set a title for the page people see.
@@ -46,44 +48,30 @@ class CalculatorController < ApplicationController
         
       # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders and Public Bodies Orders:
       when 1, 2, 4
-        
-        ##### call calculation style 1
         @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
       
       # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
       when 3
-        
-        #### call calculation style 2
         @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument and some made affirmatives
       when 5, 7
-    
-        #### call calculation style 3
         @end_date = commons_praying_days_calculation( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
       when 6, 9
-         
-        #### call calculation style 4
         @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count ) 
         
       # Calculate the **anticipated end date** for a Commons and Lords affirmative Statutory Instrument where both Houses sitting
       when 8
-       
-        #### call calculation style 5
         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for treaty period A:
       when 10
-        
-        #### call calculation style 6
         @end_date = treaty_period_a_calculation( @start_date, @day_count )
         
       # Calculate the **anticipated end date** for treaty period B:
       when 11
-      
-        #### call calculation style 7
         @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
       else
         @error_message = "Sorry, this procedure is not currently supported."
@@ -94,57 +82,7 @@ end
 
 
 
-# Calculation style 2
-# A method for calculating committee scrutiny periods for PNSIs
-# Based on parliamentary sitting days
-# Counted from first joint sitting day, then last House to 10
-def bicameral_first_to_ten_calculation( date, target_day_count )
-  
-  # We start counting on the **first day when both Houses are sitting** after the instrument is laid and never on the day of laying.
-  # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
-  if date.next_day.first_joint_parliamentary_sitting_day
-    
-    # We set the date to start counting as the first joint parliamentary sitting day.
-    date = date.next_day.first_joint_parliamentary_sitting_day
 
-  	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
-    # The first joint sitting day counts as day 1, so we count from 1, not 0
-    commons_day_count = 1
-    lords_day_count = 1
-    
-    # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
-    # This loop runs whilst the Commons have sat for less than 10 days ***or*** the Lords have sat for less than 10 days. If both Houses have sat for at least 10 days, it stops running.
-    while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
-
-      # Go to the **next day**
-      date = date.next_day
-
-      # PNSIs use parliamentary sitting days and not naive calendar days.
-      # If the Lords sat on the date we've found, we add another day to the count.
-      lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
-      # If the Commons sat on the date we've found, we add another day to the count.
-      commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
-  
-      # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-      # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-      if date.is_calendar_not_populated?
-        
-        # This error message is displayed to users.
-        @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-        break
-      end
-    end
-
-# If we didn't find any **future joint sitting date** in our calendar, we can't calculate the scrutiny period - and we show an error message.
-  else
-    
-    # This error message is displayed to users.
-    @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-  end
-  
-  # Return date for display on page
-  date
-end
 
 # Calculation style 3
 # Used for Commons only negative and affirmative SIs
