@@ -3,12 +3,10 @@ namespace :doc do
 
   require 'redcarpet'
 
-  desc ".rb with markdown comments -> .md, .html: path=path/to/file.rb"
+  desc ".rb + .md comments -> /public/ .md, .html: path=path/to/file.rb"
   task comment: :environment do
     the_path = ENV['path'] || "./lib/monkey_patching/date.rb"
-    new_path = './public/' + the_path.split( '/' ).last + '.html'
-    File.write(new_path, commentariat(the_path))
-    system %{open "#{new_path}"}
+    commentariat(the_path)
   end
   
 end
@@ -18,11 +16,16 @@ end
 def commentariat(with_path)
 markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 html_out = ""
+markdown_out = ""
+html_path = './public/' + with_path.split( '/' ).last + '.html'
+markdown_path = './public/' + with_path.split( '/' ).last + '.md'
+
 html_out << %{<!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="alternate" type="text/markdown" href="#{with_path.split( '/' ).last + '.md'}">
     <style>
       body {
         max-width: 42rem;
@@ -49,16 +52,17 @@ html_out << %{<!DOCTYPE html>
       font-weight:bold;
       font-size:2rem;}
     </style>
-    <title>#{ARGV[0]}</title>
+    <title>#{with_path}</title>
   </head>
   <body>}
 
 File.foreach(with_path).with_index do |line, line_num|
 
-  result = /^\s*#\s*(?<content>.*)/.match(line)
+  comment_line = /^\s*#\s*(?<content>.*)/.match(line)
   
-  if result
-  	html_out << markdown.render(result["content"])
+  if comment_line
+  	html_out << markdown.render(comment_line["content"])
+  	markdown_out << comment_line["content"] << "\n"
   elsif line.strip != ""
   	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre>#{line_num + 1} " << line << "</pre></code>"
   end
@@ -66,5 +70,10 @@ File.foreach(with_path).with_index do |line, line_num|
 end
 
 html_out << %{<footer><p><big>&times;&times;&times;</big></p></footer></body></html>}
-html_out
+
+
+File.write(html_path, html_out)
+File.write(markdown_path, markdown_out)
+system %{open "#{html_path}"}
+    
 end
