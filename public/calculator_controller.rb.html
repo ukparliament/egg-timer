@@ -84,25 +84,25 @@
 <ul>
 <li>the <strong>type of the procedure</strong> itself, which we refer to by a number</li>
 </ul>
-<pre><code>    procedure = params[&quot;procedure&quot;].to_i if params[&quot;procedure&quot;]
+<pre><code>    procedure = params[&#39;procedure&#39;].to_i if params[&#39;procedure&#39;]
 </code></pre>
 <ul>
 <li>the <strong>start date</strong>, for example: &quot;2020-05-06&quot;</li>
 </ul>
-<pre><code>    start_date = params[&quot;start-date&quot;]
+<pre><code>    start_date = params[&#39;start-date&#39;]
 </code></pre>
 <ul>
 <li>the <strong>day count</strong></li>
 </ul>
-<pre><code>    day_count = params[:day_count]
+<pre><code>    day_count = params[&#39;day-count&#39;]
 </code></pre>
 <p>Check that all the parameters have been provided by the form ...</p>
-<pre><code>    if start-date.blank? or day-count.blank? or day-count.to_i == 0 or procedure.nil?
+<pre><code>    if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
 </code></pre>
-<p>... if not, set an error message...</p>
+<p>... if not, set an error message ...</p>
 <pre><code>        @title = &quot;Sorry, there was not enough information provided.&quot;
 </code></pre>
-<p>...and display the error.</p>
+<p>... and display the error.</p>
 <pre><code>      render :template =&gt; &#39;calculator/not_enough_information&#39;
 </code></pre>
 <p>If the form did provide all the required information, do the calculation:</p>
@@ -116,7 +116,7 @@
 <ul>
 <li>the <strong>number of days</strong> to count</li>
 </ul>
-<pre><code>      @day_count = params[&quot;day-count&quot;].to_i
+<pre><code>      @day_count = day_count.to_i
 </code></pre>
 <ul>
 <li>make the text of the date passed into a date format</li>
