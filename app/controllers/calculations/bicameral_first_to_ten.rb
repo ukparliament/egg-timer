@@ -21,7 +21,7 @@ module CALCULATION_BICAMERAL_FIRST_TO_TEN
       # This loop runs whilst the Commons have sat for less than 10 days ***or*** the Lords have sat for less than 10 days. If both Houses have sat for at least 10 days, it stops running.
       while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
 
-        # Go to the **next day**
+        # Go to the **next day**.
         date = date.next_day
 
         # PNSIs use parliamentary sitting days and not naive calendar days.
@@ -30,7 +30,7 @@ module CALCULATION_BICAMERAL_FIRST_TO_TEN
         # If the Commons sat on the date we've found, we add another day to the count.
         commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
   
-        # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
+        # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day.
         # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
         if date.is_calendar_not_populated?
         
@@ -47,7 +47,7 @@ module CALCULATION_BICAMERAL_FIRST_TO_TEN
       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
     end
   
-    # Return date for display on page
+    # Return the anticpated end date of the scrutiny period for display on page.
     date
   end
 end
