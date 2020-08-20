@@ -3,7 +3,7 @@ namespace :doc do
 
   require 'redcarpet'
 
-  desc "Ruby comments markdown -> HTML: path=path/to/file.rb"
+  desc ".rb with markdown comments -> .md, .html: path=path/to/file.rb"
   task comment: :environment do
     the_path = ENV['path'] || "./lib/monkey_patching/date.rb"
     new_path = the_path + ".html"
