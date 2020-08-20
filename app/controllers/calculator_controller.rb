@@ -1,3 +1,6 @@
+# # Calculator controller to build the form and run the calculations.
+
+# Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 require 'calculations/bicameral_parliamentary_days'
 require 'calculations/bicameral_first_to_ten'
 require 'calculations/commons_praying_days'
@@ -6,9 +9,10 @@ require 'calculations/bicameral_praying_days_both_houses_sitting'
 require 'calculations/treaty_period_a'
 require 'calculations/commons_parliamentary_days'
 
-# # Calculating the scrutiny period
+# ## The controller itself.
 class CalculatorController < ApplicationController
   
+  # Include code from each of the modules for the different styles of calculation.
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
   include CALCULATION_BICAMERAL_FIRST_TO_TEN
   include CALCULATION_COMMONS_PRAYING_DAYS
@@ -17,17 +21,23 @@ class CalculatorController < ApplicationController
   include CALCULATION_TREATY_PERIOD_A
   include CALCULATION_COMMONS_PARLIAMENTARY_DAYS
   
-  # This is the code to generate the form that people can fill in.
-  # Set a title for the page people see.
+  # ### This is the code to provide information for the form that users can fill in.
   def index
+    
+    # Set a title for the page people see.
     @title = "Calculate scrutiny periods"
+    
+    # Find all the active procedures in display order - to populate the procedure radio buttons on the form.
     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
   
-  # Having filled in the form and pressed 'Calculate' this code runs to do the calculation.
-  # In order to calculate the scrutiny period, we need:
+  # ### When the user has pressed 'Calculate', this code runs the calculation.
   def calculate
+    
+    # Set a title for the page people see.
 	  @title = "Calculated scrutiny period"
+    
+    # In order to calculate the scrutiny period, we need:
     
 	  # * the **type of the procedure** itself, which we refer to by a number
     procedure = params["procedure"].to_i if params["procedure"]
@@ -35,54 +45,62 @@ class CalculatorController < ApplicationController
     # * the **start date**, for example: "2020-05-06"
     start_date = params["start-date"]
     
-    # Check that all the parameters have been provided by the form
-    # And if not throw an error
-    if params['start-date'].blank? or params['day-count'].blank? or params['day-count'].to_i == 0 or procedure.nil?
+    # * the **day count**
+    day_count = params[:day_count]
+    
+    # Check that all the parameters have been provided by the form ...
+    if start-date.blank? or day-count.blank? or day-count.to_i == 0 or procedure.nil?
+      
+      ...if not, set an error message...
 	    @title = "Sorry, there was not enough information provided."
+      
+      # ...and display the error.
       render :template => 'calculator/not_enough_information'
       
-    # If the form did provide all the required information, do the calculation.
+    # If the form did provide all the required information, do the calculation:
     else
       
-      # * find the procedure in the database
+      # * find the procedure
       @procedure = Procedure.find( procedure )
       
       # * the **number of days** to count
       @day_count = params["day-count"].to_i
       
-      # * make the date passed into a date the code understands...
+      # * make the text of the date passed into a date format
       @start_date = Date.parse( start_date )
       
-      # Depending upon the procedure specified, we run the appropriate calculation
+      # To calculate the ** anticipated end date**, we select the calculation based on the type of procedure:
       case @procedure.id
         
-      # Calculate the **anticipated end date** for Legislative Reform Orders, Localism Orders and Public Bodies Orders:
+      # Legislative Reform Orders, Localism Orders and Public Bodies Orders
       when 1, 2, 4
         @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
       
-      # Calculate the **anticipated end date** for a Proposed Statutory Instrument (PNSI):
+      # Proposed Statutory Instrument (PNSI)
       when 3
         @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for a Commons only negative Statutory Instrument and some made affirmatives
+      # Commons only negative Statutory Instrument and some made affirmatives
       when 5, 7
         @end_date = commons_praying_days_calculation( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for a Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
+      # Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
       when 6, 9
         @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count ) 
         
-      # Calculate the **anticipated end date** for a Commons and Lords affirmative Statutory Instrument where both Houses sitting
+      # Commons and Lords affirmative Statutory Instrument where both Houses are sitting
       when 8
         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for treaty period A:
+      # Treaty period A
       when 10
         @end_date = treaty_period_a_calculation( @start_date, @day_count )
         
-      # Calculate the **anticipated end date** for treaty period B:
+      # Treaty period B
       when 11
         @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
+        
+      # Otherwise set an error message.
       else
         @error_message = "Sorry, this procedure is not currently supported."
       end
