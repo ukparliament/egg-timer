@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        max-width: 38rem;
+        margin: auto;
+        padding: 1rem;
+        font-family: system-ui;
+        color: black;
+        background-color: white;
+        font-size:larger;
+      }
+      p {line-height: 1.4;}
+      code {
+      color:lightsteelblue;
+      }
+      footer {
+      margin:0 auto;
+      color:gray;
+      display:table;
+      }
+      footer big {
+      color:crimson;
+      font-weight:bold;
+      font-size:2rem;}
+    </style>
+    <title>doc:comment</title>
+  </head>
+  <body><pre><code>class Date
+</code></pre>
+<p>A monkey patched Ruby date class to handle UK Parliament specific day types.</p>
+<p>A set of methods to work out the type of a given day.</p>
+<p>We want to check if this is a praying sitting day in the Commons.</p>
+<p>We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.</p>
+<p>For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. </p>
+<p>If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.</p>
+<pre><code>  def is_commons_praying_sitting_day?
+</code></pre>
+<pre><code>    SittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 1 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying sitting day in the Lords.</p>
+<p>We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.</p>
+<p>For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. </p>
+<p>If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.</p>
+<pre><code>  def is_lords_praying_sitting_day?
+</code></pre>
+<pre><code>    SittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 2 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a parliamentary sitting day in the Commons. </p>
+<p>We use a more strict definition of a sitting day. We don’t include dates for which the Commons continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
+<pre><code>  def is_commons_parliamentary_sitting_day?
+</code></pre>
+<pre><code>    SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 1 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a parliamentary sitting day in the Lords. </p>
+<p>We use a more strict definition of a sitting day. We don’t include dates for which the Lords continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
+<pre><code>  def is_lords_parliamentary_sitting_day?
+</code></pre>
+<pre><code>    SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 2 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a virtual sitting day in the Commons: this is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
+<p>A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.</p>
+<p>As of the end of June 2020, the Commons has had no virtual sitting days.</p>
+<pre><code>  def is_commons_virtual_sitting_day?
+</code></pre>
+<pre><code>    VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 1 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a virtual sitting day in the Lords: this is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
+<p>A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.</p>
+<pre><code>  def is_lords_virtual_sitting_day?
+</code></pre>
+<pre><code>    VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 2 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying sitting day in either House.</p>
+<pre><code>  def is_either_house_praying_sitting_day?
+</code></pre>
+<pre><code>    self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying sitting day in both Houses.</p>
+<pre><code>  def is_joint_praying_sitting_day?
+</code></pre>
+<pre><code>    self.is_commons_praying_sitting_day? and self.is_lords_praying_sitting_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a parliamentary sitting day in either House.</p>
+<pre><code>  def is_either_house_parliamentary_sitting_day?
+</code></pre>
+<pre><code>    self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a parliamentary sitting day in both Houses.</p>
+<pre><code>  def is_joint_parliamentary_sitting_day?
+</code></pre>
+<pre><code>    self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is an adjournment day in either House.</p>
+<pre><code>  def is_adjournment_day?
+</code></pre>
+<pre><code>    AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is an adjournment day in the Commons.</p>
+<pre><code>  def is_commons_adjournment_day?
+</code></pre>
+<pre><code>    AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 1 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is an adjournment day in the Lords.</p>
+<pre><code>  def is_lords_adjournment_day?
+</code></pre>
+<pre><code>    AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 2 ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if Parliament is prorogued on this day.</p>
+<pre><code>  def is_prorogation_day?
+</code></pre>
+<pre><code>    ProrogationDay.all.where( &#39;date = ?&#39;,  self ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if Parliament is dissolved on this day.</p>
+<pre><code>  def is_dissolution_day?
+</code></pre>
+<pre><code>    DissolutionDay.all.where( &#39;date = ?&#39;,  self ).first
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a day for which we have something in the calendar.</p>
+<p>That might be a parliamentary sitting day, a praying sitting day, a virtual sitting day, an adjournment day, a day within prorogation or a day within dissolution.</p>
+<pre><code>  def is_calendar_populated?
+</code></pre>
+<pre><code>    self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a day for which we do not have anything in the calendar.</p>
+<p>We use this to check if we&#39;ve &quot;run out of calendar&quot; so we don&#39;t keep cycling into future days and loop infinitely.</p>
+<p>This is our event horizon.</p>
+<pre><code>  def is_calendar_not_populated?
+</code></pre>
+<pre><code>    !self.is_calendar_populated?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying adjournment day in the Commons.</p>
+<p>During a short adjournment, adjournment days are praying days.</p>
+<p>This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.</p>
+<p>In all known cases “short” is defined as not more than four days.</p>
+<p>For the purposes of calculating praying days, virtual sitting days count as adjournment days.</p>
+<pre><code>  def is_commons_praying_adjournment_day?( maximum_day_count )
+</code></pre>
+<p>We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.</p>
+<pre><code>    if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
+</code></pre>
+<p>Having found that this is a Commons adjournnment day or a Commons virtual sitting day, we start the adjournment day count at 1.</p>
+<pre><code>      adjournment_day_count = 1
+</code></pre>
+<p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
+<pre><code>      date = self
+</code></pre>
+<pre><code>      for i in ( 1..maximum_day_count )
+</code></pre>
+<p>Go forward one day.</p>
+<pre><code>        date = date.next_day
+</code></pre>
+<p>If this is a Commons adjournnment day or a Commons virtual sitting day...</p>
+<pre><code>        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+</code></pre>
+<p>...add one to the adjournment day count.</p>
+<pre><code>          adjournment_day_count +=1
+</code></pre>
+<p>If this is not a Commons adjournnment day or a Commons virtual sitting day...</p>
+<pre><code>        else
+</code></pre>
+<p>...stop cycling through following days.</p>
+<pre><code>          break
+</code></pre>
+<pre><code>        end
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
+<pre><code>      date = self
+</code></pre>
+<pre><code>      for i in ( 1..maximum_day_count )
+</code></pre>
+<p>Go back one day.</p>
+<pre><code>        date = date.prev_day
+</code></pre>
+<p>If this is a Commons adjournnment day or a Commons virtual sitting day...</p>
+<pre><code>        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+</code></pre>
+<p>...add one to the adjournment day count.</p>
+<pre><code>          adjournment_day_count +=1
+</code></pre>
+<p>If this is not a Commons adjournnment day or a Commons virtual sitting day...</p>
+<pre><code>        else  
+</code></pre>
+<p>...stop cycling through preceding days.</p>
+<pre><code>          break
+</code></pre>
+<pre><code>        end
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>If the total number of continuous adjournment days is more than the maximum day count...</p>
+<pre><code>      if adjournment_day_count &gt; maximum_day_count
+</code></pre>
+<p>...then this day is not part of a short adjournment and so does not count as a praying day.</p>
+<pre><code>        is_commons_short_adjournment = false
+</code></pre>
+<p>If the total number of continuous adjournment days is less than or the same as the maximum day count...</p>
+<pre><code>      else
+</code></pre>
+<p>....then this day is part of a short adjournment and so does count as a praying day.</p>
+<pre><code>        is_commons_short_adjournment = true
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>Returns if this day is a part of a Commons short adjournment</p>
+<pre><code>      is_commons_short_adjournment
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying day in the Commons.</p>
+<p>A praying day in the Commons is either a praying sitting day in the Commons, or a praying adjournment day in the Commons.</p>
+<p>We pass &#39;4&#39; as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.</p>
+<pre><code>  def is_commons_praying_day?
+</code></pre>
+<pre><code>    self.is_commons_praying_sitting_day? or self.is_commons_praying_adjournment_day?( 4 )
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying adjournment day in the Lords.</p>
+<p>During a short adjournment, adjournment days are praying days.</p>
+<p>This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.</p>
+<p>In all known cases “short” is defined as not more than four days.</p>
+<p>For the purposes of calculating praying days, virtual sitting days count as adjournment days.</p>
+<pre><code>  def is_lords_praying_adjournment_day?( maximum_day_count )
+</code></pre>
+<p>We want to check if this is a Lords adjournnment day or a Lords virtual sitting day.</p>
+<pre><code>    if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?
+</code></pre>
+<p>Having found that this is a Lords adjournnment day or a Lords virtual sitting day, we start the adjournment day count at 1.</p>
+<pre><code>      adjournment_day_count = 1
+</code></pre>
+<p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
+<pre><code>      date = self
+</code></pre>
+<pre><code>      for i in ( 1..maximum_day_count )
+</code></pre>
+<p>Go forward one day.</p>
+<pre><code>        date = date.next_day
+</code></pre>
+<p>If this is a Lords adjournnment day or a Lords virtual sitting day...</p>
+<pre><code>        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+</code></pre>
+<p>...add one to the adjournment day count.</p>
+<pre><code>          adjournment_day_count +=1
+</code></pre>
+<p>If this is not a Lords adjournnment day or a Lords virtual sitting day...</p>
+<pre><code>        else
+</code></pre>
+<p>...stop cycling through following days.</p>
+<pre><code>          break
+</code></pre>
+<pre><code>        end
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
+<pre><code>      date = self
+</code></pre>
+<pre><code>      for i in ( 1..maximum_day_count )
+</code></pre>
+<p>Go back one day.</p>
+<pre><code>        date = date.prev_day
+</code></pre>
+<p>If this is a Lords adjournnment day or a Lords virtual sitting day...</p>
+<pre><code>        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+</code></pre>
+<p>...add one to the adjournment day count.</p>
+<pre><code>          adjournment_day_count +=1
+</code></pre>
+<p>If this is not a Lords adjournnment day or a Lords virtual sitting day...</p>
+<pre><code>        else  
+</code></pre>
+<p>...stop cycling through preceding days.</p>
+<pre><code>          break
+</code></pre>
+<pre><code>        end
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>If the total number of continuous adjournment days is more than the maximum day count...</p>
+<pre><code>      if adjournment_day_count &gt; maximum_day_count
+</code></pre>
+<p>...then this day is not part of a short adjournment and so does not count as a praying day.</p>
+<pre><code>        is_lords_short_adjournment = false
+</code></pre>
+<p>If the total number of continuous adjournment days is less than or the same as the maximum day count...</p>
+<pre><code>      else
+</code></pre>
+<p>....then this day is part of a short adjournment and so does count as a praying day.</p>
+<pre><code>        is_lords_short_adjournment = true
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>Returns if this day is a part of a Lords short adjournment</p>
+<pre><code>      is_lords_short_adjournment
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying day in the Lords.</p>
+<p>A praying day in the Lords is either a praying sitting day in the Lords, or a praying adjournment day in the Lords.</p>
+<p>We pass &#39;4&#39; as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.</p>
+<pre><code>  def is_lords_praying_day?
+</code></pre>
+<pre><code>    self.is_lords_praying_sitting_day? or self.is_lords_praying_adjournment_day?( 4 )
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying day in either House.</p>
+<pre><code>  def is_either_house_praying_day?
+</code></pre>
+<pre><code>    self.is_commons_praying_day? or self.is_lords_praying_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to check if this is a praying day in both Houses.</p>
+<pre><code>  def is_joint_praying_day?
+</code></pre>
+<pre><code>    self.is_commons_praying_day? and self.is_lords_praying_day?
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>End of set of methods to work out the type of a given day.</p>
+<p>A set of methods to find the first day of a given type.</p>
+<p>We want to find the first praying day in either House.</p>
+<p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first praying sitting day in either House following the laying.</p>
+<p>This method is used for bicameral negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.</p>
+<pre><code>  def first_praying_day_in_either_house
+</code></pre>
+<p>If this is a day on which the calendar is not yet populated...</p>
+<pre><code>    if self.is_calendar_not_populated?
+</code></pre>
+<p>...then we cannot find a first praying day so we stop looking.</p>
+<pre><code>      return nil
+</code></pre>
+<p>If this is a day on which the calendar is populated...</p>
+<pre><code>    else
+</code></pre>
+<p>...then if this is not a praying day in either House...</p>
+<pre><code>      unless self.is_either_house_praying_day?
+</code></pre>
+<p>...then go to the next day and check that.</p>
+<pre><code>        self.next_day.first_praying_day_in_either_house
+</code></pre>
+<p>...then if this is a praying day in either House...</p>
+<pre><code>      else
+</code></pre>
+<p>...then return this day as the first praying day in either House.</p>
+<pre><code>        self
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to find the first praying day in both Houses.</p>
+<p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in both Houses following the laying.</p>
+<p>This method is used for bicameral made affirmatives where the enabling legislation specifies that both Houses must be sitting.</p>
+<pre><code>  def first_joint_praying_day
+</code></pre>
+<p>If this is a day on which the calendar is not yet populated...</p>
+<pre><code>    if self.is_calendar_not_populated?
+</code></pre>
+<p>...then we cannot find a first praying day so we stop looking.</p>
+<pre><code>      return nil
+</code></pre>
+<p>If this is a day on which the calendar is populated...</p>
+<pre><code>    else
+</code></pre>
+<p>...then if this is not a praying day in both Houses...</p>
+<pre><code>      unless self.is_joint_praying_day?
+</code></pre>
+<p>...then go to the next day and check that.</p>
+<pre><code>        self.next_day.first_joint_praying_day
+</code></pre>
+<p>...then if this is a praying day in both Houses...</p>
+<pre><code>      else
+</code></pre>
+<p>...then return this day as the first praying day in both Houses.</p>
+<pre><code>        self
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to find the first praying day in the Commons.</p>
+<p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in the Commons following the laying.</p>
+<p>This method is used for negative or made affirmative SIs - laid in the Commons and not laid in the Lords.</p>
+<pre><code>  def first_commons_praying_day
+</code></pre>
+<p>If this is a day on which the calendar is not yet populated...</p>
+<pre><code>    if self.is_calendar_not_populated?
+</code></pre>
+<p>...then we cannot find a first Commons praying day so we stop looking.</p>
+<pre><code>      return nil
+</code></pre>
+<p>If this is a day on which the calendar is populated...</p>
+<pre><code>    else
+</code></pre>
+<p>...then if this is not a praying day in the Commons...</p>
+<pre><code>      unless self.is_commons_praying_day?
+</code></pre>
+<p>...then go to the next day and check that.</p>
+<pre><code>        self.next_day.first_commons_praying_day
+</code></pre>
+<p>...then if this is a praying day in the Commons...</p>
+<pre><code>      else
+</code></pre>
+<p>...then return this day as the first praying day in the Commons.</p>
+<pre><code>        self
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to find the first parliamentary sitting day in both Houses.</p>
+<p>This method is used when a Proposed Negative Statutory Instrument is laid.</p>
+<p>Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.</p>
+<pre><code>  def first_joint_parliamentary_sitting_day
+</code></pre>
+<p>If this is a day on which the calendar is not yet populated...</p>
+<pre><code>    if self.is_calendar_not_populated?
+</code></pre>
+<p>...then we cannot find a first parliamentary sitting day in both Houses so we stop looking.</p>
+<pre><code>      return nil
+</code></pre>
+<p>If this is a day on which the calendar is populated...</p>
+<pre><code>    else
+</code></pre>
+<p>...then if this is not a parliamentary sitting day in both Houses...</p>
+<pre><code>      unless self.is_joint_parliamentary_sitting_day?
+</code></pre>
+<p>...then go to the next day and check that.</p>
+<pre><code>        self.next_day.first_joint_parliamentary_sitting_day
+</code></pre>
+<p>...then if this is a parliamentary sitting day in both Houses...</p>
+<pre><code>      else
+</code></pre>
+<p>...then return this day as the first parliamentary sitting day in both Houses.</p>
+<pre><code>        self
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>We want to find the first parliamentary sitting day in the Commons.</p>
+<p>This method is used when a motion to not ratify a treaty in either House is approved - and the Government make a statement that the treaty should nonetheless be ratified, triggering treaty scrutiny period B.</p>
+<p>Treaty scrutiny period B starts on the first Commons parliamentary sitting day following the date of the Government statement.</p>
+<pre><code>  def first_commons_parliamentary_sitting_day
+</code></pre>
+<p>If this is a day on which the calendar is not yet populated...</p>
+<pre><code>    if self.is_calendar_not_populated?
+</code></pre>
+<p>...then we cannot find a first parliamentary sitting day in the Commons so we stop looking.</p>
+<pre><code>      return nil
+</code></pre>
+<p>If this is a day on which the calendar is populated...</p>
+<pre><code>    else
+</code></pre>
+<p>...then if this is not a parliamentary sitting day in the Commons...</p>
+<pre><code>      unless self.is_commons_parliamentary_sitting_day?
+</code></pre>
+<p>...then go to the next day and check that.</p>
+<pre><code>        self.next_day.first_commons_parliamentary_sitting_day
+</code></pre>
+<p>...then if this is a parliamentary sitting day in the Commons...</p>
+<pre><code>      else
+</code></pre>
+<p>...then return this day as the first parliamentary sitting day in the Commons.</p>
+<pre><code>        self
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>End of set of methods to find the first day of a given type.</p>
+<p>Generate label for the day type in the Commons in a session.</p>
+<pre><code>  def commons_day_type
+</code></pre>
+<pre><code>    if self.is_commons_parliamentary_sitting_day?
+</code></pre>
+<pre><code>      day_type = &#39;Sitting day&#39;
+</code></pre>
+<pre><code>    elsif self.is_commons_virtual_sitting_day?
+</code></pre>
+<pre><code>      day_type = &#39;Virtual sitting day&#39;
+</code></pre>
+<pre><code>    elsif self.is_commons_praying_sitting_day?
+</code></pre>
+<pre><code>      day_type = &quot;Sitting praying day&quot;
+</code></pre>
+<pre><code>    elsif self.is_commons_praying_adjournment_day?( 4 )
+</code></pre>
+<pre><code>      day_type = &#39;Praying adjournment day&#39;
+</code></pre>
+<pre><code>    elsif self.is_commons_adjournment_day?
+</code></pre>
+<pre><code>      day_type = &#39;Adjournment day&#39;
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>    day_type
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>Generate label for the day type in the Lords in a session.</p>
+<pre><code>  def lords_day_type
+</code></pre>
+<pre><code>    if self.is_lords_parliamentary_sitting_day?
+</code></pre>
+<pre><code>      day_type = &#39;Sitting day&#39;
+</code></pre>
+<pre><code>    elsif self.is_lords_virtual_sitting_day?
+</code></pre>
+<pre><code>      day_type = &#39;Virtual sitting day&#39;
+</code></pre>
+<pre><code>    elsif self.is_lords_praying_sitting_day?
+</code></pre>
+<pre><code>      day_type = &quot;Sitting praying day&quot;
+</code></pre>
+<pre><code>    elsif self.is_lords_praying_adjournment_day?( 4 )
+</code></pre>
+<pre><code>      day_type = &#39;Praying adjournment day&#39;
+</code></pre>
+<pre><code>    elsif self.is_lords_adjournment_day?
+</code></pre>
+<pre><code>      day_type = &#39;Adjournment day&#39;
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>    day_type
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>Generate a label to say whether it&#39;s a praying day in the Commons or not.</p>
+<pre><code>  def is_commons_praying_day_label
+</code></pre>
+<pre><code>    if self.is_commons_praying_day?
+</code></pre>
+<pre><code>      label = &#39;True&#39;
+</code></pre>
+<pre><code>    else
+</code></pre>
+<pre><code>      label = &#39;False&#39;
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>    label
+</code></pre>
+<pre><code>  end
+</code></pre>
+<p>Generate a label to say whether it&#39;s a praying day in the Lords or not.</p>
+<pre><code>  def is_lords_praying_day_label
+</code></pre>
+<pre><code>    if self.is_lords_praying_day?
+</code></pre>
+<pre><code>      label = &#39;True&#39;
+</code></pre>
+<pre><code>    else
+</code></pre>
+<pre><code>      label = &#39;False&#39;
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>    label
+</code></pre>
+<pre><code>  end
+</code></pre>
+<pre><code>end
+</code></pre>
+<footer><p><big>&times;&times;&times;</big></p></footer></body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        max-width: 38rem;
+        margin: auto;
+        padding: 1rem;
+        font-family: system-ui;
+        color: black;
+        background-color: white;
+        font-size:larger;
+      }
+      p {line-height: 1.4;}
+      code {
+      color:lightsteelblue;
+      }
+      footer {
+      margin:0 auto;
+      color:gray;
+      display:table;
+      }
+      footer big {
+      color:crimson;
+      font-weight:bold;
+      font-size:2rem;}
+    </style>
+    <title>doc:comment</title>
+  </head>
+  <body><h1>Calculator controller to build the form and run the calculations.</h1>
+<p>Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.</p>
+<pre><code>require &#39;calculations/bicameral_parliamentary_days&#39;
+</code></pre>
+<pre><code>require &#39;calculations/bicameral_first_to_ten&#39;
+</code></pre>
+<pre><code>require &#39;calculations/commons_praying_days&#39;
+</code></pre>
+<pre><code>require &#39;calculations/bicameral_praying_days_either_house_sitting&#39;
+</code></pre>
+<pre><code>require &#39;calculations/bicameral_praying_days_both_houses_sitting&#39;
+</code></pre>
+<pre><code>require &#39;calculations/treaty_period_a&#39;
+</code></pre>
+<pre><code>require &#39;calculations/commons_parliamentary_days&#39;
+</code></pre>
+<h2>The controller itself.</h2>
+<pre><code>class CalculatorController &lt; ApplicationController
+</code></pre>
+<p>Include code from each of the modules for the different styles of calculation.</p>
+<pre><code>  include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
+</code></pre>
+<pre><code>  include CALCULATION_BICAMERAL_FIRST_TO_TEN
+</code></pre>
+<pre><code>  include CALCULATION_COMMONS_PRAYING_DAYS
+</code></pre>
+<pre><code>  include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
+</code></pre>
+<pre><code>  include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
+</code></pre>
+<pre><code>  include CALCULATION_TREATY_PERIOD_A
+</code></pre>
+<pre><code>  include CALCULATION_COMMONS_PARLIAMENTARY_DAYS
+</code></pre>
+<h3>This is the code to provide information for the form that users can fill in.</h3>
+<pre><code>  def index
+</code></pre>
+<p>Set a title for the page.</p>
+<pre><code>    @title = &quot;Calculate scrutiny periods&quot;
+</code></pre>
+<p>Find all the active procedures in display order - to populate the procedure radio buttons on the form.</p>
+<pre><code>    @procedures = Procedure.all.where( &#39;active is true&#39; ).order( &#39;display_order asc&#39;)
+</code></pre>
+<pre><code>  end
+</code></pre>
+<h3>When the user has pressed &#39;Calculate&#39;, this code runs the calculation.</h3>
+<pre><code>  def calculate
+</code></pre>
+<p>Set a title for the page.</p>
+<pre><code>      @title = &quot;Calculated scrutiny period&quot;
+</code></pre>
+<p>In order to calculate the scrutiny period, we need:</p>
+<ul>
+<li>the <strong>type of the procedure</strong> itself, which we refer to by a number</li>
+</ul>
+<pre><code>    procedure = params[&quot;procedure&quot;].to_i if params[&quot;procedure&quot;]
+</code></pre>
+<ul>
+<li>the <strong>start date</strong>, for example: &quot;2020-05-06&quot;</li>
+</ul>
+<pre><code>    start_date = params[&quot;start-date&quot;]
+</code></pre>
+<ul>
+<li>the <strong>day count</strong></li>
+</ul>
+<pre><code>    day_count = params[:day_count]
+</code></pre>
+<p>Check that all the parameters have been provided by the form ...</p>
+<pre><code>    if start-date.blank? or day-count.blank? or day-count.to_i == 0 or procedure.nil?
+</code></pre>
+<p>... if not, set an error message...</p>
+<pre><code>        @title = &quot;Sorry, there was not enough information provided.&quot;
+</code></pre>
+<p>...and display the error.</p>
+<pre><code>      render :template =&gt; &#39;calculator/not_enough_information&#39;
+</code></pre>
+<p>If the form did provide all the required information, do the calculation:</p>
+<pre><code>    else
+</code></pre>
+<ul>
+<li>find the procedure</li>
+</ul>
+<pre><code>      @procedure = Procedure.find( procedure )
+</code></pre>
+<ul>
+<li>the <strong>number of days</strong> to count</li>
+</ul>
+<pre><code>      @day_count = params[&quot;day-count&quot;].to_i
+</code></pre>
+<ul>
+<li>make the text of the date passed into a date format</li>
+</ul>
+<pre><code>      @start_date = Date.parse( start_date )
+</code></pre>
+<p>To calculate the <strong>anticipated end date</strong>, we select the calculation based on the type of procedure:</p>
+<pre><code>      case @procedure.id
+</code></pre>
+<ul>
+<li>Legislative Reform Orders, Localism Orders and Public Bodies Orders</li>
+</ul>
+<pre><code>      when 1, 2, 4
+</code></pre>
+<pre><code>        @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Proposed Statutory Instrument (PNSI)</li>
+</ul>
+<pre><code>      when 3
+</code></pre>
+<pre><code>        @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Commons only negative Statutory Instrument and some made affirmatives</li>
+</ul>
+<pre><code>      when 5, 7
+</code></pre>
+<pre><code>        @end_date = commons_praying_days_calculation( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting</li>
+</ul>
+<pre><code>      when 6, 9
+</code></pre>
+<pre><code>        @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count ) 
+</code></pre>
+<ul>
+<li>Commons and Lords affirmative Statutory Instrument where both Houses are sitting</li>
+</ul>
+<pre><code>      when 8
+</code></pre>
+<pre><code>        @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Treaty period A</li>
+</ul>
+<pre><code>      when 10
+</code></pre>
+<pre><code>        @end_date = treaty_period_a_calculation( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Treaty period B</li>
+</ul>
+<pre><code>      when 11
+</code></pre>
+<pre><code>        @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
+</code></pre>
+<ul>
+<li>Otherwise set an error message.</li>
+</ul>
+<pre><code>      else
+</code></pre>
+<pre><code>        @error_message = &quot;Sorry, this procedure is not currently supported.&quot;
+</code></pre>
+<pre><code>      end
+</code></pre>
+<pre><code>    end
+</code></pre>
+<pre><code>  end
+</code></pre>
+<pre><code>end
+</code></pre>
+<footer><p><big>&times;&times;&times;</big></p></footer></body></html>
