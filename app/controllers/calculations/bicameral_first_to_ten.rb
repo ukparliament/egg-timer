@@ -1,23 +1,23 @@
 module CALCULATION_BICAMERAL_FIRST_TO_TEN
   
-  # A method for calculating committee scrutiny periods for PNSIs
-  # Based on parliamentary sitting days
-  # Counted from first joint sitting day, then last House to 10
+  # # A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
+  # Based on parliamentary sitting days.
+  # Counted from first joint sitting day, then last House to 10.
   def bicameral_first_to_ten_calculation( date, target_day_count )
   
-    # We start counting on the **first day when both Houses are sitting** after the instrument is laid and never on the day of laying.
+    # ## We start counting on the **first day when both Houses are sitting** after the instrument is laid and never on the day of laying.
     # If we find the **first joint sitting day** following the start date, the laying date in this case, ...
     if date.next_day.first_joint_parliamentary_sitting_day
     
-      # We set the date to start counting as the first joint parliamentary sitting day.
+      # ...we set the date to start counting as the first joint parliamentary sitting day.
       date = date.next_day.first_joint_parliamentary_sitting_day
 
     	# PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
-      # The first joint sitting day counts as day 1, so we count from 1, not 0
+      # The first joint sitting day counts as day 1, so we count from 1, not 0.
       commons_day_count = 1
       lords_day_count = 1
     
-      # ... we look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
+      # ## We look at subsequent days, ensuring that we've counted at least the set number of sitting days to count in each House. In the case of a PNSI, that's ten days.
       # This loop runs whilst the Commons have sat for less than 10 days ***or*** the Lords have sat for less than 10 days. If both Houses have sat for at least 10 days, it stops running.
       while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
 
