@@ -51,6 +51,10 @@ html_out << %{<!DOCTYPE html>
       color:crimson;
       font-weight:bold;
       font-size:2rem;}
+      
+      @media (prefers-color-scheme: dark) {
+body {color:white;background-color:black;}
+}
     </style>
     <title>#{with_path}</title>
   </head>
