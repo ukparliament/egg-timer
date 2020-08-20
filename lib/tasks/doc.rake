@@ -6,7 +6,7 @@ namespace :doc do
   desc ".rb with markdown comments -> .md, .html: path=path/to/file.rb"
   task comment: :environment do
     the_path = ENV['path'] || "./lib/monkey_patching/date.rb"
-    new_path = the_path + ".html"
+    new_path = './public' + the_path.split( '/' ).last + '.html'
     File.write(new_path, commentariat(the_path))
     system %{open "#{new_path}"}
   end
