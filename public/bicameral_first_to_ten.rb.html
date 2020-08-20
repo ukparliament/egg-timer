@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        max-width: 38rem;
+        margin: auto;
+        padding: 1rem;
+        font-family: system-ui;
+        color: black;
+        background-color: white;
+        font-size:larger;
+      }
+      p {line-height: 1.4;}
+      code {
+      color:lightsteelblue;
+      }
+      footer {
+      margin:0 auto;
+      color:gray;
+      display:table;
+      }
+      footer big {
+      color:crimson;
+      font-weight:bold;
+      font-size:2rem;}
+    </style>
+    <title>doc:comment</title>
+  </head>
+  <body><pre><code>module CALCULATION_BICAMERAL_FIRST_TO_TEN
+</code></pre>
+<h1>A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).</h1>
+<p>The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.</p>
+<pre><code>  def bicameral_first_to_ten_calculation( date, target_day_count )
+</code></pre>
+<h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting following the laying of the instrument</strong>.</h2>
+<p>If the date of laying day is a joint parliamentary sitting day, we do not count that day.</p>
+<p>If we find a day meeting that criteria ...</p>
+<pre><code>    if date.next_day.first_joint_parliamentary_sitting_day
+</code></pre>
+<p>... we set the date to start counting from as that day.</p>
+<pre><code>      date = date.next_day.first_joint_parliamentary_sitting_day
+</code></pre>
+<p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
+<p>The first joint sitting day counts as day 1, so we count from 1 rather than from 0.</p>
+<pre><code>        commons_day_count = 1
+</code></pre>
+<pre><code>      lords_day_count = 1
+</code></pre>
+<h2>We look at subsequent days, ensuring that we&#39;ve counted at least the set number of sitting days in each House. In the case of a PNSI, that&#39;s ten days.</h2>
+<p>While there are still days on which the Commons <strong>or</strong> Lords have sat for fewer than 10 days, we continue counting days ...</p>
+<pre><code>      while ( ( commons_day_count &lt; target_day_count ) or ( lords_day_count &lt; target_day_count ) ) do
+</code></pre>
+<p>... continue to the <strong>next day</strong>.</p>
+<pre><code>        date = date.next_day
+</code></pre>
+<p>PNSIs use parliamentary sitting days, rather than naive calendar days.</p>
+<p>If the Lords sat on the date we&#39;ve found, we add another day to the Lords’ count.</p>
+<pre><code>        lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
+</code></pre>
+<p>If the Commons sat on the date we&#39;ve found, we add another day to the Commons’ count.</p>
+<pre><code>        commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
+</code></pre>
+<p>If the calendar has no record of what type of day this is , we can&#39;t calculate the end date, ...</p>
+<pre><code>        if date.is_calendar_not_populated?
+</code></pre>
+<p>... this error message is displayed to users ...</p>
+<pre><code>          @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;
+</code></pre>
+<p>... and we stop looking through the calendar.</p>
+<pre><code>          break
+</code></pre>
+<pre><code>        end
+</code></pre>
+<pre><code>      end
+</code></pre>
+<p>If we didn&#39;t find any <strong>future joint sitting date</strong> in our calendar, we can&#39;t calculate the scrutiny period ...</p>
+<pre><code>    else
+</code></pre>
+<p>... and this error message is displayed.</p>
+<pre><code>      @error_message = &quot;Unable to find a future joint sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;
+</code></pre>
+<pre><code>    end
+</code></pre>
+<p>Return the anticipated end date of the scrutiny period for display.</p>
+<pre><code>    date
+</code></pre>
+<pre><code>  end
+</code></pre>
+<pre><code>end
+</code></pre>
+<footer><p><big>&times;&times;&times;</big></p></footer></body></html>
