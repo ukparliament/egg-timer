@@ -3,11 +3,7 @@ namespace :doc do
 
   require 'redcarpet'
 
-<<<<<<< HEAD
-  desc "Ruby comments markdown -> HTML: path=./lib/monkey_patching/date.rb"
-=======
   desc ".rb with markdown comments -> .md, .html: path=path/to/file.rb"
->>>>>>> 20f8302b402642754cb8ad1c1e3a640f652aa6a7
   task comment: :environment do
     the_path = ENV['path'] || "./lib/monkey_patching/date.rb"
     new_path = './public/' + the_path.split( '/' ).last + '.html'
