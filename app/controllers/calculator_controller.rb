@@ -51,10 +51,10 @@ class CalculatorController < ApplicationController
     # Check that all the parameters have been provided by the form ...
     if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
       
-      # ... if not, set an error message...
+      # ... if not, set an error message ...
 	    @title = "Sorry, there was not enough information provided."
       
-      # ...and display the error.
+      # ... and display the error.
       render :template => 'calculator/not_enough_information'
       
     # If the form did provide all the required information, do the calculation:
