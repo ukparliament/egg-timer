@@ -17,12 +17,12 @@ end
 
 def commentariat(with_path)
 markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-out = ""
-out << %{<!DOCTYPE html>
+html_out = ""
+html_out << %{<!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width">
     <style>
       body {
         max-width: 42rem;
@@ -37,6 +37,7 @@ out << %{<!DOCTYPE html>
       code {
       color:lightsteelblue;
       }
+      code pre {word-wrap: break-word;}
       code:hover {color:black;}
       footer {
       margin:0 auto;
@@ -57,13 +58,13 @@ File.foreach(with_path).with_index do |line, line_num|
   result = /^\s*#\s*(?<content>.*)/.match(line)
   
   if result
-  	out << markdown.render(result["content"])
+  	html_out << markdown.render(result["content"])
   elsif line.strip != ""
-  	out << "<code title='Line #{line_num + 1}, #{with_path}'><pre>#{line_num + 1} " << line << "</pre></code>"
+  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre>#{line_num + 1} " << line << "</pre></code>"
   end
   
 end
 
-out << %{<footer><p><big>&times;&times;&times;</big></p></footer></body></html>}
-out
+html_out << %{<footer><p><big>&times;&times;&times;</big></p></footer></body></html>}
+html_out
 end
