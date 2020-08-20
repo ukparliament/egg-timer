@@ -49,7 +49,7 @@ class CalculatorController < ApplicationController
     day_count = params[:day_count]
     
     # Check that all the parameters have been provided by the form ...
-    if start-date.blank? or day-count.blank? or day-count.to_i == 0 or procedure.nil?
+    if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
       
       # ... if not, set an error message...
 	    @title = "Sorry, there was not enough information provided."
