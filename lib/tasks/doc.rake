@@ -59,7 +59,7 @@ File.foreach(with_path).with_index do |line, line_num|
   if result
   	out << markdown.render(result["content"])
   elsif line.strip != ""
-  	out << "<span title='Line #{line_num + 1}, #{with_path}'>" << markdown.render("\t#{line}") << "</span>"
+  	out << "<code title='Line #{line_num + 1}, #{with_path}'><pre>" << line << "</pre></code>"
   end
   
 end
