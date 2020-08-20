@@ -25,7 +25,7 @@ out << %{<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
-        max-width: 38rem;
+        max-width: 42rem;
         margin: auto;
         padding: 1rem;
         font-family: system-ui;
@@ -37,6 +37,7 @@ out << %{<!DOCTYPE html>
       code {
       color:lightsteelblue;
       }
+      code:hover {color:black;}
       footer {
       margin:0 auto;
       color:gray;
@@ -51,14 +52,14 @@ out << %{<!DOCTYPE html>
   </head>
   <body>}
 
-File.readlines(with_path).each do |line|
+File.foreach(with_path).with_index do |line, line_num|
 
   result = /^\s*#\s*(?<content>.*)/.match(line)
   
   if result
   	out << markdown.render(result["content"])
   elsif line.strip != ""
-  	out << markdown.render("\t#{line}")
+  	out << "<span title='Line #{line_num + 1}, #{with_path}'>" << markdown.render("\t#{line}") << "</span>"
   end
   
 end
