@@ -1,6 +1,6 @@
 class Date
   
-  # A monkey patched Ruby date class to handle UK Parliament specific day types.
+  ## A monkey patched Ruby date class to handle UK Parliament specific day types.
   
   # A set of methods to work out the type of a given day.
   
