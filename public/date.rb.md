@@ -116,13 +116,13 @@ If the total number of continuous adjournment days is less than or the same as t
 
 Returns if this day is a part of a Commons short adjournment
 
-We want to check if this is a praying day in the Commons.
+### We want to check if this is a praying day in the Commons.
 
 A praying day in the Commons is either a praying sitting day in the Commons, or a praying adjournment day in the Commons.
 
 We pass '4' as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.
 
-We want to check if this is a praying adjournment day in the Lords.
+### We want to check if this is a praying adjournment day in the Lords.
 
 During a short adjournment, adjournment days are praying days.
 
@@ -170,21 +170,21 @@ If the total number of continuous adjournment days is less than or the same as t
 
 Returns if this day is a part of a Lords short adjournment
 
-We want to check if this is a praying day in the Lords.
+### We want to check if this is a praying day in the Lords.
 
 A praying day in the Lords is either a praying sitting day in the Lords, or a praying adjournment day in the Lords.
 
 We pass '4' as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.
 
-We want to check if this is a praying day in either House.
+### We want to check if this is a praying day in either House.
 
-We want to check if this is a praying day in both Houses.
+### We want to check if this is a praying day in both Houses.
 
-End of set of methods to work out the type of a given day.
+(End of set of methods to work out the type of a given day.)
 
-A set of methods to find the first day of a given type.
+## A set of methods to find the first day of a given type.
 
-We want to find the first praying day in either House.
+### We want to find the first praying day in either House.
 
 This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first praying sitting day in either House following the laying.
 
@@ -204,7 +204,7 @@ If this is a day on which the calendar is populated ...
 
 ... then return this day as the first praying day in either House.
 
-We want to find the first praying day in both Houses.
+### We want to find the first praying day in both Houses.
 
 This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in both Houses following the laying.
 
@@ -224,7 +224,7 @@ If this is a day on which the calendar is populated ...
 
 ... then return this day as the first praying day in both Houses.
 
-We want to find the first praying day in the Commons.
+### We want to find the first praying day in the Commons.
 
 This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in the Commons following the laying.
 
@@ -244,7 +244,7 @@ If this is a day on which the calendar is populated ...
 
 ... then return this day as the first praying day in the Commons.
 
-We want to find the first parliamentary sitting day in both Houses.
+### We want to find the first parliamentary sitting day in both Houses.
 
 This method is used when a Proposed Negative Statutory Instrument is laid.
 
@@ -264,7 +264,7 @@ If this is a day on which the calendar is populated ...
 
 ... then return this day as the first parliamentary sitting day in both Houses.
 
-We want to find the first parliamentary sitting day in the Commons.
+### We want to find the first parliamentary sitting day in the Commons.
 
 This method is used when a motion to not ratify a treaty in either House is approved - and the Government make a statement that the treaty should nonetheless be ratified, triggering treaty scrutiny period B.
 
@@ -284,7 +284,7 @@ If this is a day on which the calendar is populated ...
 
 ... then return this day as the first parliamentary sitting day in the Commons.
 
-End of set of methods to find the first day of a given type.
+(End of set of methods to find the first day of a given type.)
 
 Generate label for the day type in the Commons in a session.
 
