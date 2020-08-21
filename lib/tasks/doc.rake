@@ -14,7 +14,7 @@ end
 
 
 def commentariat(with_path)
-markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, no_intra_emphasis: true, autolink: true, underline: true, hightlight: true, quote: true)
 html_out = ""
 markdown_out = ""
 html_path = './public/' + with_path.split( '/' ).last + '.html'
@@ -62,7 +62,7 @@ body {color:white;background-color:black;}
 File.foreach(with_path).with_index do |line, line_num|
 
   comment_line = /^\s*#\s*(?<content>.*)/.match(line)
-  
+    
   if comment_line
   	html_out << markdown.render(comment_line["content"])
   	markdown_out << comment_line["content"] << "\n\n"

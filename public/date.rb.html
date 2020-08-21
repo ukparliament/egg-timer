@@ -117,7 +117,7 @@ body {color:white;background-color:black;}
 </pre></code><code title='Line 129, ./lib/monkey_patching/date.rb'><pre><a name='129'>129</a>     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
 </pre></code><code title='Line 130, ./lib/monkey_patching/date.rb'><pre><a name='130'>130</a>   end
 </pre></code><h3>We want to check if this is a day for which we do not have anything in the calendar.</h3>
-<p>We use this to check if we&#39;ve &quot;run out of calendar&quot; so we don&#39;t keep cycling into future days and loop infinitely.</p>
+<p>We use this to check if we&#39;ve <q>run out of calendar</q> so we don&#39;t keep cycling into future days and loop infinitely.</p>
 <p>This is our event horizon.</p>
 <code title='Line 138, ./lib/monkey_patching/date.rb'><pre><a name='138'>138</a>   def is_calendar_not_populated?
 </pre></code><code title='Line 139, ./lib/monkey_patching/date.rb'><pre><a name='139'>139</a>     !self.is_calendar_populated?
