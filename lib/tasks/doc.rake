@@ -68,7 +68,7 @@ File.foreach(with_path).with_index do |line, line_num|
   	html_out << markdown.render(comment_line["content"])
   	markdown_out << comment_line["content"] << "\n"
   elsif line.strip != ""
-  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre>#{line_num + 1} " << line << "</pre></code>"
+  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'>#{line_num + 1}</a> " << line << "</pre></code>"
   end
   
 end
