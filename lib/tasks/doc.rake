@@ -47,8 +47,6 @@ html_out << %{<!DOCTYPE html>
       display:table;
       }
       footer big {
-      color:crimson;
-      font-weight:bold;
       font-size:2rem;}
       
       @media (prefers-color-scheme: dark) {
@@ -57,13 +55,14 @@ body {color:white;background-color:black;}
     </style>
     <title>#{with_path}</title>
   </head>
-  <body>}
+  <body><a name="top"></a>}
 
 File.foreach(with_path).with_index do |line, line_num|
 
   comment_line = /^\s*#\s*(?<content>.*)/.match(line)
     
   if comment_line
+    html_out << "<a name='#{line_num + 1}'></a> "
   	html_out << markdown.render(comment_line["content"])
   	markdown_out << comment_line["content"] << "\n\n"
   elsif line.strip != ""
@@ -72,7 +71,7 @@ File.foreach(with_path).with_index do |line, line_num|
   
 end
 
-html_out << %{<footer><p><big>&times;&times;&times;</big></p></footer></body></html>}
+html_out << %{<footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>}
 
 
 File.write(html_path, html_out)
