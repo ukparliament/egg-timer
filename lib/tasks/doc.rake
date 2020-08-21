@@ -28,13 +28,12 @@ html_out << %{<!DOCTYPE html>
     <link rel="alternate" type="text/markdown" href="#{with_path.split( '/' ).last + '.md'}">
     <style>
       body {
-        max-width: 42rem;
+        max-width: 38rem;
         margin: auto;
         padding: 1rem;
         font-family: system-ui;
         color: black;
         background-color: white;
-        font-size:larger;
       }
       p {line-height: 1.4;}
       code {
