@@ -2,7 +2,8 @@
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width">
+    <link rel="alternate" type="text/markdown" href="bicameral_first_to_ten.rb.md">
     <style>
       body {
         max-width: 38rem;
@@ -11,84 +12,65 @@
         font-family: system-ui;
         color: black;
         background-color: white;
-        font-size:larger;
       }
       p {line-height: 1.4;}
       code {
       color:lightsteelblue;
       }
+      code pre {word-wrap: break-word;}
+      code:hover {color:black;}
       footer {
       margin:0 auto;
       color:gray;
       display:table;
       }
       footer big {
-      color:crimson;
-      font-weight:bold;
       font-size:2rem;}
+      
+      @media (prefers-color-scheme: dark) {
+body {color:white;background-color:black;}
+}
     </style>
-    <title>doc:comment</title>
+    <title>app/controllers/calculations/bicameral_first_to_ten.rb</title>
   </head>
-  <body><pre><code>module CALCULATION_BICAMERAL_FIRST_TO_TEN
-</code></pre>
-<h1>A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).</h1>
-<p>The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.</p>
-<pre><code>  def bicameral_first_to_ten_calculation( date, target_day_count )
-</code></pre>
-<h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting following the laying of the instrument</strong>.</h2>
-<p>If the date of laying day is a joint parliamentary sitting day, we do not count that day.</p>
-<p>If we find a day meeting that criteria ...</p>
-<pre><code>    if date.next_day.first_joint_parliamentary_sitting_day
-</code></pre>
-<p>... we set the date to start counting from as that day.</p>
-<pre><code>      date = date.next_day.first_joint_parliamentary_sitting_day
-</code></pre>
-<p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
-<p>The first joint sitting day counts as day 1, so we count from 1 rather than from 0.</p>
-<pre><code>        commons_day_count = 1
-</code></pre>
-<pre><code>      lords_day_count = 1
-</code></pre>
-<h2>We look at subsequent days, ensuring that we&#39;ve counted at least the set number of sitting days in each House. In the case of a PNSI, that&#39;s ten days.</h2>
-<p>While there are still days on which the Commons <strong>or</strong> Lords have sat for fewer than 10 days, we continue counting days ...</p>
-<pre><code>      while ( ( commons_day_count &lt; target_day_count ) or ( lords_day_count &lt; target_day_count ) ) do
-</code></pre>
-<p>... continue to the <strong>next day</strong>.</p>
-<pre><code>        date = date.next_day
-</code></pre>
-<p>PNSIs use parliamentary sitting days, rather than naive calendar days.</p>
-<p>If the Lords sat on the date we&#39;ve found, we add another day to the Lords’ count.</p>
-<pre><code>        lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
-</code></pre>
-<p>If the Commons sat on the date we&#39;ve found, we add another day to the Commons’ count.</p>
-<pre><code>        commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
-</code></pre>
-<p>If the calendar has no record of what type of day this is , we can&#39;t calculate the end date, ...</p>
-<pre><code>        if date.is_calendar_not_populated?
-</code></pre>
-<p>... this error message is displayed to users ...</p>
-<pre><code>          @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;
-</code></pre>
-<p>... and we stop looking through the calendar.</p>
-<pre><code>          break
-</code></pre>
-<pre><code>        end
-</code></pre>
-<pre><code>      end
-</code></pre>
-<p>If we didn&#39;t find any <strong>future joint sitting date</strong> in our calendar, we can&#39;t calculate the scrutiny period ...</p>
-<pre><code>    else
-</code></pre>
-<p>... and this error message is displayed.</p>
-<pre><code>      @error_message = &quot;Unable to find a future joint sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;
-</code></pre>
-<pre><code>    end
-</code></pre>
-<p>Return the anticipated end date of the scrutiny period for display.</p>
-<pre><code>    date
-</code></pre>
-<pre><code>  end
-</code></pre>
-<pre><code>end
-</code></pre>
-<footer><p><big>&times;&times;&times;</big></p></footer></body></html>
+  <body><a name="top"></a><code title='Line 1, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='1'>1</a> module CALCULATION_BICAMERAL_FIRST_TO_TEN
+</pre></code><a name='3'></a> <h1>A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).</h1>
+<a name='4'></a> <p>The calculation counts a day whenever both Houses have a praying sitting day, requiring the laying date and the number of days to count.</p>
+<code title='Line 5, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='5'>5</a>   def bicameral_first_to_ten_calculation( date, target_day_count )
+</pre></code><a name='7'></a> <h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting following the laying of the instrument</strong>.</h2>
+<a name='8'></a> <p>If the date of laying day is a joint parliamentary sitting day, we do not count that day.</p>
+<a name='9'></a> <p>If we find a day meeting that criteria ...</p>
+<code title='Line 10, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='10'>10</a>     if date.next_day.first_joint_parliamentary_sitting_day
+</pre></code><a name='12'></a> <p>... we set the date to start counting from as that day.</p>
+<code title='Line 13, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='13'>13</a>       date = date.next_day.first_joint_parliamentary_sitting_day
+</pre></code><a name='15'></a> <p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
+<a name='16'></a> <p>The first joint sitting day counts as day 1, so we count from 1 rather than from 0.</p>
+<code title='Line 17, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='17'>17</a>     	commons_day_count = 1
+</pre></code><code title='Line 18, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='18'>18</a>       lords_day_count = 1
+</pre></code><a name='20'></a> <h2>We look at subsequent days, ensuring that we&#39;ve counted at least the set number of sitting days in each House. In the case of a PNSI, that&#39;s ten days.</h2>
+<a name='21'></a> <p>While there are still days on which the Commons <strong>or</strong> Lords have sat for fewer than 10 days, we continue counting days ...</p>
+<code title='Line 22, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='22'>22</a>       while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
+</pre></code><a name='24'></a> <p>... continue to the <strong>next day</strong>.</p>
+<code title='Line 25, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='25'>25</a>         date = date.next_day
+</pre></code><a name='27'></a> <p>PNSIs use parliamentary sitting days, rather than naive calendar days.</p>
+<a name='28'></a> <p>If the Lords sat on the date we&#39;ve found, we add another day to the Lords’ count.</p>
+<code title='Line 29, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='29'>29</a>         lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
+</pre></code><a name='30'></a> <p>If the Commons sat on the date we&#39;ve found, we add another day to the Commons’ count.</p>
+<code title='Line 31, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='31'>31</a>         commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
+</pre></code><a name='33'></a> <p>If the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+<code title='Line 34, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='34'>34</a>         if date.is_calendar_not_populated?
+</pre></code><a name='36'></a> <p>... this error message is displayed to users ...</p>
+<code title='Line 37, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='37'>37</a>           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><a name='39'></a> <p>... and we stop looking through the calendar.</p>
+<code title='Line 40, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='40'>40</a>           break
+</pre></code><code title='Line 41, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='41'>41</a>         end
+</pre></code><code title='Line 42, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='42'>42</a>       end
+</pre></code><a name='44'></a> <p>If we didn&#39;t find any <strong>future joint sitting date</strong> in our calendar, we can&#39;t calculate the scrutiny period ...</p>
+<code title='Line 45, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='45'>45</a>     else
+</pre></code><a name='47'></a> <p>... and this error message is displayed.</p>
+<code title='Line 48, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='48'>48</a>       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><code title='Line 49, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='49'>49</a>     end
+</pre></code><a name='51'></a> <p>Return the anticipated end date of the scrutiny period for display.</p>
+<code title='Line 52, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='52'>52</a>     date
+</pre></code><code title='Line 53, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='53'>53</a>   end
+</pre></code><code title='Line 54, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='54'>54</a> end</pre></code><footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>
