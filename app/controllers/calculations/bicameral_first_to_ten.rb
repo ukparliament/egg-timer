@@ -1,7 +1,7 @@
 module CALCULATION_BICAMERAL_FIRST_TO_TEN
   
-  # # A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).
-  # The calculation counts a day whenever both Houses have a praying sitting day, requiring the laying date and the number of days to count.
+  # # A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
+  # The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
   def bicameral_first_to_ten_calculation( date, target_day_count )
   
     # ## We start counting on the **first day when both Houses have a parliamentary sitting following the laying of the instrument**.

@@ -34,8 +34,8 @@ body {color:white;background-color:black;}
     <title>app/controllers/calculations/bicameral_first_to_ten.rb</title>
   </head>
   <body><a name="top"></a><code title='Line 1, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='1'>1</a> module CALCULATION_BICAMERAL_FIRST_TO_TEN
-</pre></code><a name='3'></a> <h1>A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).</h1>
-<a name='4'></a> <p>The calculation counts a day whenever both Houses have a praying sitting day, requiring the laying date and the number of days to count.</p>
+</pre></code><a name='3'></a> <h1>A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).</h1>
+<a name='4'></a> <p>The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.</p>
 <code title='Line 5, app/controllers/calculations/bicameral_first_to_ten.rb'><pre><a name='5'>5</a>   def bicameral_first_to_ten_calculation( date, target_day_count )
 </pre></code><a name='7'></a> <h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting following the laying of the instrument</strong>.</h2>
 <a name='8'></a> <p>If the date of laying day is a joint parliamentary sitting day, we do not count that day.</p>
