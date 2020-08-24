@@ -12,18 +12,20 @@ module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
       # ... we look for the next parliamentary sitting day. If there is a subsequent joint parliamentary sitting day ...
       if date.first_joint_parliamentary_sitting_day 
       
-        # ... we set the date to the first joint parliamentary sitting day.
+        # ... we set the date to that day.
         date = date.first_joint_parliamentary_sitting_day 
       
-       # If we didn't find a **future joint parliamentary sitting day** in our calendar, we can't calculate the scrutiny period ...
+      # If we didn't find a **future joint parliamentary sitting day** in our calendar, we can't calculate the scrutiny period, ...
       else
   
-         # ... this error message is displayed.
+         # ... this error message is displayed ...
         @error_message = "Unable to find a future joint parliamentary sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
         
         # ... and we stop looking for a scrutiny period end date.
         return
       end
+      
+    # Otherwise, we've established the laying day is a joint parliamentary sitting day so we don't have to cycle through the calendar to find a subsequent one.
     end
   
     # We've found the first joint parliamentary sitting day so we start counting from day 1.
