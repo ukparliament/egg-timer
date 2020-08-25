@@ -1,6 +1,6 @@
 # A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).
 
-The calculation counts a day whenever both Houses have a praying sitting day, requiring the laying date and the number of days to count.
+The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.
 
 ## We start counting on the **first day when both Houses have a parliamentary sitting**.
 
