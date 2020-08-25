@@ -35,7 +35,7 @@ body {color:white;background-color:black;}
   </head>
   <body><a name="top"></a><code title='Line 1, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='1'>1</a> module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
 </pre></code><a name='3'></a> <h1>A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).</h1>
-<a name='4'></a> <p>The calculation counts a day whenever both Houses have a praying sitting day, requiring the laying date and the number of days to count.</p>
+<a name='4'></a> <p>The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.</p>
 <code title='Line 5, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='5'>5</a>   def bicameral_parliamentary_days_calculation( date, target_day_count )
 </pre></code><a name='7'></a> <h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting</strong>.</h2>
 <a name='8'></a> <p>This may include the laying day of the instrument.</p>

@@ -31,375 +31,375 @@
 body {color:white;background-color:black;}
 }
     </style>
-    <title>lib/monkey_patching/date.rb</title>
+    <title>./lib/monkey_patching/date.rb</title>
   </head>
   <body><a name="top"></a><a name='2'></a> <h1>A monkey patched Ruby date class to handle UK Parliament specific day types.</h1>
-<code title='Line 4, lib/monkey_patching/date.rb'><pre><a name='4'>4</a> class Date
+<code title='Line 4, ./lib/monkey_patching/date.rb'><pre><a name='4'>4</a> class Date
 </pre></code><a name='6'></a> <h2>A set of methods to work out the type of a given day.</h2>
 <a name='8'></a> <h3>We want to check if this is a praying sitting day in the Commons.</h3>
 <a name='10'></a> <p>We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.</p>
 <a name='12'></a> <p>For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days. </p>
 <a name='14'></a> <p>If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.</p>
-<code title='Line 16, lib/monkey_patching/date.rb'><pre><a name='16'>16</a>   def is_commons_praying_sitting_day?
-</pre></code><code title='Line 17, lib/monkey_patching/date.rb'><pre><a name='17'>17</a>     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
-</pre></code><code title='Line 18, lib/monkey_patching/date.rb'><pre><a name='18'>18</a>   end
+<code title='Line 16, ./lib/monkey_patching/date.rb'><pre><a name='16'>16</a>   def is_commons_praying_sitting_day?
+</pre></code><code title='Line 17, ./lib/monkey_patching/date.rb'><pre><a name='17'>17</a>     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+</pre></code><code title='Line 18, ./lib/monkey_patching/date.rb'><pre><a name='18'>18</a>   end
 </pre></code><a name='20'></a> <h3>We want to check if this is a praying sitting day in the Lords.</h3>
 <a name='22'></a> <p>We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.</p>
 <a name='24'></a> <p>For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as praying sitting days.</p>
 <a name='26'></a> <p>If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.</p>
-<code title='Line 28, lib/monkey_patching/date.rb'><pre><a name='28'>28</a>   def is_lords_praying_sitting_day?
-</pre></code><code title='Line 29, lib/monkey_patching/date.rb'><pre><a name='29'>29</a>     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
-</pre></code><code title='Line 30, lib/monkey_patching/date.rb'><pre><a name='30'>30</a>   end
+<code title='Line 28, ./lib/monkey_patching/date.rb'><pre><a name='28'>28</a>   def is_lords_praying_sitting_day?
+</pre></code><code title='Line 29, ./lib/monkey_patching/date.rb'><pre><a name='29'>29</a>     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+</pre></code><code title='Line 30, ./lib/monkey_patching/date.rb'><pre><a name='30'>30</a>   end
 </pre></code><a name='32'></a> <h3>We want to check if this is a parliamentary sitting day in the Commons.</h3>
 <a name='34'></a> <p>We use a more strict definition of a sitting day. We don’t include dates for which the Commons continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
-<code title='Line 36, lib/monkey_patching/date.rb'><pre><a name='36'>36</a>   def is_commons_parliamentary_sitting_day?
-</pre></code><code title='Line 37, lib/monkey_patching/date.rb'><pre><a name='37'>37</a>     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
-</pre></code><code title='Line 38, lib/monkey_patching/date.rb'><pre><a name='38'>38</a>   end
+<code title='Line 36, ./lib/monkey_patching/date.rb'><pre><a name='36'>36</a>   def is_commons_parliamentary_sitting_day?
+</pre></code><code title='Line 37, ./lib/monkey_patching/date.rb'><pre><a name='37'>37</a>     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
+</pre></code><code title='Line 38, ./lib/monkey_patching/date.rb'><pre><a name='38'>38</a>   end
 </pre></code><a name='40'></a> <h3>We want to check if this is a parliamentary sitting day in the Lords.</h3>
 <a name='42'></a> <p>We use a more strict definition of a sitting day. We don’t include dates for which the Lords continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
-<code title='Line 44, lib/monkey_patching/date.rb'><pre><a name='44'>44</a>   def is_lords_parliamentary_sitting_day?
-</pre></code><code title='Line 45, lib/monkey_patching/date.rb'><pre><a name='45'>45</a>     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 2 ).first
-</pre></code><code title='Line 46, lib/monkey_patching/date.rb'><pre><a name='46'>46</a>   end
+<code title='Line 44, ./lib/monkey_patching/date.rb'><pre><a name='44'>44</a>   def is_lords_parliamentary_sitting_day?
+</pre></code><code title='Line 45, ./lib/monkey_patching/date.rb'><pre><a name='45'>45</a>     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 2 ).first
+</pre></code><code title='Line 46, ./lib/monkey_patching/date.rb'><pre><a name='46'>46</a>   end
 </pre></code><a name='48'></a> <h3>We want to check if this is a virtual sitting day in the Commons.</h3>
 <a name='50'></a> <p>This is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
 <a name='52'></a> <p>A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.</p>
 <a name='54'></a> <p>As of the end of June 2020, the Commons has had no virtual sitting days.</p>
-<code title='Line 56, lib/monkey_patching/date.rb'><pre><a name='56'>56</a>   def is_commons_virtual_sitting_day?
-</pre></code><code title='Line 57, lib/monkey_patching/date.rb'><pre><a name='57'>57</a>     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
-</pre></code><code title='Line 58, lib/monkey_patching/date.rb'><pre><a name='58'>58</a>   end
+<code title='Line 56, ./lib/monkey_patching/date.rb'><pre><a name='56'>56</a>   def is_commons_virtual_sitting_day?
+</pre></code><code title='Line 57, ./lib/monkey_patching/date.rb'><pre><a name='57'>57</a>     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+</pre></code><code title='Line 58, ./lib/monkey_patching/date.rb'><pre><a name='58'>58</a>   end
 </pre></code><a name='60'></a> <h3>We want to check if this is a virtual sitting day in the Lords.</h3>
 <a name='62'></a> <p>This is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
 <a name='64'></a> <p>A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.</p>
-<code title='Line 66, lib/monkey_patching/date.rb'><pre><a name='66'>66</a>   def is_lords_virtual_sitting_day?
-</pre></code><code title='Line 67, lib/monkey_patching/date.rb'><pre><a name='67'>67</a>     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
-</pre></code><code title='Line 68, lib/monkey_patching/date.rb'><pre><a name='68'>68</a>   end
+<code title='Line 66, ./lib/monkey_patching/date.rb'><pre><a name='66'>66</a>   def is_lords_virtual_sitting_day?
+</pre></code><code title='Line 67, ./lib/monkey_patching/date.rb'><pre><a name='67'>67</a>     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+</pre></code><code title='Line 68, ./lib/monkey_patching/date.rb'><pre><a name='68'>68</a>   end
 </pre></code><a name='70'></a> <h3>We want to check if this is a praying sitting day in either House.</h3>
-<code title='Line 72, lib/monkey_patching/date.rb'><pre><a name='72'>72</a>   def is_either_house_praying_sitting_day?
-</pre></code><code title='Line 73, lib/monkey_patching/date.rb'><pre><a name='73'>73</a>     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day?
-</pre></code><code title='Line 74, lib/monkey_patching/date.rb'><pre><a name='74'>74</a>   end
+<code title='Line 72, ./lib/monkey_patching/date.rb'><pre><a name='72'>72</a>   def is_either_house_praying_sitting_day?
+</pre></code><code title='Line 73, ./lib/monkey_patching/date.rb'><pre><a name='73'>73</a>     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day?
+</pre></code><code title='Line 74, ./lib/monkey_patching/date.rb'><pre><a name='74'>74</a>   end
 </pre></code><a name='76'></a> <h3>We want to check if this is a praying sitting day in both Houses.</h3>
-<code title='Line 78, lib/monkey_patching/date.rb'><pre><a name='78'>78</a>   def is_joint_praying_sitting_day?
-</pre></code><code title='Line 79, lib/monkey_patching/date.rb'><pre><a name='79'>79</a>     self.is_commons_praying_sitting_day? and self.is_lords_praying_sitting_day?
-</pre></code><code title='Line 80, lib/monkey_patching/date.rb'><pre><a name='80'>80</a>   end
+<code title='Line 78, ./lib/monkey_patching/date.rb'><pre><a name='78'>78</a>   def is_joint_praying_sitting_day?
+</pre></code><code title='Line 79, ./lib/monkey_patching/date.rb'><pre><a name='79'>79</a>     self.is_commons_praying_sitting_day? and self.is_lords_praying_sitting_day?
+</pre></code><code title='Line 80, ./lib/monkey_patching/date.rb'><pre><a name='80'>80</a>   end
 </pre></code><a name='82'></a> <h3>We want to check if this is a parliamentary sitting day in either House.</h3>
-<code title='Line 84, lib/monkey_patching/date.rb'><pre><a name='84'>84</a>   def is_either_house_parliamentary_sitting_day?
-</pre></code><code title='Line 85, lib/monkey_patching/date.rb'><pre><a name='85'>85</a>     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
-</pre></code><code title='Line 86, lib/monkey_patching/date.rb'><pre><a name='86'>86</a>   end
+<code title='Line 84, ./lib/monkey_patching/date.rb'><pre><a name='84'>84</a>   def is_either_house_parliamentary_sitting_day?
+</pre></code><code title='Line 85, ./lib/monkey_patching/date.rb'><pre><a name='85'>85</a>     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
+</pre></code><code title='Line 86, ./lib/monkey_patching/date.rb'><pre><a name='86'>86</a>   end
 </pre></code><a name='88'></a> <h3>We want to check if this is a parliamentary sitting day in both Houses.</h3>
-<code title='Line 90, lib/monkey_patching/date.rb'><pre><a name='90'>90</a>   def is_joint_parliamentary_sitting_day?
-</pre></code><code title='Line 91, lib/monkey_patching/date.rb'><pre><a name='91'>91</a>     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
-</pre></code><code title='Line 92, lib/monkey_patching/date.rb'><pre><a name='92'>92</a>   end
+<code title='Line 90, ./lib/monkey_patching/date.rb'><pre><a name='90'>90</a>   def is_joint_parliamentary_sitting_day?
+</pre></code><code title='Line 91, ./lib/monkey_patching/date.rb'><pre><a name='91'>91</a>     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
+</pre></code><code title='Line 92, ./lib/monkey_patching/date.rb'><pre><a name='92'>92</a>   end
 </pre></code><a name='94'></a> <h3>We want to check if this is an adjournment day in either House.</h3>
-<code title='Line 96, lib/monkey_patching/date.rb'><pre><a name='96'>96</a>   def is_adjournment_day?
-</pre></code><code title='Line 97, lib/monkey_patching/date.rb'><pre><a name='97'>97</a>     AdjournmentDay.all.where( 'date = ?',  self ).first
-</pre></code><code title='Line 98, lib/monkey_patching/date.rb'><pre><a name='98'>98</a>   end
+<code title='Line 96, ./lib/monkey_patching/date.rb'><pre><a name='96'>96</a>   def is_adjournment_day?
+</pre></code><code title='Line 97, ./lib/monkey_patching/date.rb'><pre><a name='97'>97</a>     AdjournmentDay.all.where( 'date = ?',  self ).first
+</pre></code><code title='Line 98, ./lib/monkey_patching/date.rb'><pre><a name='98'>98</a>   end
 </pre></code><a name='100'></a> <h3>We want to check if this is an adjournment day in the Commons.</h3>
-<code title='Line 102, lib/monkey_patching/date.rb'><pre><a name='102'>102</a>   def is_commons_adjournment_day?
-</pre></code><code title='Line 103, lib/monkey_patching/date.rb'><pre><a name='103'>103</a>     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 1 ).first
-</pre></code><code title='Line 104, lib/monkey_patching/date.rb'><pre><a name='104'>104</a>   end
+<code title='Line 102, ./lib/monkey_patching/date.rb'><pre><a name='102'>102</a>   def is_commons_adjournment_day?
+</pre></code><code title='Line 103, ./lib/monkey_patching/date.rb'><pre><a name='103'>103</a>     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 1 ).first
+</pre></code><code title='Line 104, ./lib/monkey_patching/date.rb'><pre><a name='104'>104</a>   end
 </pre></code><a name='106'></a> <h3>We want to check if this is an adjournment day in the Lords.</h3>
-<code title='Line 108, lib/monkey_patching/date.rb'><pre><a name='108'>108</a>   def is_lords_adjournment_day?
-</pre></code><code title='Line 109, lib/monkey_patching/date.rb'><pre><a name='109'>109</a>     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 2 ).first
-</pre></code><code title='Line 110, lib/monkey_patching/date.rb'><pre><a name='110'>110</a>   end
+<code title='Line 108, ./lib/monkey_patching/date.rb'><pre><a name='108'>108</a>   def is_lords_adjournment_day?
+</pre></code><code title='Line 109, ./lib/monkey_patching/date.rb'><pre><a name='109'>109</a>     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 2 ).first
+</pre></code><code title='Line 110, ./lib/monkey_patching/date.rb'><pre><a name='110'>110</a>   end
 </pre></code><a name='112'></a> <h3>We want to check if Parliament is prorogued on this day.</h3>
-<code title='Line 114, lib/monkey_patching/date.rb'><pre><a name='114'>114</a>   def is_prorogation_day?
-</pre></code><code title='Line 115, lib/monkey_patching/date.rb'><pre><a name='115'>115</a>     ProrogationDay.all.where( 'date = ?',  self ).first
-</pre></code><code title='Line 116, lib/monkey_patching/date.rb'><pre><a name='116'>116</a>   end
+<code title='Line 114, ./lib/monkey_patching/date.rb'><pre><a name='114'>114</a>   def is_prorogation_day?
+</pre></code><code title='Line 115, ./lib/monkey_patching/date.rb'><pre><a name='115'>115</a>     ProrogationDay.all.where( 'date = ?',  self ).first
+</pre></code><code title='Line 116, ./lib/monkey_patching/date.rb'><pre><a name='116'>116</a>   end
 </pre></code><a name='118'></a> <h3>We want to check if Parliament is dissolved on this day.</h3>
-<code title='Line 120, lib/monkey_patching/date.rb'><pre><a name='120'>120</a>   def is_dissolution_day?
-</pre></code><code title='Line 121, lib/monkey_patching/date.rb'><pre><a name='121'>121</a>     DissolutionDay.all.where( 'date = ?',  self ).first
-</pre></code><code title='Line 122, lib/monkey_patching/date.rb'><pre><a name='122'>122</a>   end
+<code title='Line 120, ./lib/monkey_patching/date.rb'><pre><a name='120'>120</a>   def is_dissolution_day?
+</pre></code><code title='Line 121, ./lib/monkey_patching/date.rb'><pre><a name='121'>121</a>     DissolutionDay.all.where( 'date = ?',  self ).first
+</pre></code><code title='Line 122, ./lib/monkey_patching/date.rb'><pre><a name='122'>122</a>   end
 </pre></code><a name='124'></a> <h3>We want to check if this is a day for which we have something in the calendar.</h3>
 <a name='126'></a> <p>That might be a parliamentary sitting day, a praying sitting day, a virtual sitting day, an adjournment day, a day within prorogation or a day within dissolution.</p>
-<code title='Line 128, lib/monkey_patching/date.rb'><pre><a name='128'>128</a>   def is_calendar_populated?
-</pre></code><code title='Line 129, lib/monkey_patching/date.rb'><pre><a name='129'>129</a>     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
-</pre></code><code title='Line 130, lib/monkey_patching/date.rb'><pre><a name='130'>130</a>   end
+<code title='Line 128, ./lib/monkey_patching/date.rb'><pre><a name='128'>128</a>   def is_calendar_populated?
+</pre></code><code title='Line 129, ./lib/monkey_patching/date.rb'><pre><a name='129'>129</a>     self.is_commons_praying_sitting_day? or self.is_lords_praying_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+</pre></code><code title='Line 130, ./lib/monkey_patching/date.rb'><pre><a name='130'>130</a>   end
 </pre></code><a name='132'></a> <h3>We want to check if this is a day for which we do not have anything in the calendar.</h3>
 <a name='134'></a> <p>We use this to check if we&#39;ve <q>run out of calendar</q> so we don&#39;t keep cycling into future days and loop infinitely.</p>
 <a name='136'></a> <p>This is our event horizon.</p>
-<code title='Line 138, lib/monkey_patching/date.rb'><pre><a name='138'>138</a>   def is_calendar_not_populated?
-</pre></code><code title='Line 139, lib/monkey_patching/date.rb'><pre><a name='139'>139</a>     !self.is_calendar_populated?
-</pre></code><code title='Line 140, lib/monkey_patching/date.rb'><pre><a name='140'>140</a>   end
+<code title='Line 138, ./lib/monkey_patching/date.rb'><pre><a name='138'>138</a>   def is_calendar_not_populated?
+</pre></code><code title='Line 139, ./lib/monkey_patching/date.rb'><pre><a name='139'>139</a>     !self.is_calendar_populated?
+</pre></code><code title='Line 140, ./lib/monkey_patching/date.rb'><pre><a name='140'>140</a>   end
 </pre></code><a name='142'></a> <h3>We want to check if this is a praying adjournment day in the Commons.</h3>
 <a name='144'></a> <p>During a short adjournment, adjournment days are praying days.</p>
 <a name='146'></a> <p>This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.</p>
 <a name='148'></a> <p>In all known cases “short” is defined as not more than four days.</p>
 <a name='150'></a> <p>For the purposes of calculating praying days, virtual sitting days count as adjournment days.</p>
-<code title='Line 152, lib/monkey_patching/date.rb'><pre><a name='152'>152</a>   def is_commons_praying_adjournment_day?( maximum_day_count )
+<code title='Line 152, ./lib/monkey_patching/date.rb'><pre><a name='152'>152</a>   def is_commons_praying_adjournment_day?( maximum_day_count )
 </pre></code><a name='154'></a> <h3>We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.</h3>
-<code title='Line 156, lib/monkey_patching/date.rb'><pre><a name='156'>156</a>     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
+<code title='Line 156, ./lib/monkey_patching/date.rb'><pre><a name='156'>156</a>     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
 </pre></code><a name='158'></a> <p>Having found that this is a Commons adjournnment day or a Commons virtual sitting day, we start the adjournment day count at 1.</p>
-<code title='Line 160, lib/monkey_patching/date.rb'><pre><a name='160'>160</a>       adjournment_day_count = 1
+<code title='Line 160, ./lib/monkey_patching/date.rb'><pre><a name='160'>160</a>       adjournment_day_count = 1
 </pre></code><a name='162'></a> <p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
-<code title='Line 164, lib/monkey_patching/date.rb'><pre><a name='164'>164</a>       date = self
-</pre></code><code title='Line 165, lib/monkey_patching/date.rb'><pre><a name='165'>165</a>       for i in ( 1..maximum_day_count )
+<code title='Line 164, ./lib/monkey_patching/date.rb'><pre><a name='164'>164</a>       date = self
+</pre></code><code title='Line 165, ./lib/monkey_patching/date.rb'><pre><a name='165'>165</a>       for i in ( 1..maximum_day_count )
 </pre></code><a name='167'></a> <p>Go forward one day.</p>
-<code title='Line 169, lib/monkey_patching/date.rb'><pre><a name='169'>169</a>         date = date.next_day
+<code title='Line 169, ./lib/monkey_patching/date.rb'><pre><a name='169'>169</a>         date = date.next_day
 </pre></code><a name='171'></a> <p>If this is a Commons adjournnment day or a Commons virtual sitting day ...</p>
-<code title='Line 172, lib/monkey_patching/date.rb'><pre><a name='172'>172</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+<code title='Line 172, ./lib/monkey_patching/date.rb'><pre><a name='172'>172</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
 </pre></code><a name='174'></a> <p>... add one to the adjournment day count.</p>
-<code title='Line 175, lib/monkey_patching/date.rb'><pre><a name='175'>175</a>           adjournment_day_count +=1
+<code title='Line 175, ./lib/monkey_patching/date.rb'><pre><a name='175'>175</a>           adjournment_day_count +=1
 </pre></code><a name='177'></a> <p>If this is not a Commons adjournnment day or a Commons virtual sitting day ...</p>
-<code title='Line 178, lib/monkey_patching/date.rb'><pre><a name='178'>178</a>         else
+<code title='Line 178, ./lib/monkey_patching/date.rb'><pre><a name='178'>178</a>         else
 </pre></code><a name='180'></a> <p>... stop cycling through following days.</p>
-<code title='Line 181, lib/monkey_patching/date.rb'><pre><a name='181'>181</a>           break
-</pre></code><code title='Line 182, lib/monkey_patching/date.rb'><pre><a name='182'>182</a>         end
-</pre></code><code title='Line 183, lib/monkey_patching/date.rb'><pre><a name='183'>183</a>       end
+<code title='Line 181, ./lib/monkey_patching/date.rb'><pre><a name='181'>181</a>           break
+</pre></code><code title='Line 182, ./lib/monkey_patching/date.rb'><pre><a name='182'>182</a>         end
+</pre></code><code title='Line 183, ./lib/monkey_patching/date.rb'><pre><a name='183'>183</a>       end
 </pre></code><a name='185'></a> <p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
-<code title='Line 186, lib/monkey_patching/date.rb'><pre><a name='186'>186</a>       date = self
-</pre></code><code title='Line 187, lib/monkey_patching/date.rb'><pre><a name='187'>187</a>       for i in ( 1..maximum_day_count )
+<code title='Line 186, ./lib/monkey_patching/date.rb'><pre><a name='186'>186</a>       date = self
+</pre></code><code title='Line 187, ./lib/monkey_patching/date.rb'><pre><a name='187'>187</a>       for i in ( 1..maximum_day_count )
 </pre></code><a name='189'></a> <p>Go back one day.</p>
-<code title='Line 190, lib/monkey_patching/date.rb'><pre><a name='190'>190</a>         date = date.prev_day
+<code title='Line 190, ./lib/monkey_patching/date.rb'><pre><a name='190'>190</a>         date = date.prev_day
 </pre></code><a name='192'></a> <p>If this is a Commons adjournnment day or a Commons virtual sitting day ...</p>
-<code title='Line 193, lib/monkey_patching/date.rb'><pre><a name='193'>193</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+<code title='Line 193, ./lib/monkey_patching/date.rb'><pre><a name='193'>193</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
 </pre></code><a name='195'></a> <p>... add one to the adjournment day count.</p>
-<code title='Line 196, lib/monkey_patching/date.rb'><pre><a name='196'>196</a>           adjournment_day_count +=1
+<code title='Line 196, ./lib/monkey_patching/date.rb'><pre><a name='196'>196</a>           adjournment_day_count +=1
 </pre></code><a name='198'></a> <p>If this is not a Commons adjournnment day or a Commons virtual sitting day ...</p>
-<code title='Line 199, lib/monkey_patching/date.rb'><pre><a name='199'>199</a>         else  
+<code title='Line 199, ./lib/monkey_patching/date.rb'><pre><a name='199'>199</a>         else  
 </pre></code><a name='201'></a> <p>... stop cycling through preceding days.</p>
-<code title='Line 202, lib/monkey_patching/date.rb'><pre><a name='202'>202</a>           break
-</pre></code><code title='Line 203, lib/monkey_patching/date.rb'><pre><a name='203'>203</a>         end
-</pre></code><code title='Line 204, lib/monkey_patching/date.rb'><pre><a name='204'>204</a>       end
+<code title='Line 202, ./lib/monkey_patching/date.rb'><pre><a name='202'>202</a>           break
+</pre></code><code title='Line 203, ./lib/monkey_patching/date.rb'><pre><a name='203'>203</a>         end
+</pre></code><code title='Line 204, ./lib/monkey_patching/date.rb'><pre><a name='204'>204</a>       end
 </pre></code><a name='206'></a> <p>If the total number of continuous adjournment days is more than the maximum day count ...</p>
-<code title='Line 207, lib/monkey_patching/date.rb'><pre><a name='207'>207</a>       if adjournment_day_count > maximum_day_count
+<code title='Line 207, ./lib/monkey_patching/date.rb'><pre><a name='207'>207</a>       if adjournment_day_count > maximum_day_count
 </pre></code><a name='209'></a> <p>... then this day is not part of a short adjournment and so does not count as a praying day.</p>
-<code title='Line 210, lib/monkey_patching/date.rb'><pre><a name='210'>210</a>         is_commons_short_adjournment = false
+<code title='Line 210, ./lib/monkey_patching/date.rb'><pre><a name='210'>210</a>         is_commons_short_adjournment = false
 </pre></code><a name='212'></a> <p>If the total number of continuous adjournment days is less than or the same as the maximum day count ...</p>
-<code title='Line 213, lib/monkey_patching/date.rb'><pre><a name='213'>213</a>       else
+<code title='Line 213, ./lib/monkey_patching/date.rb'><pre><a name='213'>213</a>       else
 </pre></code><a name='215'></a> <p>... then this day is part of a short adjournment and so does count as a praying day.</p>
-<code title='Line 216, lib/monkey_patching/date.rb'><pre><a name='216'>216</a>         is_commons_short_adjournment = true
-</pre></code><code title='Line 217, lib/monkey_patching/date.rb'><pre><a name='217'>217</a>       end
+<code title='Line 216, ./lib/monkey_patching/date.rb'><pre><a name='216'>216</a>         is_commons_short_adjournment = true
+</pre></code><code title='Line 217, ./lib/monkey_patching/date.rb'><pre><a name='217'>217</a>       end
 </pre></code><a name='219'></a> <p>Returns if this day is a part of a Commons short adjournment</p>
-<code title='Line 220, lib/monkey_patching/date.rb'><pre><a name='220'>220</a>       is_commons_short_adjournment
-</pre></code><code title='Line 221, lib/monkey_patching/date.rb'><pre><a name='221'>221</a>     end
-</pre></code><code title='Line 222, lib/monkey_patching/date.rb'><pre><a name='222'>222</a>   end
+<code title='Line 220, ./lib/monkey_patching/date.rb'><pre><a name='220'>220</a>       is_commons_short_adjournment
+</pre></code><code title='Line 221, ./lib/monkey_patching/date.rb'><pre><a name='221'>221</a>     end
+</pre></code><code title='Line 222, ./lib/monkey_patching/date.rb'><pre><a name='222'>222</a>   end
 </pre></code><a name='224'></a> <h3>We want to check if this is a praying day in the Commons.</h3>
 <a name='226'></a> <p>A praying day in the Commons is either a praying sitting day in the Commons, or a praying adjournment day in the Commons.</p>
 <a name='228'></a> <p>We pass &#39;4&#39; as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.</p>
-<code title='Line 230, lib/monkey_patching/date.rb'><pre><a name='230'>230</a>   def is_commons_praying_day?
-</pre></code><code title='Line 231, lib/monkey_patching/date.rb'><pre><a name='231'>231</a>     self.is_commons_praying_sitting_day? or self.is_commons_praying_adjournment_day?( 4 )
-</pre></code><code title='Line 232, lib/monkey_patching/date.rb'><pre><a name='232'>232</a>   end
+<code title='Line 230, ./lib/monkey_patching/date.rb'><pre><a name='230'>230</a>   def is_commons_praying_day?
+</pre></code><code title='Line 231, ./lib/monkey_patching/date.rb'><pre><a name='231'>231</a>     self.is_commons_praying_sitting_day? or self.is_commons_praying_adjournment_day?( 4 )
+</pre></code><code title='Line 232, ./lib/monkey_patching/date.rb'><pre><a name='232'>232</a>   end
 </pre></code><a name='234'></a> <h3>We want to check if this is a praying adjournment day in the Lords.</h3>
 <a name='236'></a> <p>During a short adjournment, adjournment days are praying days.</p>
 <a name='238'></a> <p>This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.</p>
 <a name='240'></a> <p>In all known cases “short” is defined as not more than four days.</p>
 <a name='242'></a> <p>For the purposes of calculating praying days, virtual sitting days count as adjournment days.</p>
-<code title='Line 244, lib/monkey_patching/date.rb'><pre><a name='244'>244</a>   def is_lords_praying_adjournment_day?( maximum_day_count )
+<code title='Line 244, ./lib/monkey_patching/date.rb'><pre><a name='244'>244</a>   def is_lords_praying_adjournment_day?( maximum_day_count )
 </pre></code><a name='246'></a> <p>We want to check if this is a Lords adjournnment day or a Lords virtual sitting day.</p>
-<code title='Line 247, lib/monkey_patching/date.rb'><pre><a name='247'>247</a>     if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?
+<code title='Line 247, ./lib/monkey_patching/date.rb'><pre><a name='247'>247</a>     if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?
 </pre></code><a name='249'></a> <p>Having found that this is a Lords adjournnment day or a Lords virtual sitting day, we start the adjournment day count at 1.</p>
-<code title='Line 250, lib/monkey_patching/date.rb'><pre><a name='250'>250</a>       adjournment_day_count = 1
+<code title='Line 250, ./lib/monkey_patching/date.rb'><pre><a name='250'>250</a>       adjournment_day_count = 1
 </pre></code><a name='252'></a> <p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
-<code title='Line 253, lib/monkey_patching/date.rb'><pre><a name='253'>253</a>       date = self
-</pre></code><code title='Line 254, lib/monkey_patching/date.rb'><pre><a name='254'>254</a>       for i in ( 1..maximum_day_count )
+<code title='Line 253, ./lib/monkey_patching/date.rb'><pre><a name='253'>253</a>       date = self
+</pre></code><code title='Line 254, ./lib/monkey_patching/date.rb'><pre><a name='254'>254</a>       for i in ( 1..maximum_day_count )
 </pre></code><a name='256'></a> <p>Go forward one day.</p>
-<code title='Line 257, lib/monkey_patching/date.rb'><pre><a name='257'>257</a>         date = date.next_day
+<code title='Line 257, ./lib/monkey_patching/date.rb'><pre><a name='257'>257</a>         date = date.next_day
 </pre></code><a name='259'></a> <p>If this is a Lords adjournnment day or a Lords virtual sitting day ...</p>
-<code title='Line 260, lib/monkey_patching/date.rb'><pre><a name='260'>260</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+<code title='Line 260, ./lib/monkey_patching/date.rb'><pre><a name='260'>260</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
 </pre></code><a name='262'></a> <p>... add one to the adjournment day count.</p>
-<code title='Line 263, lib/monkey_patching/date.rb'><pre><a name='263'>263</a>           adjournment_day_count +=1
+<code title='Line 263, ./lib/monkey_patching/date.rb'><pre><a name='263'>263</a>           adjournment_day_count +=1
 </pre></code><a name='265'></a> <p>If this is not a Lords adjournnment day or a Lords virtual sitting day ...</p>
-<code title='Line 266, lib/monkey_patching/date.rb'><pre><a name='266'>266</a>         else
+<code title='Line 266, ./lib/monkey_patching/date.rb'><pre><a name='266'>266</a>         else
 </pre></code><a name='268'></a> <p>... stop cycling through following days.</p>
-<code title='Line 269, lib/monkey_patching/date.rb'><pre><a name='269'>269</a>           break
-</pre></code><code title='Line 270, lib/monkey_patching/date.rb'><pre><a name='270'>270</a>         end
-</pre></code><code title='Line 271, lib/monkey_patching/date.rb'><pre><a name='271'>271</a>       end
+<code title='Line 269, ./lib/monkey_patching/date.rb'><pre><a name='269'>269</a>           break
+</pre></code><code title='Line 270, ./lib/monkey_patching/date.rb'><pre><a name='270'>270</a>         end
+</pre></code><code title='Line 271, ./lib/monkey_patching/date.rb'><pre><a name='271'>271</a>       end
 </pre></code><a name='273'></a> <p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
-<code title='Line 274, lib/monkey_patching/date.rb'><pre><a name='274'>274</a>       date = self
-</pre></code><code title='Line 275, lib/monkey_patching/date.rb'><pre><a name='275'>275</a>       for i in ( 1..maximum_day_count )
+<code title='Line 274, ./lib/monkey_patching/date.rb'><pre><a name='274'>274</a>       date = self
+</pre></code><code title='Line 275, ./lib/monkey_patching/date.rb'><pre><a name='275'>275</a>       for i in ( 1..maximum_day_count )
 </pre></code><a name='277'></a> <p>Go back one day.</p>
-<code title='Line 278, lib/monkey_patching/date.rb'><pre><a name='278'>278</a>         date = date.prev_day
+<code title='Line 278, ./lib/monkey_patching/date.rb'><pre><a name='278'>278</a>         date = date.prev_day
 </pre></code><a name='280'></a> <p>If this is a Lords adjournnment day or a Lords virtual sitting day ...</p>
-<code title='Line 281, lib/monkey_patching/date.rb'><pre><a name='281'>281</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+<code title='Line 281, ./lib/monkey_patching/date.rb'><pre><a name='281'>281</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
 </pre></code><a name='283'></a> <p>... add one to the adjournment day count.</p>
-<code title='Line 284, lib/monkey_patching/date.rb'><pre><a name='284'>284</a>           adjournment_day_count +=1
+<code title='Line 284, ./lib/monkey_patching/date.rb'><pre><a name='284'>284</a>           adjournment_day_count +=1
 </pre></code><a name='286'></a> <p>If this is not a Lords adjournnment day or a Lords virtual sitting day ...</p>
-<code title='Line 287, lib/monkey_patching/date.rb'><pre><a name='287'>287</a>         else  
+<code title='Line 287, ./lib/monkey_patching/date.rb'><pre><a name='287'>287</a>         else  
 </pre></code><a name='289'></a> <p>... stop cycling through preceding days.</p>
-<code title='Line 290, lib/monkey_patching/date.rb'><pre><a name='290'>290</a>           break
-</pre></code><code title='Line 291, lib/monkey_patching/date.rb'><pre><a name='291'>291</a>         end
-</pre></code><code title='Line 292, lib/monkey_patching/date.rb'><pre><a name='292'>292</a>       end
+<code title='Line 290, ./lib/monkey_patching/date.rb'><pre><a name='290'>290</a>           break
+</pre></code><code title='Line 291, ./lib/monkey_patching/date.rb'><pre><a name='291'>291</a>         end
+</pre></code><code title='Line 292, ./lib/monkey_patching/date.rb'><pre><a name='292'>292</a>       end
 </pre></code><a name='294'></a> <p>If the total number of continuous adjournment days is more than the maximum day count ...</p>
-<code title='Line 295, lib/monkey_patching/date.rb'><pre><a name='295'>295</a>       if adjournment_day_count > maximum_day_count
+<code title='Line 295, ./lib/monkey_patching/date.rb'><pre><a name='295'>295</a>       if adjournment_day_count > maximum_day_count
 </pre></code><a name='297'></a> <p>... then this day is not part of a short adjournment and so does not count as a praying day.</p>
-<code title='Line 298, lib/monkey_patching/date.rb'><pre><a name='298'>298</a>         is_lords_short_adjournment = false
+<code title='Line 298, ./lib/monkey_patching/date.rb'><pre><a name='298'>298</a>         is_lords_short_adjournment = false
 </pre></code><a name='300'></a> <p>If the total number of continuous adjournment days is less than or the same as the maximum day count ...</p>
-<code title='Line 301, lib/monkey_patching/date.rb'><pre><a name='301'>301</a>       else
+<code title='Line 301, ./lib/monkey_patching/date.rb'><pre><a name='301'>301</a>       else
 </pre></code><a name='303'></a> <p>... then this day is part of a short adjournment and so does count as a praying day.</p>
-<code title='Line 304, lib/monkey_patching/date.rb'><pre><a name='304'>304</a>         is_lords_short_adjournment = true
-</pre></code><code title='Line 305, lib/monkey_patching/date.rb'><pre><a name='305'>305</a>       end
+<code title='Line 304, ./lib/monkey_patching/date.rb'><pre><a name='304'>304</a>         is_lords_short_adjournment = true
+</pre></code><code title='Line 305, ./lib/monkey_patching/date.rb'><pre><a name='305'>305</a>       end
 </pre></code><a name='307'></a> <p>Returns if this day is a part of a Lords short adjournment</p>
-<code title='Line 308, lib/monkey_patching/date.rb'><pre><a name='308'>308</a>       is_lords_short_adjournment
-</pre></code><code title='Line 309, lib/monkey_patching/date.rb'><pre><a name='309'>309</a>     end
-</pre></code><code title='Line 310, lib/monkey_patching/date.rb'><pre><a name='310'>310</a>   end
+<code title='Line 308, ./lib/monkey_patching/date.rb'><pre><a name='308'>308</a>       is_lords_short_adjournment
+</pre></code><code title='Line 309, ./lib/monkey_patching/date.rb'><pre><a name='309'>309</a>     end
+</pre></code><code title='Line 310, ./lib/monkey_patching/date.rb'><pre><a name='310'>310</a>   end
 </pre></code><a name='312'></a> <h3>We want to check if this is a praying day in the Lords.</h3>
 <a name='314'></a> <p>A praying day in the Lords is either a praying sitting day in the Lords, or a praying adjournment day in the Lords.</p>
 <a name='316'></a> <p>We pass &#39;4&#39; as the maximum day count to the adjournment day calculation, because praying adjournment days are days within a series of not more than four adjournment days.</p>
-<code title='Line 318, lib/monkey_patching/date.rb'><pre><a name='318'>318</a>   def is_lords_praying_day?
-</pre></code><code title='Line 319, lib/monkey_patching/date.rb'><pre><a name='319'>319</a>     self.is_lords_praying_sitting_day? or self.is_lords_praying_adjournment_day?( 4 )
-</pre></code><code title='Line 320, lib/monkey_patching/date.rb'><pre><a name='320'>320</a>   end
+<code title='Line 318, ./lib/monkey_patching/date.rb'><pre><a name='318'>318</a>   def is_lords_praying_day?
+</pre></code><code title='Line 319, ./lib/monkey_patching/date.rb'><pre><a name='319'>319</a>     self.is_lords_praying_sitting_day? or self.is_lords_praying_adjournment_day?( 4 )
+</pre></code><code title='Line 320, ./lib/monkey_patching/date.rb'><pre><a name='320'>320</a>   end
 </pre></code><a name='322'></a> <h3>We want to check if this is a praying day in either House.</h3>
-<code title='Line 324, lib/monkey_patching/date.rb'><pre><a name='324'>324</a>   def is_either_house_praying_day?
-</pre></code><code title='Line 325, lib/monkey_patching/date.rb'><pre><a name='325'>325</a>     self.is_commons_praying_day? or self.is_lords_praying_day?
-</pre></code><code title='Line 326, lib/monkey_patching/date.rb'><pre><a name='326'>326</a>   end
+<code title='Line 324, ./lib/monkey_patching/date.rb'><pre><a name='324'>324</a>   def is_either_house_praying_day?
+</pre></code><code title='Line 325, ./lib/monkey_patching/date.rb'><pre><a name='325'>325</a>     self.is_commons_praying_day? or self.is_lords_praying_day?
+</pre></code><code title='Line 326, ./lib/monkey_patching/date.rb'><pre><a name='326'>326</a>   end
 </pre></code><a name='328'></a> <h3>We want to check if this is a praying day in both Houses.</h3>
-<code title='Line 330, lib/monkey_patching/date.rb'><pre><a name='330'>330</a>   def is_joint_praying_day?
-</pre></code><code title='Line 331, lib/monkey_patching/date.rb'><pre><a name='331'>331</a>     self.is_commons_praying_day? and self.is_lords_praying_day?
-</pre></code><code title='Line 332, lib/monkey_patching/date.rb'><pre><a name='332'>332</a>   end
+<code title='Line 330, ./lib/monkey_patching/date.rb'><pre><a name='330'>330</a>   def is_joint_praying_day?
+</pre></code><code title='Line 331, ./lib/monkey_patching/date.rb'><pre><a name='331'>331</a>     self.is_commons_praying_day? and self.is_lords_praying_day?
+</pre></code><code title='Line 332, ./lib/monkey_patching/date.rb'><pre><a name='332'>332</a>   end
 </pre></code><a name='334'></a> <p>(End of set of methods to work out the type of a given day.)</p>
 <a name='338'></a> <h2>A set of methods to find the first day of a given type.</h2>
 <a name='340'></a> <h3>We want to find the first praying day in either House.</h3>
 <a name='342'></a> <p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first praying sitting day in either House following the laying.</p>
 <a name='344'></a> <p>This method is used for bicameral negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.</p>
-<code title='Line 346, lib/monkey_patching/date.rb'><pre><a name='346'>346</a>   def first_praying_day_in_either_house
+<code title='Line 346, ./lib/monkey_patching/date.rb'><pre><a name='346'>346</a>   def first_praying_day_in_either_house
 </pre></code><a name='348'></a> <p>If this is a day on which the calendar is not yet populated ...</p>
-<code title='Line 349, lib/monkey_patching/date.rb'><pre><a name='349'>349</a>     if self.is_calendar_not_populated?
+<code title='Line 349, ./lib/monkey_patching/date.rb'><pre><a name='349'>349</a>     if self.is_calendar_not_populated?
 </pre></code><a name='351'></a> <p>... then we cannot find a first praying day so we stop looking.</p>
-<code title='Line 352, lib/monkey_patching/date.rb'><pre><a name='352'>352</a>       return nil
+<code title='Line 352, ./lib/monkey_patching/date.rb'><pre><a name='352'>352</a>       return nil
 </pre></code><a name='354'></a> <p>If this is a day on which the calendar is populated ...</p>
-<code title='Line 355, lib/monkey_patching/date.rb'><pre><a name='355'>355</a>     else
+<code title='Line 355, ./lib/monkey_patching/date.rb'><pre><a name='355'>355</a>     else
 </pre></code><a name='357'></a> <p>... then if this is not a praying day in either House ...</p>
-<code title='Line 358, lib/monkey_patching/date.rb'><pre><a name='358'>358</a>       unless self.is_either_house_praying_day?
+<code title='Line 358, ./lib/monkey_patching/date.rb'><pre><a name='358'>358</a>       unless self.is_either_house_praying_day?
 </pre></code><a name='360'></a> <p>... then go to the next day and check that.</p>
-<code title='Line 361, lib/monkey_patching/date.rb'><pre><a name='361'>361</a>         self.next_day.first_praying_day_in_either_house
+<code title='Line 361, ./lib/monkey_patching/date.rb'><pre><a name='361'>361</a>         self.next_day.first_praying_day_in_either_house
 </pre></code><a name='363'></a> <p>... then if this is a praying day in either House ...</p>
-<code title='Line 364, lib/monkey_patching/date.rb'><pre><a name='364'>364</a>       else
+<code title='Line 364, ./lib/monkey_patching/date.rb'><pre><a name='364'>364</a>       else
 </pre></code><a name='366'></a> <p>... then return this day as the first praying day in either House.</p>
-<code title='Line 367, lib/monkey_patching/date.rb'><pre><a name='367'>367</a>         self
-</pre></code><code title='Line 368, lib/monkey_patching/date.rb'><pre><a name='368'>368</a>       end
-</pre></code><code title='Line 369, lib/monkey_patching/date.rb'><pre><a name='369'>369</a>     end
-</pre></code><code title='Line 370, lib/monkey_patching/date.rb'><pre><a name='370'>370</a>   end
+<code title='Line 367, ./lib/monkey_patching/date.rb'><pre><a name='367'>367</a>         self
+</pre></code><code title='Line 368, ./lib/monkey_patching/date.rb'><pre><a name='368'>368</a>       end
+</pre></code><code title='Line 369, ./lib/monkey_patching/date.rb'><pre><a name='369'>369</a>     end
+</pre></code><code title='Line 370, ./lib/monkey_patching/date.rb'><pre><a name='370'>370</a>   end
 </pre></code><a name='372'></a> <h3>We want to find the first praying day in both Houses.</h3>
 <a name='374'></a> <p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in both Houses following the laying.</p>
 <a name='376'></a> <p>This method is used for bicameral made affirmatives where the enabling legislation specifies that both Houses must be sitting.</p>
-<code title='Line 378, lib/monkey_patching/date.rb'><pre><a name='378'>378</a>   def first_joint_praying_day
+<code title='Line 378, ./lib/monkey_patching/date.rb'><pre><a name='378'>378</a>   def first_joint_praying_day
 </pre></code><a name='380'></a> <p>If this is a day on which the calendar is not yet populated ...</p>
-<code title='Line 381, lib/monkey_patching/date.rb'><pre><a name='381'>381</a>     if self.is_calendar_not_populated?
+<code title='Line 381, ./lib/monkey_patching/date.rb'><pre><a name='381'>381</a>     if self.is_calendar_not_populated?
 </pre></code><a name='383'></a> <p>... then we cannot find a first praying day so we stop looking.</p>
-<code title='Line 384, lib/monkey_patching/date.rb'><pre><a name='384'>384</a>       return nil
+<code title='Line 384, ./lib/monkey_patching/date.rb'><pre><a name='384'>384</a>       return nil
 </pre></code><a name='386'></a> <p>If this is a day on which the calendar is populated ...</p>
-<code title='Line 387, lib/monkey_patching/date.rb'><pre><a name='387'>387</a>     else
+<code title='Line 387, ./lib/monkey_patching/date.rb'><pre><a name='387'>387</a>     else
 </pre></code><a name='389'></a> <p>... then if this is not a praying day in both Houses ...</p>
-<code title='Line 390, lib/monkey_patching/date.rb'><pre><a name='390'>390</a>       unless self.is_joint_praying_day?
+<code title='Line 390, ./lib/monkey_patching/date.rb'><pre><a name='390'>390</a>       unless self.is_joint_praying_day?
 </pre></code><a name='392'></a> <p>... then go to the next day and check that.</p>
-<code title='Line 393, lib/monkey_patching/date.rb'><pre><a name='393'>393</a>         self.next_day.first_joint_praying_day
+<code title='Line 393, ./lib/monkey_patching/date.rb'><pre><a name='393'>393</a>         self.next_day.first_joint_praying_day
 </pre></code><a name='395'></a> <p>... then if this is a praying day in both Houses ...</p>
-<code title='Line 396, lib/monkey_patching/date.rb'><pre><a name='396'>396</a>       else
+<code title='Line 396, ./lib/monkey_patching/date.rb'><pre><a name='396'>396</a>       else
 </pre></code><a name='398'></a> <p>... then return this day as the first praying day in both Houses.</p>
-<code title='Line 399, lib/monkey_patching/date.rb'><pre><a name='399'>399</a>         self
-</pre></code><code title='Line 400, lib/monkey_patching/date.rb'><pre><a name='400'>400</a>       end
-</pre></code><code title='Line 401, lib/monkey_patching/date.rb'><pre><a name='401'>401</a>     end
-</pre></code><code title='Line 402, lib/monkey_patching/date.rb'><pre><a name='402'>402</a>   end
+<code title='Line 399, ./lib/monkey_patching/date.rb'><pre><a name='399'>399</a>         self
+</pre></code><code title='Line 400, ./lib/monkey_patching/date.rb'><pre><a name='400'>400</a>       end
+</pre></code><code title='Line 401, ./lib/monkey_patching/date.rb'><pre><a name='401'>401</a>     end
+</pre></code><code title='Line 402, ./lib/monkey_patching/date.rb'><pre><a name='402'>402</a>   end
 </pre></code><a name='404'></a> <h3>We want to find the first praying day in the Commons.</h3>
 <a name='406'></a> <p>This method is used when a Statutory Instrument is not laid in a praying period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first praying sitting day in the Commons following the laying.</p>
 <a name='408'></a> <p>This method is used for negative or made affirmative SIs - laid in the Commons and not laid in the Lords.</p>
-<code title='Line 410, lib/monkey_patching/date.rb'><pre><a name='410'>410</a>   def first_commons_praying_day
+<code title='Line 410, ./lib/monkey_patching/date.rb'><pre><a name='410'>410</a>   def first_commons_praying_day
 </pre></code><a name='412'></a> <p>If this is a day on which the calendar is not yet populated ...</p>
-<code title='Line 413, lib/monkey_patching/date.rb'><pre><a name='413'>413</a>     if self.is_calendar_not_populated?
+<code title='Line 413, ./lib/monkey_patching/date.rb'><pre><a name='413'>413</a>     if self.is_calendar_not_populated?
 </pre></code><a name='415'></a> <p>... then we cannot find a first Commons praying day so we stop looking.</p>
-<code title='Line 416, lib/monkey_patching/date.rb'><pre><a name='416'>416</a>       return nil
+<code title='Line 416, ./lib/monkey_patching/date.rb'><pre><a name='416'>416</a>       return nil
 </pre></code><a name='418'></a> <p>If this is a day on which the calendar is populated ...</p>
-<code title='Line 419, lib/monkey_patching/date.rb'><pre><a name='419'>419</a>     else
+<code title='Line 419, ./lib/monkey_patching/date.rb'><pre><a name='419'>419</a>     else
 </pre></code><a name='421'></a> <p>... then if this is not a praying day in the Commons ...</p>
-<code title='Line 422, lib/monkey_patching/date.rb'><pre><a name='422'>422</a>       unless self.is_commons_praying_day?
+<code title='Line 422, ./lib/monkey_patching/date.rb'><pre><a name='422'>422</a>       unless self.is_commons_praying_day?
 </pre></code><a name='424'></a> <p>... then go to the next day and check that.</p>
-<code title='Line 425, lib/monkey_patching/date.rb'><pre><a name='425'>425</a>         self.next_day.first_commons_praying_day
+<code title='Line 425, ./lib/monkey_patching/date.rb'><pre><a name='425'>425</a>         self.next_day.first_commons_praying_day
 </pre></code><a name='427'></a> <p>... then if this is a praying day in the Commons ...</p>
-<code title='Line 428, lib/monkey_patching/date.rb'><pre><a name='428'>428</a>       else
+<code title='Line 428, ./lib/monkey_patching/date.rb'><pre><a name='428'>428</a>       else
 </pre></code><a name='430'></a> <p>... then return this day as the first praying day in the Commons.</p>
-<code title='Line 431, lib/monkey_patching/date.rb'><pre><a name='431'>431</a>         self
-</pre></code><code title='Line 432, lib/monkey_patching/date.rb'><pre><a name='432'>432</a>       end
-</pre></code><code title='Line 433, lib/monkey_patching/date.rb'><pre><a name='433'>433</a>     end
-</pre></code><code title='Line 434, lib/monkey_patching/date.rb'><pre><a name='434'>434</a>   end
+<code title='Line 431, ./lib/monkey_patching/date.rb'><pre><a name='431'>431</a>         self
+</pre></code><code title='Line 432, ./lib/monkey_patching/date.rb'><pre><a name='432'>432</a>       end
+</pre></code><code title='Line 433, ./lib/monkey_patching/date.rb'><pre><a name='433'>433</a>     end
+</pre></code><code title='Line 434, ./lib/monkey_patching/date.rb'><pre><a name='434'>434</a>   end
 </pre></code><a name='436'></a> <h3>We want to find the first parliamentary sitting day in both Houses.</h3>
 <a name='438'></a> <p>This method is used when a Proposed Negative Statutory Instrument is laid.</p>
 <a name='440'></a> <p>Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.</p>
-<code title='Line 442, lib/monkey_patching/date.rb'><pre><a name='442'>442</a>   def first_joint_parliamentary_sitting_day
+<code title='Line 442, ./lib/monkey_patching/date.rb'><pre><a name='442'>442</a>   def first_joint_parliamentary_sitting_day
 </pre></code><a name='444'></a> <p>If this is a day on which the calendar is not yet populated ...</p>
-<code title='Line 445, lib/monkey_patching/date.rb'><pre><a name='445'>445</a>     if self.is_calendar_not_populated?
+<code title='Line 445, ./lib/monkey_patching/date.rb'><pre><a name='445'>445</a>     if self.is_calendar_not_populated?
 </pre></code><a name='447'></a> <p>... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.</p>
-<code title='Line 448, lib/monkey_patching/date.rb'><pre><a name='448'>448</a>       return nil
+<code title='Line 448, ./lib/monkey_patching/date.rb'><pre><a name='448'>448</a>       return nil
 </pre></code><a name='450'></a> <p>If this is a day on which the calendar is populated ...</p>
-<code title='Line 451, lib/monkey_patching/date.rb'><pre><a name='451'>451</a>     else
+<code title='Line 451, ./lib/monkey_patching/date.rb'><pre><a name='451'>451</a>     else
 </pre></code><a name='453'></a> <p>... then if this is not a parliamentary sitting day in both Houses ...</p>
-<code title='Line 454, lib/monkey_patching/date.rb'><pre><a name='454'>454</a>       unless self.is_joint_parliamentary_sitting_day?
+<code title='Line 454, ./lib/monkey_patching/date.rb'><pre><a name='454'>454</a>       unless self.is_joint_parliamentary_sitting_day?
 </pre></code><a name='456'></a> <p>... then go to the next day and check that.</p>
-<code title='Line 457, lib/monkey_patching/date.rb'><pre><a name='457'>457</a>         self.next_day.first_joint_parliamentary_sitting_day
+<code title='Line 457, ./lib/monkey_patching/date.rb'><pre><a name='457'>457</a>         self.next_day.first_joint_parliamentary_sitting_day
 </pre></code><a name='459'></a> <p>... then if this is a parliamentary sitting day in both Houses ...</p>
-<code title='Line 460, lib/monkey_patching/date.rb'><pre><a name='460'>460</a>       else
+<code title='Line 460, ./lib/monkey_patching/date.rb'><pre><a name='460'>460</a>       else
 </pre></code><a name='462'></a> <p>... then return this day as the first parliamentary sitting day in both Houses.</p>
-<code title='Line 463, lib/monkey_patching/date.rb'><pre><a name='463'>463</a>         self
-</pre></code><code title='Line 464, lib/monkey_patching/date.rb'><pre><a name='464'>464</a>       end
-</pre></code><code title='Line 465, lib/monkey_patching/date.rb'><pre><a name='465'>465</a>     end
-</pre></code><code title='Line 466, lib/monkey_patching/date.rb'><pre><a name='466'>466</a>   end
+<code title='Line 463, ./lib/monkey_patching/date.rb'><pre><a name='463'>463</a>         self
+</pre></code><code title='Line 464, ./lib/monkey_patching/date.rb'><pre><a name='464'>464</a>       end
+</pre></code><code title='Line 465, ./lib/monkey_patching/date.rb'><pre><a name='465'>465</a>     end
+</pre></code><code title='Line 466, ./lib/monkey_patching/date.rb'><pre><a name='466'>466</a>   end
 </pre></code><a name='468'></a> <h3>We want to find the first parliamentary sitting day in the Commons.</h3>
 <a name='470'></a> <p>This method is used when a motion to not ratify a treaty in either House is approved - and the Government make a statement that the treaty should nonetheless be ratified, triggering treaty scrutiny period B.</p>
 <a name='472'></a> <p>Treaty scrutiny period B starts on the first Commons parliamentary sitting day following the date of the Government statement.</p>
-<code title='Line 474, lib/monkey_patching/date.rb'><pre><a name='474'>474</a>   def first_commons_parliamentary_sitting_day
+<code title='Line 474, ./lib/monkey_patching/date.rb'><pre><a name='474'>474</a>   def first_commons_parliamentary_sitting_day
 </pre></code><a name='476'></a> <p>If this is a day on which the calendar is not yet populated ...</p>
-<code title='Line 477, lib/monkey_patching/date.rb'><pre><a name='477'>477</a>     if self.is_calendar_not_populated?
+<code title='Line 477, ./lib/monkey_patching/date.rb'><pre><a name='477'>477</a>     if self.is_calendar_not_populated?
 </pre></code><a name='479'></a> <p>... then we cannot find a first parliamentary sitting day in the Commons so we stop looking.</p>
-<code title='Line 480, lib/monkey_patching/date.rb'><pre><a name='480'>480</a>       return nil
+<code title='Line 480, ./lib/monkey_patching/date.rb'><pre><a name='480'>480</a>       return nil
 </pre></code><a name='482'></a> <p>If this is a day on which the calendar is populated ...</p>
-<code title='Line 483, lib/monkey_patching/date.rb'><pre><a name='483'>483</a>     else
+<code title='Line 483, ./lib/monkey_patching/date.rb'><pre><a name='483'>483</a>     else
 </pre></code><a name='485'></a> <p>... then if this is not a parliamentary sitting day in the Commons ...</p>
-<code title='Line 486, lib/monkey_patching/date.rb'><pre><a name='486'>486</a>       unless self.is_commons_parliamentary_sitting_day?
+<code title='Line 486, ./lib/monkey_patching/date.rb'><pre><a name='486'>486</a>       unless self.is_commons_parliamentary_sitting_day?
 </pre></code><a name='488'></a> <p>... then go to the next day and check that.</p>
-<code title='Line 489, lib/monkey_patching/date.rb'><pre><a name='489'>489</a>         self.next_day.first_commons_parliamentary_sitting_day
+<code title='Line 489, ./lib/monkey_patching/date.rb'><pre><a name='489'>489</a>         self.next_day.first_commons_parliamentary_sitting_day
 </pre></code><a name='491'></a> <p>... then if this is a parliamentary sitting day in the Commons ...</p>
-<code title='Line 492, lib/monkey_patching/date.rb'><pre><a name='492'>492</a>       else
+<code title='Line 492, ./lib/monkey_patching/date.rb'><pre><a name='492'>492</a>       else
 </pre></code><a name='494'></a> <p>... then return this day as the first parliamentary sitting day in the Commons.</p>
-<code title='Line 495, lib/monkey_patching/date.rb'><pre><a name='495'>495</a>         self
-</pre></code><code title='Line 496, lib/monkey_patching/date.rb'><pre><a name='496'>496</a>       end
-</pre></code><code title='Line 497, lib/monkey_patching/date.rb'><pre><a name='497'>497</a>     end
-</pre></code><code title='Line 498, lib/monkey_patching/date.rb'><pre><a name='498'>498</a>   end
+<code title='Line 495, ./lib/monkey_patching/date.rb'><pre><a name='495'>495</a>         self
+</pre></code><code title='Line 496, ./lib/monkey_patching/date.rb'><pre><a name='496'>496</a>       end
+</pre></code><code title='Line 497, ./lib/monkey_patching/date.rb'><pre><a name='497'>497</a>     end
+</pre></code><code title='Line 498, ./lib/monkey_patching/date.rb'><pre><a name='498'>498</a>   end
 </pre></code><a name='500'></a> <p>(End of set of methods to find the first day of a given type.)</p>
 <a name='502'></a> <p>Generate label for the day type in the Commons in a session.</p>
-<code title='Line 503, lib/monkey_patching/date.rb'><pre><a name='503'>503</a>   def commons_day_type
-</pre></code><code title='Line 504, lib/monkey_patching/date.rb'><pre><a name='504'>504</a>     if self.is_commons_parliamentary_sitting_day?
-</pre></code><code title='Line 505, lib/monkey_patching/date.rb'><pre><a name='505'>505</a>       day_type = 'Sitting day'
-</pre></code><code title='Line 506, lib/monkey_patching/date.rb'><pre><a name='506'>506</a>     elsif self.is_commons_virtual_sitting_day?
-</pre></code><code title='Line 507, lib/monkey_patching/date.rb'><pre><a name='507'>507</a>       day_type = 'Virtual sitting day'
-</pre></code><code title='Line 508, lib/monkey_patching/date.rb'><pre><a name='508'>508</a>     elsif self.is_commons_praying_sitting_day?
-</pre></code><code title='Line 509, lib/monkey_patching/date.rb'><pre><a name='509'>509</a>       day_type = "Sitting praying day"
-</pre></code><code title='Line 510, lib/monkey_patching/date.rb'><pre><a name='510'>510</a>     elsif self.is_commons_praying_adjournment_day?( 4 )
-</pre></code><code title='Line 511, lib/monkey_patching/date.rb'><pre><a name='511'>511</a>       day_type = 'Praying adjournment day'
-</pre></code><code title='Line 512, lib/monkey_patching/date.rb'><pre><a name='512'>512</a>     elsif self.is_commons_adjournment_day?
-</pre></code><code title='Line 513, lib/monkey_patching/date.rb'><pre><a name='513'>513</a>       day_type = 'Adjournment day'
-</pre></code><code title='Line 514, lib/monkey_patching/date.rb'><pre><a name='514'>514</a>     end
-</pre></code><code title='Line 515, lib/monkey_patching/date.rb'><pre><a name='515'>515</a>     day_type
-</pre></code><code title='Line 516, lib/monkey_patching/date.rb'><pre><a name='516'>516</a>   end
+<code title='Line 503, ./lib/monkey_patching/date.rb'><pre><a name='503'>503</a>   def commons_day_type
+</pre></code><code title='Line 504, ./lib/monkey_patching/date.rb'><pre><a name='504'>504</a>     if self.is_commons_parliamentary_sitting_day?
+</pre></code><code title='Line 505, ./lib/monkey_patching/date.rb'><pre><a name='505'>505</a>       day_type = 'Sitting day'
+</pre></code><code title='Line 506, ./lib/monkey_patching/date.rb'><pre><a name='506'>506</a>     elsif self.is_commons_virtual_sitting_day?
+</pre></code><code title='Line 507, ./lib/monkey_patching/date.rb'><pre><a name='507'>507</a>       day_type = 'Virtual sitting day'
+</pre></code><code title='Line 508, ./lib/monkey_patching/date.rb'><pre><a name='508'>508</a>     elsif self.is_commons_praying_sitting_day?
+</pre></code><code title='Line 509, ./lib/monkey_patching/date.rb'><pre><a name='509'>509</a>       day_type = "Sitting praying day"
+</pre></code><code title='Line 510, ./lib/monkey_patching/date.rb'><pre><a name='510'>510</a>     elsif self.is_commons_praying_adjournment_day?( 4 )
+</pre></code><code title='Line 511, ./lib/monkey_patching/date.rb'><pre><a name='511'>511</a>       day_type = 'Praying adjournment day'
+</pre></code><code title='Line 512, ./lib/monkey_patching/date.rb'><pre><a name='512'>512</a>     elsif self.is_commons_adjournment_day?
+</pre></code><code title='Line 513, ./lib/monkey_patching/date.rb'><pre><a name='513'>513</a>       day_type = 'Adjournment day'
+</pre></code><code title='Line 514, ./lib/monkey_patching/date.rb'><pre><a name='514'>514</a>     end
+</pre></code><code title='Line 515, ./lib/monkey_patching/date.rb'><pre><a name='515'>515</a>     day_type
+</pre></code><code title='Line 516, ./lib/monkey_patching/date.rb'><pre><a name='516'>516</a>   end
 </pre></code><a name='518'></a> <p>Generate label for the day type in the Lords in a session.</p>
-<code title='Line 519, lib/monkey_patching/date.rb'><pre><a name='519'>519</a>   def lords_day_type
-</pre></code><code title='Line 520, lib/monkey_patching/date.rb'><pre><a name='520'>520</a>     if self.is_lords_parliamentary_sitting_day?
-</pre></code><code title='Line 521, lib/monkey_patching/date.rb'><pre><a name='521'>521</a>       day_type = 'Sitting day'
-</pre></code><code title='Line 522, lib/monkey_patching/date.rb'><pre><a name='522'>522</a>     elsif self.is_lords_virtual_sitting_day?
-</pre></code><code title='Line 523, lib/monkey_patching/date.rb'><pre><a name='523'>523</a>       day_type = 'Virtual sitting day'
-</pre></code><code title='Line 524, lib/monkey_patching/date.rb'><pre><a name='524'>524</a>     elsif self.is_lords_praying_sitting_day?
-</pre></code><code title='Line 525, lib/monkey_patching/date.rb'><pre><a name='525'>525</a>       day_type = "Sitting praying day"
-</pre></code><code title='Line 526, lib/monkey_patching/date.rb'><pre><a name='526'>526</a>     elsif self.is_lords_praying_adjournment_day?( 4 )
-</pre></code><code title='Line 527, lib/monkey_patching/date.rb'><pre><a name='527'>527</a>       day_type = 'Praying adjournment day'
-</pre></code><code title='Line 528, lib/monkey_patching/date.rb'><pre><a name='528'>528</a>     elsif self.is_lords_adjournment_day?
-</pre></code><code title='Line 529, lib/monkey_patching/date.rb'><pre><a name='529'>529</a>       day_type = 'Adjournment day'
-</pre></code><code title='Line 530, lib/monkey_patching/date.rb'><pre><a name='530'>530</a>     end
-</pre></code><code title='Line 531, lib/monkey_patching/date.rb'><pre><a name='531'>531</a>     day_type
-</pre></code><code title='Line 532, lib/monkey_patching/date.rb'><pre><a name='532'>532</a>   end
+<code title='Line 519, ./lib/monkey_patching/date.rb'><pre><a name='519'>519</a>   def lords_day_type
+</pre></code><code title='Line 520, ./lib/monkey_patching/date.rb'><pre><a name='520'>520</a>     if self.is_lords_parliamentary_sitting_day?
+</pre></code><code title='Line 521, ./lib/monkey_patching/date.rb'><pre><a name='521'>521</a>       day_type = 'Sitting day'
+</pre></code><code title='Line 522, ./lib/monkey_patching/date.rb'><pre><a name='522'>522</a>     elsif self.is_lords_virtual_sitting_day?
+</pre></code><code title='Line 523, ./lib/monkey_patching/date.rb'><pre><a name='523'>523</a>       day_type = 'Virtual sitting day'
+</pre></code><code title='Line 524, ./lib/monkey_patching/date.rb'><pre><a name='524'>524</a>     elsif self.is_lords_praying_sitting_day?
+</pre></code><code title='Line 525, ./lib/monkey_patching/date.rb'><pre><a name='525'>525</a>       day_type = "Sitting praying day"
+</pre></code><code title='Line 526, ./lib/monkey_patching/date.rb'><pre><a name='526'>526</a>     elsif self.is_lords_praying_adjournment_day?( 4 )
+</pre></code><code title='Line 527, ./lib/monkey_patching/date.rb'><pre><a name='527'>527</a>       day_type = 'Praying adjournment day'
+</pre></code><code title='Line 528, ./lib/monkey_patching/date.rb'><pre><a name='528'>528</a>     elsif self.is_lords_adjournment_day?
+</pre></code><code title='Line 529, ./lib/monkey_patching/date.rb'><pre><a name='529'>529</a>       day_type = 'Adjournment day'
+</pre></code><code title='Line 530, ./lib/monkey_patching/date.rb'><pre><a name='530'>530</a>     end
+</pre></code><code title='Line 531, ./lib/monkey_patching/date.rb'><pre><a name='531'>531</a>     day_type
+</pre></code><code title='Line 532, ./lib/monkey_patching/date.rb'><pre><a name='532'>532</a>   end
 </pre></code><a name='534'></a> <p>Generate a label to say whether it&#39;s a praying day in the Commons or not.</p>
-<code title='Line 535, lib/monkey_patching/date.rb'><pre><a name='535'>535</a>   def is_commons_praying_day_label
-</pre></code><code title='Line 536, lib/monkey_patching/date.rb'><pre><a name='536'>536</a>     if self.is_commons_praying_day?
-</pre></code><code title='Line 537, lib/monkey_patching/date.rb'><pre><a name='537'>537</a>       label = 'True'
-</pre></code><code title='Line 538, lib/monkey_patching/date.rb'><pre><a name='538'>538</a>     else
-</pre></code><code title='Line 539, lib/monkey_patching/date.rb'><pre><a name='539'>539</a>       label = 'False'
-</pre></code><code title='Line 540, lib/monkey_patching/date.rb'><pre><a name='540'>540</a>     end
-</pre></code><code title='Line 541, lib/monkey_patching/date.rb'><pre><a name='541'>541</a>     label
-</pre></code><code title='Line 542, lib/monkey_patching/date.rb'><pre><a name='542'>542</a>   end
+<code title='Line 535, ./lib/monkey_patching/date.rb'><pre><a name='535'>535</a>   def is_commons_praying_day_label
+</pre></code><code title='Line 536, ./lib/monkey_patching/date.rb'><pre><a name='536'>536</a>     if self.is_commons_praying_day?
+</pre></code><code title='Line 537, ./lib/monkey_patching/date.rb'><pre><a name='537'>537</a>       label = 'True'
+</pre></code><code title='Line 538, ./lib/monkey_patching/date.rb'><pre><a name='538'>538</a>     else
+</pre></code><code title='Line 539, ./lib/monkey_patching/date.rb'><pre><a name='539'>539</a>       label = 'False'
+</pre></code><code title='Line 540, ./lib/monkey_patching/date.rb'><pre><a name='540'>540</a>     end
+</pre></code><code title='Line 541, ./lib/monkey_patching/date.rb'><pre><a name='541'>541</a>     label
+</pre></code><code title='Line 542, ./lib/monkey_patching/date.rb'><pre><a name='542'>542</a>   end
 </pre></code><a name='544'></a> <p>Generate a label to say whether it&#39;s a praying day in the Lords or not.</p>
-<code title='Line 545, lib/monkey_patching/date.rb'><pre><a name='545'>545</a>   def is_lords_praying_day_label
-</pre></code><code title='Line 546, lib/monkey_patching/date.rb'><pre><a name='546'>546</a>     if self.is_lords_praying_day?
-</pre></code><code title='Line 547, lib/monkey_patching/date.rb'><pre><a name='547'>547</a>       label = 'True'
-</pre></code><code title='Line 548, lib/monkey_patching/date.rb'><pre><a name='548'>548</a>     else
-</pre></code><code title='Line 549, lib/monkey_patching/date.rb'><pre><a name='549'>549</a>       label = 'False'
-</pre></code><code title='Line 550, lib/monkey_patching/date.rb'><pre><a name='550'>550</a>     end
-</pre></code><code title='Line 551, lib/monkey_patching/date.rb'><pre><a name='551'>551</a>     label
-</pre></code><code title='Line 552, lib/monkey_patching/date.rb'><pre><a name='552'>552</a>   end
-</pre></code><code title='Line 553, lib/monkey_patching/date.rb'><pre><a name='553'>553</a> end</pre></code><footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>
+<code title='Line 545, ./lib/monkey_patching/date.rb'><pre><a name='545'>545</a>   def is_lords_praying_day_label
+</pre></code><code title='Line 546, ./lib/monkey_patching/date.rb'><pre><a name='546'>546</a>     if self.is_lords_praying_day?
+</pre></code><code title='Line 547, ./lib/monkey_patching/date.rb'><pre><a name='547'>547</a>       label = 'True'
+</pre></code><code title='Line 548, ./lib/monkey_patching/date.rb'><pre><a name='548'>548</a>     else
+</pre></code><code title='Line 549, ./lib/monkey_patching/date.rb'><pre><a name='549'>549</a>       label = 'False'
+</pre></code><code title='Line 550, ./lib/monkey_patching/date.rb'><pre><a name='550'>550</a>     end
+</pre></code><code title='Line 551, ./lib/monkey_patching/date.rb'><pre><a name='551'>551</a>     label
+</pre></code><code title='Line 552, ./lib/monkey_patching/date.rb'><pre><a name='552'>552</a>   end
+</pre></code><code title='Line 553, ./lib/monkey_patching/date.rb'><pre><a name='553'>553</a> end</pre></code><footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>
