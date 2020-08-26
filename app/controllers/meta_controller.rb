@@ -16,7 +16,7 @@ class MetaController < ApplicationController
   	@title = "Database schema"
   end
   
-  def schema
-  	@title = "Code"
+  def comment
+  	@title = "Comments"
   end
 end

@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get 'meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
   get 'meta/prorogation-and-dissolution' => 'meta#prorogation_and_dissolution', as: :meta_prorogation_dissolution
   get 'meta/schema' => 'meta#schema', as: :meta_schema
-  get 'meta/code' => 'meta#code', as: :meta_code
+  get 'meta/comments' => 'meta#comment', as: :meta_comment
   
   # hack to let us switch procedures on and off
   get 'procedures' => 'procedure#index', as: :procedure_list
