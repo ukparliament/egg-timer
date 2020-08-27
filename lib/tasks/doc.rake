@@ -77,7 +77,6 @@ html_out << %{<footer><p><big><a href="#top">&times;&times;&times;</a></big></p>
 File.write(html_path, html_out)
 print "Wrote HTML to " + html_path
 File.write(markdown_path, markdown_out)
-print "Wrote Mardown to " + markdown_path
-system %{open "#{html_path}"}
+print "Wrote Markdown to " + markdown_path
     
 end
