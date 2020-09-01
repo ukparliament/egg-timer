@@ -8,11 +8,9 @@ The calculation counts a day whenever both Houses have a praying day, requiring 
 
 This may include the laying day of the instrument.
 
-Unless the laying day is a joint praying day ...
+Unless the laying day is a joint praying day, then ...
 
-If there is a future praying day in the Commons or the Lords
-
-... we look for the next joint praying day. If there is a subsequent joint praying day ...
+... if there is a future joint praying day ...
 
 ... we set the date to that day.
 
