@@ -15,63 +15,57 @@
       }
       p {line-height: 1.4;}
       code {
-      color:lightsteelblue;
+      color:gray;
+      line-height: 1.4;
       }
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
-      footer {
-      margin:0 auto;
-      color:gray;
-      display:table;
-      }
-      footer big {
-      font-size:2rem;}
-      
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
 }
+h1, h2, h3 {font-weight:normal;}
     </style>
     <title>app/controllers/calculations/commons_parliamentary_days.rb</title>
   </head>
-  <body><a name="top"></a><code title='Line 1, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='1'>1</a> module CALCULATION_COMMONS_PARLIAMENTARY_DAYS
-</pre></code><a name='3'></a> <h1>A method for calculating scrutiny periods during which the House of Commons must be sitting, used for treaty period B.</h1>
+  <body><a name="top"></a><code title='Line 1, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='1'> 1</a> module CALCULATION_COMMONS_PARLIAMENTARY_DAYS
+</pre></code><a name='3'></a> <h1>A method for calculating the end date of scrutiny periods during which the House of Commons must be sitting, used for treaty period B.</h1>
 <a name='4'></a> <p>The calculation counts a day whenever the House of Commons has a parliamentary sitting day, requiring the date of the government statement that the treaty should nonetheless be ratified and the number of days to count.</p>
 <a name='5'></a> <p>1st September 2020 - we have assumed that the trigger for this calculation is the date of the government statement <strong>and</strong> that this day counts toward the total if it is a parliamentary sitting day in the House of Commons.</p>
-<code title='Line 6, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='6'>6</a>   def commons_parliamentary_days_calculation( date, target_day_count )
+<code title='Line 6, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='6'> 6</a>   def commons_parliamentary_days_calculation( date, target_day_count )
 </pre></code><a name='9'></a> <h2>We start counting on the <strong>first day when the House of Commons has a parliamentary sitting day</strong>.</h2>
 <a name='10'></a> <p>This may include the day of the government statement.</p>
 <a name='11'></a> <p>Unless that day is a House of Commons parliamentary sitting day, then ...</p>
-<code title='Line 12, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='12'>12</a>     unless date.is_commons_parliamentary_sitting_day?
+<code title='Line 12, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='12'> 12</a>     unless date.is_commons_parliamentary_sitting_day?
 </pre></code><a name='14'></a> <p>... if there is a future House of Commons parliamentary sitting day ...</p>
-<code title='Line 15, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='15'>15</a>       if date.first_commons_parliamentary_sitting_day
+<code title='Line 15, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='15'> 15</a>       if date.first_commons_parliamentary_sitting_day
 </pre></code><a name='17'></a> <p>... we set the date to that day.</p>
-<code title='Line 18, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='18'>18</a>         date = date.first_commons_parliamentary_sitting_day 
+<code title='Line 18, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='18'> 18</a>         date = date.first_commons_parliamentary_sitting_day 
 </pre></code><a name='20'></a> <p>If we didn&#39;t find a <strong>future House of Commons parliamentary sitting day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
-<code title='Line 21, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='21'>21</a>       else
+<code title='Line 21, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='21'> 21</a>       else
 </pre></code><a name='23'></a> <p>... this error message is displayed ...</p>
-<code title='Line 24, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='24'>24</a>         @error_message = "Unable to find a future parliamentary sitting day in the House of Commons. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 24, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='24'> 24</a>         @error_message = "Unable to find a future parliamentary sitting day in the House of Commons. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><a name='26'></a> <p>... and we stop looking for a scrutiny period end date.</p>
-<code title='Line 27, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='27'>27</a>         return
-</pre></code><code title='Line 28, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='28'>28</a>       end
+<code title='Line 27, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='27'> 27</a>         return
+</pre></code><code title='Line 28, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='28'> 28</a>       end
 </pre></code><a name='30'></a> <p>Otherwise, we&#39;ve established that the day of the government statement is a House of Commons parliamentary sitting day, so we don&#39;t have to cycle through the calendar to find a subsequent one.</p>
-<code title='Line 31, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='31'>31</a>     end
+<code title='Line 31, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='31'> 31</a>     end
 </pre></code><a name='33'></a> <p>We&#39;ve found the first House of Commons parliamentary sitting day so we start counting from day 1.</p>
-<code title='Line 34, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='34'>34</a>     day_count = 1
+<code title='Line 34, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='34'> 34</a>     day_count = 1
 </pre></code><a name='36'></a> <h2>Whilst the number of days we’re counting is less than the target number of days to count ...</h2>
-<code title='Line 37, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='37'>37</a>     while ( day_count < target_day_count ) do
+<code title='Line 37, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='37'> 37</a>     while ( day_count < target_day_count ) do
 </pre></code><a name='39'></a> <p>... continue to the <strong>next day</strong>.</p>
-<code title='Line 40, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='40'>40</a>       date = date.next_day
+<code title='Line 40, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='40'> 40</a>       date = date.next_day
 </pre></code><a name='42'></a> <p>... and add 1 to the day count if this is a House of Commons parliamentary sitting day.</p>
-<code title='Line 43, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='43'>43</a>       day_count +=1 if date.is_commons_parliamentary_sitting_day?
+<code title='Line 43, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='43'> 43</a>       day_count +=1 if date.is_commons_parliamentary_sitting_day?
 </pre></code><a name='45'></a> <p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
-<code title='Line 46, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='46'>46</a>       if date.is_calendar_not_populated?
+<code title='Line 46, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='46'> 46</a>       if date.is_calendar_not_populated?
 </pre></code><a name='48'></a> <p>... this error message is displayed to users ...</p>
-<code title='Line 49, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='49'>49</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 49, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='49'> 49</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><a name='51'></a> <p>... and we stop looking through the calendar.</p>
-<code title='Line 52, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='52'>52</a>         break
-</pre></code><code title='Line 53, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='53'>53</a>       end
-</pre></code><code title='Line 54, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='54'>54</a>     end
+<code title='Line 52, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='52'> 52</a>         break
+</pre></code><code title='Line 53, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='53'> 53</a>       end
+</pre></code><code title='Line 54, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='54'> 54</a>     end
 </pre></code><a name='56'></a> <p>Return the anticipated end date of the scrutiny period for display.</p>
-<code title='Line 57, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='57'>57</a>     date
-</pre></code><code title='Line 58, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='58'>58</a>   end
-</pre></code><code title='Line 59, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='59'>59</a> end</pre></code><footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>
+<code title='Line 57, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='57'> 57</a>     date
+</pre></code><code title='Line 58, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='58'> 58</a>   end
+</pre></code><code title='Line 59, app/controllers/calculations/commons_parliamentary_days.rb'><pre><a name='59'> 59</a> end</pre></code><footer></footer></body></html>

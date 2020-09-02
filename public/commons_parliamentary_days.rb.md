@@ -1,4 +1,4 @@
-# A method for calculating scrutiny periods during which the House of Commons must be sitting, used for treaty period B.
+# A method for calculating the end date of scrutiny periods during which the House of Commons must be sitting, used for treaty period B.
 
 The calculation counts a day whenever the House of Commons has a parliamentary sitting day, requiring the date of the government statement that the treaty should nonetheless be ratified and the number of days to count.
 
