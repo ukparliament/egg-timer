@@ -37,9 +37,9 @@ html_out << %{<!DOCTYPE html>
       }
       p {line-height: 1.4;}
       code {
-      color:gray;
       line-height: 1.4;
       }
+      a.line_number {color:gray;}
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
       @media (prefers-color-scheme: dark) {
@@ -49,23 +49,23 @@ h1, h2, h3 {font-weight:normal;}
     </style>
     <title>#{with_path}</title>
   </head>
-  <body><a name="top"></a>}
+  <body>}
 
 File.foreach(with_path).with_index do |line, line_num|
 
   comment_line = /^\s*#\s*(?<content>.*)/.match(line)
-    
+      
   if comment_line
-    html_out << "<a name='#{line_num + 1}'></a> "
-  	html_out << markdown.render(comment_line["content"])
+  	html_out << markdown.render(comment_line["content"])  	
   	markdown_out << comment_line["content"] << "\n\n"
-  elsif line.strip != ""
-  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'> #{line_num + 1}</a> " << line << "</pre></code>"
+  elsif !(line.strip.empty?)
+  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}' class='line_number'> #{line_num + 1}</a> " << line << "</pre></code>"
+  	markdown_out << line
   end
   
 end
 
-html_out << %{<footer></footer></body></html>}
+html_out << %{</body></html>}
 
 
 File.write(html_path, html_out)
