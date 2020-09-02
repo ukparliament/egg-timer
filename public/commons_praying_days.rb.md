@@ -1,4 +1,4 @@
-# A method for calculating scrutiny periods during which the House of Commons must be sitting or on a short adjournment, used for House of Commons only draft and made affirmative Statutory Instruments.
+# A method for calculating the end date of scrutiny periods during which the House of Commons must be sitting or on a short adjournment, used for House of Commons only draft and made affirmative Statutory Instruments.
 
 The calculation counts a day whenever the House of Commons has a praying day, requiring the laying date and the number of days to count.
 
