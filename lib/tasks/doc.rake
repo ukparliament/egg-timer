@@ -37,13 +37,15 @@ html_out << %{<!DOCTYPE html>
       }
       p {line-height: 1.4;}
       code {
-      color:lightsteelblue;
+      color:gray;
+      line-height: 1.4;
       }
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
 }
+h1, h2, h3 {font-weight:normal;}
     </style>
     <title>#{with_path}</title>
   </head>
@@ -58,7 +60,7 @@ File.foreach(with_path).with_index do |line, line_num|
   	html_out << markdown.render(comment_line["content"])
   	markdown_out << comment_line["content"] << "\n\n"
   elsif line.strip != ""
-  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'>#{line_num + 1}</a> " << line << "</pre></code>"
+  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'> #{line_num + 1}</a> " << line << "</pre></code>"
   end
   
 end
@@ -67,8 +69,8 @@ html_out << %{<footer></footer></body></html>}
 
 
 File.write(html_path, html_out)
-print "Wrote HTML to " + html_path
+puts "Wrote HTML to " + html_path
 File.write(markdown_path, markdown_out)
-print "Wrote Markdown to " + markdown_path
+puts "Wrote Markdown to " + markdown_path
     
 end
