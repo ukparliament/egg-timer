@@ -1,6 +1,6 @@
 module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
 
-  # # A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).
+  # # A method for calculating the end date of scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).
   # The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.
   def bicameral_parliamentary_days_calculation( date, target_day_count )
   

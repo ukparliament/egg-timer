@@ -1,4 +1,4 @@
-# A method for calculating scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act.
+# A method for calculating the end date of scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act.
 
 25th August 2020 - there are two possible interpretations of this rule: to calculate whether both Houses are on a praying day and if so count it; or to calculate joint sitting days and determine joint praying days from this, then count those. This method currently uses the former. A meeting with the Speaker’s Counsel has been arranged to check this logic.
 

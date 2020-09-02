@@ -1,6 +1,6 @@
 module CALCULATION_COMMONS_PARLIAMENTARY_DAYS
   
-  # # A method for calculating scrutiny periods during which the House of Commons must be sitting, used for treaty period B.
+  # # A method for calculating the end date of scrutiny periods during which the House of Commons must be sitting, used for treaty period B.
   # The calculation counts a day whenever the House of Commons has a parliamentary sitting day, requiring the date of the government statement that the treaty should nonetheless be ratified and the number of days to count.
   # 1st September 2020 - we have assumed that the trigger for this calculation is the date of the government statement **and** that this day counts toward the total if it is a parliamentary sitting day in the House of Commons.
   def commons_parliamentary_days_calculation( date, target_day_count )
