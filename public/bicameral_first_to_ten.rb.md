@@ -1,4 +1,4 @@
-# A method for calculating committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
+# A method for calculating the end date of committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
 
 The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
 
