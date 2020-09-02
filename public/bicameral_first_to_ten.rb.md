@@ -2,6 +2,8 @@
 
 The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
 
+Calculation defined by [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) and [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11)
+
 ## We start counting on the **first day when both Houses have a parliamentary sitting following the laying of the instrument**.
 
 If the date of laying day is a joint parliamentary sitting day, we do not count that day.
