@@ -15,62 +15,56 @@
       }
       p {line-height: 1.4;}
       code {
-      color:lightsteelblue;
+      color:gray;
+      line-height: 1.4;
       }
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
-      footer {
-      margin:0 auto;
-      color:gray;
-      display:table;
-      }
-      footer big {
-      font-size:2rem;}
-      
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
 }
+h1, h2, h3 {font-weight:normal;}
     </style>
     <title>app/controllers/calculations/bicameral_parliamentary_days.rb</title>
   </head>
-  <body><a name="top"></a><code title='Line 1, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='1'>1</a> module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-</pre></code><a name='3'></a> <h1>A method for calculating scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).</h1>
+  <body><a name="top"></a><code title='Line 1, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='1'> 1</a> module CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
+</pre></code><a name='3'></a> <h1>A method for calculating the end date of scrutiny periods for Legislative Reform Orders (LROs), Localism Orders (LOs) and Public Body Orders (PBOs).</h1>
 <a name='4'></a> <p>The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.</p>
-<code title='Line 5, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='5'>5</a>   def bicameral_parliamentary_days_calculation( date, target_day_count )
+<code title='Line 5, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='5'> 5</a>   def bicameral_parliamentary_days_calculation( date, target_day_count )
 </pre></code><a name='7'></a> <h2>We start counting on the <strong>first day when both Houses have a parliamentary sitting</strong>.</h2>
 <a name='8'></a> <p>This may include the laying day of the instrument.</p>
 <a name='9'></a> <p>Unless the laying day is a joint parliamentary sitting day ...</p>
-<code title='Line 10, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='10'>10</a>     unless date.is_joint_parliamentary_sitting_day?
+<code title='Line 10, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='10'> 10</a>     unless date.is_joint_parliamentary_sitting_day?
 </pre></code><a name='12'></a> <p>... we look for the next parliamentary sitting day. If there is a subsequent joint parliamentary sitting day ...</p>
-<code title='Line 13, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='13'>13</a>       if date.first_joint_parliamentary_sitting_day 
+<code title='Line 13, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='13'> 13</a>       if date.first_joint_parliamentary_sitting_day 
 </pre></code><a name='15'></a> <p>... we set the date to that day.</p>
-<code title='Line 16, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='16'>16</a>         date = date.first_joint_parliamentary_sitting_day 
+<code title='Line 16, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='16'> 16</a>         date = date.first_joint_parliamentary_sitting_day 
 </pre></code><a name='18'></a> <p>If we didn&#39;t find a <strong>future joint parliamentary sitting day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
-<code title='Line 19, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='19'>19</a>       else
+<code title='Line 19, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='19'> 19</a>       else
 </pre></code><a name='21'></a> <p>... this error message is displayed ...</p>
-<code title='Line 22, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='22'>22</a>         @error_message = "Unable to find a future joint parliamentary sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 22, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='22'> 22</a>         @error_message = "Unable to find a future joint parliamentary sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><a name='24'></a> <p>... and we stop looking for a scrutiny period end date.</p>
-<code title='Line 25, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='25'>25</a>         return
-</pre></code><code title='Line 26, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='26'>26</a>       end
+<code title='Line 25, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='25'> 25</a>         return
+</pre></code><code title='Line 26, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='26'> 26</a>       end
 </pre></code><a name='28'></a> <p>Otherwise, we&#39;ve established the laying day is a joint parliamentary sitting day so we don&#39;t have to cycle through the calendar to find a subsequent one.</p>
-<code title='Line 29, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='29'>29</a>     end
+<code title='Line 29, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='29'> 29</a>     end
 </pre></code><a name='31'></a> <p>We&#39;ve found the first joint parliamentary sitting day so we start counting from day 1.</p>
-<code title='Line 32, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='32'>32</a>     day_count = 1
+<code title='Line 32, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='32'> 32</a>     day_count = 1
 </pre></code><a name='34'></a> <h2>Whilst the number of parliamentary sitting days we’re counting is less than the target number of days to count ...</h2>
-<code title='Line 35, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='35'>35</a>     while ( day_count < target_day_count ) do
+<code title='Line 35, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='35'> 35</a>     while ( day_count < target_day_count ) do
 </pre></code><a name='37'></a> <p>... continue to the <strong>next day</strong>.</p>
-<code title='Line 38, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='38'>38</a>       date = date.next_day
+<code title='Line 38, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='38'> 38</a>       date = date.next_day
 </pre></code><a name='40'></a> <p>... and add 1 to the day count if this is a joint parliamentary sitting day.</p>
-<code title='Line 41, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='41'>41</a>       day_count +=1 if date.is_joint_parliamentary_sitting_day?
+<code title='Line 41, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='41'> 41</a>       day_count +=1 if date.is_joint_parliamentary_sitting_day?
 </pre></code><a name='43'></a> <p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
-<code title='Line 44, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='44'>44</a>       if date.is_calendar_not_populated?
+<code title='Line 44, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='44'> 44</a>       if date.is_calendar_not_populated?
 </pre></code><a name='46'></a> <p>... this error message is displayed to users ...</p>
-<code title='Line 47, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='47'>47</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 47, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='47'> 47</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><a name='49'></a> <p>... and we stop looking through the calendar.</p>
-<code title='Line 50, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='50'>50</a>         break
-</pre></code><code title='Line 51, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='51'>51</a>       end
-</pre></code><code title='Line 52, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='52'>52</a>     end
+<code title='Line 50, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='50'> 50</a>         break
+</pre></code><code title='Line 51, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='51'> 51</a>       end
+</pre></code><code title='Line 52, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='52'> 52</a>     end
 </pre></code><a name='54'></a> <p>Return the anticipated end date of the scrutiny period for display.</p>
-<code title='Line 55, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='55'>55</a>     date
-</pre></code><code title='Line 56, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='56'>56</a>   end
-</pre></code><code title='Line 57, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='57'>57</a> end</pre></code><footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>
+<code title='Line 55, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='55'> 55</a>     date
+</pre></code><code title='Line 56, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='56'> 56</a>   end
+</pre></code><code title='Line 57, app/controllers/calculations/bicameral_parliamentary_days.rb'><pre><a name='57'> 57</a> end</pre></code><footer></footer></body></html>
