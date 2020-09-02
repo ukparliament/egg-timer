@@ -1,51 +1,56 @@
 module CALCULATION_COMMONS_PRAYING_DAYS
   
-  # Used for Commons only negative and affirmative SIs
-  # Counts through short adjournments
+  # # A method for calculating scrutiny periods during which the House of Commons must be sitting or on a short adjournment, used for House of Commons only draft and made affirmative Statutory Instruments.
+  # The calculation counts a day whenever the House of Commons has a praying day, requiring the laying date and the number of days to count.
   def commons_praying_days_calculation( date, target_day_count )
-  
-    # Get ready to count praying days in the House of Commons
-    # If this is not a praying day for the Commons...
-    unless date.is_commons_praying_day?
     
-      # If there is a future Commons praying day
+    # ## We start counting on the **first day when the House of Commons has a praying day**.
+    # This may include the laying day of the instrument.
+    # Unless the laying day is a House of Commons praying day, then ...
+    unless date.is_commons_praying_day?
+      
+      # ... if there is a future House of Commons praying day ...
       if date.first_commons_praying_day 
       
-        # Set the date to the first Commons praying day
-        date = date.first_commons_praying_day 
-      
-      # If we didn't find any **future Commons praying day* in our calendar, we can't calculate the scrutiny period - and we show an error message and stop running this code.
+        # ... we set the date to that day.
+        date = date.first_commons_praying_day
+        
+      # If we didn't find a **future House of Commons praying day** in our calendar, we can't calculate the scrutiny period, ...
       else
   
-        # This error message is displayed to users.
+        # ... this error message is displayed ...
         @error_message = "Unable to find a future House of Commons praying day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+        
+        # ... and we stop looking for a scrutiny period end date.
         return
       end
+    # Otherwise, we've established the laying day is a House of Commons praying day so we don't have to cycle through the calendar to find a subsequent one.
     end
     
-    # We've found the first praying day so start from 1
+    # We've found the first House of Commons praying day so we start counting from day 1.
     day_count = 1
-
-    # ... we look at each of our calendar dates, ensuring that we've counted the set number of days to count.
+    
+    # ## Whilst the number of days we’re counting is less than the target number of days to count ...
     while ( day_count < target_day_count ) do
     
-      # Skip to the next calendar day
+      # ... continue to the **next day**.
       date = date.next_day
-    
-      # If the date we've found was a Commons praying day, we add another day to the count.
-      day_count +=1 if date.is_commons_praying_day?
-    
-      # Stop looping if the date is not a sitting day, not an adjournment day, not a prorogation day and not a dissolution day
-      # If we have no record for this day yet, we can't calculate the end date - and we show an error message.
-      if date.is_calendar_not_populated?
       
-        # This error message is displayed to users unless an error message was set earlier
+      # ... and add 1 to the day count if this is a House of Commons praying day.
+      day_count +=1 if date.is_commons_praying_day?
+      
+      # ... if the calendar has no record of what type of day this is, we can't calculate the end date, ...
+      if date.is_calendar_not_populated?
+        
+        # ... this error message is displayed to users ...
         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-         break
+        
+        # ... and we stop looking through the calendar.
+        break
       end
     end
   
-    # Return date for display on page
+    # Return the anticipated end date of the scrutiny period for display.
     date
   end
 end
