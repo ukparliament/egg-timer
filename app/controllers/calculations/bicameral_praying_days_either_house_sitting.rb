@@ -1,6 +1,6 @@
 module CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
   
-  # # A method for calculating scrutiny periods during which **either** House must be sitting or on a short adjournment, used for Commons and Lords negative Statutory Instruments and made affirmative SIs where this is set out by their enabling Act.
+  # # A method for calculating the end date of scrutiny periods during which **either** House must be sitting or on a short adjournment, used for Commons and Lords negative Statutory Instruments and made affirmative SIs where this is set out by their enabling Act.
   # The calculation counts a day whenever either House has a praying day, requiring the laying date and the number of days to count.
   def bicameral_praying_days_calculation_either_house_sitting( date, target_day_count )
     
