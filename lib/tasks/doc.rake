@@ -41,14 +41,6 @@ html_out << %{<!DOCTYPE html>
       }
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
-      footer {
-      margin:0 auto;
-      color:gray;
-      display:table;
-      }
-      footer big {
-      font-size:2rem;}
-      
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
 }
@@ -71,7 +63,7 @@ File.foreach(with_path).with_index do |line, line_num|
   
 end
 
-html_out << %{<footer><p><big><a href="#top">&times;&times;&times;</a></big></p></footer></body></html>}
+html_out << %{<footer></footer></body></html>}
 
 
 File.write(html_path, html_out)
