@@ -28,24 +28,24 @@ html_out << %{<!DOCTYPE html>
     <link rel="alternate" type="text/markdown" href="#{with_path.split( '/' ).last + '.md'}">
     <style>
       body {
-        max-width: 38rem;
+        max-width: 40rem;
         margin: auto;
         padding: 1rem;
-        font-family: system-ui;
+        font-family: 'Helvetica Neue', system-ui;
         color: black;
         background-color: white;
       }
       p {line-height: 1.4;}
       code {
       line-height: 1.4;
+      color:gray;
       }
-      a.line_number {color:gray;}
       code pre {word-wrap: break-word;}
       code:hover {color:black;}
+      h1, h2 {font-weight:normal;}
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
 }
-h1, h2, h3 {font-weight:normal;}
     </style>
     <title>#{with_path}</title>
   </head>
@@ -59,7 +59,7 @@ File.foreach(with_path).with_index do |line, line_num|
   	html_out << markdown.render(comment_line["content"])  	
   	markdown_out << comment_line["content"] << "\n\n"
   elsif !(line.strip.empty?)
-  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}' class='line_number'> #{line_num + 1}</a> " << line << "</pre></code>"
+  	html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'> #{line_num + 1}</a> " << line << "</pre></code>"
   	markdown_out << line
   end
   
