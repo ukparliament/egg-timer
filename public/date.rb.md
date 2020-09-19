@@ -120,6 +120,16 @@ This is our event horizon.
   def is_calendar_not_populated?
     !self.is_calendar_populated?
   end
+### Methods to calculate non-sitting scrutiny days in both Houses.
+
+In guidance issued on 12-04-2020 the Lords Procedure Committee stated, "A Virtual Proceeding is not a sitting of the House."
+
+https://committees.parliament.uk/publications/1054/documents/9235/default/
+
+Whilst clerks state that a virtual sitting day does not count as a sitting day for the purposes of calculating scrutiny periods, lawyers imply this would need to be tested in court.
+
+Unless and until this is resolved, these methods use the clerks' definition of non-sitting scrutiny day.
+
 ### We want to check if this is a non-sitting scrutiny day in the Commons.
 
 During a short adjournment, adjournment days count toward the scrutiny period.
@@ -131,7 +141,7 @@ In all known cases “short” is defined as not more than four days.
 For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.
 
   def is_commons_non_sitting_scrutiny_day?( maximum_day_count )
-### We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.
+#### We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.
 
     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
 Having found that this is a Commons adjournnment day or a Commons virtual sitting day, we start the adjournment day count at 1.
@@ -274,6 +284,8 @@ Returns if this day is a Lords non-sitting scrutiny day
       is_lords_non_sitting_scrutiny_day
     end
   end
+(End of methods to calculate non-sitting scrutiny days in both Houses.)
+
 ### We want to check if this is a scrutiny day in the Commons.
 
 A scrutiny day in the Commons is either an actual sitting day in the Commons, or a non-sitting scrutiny day in the Commons.
