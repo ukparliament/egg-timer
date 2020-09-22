@@ -1,9 +1,9 @@
-module CALCULATION_TREATY_PERIOD_A
+module CALCULATION_TREATY
   
   # # A method for calculating the end date for treaty period A.
   # The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.
-  # Calculation defined by [Constitutional Reform and Governance Act 2010 section 20 paragraph 2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2)
-  def treaty_period_a_calculation( date, target_day_count )
+  # Calculation defined by [Constitutional Reform and Governance Act 2010 section 20 paragraph 2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2).
+  def treaty_calculation( date, target_day_count )
     
     # ## We start counting on the **first day when both Houses have a parliamentary sitting**.
     # This **does not** include the laying day of the instrument.
