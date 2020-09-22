@@ -1,18 +1,22 @@
 module CALCULATION_TREATY
   
-  # # A method for calculating the end date for treaty period A.
-  # The calculation counts a day whenever both Houses have a parliamentary sitting day, requiring the laying date and the number of days to count.
-  # Calculation defined by [Constitutional Reform and Governance Act 2010 section 20 paragraph 2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2).
+  # # A method for calculating the end date for treaty periods A and B.
+  # The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.
+  # For period A the start date is the day on which "a Minister of the Crown has laid before Parliament a copy of the treaty".
+  # For period B the start date is the day on which "a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why".
+  # The calculation is defined by [Constitutional Reform and Governance Act 2010 section 20 paragraph 2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2).
+  
   def treaty_calculation( date, target_day_count )
     
-    # ## We start counting on the **first day when both Houses have a parliamentary sitting**.
-    # This **does not** include the laying day of the instrument.
+    # ## We start counting on the **first day when both Houses have an actual sitting**.
+    # For period A this **does not** include the laying day of the treaty.
+    # For period B this **does not** include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.
     
-    # We continue to the **day immediately following** the laying day.
+    # We continue to the **day immediately following** the start day.
     # If that day is or is followed by a joint parliamentary sitting day...
     if date.next_day.first_joint_parliamentary_sitting_day
       
-      # ... we set the date to the day of the first joint parliamentary sitting day **following** the laying day.
+      # ... we set the date to the day of the first joint parliamentary sitting day **following** the start date.
       date = date.next_day.first_joint_parliamentary_sitting_day
       
       # ... we've found the first joint parliamentary sitting day so we start counting from day 1.
@@ -24,8 +28,8 @@ module CALCULATION_TREATY
         # ... continue to the **next day**.
         date = date.next_day
     
-        # ... and add 1 to the day count if this is a joint parliamentary sitting day.
-        day_count +=1 if date.is_joint_parliamentary_sitting_day?
+        # ... and add 1 to the day count if this is an actual parliamentary sitting day.
+        day_count +=1 if date.is_joint_actual_sitting_day?
     
          # ... if the calendar has no record of what type of day this is, we can't calculate the end date, ...
         if date.is_calendar_not_populated?
