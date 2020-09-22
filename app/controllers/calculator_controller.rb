@@ -6,8 +6,7 @@ require 'calculations/bicameral_first_to_ten'
 require 'calculations/commons_praying_days'
 require 'calculations/bicameral_praying_days_either_house_sitting'
 require 'calculations/bicameral_praying_days_both_houses_sitting'
-require 'calculations/treaty_period_a'
-require 'calculations/commons_parliamentary_days'
+require 'calculations/treaty'
 
 # ## The controller itself.
 class CalculatorController < ApplicationController
@@ -18,8 +17,7 @@ class CalculatorController < ApplicationController
   include CALCULATION_COMMONS_PRAYING_DAYS
   include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
   include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
-  include CALCULATION_TREATY_PERIOD_A
-  include CALCULATION_COMMONS_PARLIAMENTARY_DAYS
+  include CALCULATION_TREATY
   
   # ### This is the code to provide information for the form that users can fill in.
   def index
@@ -92,13 +90,9 @@ class CalculatorController < ApplicationController
       when 8
         @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
         
-      # * Treaty period A
-      when 10
-        @end_date = treaty_period_a_calculation( @start_date, @day_count )
-        
-      # * Treaty period B
-      when 11
-        @end_date = commons_parliamentary_days_calculation( @start_date, @day_count )
+      # * Treaty periods A and B
+      when 10, 11
+        @end_date = treaty_calculation( @start_date, @day_count )
         
       # * Otherwise set an error message.
       else
