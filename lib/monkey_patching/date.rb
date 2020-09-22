@@ -140,9 +140,7 @@ class Date
   
   #### Methods to calculate non-sitting scrutiny days in both Houses.
   
-  # In guidance issued on 12-04-2020 the Lords Procedure Committee stated, "A Virtual Proceeding is not a sitting of the House."
-  
-  # https://committees.parliament.uk/publications/1054/documents/9235/default/
+  # In [guidance issued on 12-04-2020](https://committees.parliament.uk/publications/1054/documents/9235/default/) the Lords Procedure Committee stated, "A Virtual Proceeding is not a sitting of the House."
   
   # Whilst clerks state that a virtual sitting day does not count as a sitting day for the purposes of calculating scrutiny periods, lawyers imply this would need to be tested in court.
   
