@@ -1,12 +1,12 @@
-module CALCULATION_BICAMERAL_FIRST_TO_TEN
+module CALCULATION_PNSI
   
   # # A method for calculating the end date of committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
   # The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
-  # Calculation defined by [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) and [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11).
-  def bicameral_first_to_ten_calculation( date, target_day_count )
+  # The calculation is defined by the [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) (number of days to count) and [paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11) (definition of sitting day).
+  def pnsi_calculation( date, target_day_count )
   
-    # ## We start counting on the **first day when both Houses have a parliamentary sitting following the laying of the instrument**.
-    # If the date of laying day is a joint parliamentary sitting day, we do not count that day.
+    # ## We start counting on the **first joint parliamentary sitting day following the laying of the instrument**.
+    # If the date of laying is a joint parliamentary sitting day, we do not count that day.
     # If we find a day meeting that criteria ...
     if date.next_day.first_joint_parliamentary_sitting_day
     
@@ -14,18 +14,17 @@ module CALCULATION_BICAMERAL_FIRST_TO_TEN
       date = date.next_day.first_joint_parliamentary_sitting_day
 
       # PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.
-      # The first joint sitting day counts as day 1, so we count from 1 rather than from 0.
+      # The first joint sitting day counts as day 1 in both Houses, so we count from 1 rather than from 0.
     	commons_day_count = 1
       lords_day_count = 1
     
-      # ## We look at subsequent days, ensuring that we've counted at least the set number of sitting days in each House. In the case of a PNSI, that's ten days.
-      # While there are still days on which the Commons **or** Lords have sat for fewer than 10 days, we continue counting days ...
-      while ( ( commons_day_count < target_day_count ) or ( lords_day_count < target_day_count ) ) do
+      # ## We look at subsequent days, ensuring that we've counted at least ten parliamentary sitting days in each House ...
+      until ( ( commons_day_count >= target_day_count ) and ( lords_day_count >= target_day_count ) ) do
 
         # ... continue to the **next day**.
         date = date.next_day
 
-        # PNSIs use parliamentary sitting days, rather than naive calendar days.
+        # PNSIs use parliamentary sitting days, rather than naive sitting days.
         # If the Lords sat on the date we've found, we add another day to the Lords’ count.
         lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
         # If the Commons sat on the date we've found, we add another day to the Commons’ count.
