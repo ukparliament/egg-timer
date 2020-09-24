@@ -1,4 +1,11 @@
-require 'google/apis/calendar_v3'
+# NOTE: this script should not be run locally. It uses a sync token from Google to only pull changes from that sync token.
+
+# If there are changes to the Google calendar data and you run this script before it’s run on Heroku, those changes may not not get picked up by the Heroku app.
+
+
+
+
+# require 'google/apis/calendar_v3'
 require 'googleauth'
 
 task :sync => [
