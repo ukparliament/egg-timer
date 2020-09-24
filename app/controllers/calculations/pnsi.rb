@@ -2,7 +2,7 @@ module CALCULATION_BICAMERAL_FIRST_TO_TEN
   
   # # A method for calculating the end date of committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
   # The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
-  # Calculation defined by [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) and [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11)
+  # Calculation defined by [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) and [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11).
   def bicameral_first_to_ten_calculation( date, target_day_count )
   
     # ## We start counting on the **first day when both Houses have a parliamentary sitting following the laying of the instrument**.
