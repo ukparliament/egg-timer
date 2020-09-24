@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="alternate" type="text/markdown" href="pnsi.rb.md">
+    <style>
+      body {
+        max-width: 40rem;
+        margin: auto;
+        padding: 1rem;
+        font-family: 'Helvetica Neue', system-ui;
+        color: black;
+        background-color: white;
+      }
+      p {line-height: 1.4;}
+      code {
+      line-height: 1.4;
+      color:gray;
+      }
+      code pre {word-wrap: break-word;}
+      code:hover {color:black;}
+      h1, h2 {font-weight:normal;}
+      @media (prefers-color-scheme: dark) {
+body {color:white;background-color:black;}
+}
+    </style>
+    <title>app/controllers/calculations/pnsi.rb</title>
+  </head>
+  <body><code title='Line 1, app/controllers/calculations/pnsi.rb'><pre><a name='1'> 1</a> module CALCULATION_PNSI
+</pre></code><h1>A method for calculating the end date of committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).</h1>
+<p>The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.</p>
+<p>The calculation is defined by the <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10">European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)</a> (number of days to count) and <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11">paragraph 17(11)</a> (definition of sitting day).</p>
+<code title='Line 6, app/controllers/calculations/pnsi.rb'><pre><a name='6'> 6</a>   def pnsi_calculation( date, target_day_count )
+</pre></code><h2>We start counting on the <strong>first joint parliamentary sitting day following the laying of the instrument</strong>.</h2>
+<p>If the date of laying is a joint parliamentary sitting day, we do not count that day.</p>
+<p>If we find a day meeting that criteria ...</p>
+<code title='Line 11, app/controllers/calculations/pnsi.rb'><pre><a name='11'> 11</a>     if date.next_day.first_joint_parliamentary_sitting_day
+</pre></code><p>... we set the date to start counting from as that day.</p>
+<code title='Line 14, app/controllers/calculations/pnsi.rb'><pre><a name='14'> 14</a>       date = date.next_day.first_joint_parliamentary_sitting_day
+</pre></code><p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
+<p>The first joint sitting day counts as day 1 in both Houses, so we count from 1 rather than from 0.</p>
+<code title='Line 18, app/controllers/calculations/pnsi.rb'><pre><a name='18'> 18</a>     	commons_day_count = 1
+</pre></code><code title='Line 19, app/controllers/calculations/pnsi.rb'><pre><a name='19'> 19</a>       lords_day_count = 1
+</pre></code><h2>We look at subsequent days, ensuring that we&#39;ve counted at least ten parliamentary sitting days in each House ...</h2>
+<code title='Line 22, app/controllers/calculations/pnsi.rb'><pre><a name='22'> 22</a>       until ( ( commons_day_count >= target_day_count ) and ( lords_day_count >= target_day_count ) ) do
+</pre></code><p>... continue to the <strong>next day</strong>.</p>
+<code title='Line 25, app/controllers/calculations/pnsi.rb'><pre><a name='25'> 25</a>         date = date.next_day
+</pre></code><p>PNSIs use parliamentary sitting days, rather than naive sitting days.</p>
+<p>If the Lords sat on the date we&#39;ve found, we add another day to the Lords’ count.</p>
+<code title='Line 29, app/controllers/calculations/pnsi.rb'><pre><a name='29'> 29</a>         lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?
+</pre></code><p>If the Commons sat on the date we&#39;ve found, we add another day to the Commons’ count.</p>
+<code title='Line 31, app/controllers/calculations/pnsi.rb'><pre><a name='31'> 31</a>         commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?
+</pre></code><p>If the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+<code title='Line 34, app/controllers/calculations/pnsi.rb'><pre><a name='34'> 34</a>         if date.is_calendar_not_populated?
+</pre></code><p>... this error message is displayed to users ...</p>
+<code title='Line 37, app/controllers/calculations/pnsi.rb'><pre><a name='37'> 37</a>           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><p>... and we stop looking through the calendar.</p>
+<code title='Line 40, app/controllers/calculations/pnsi.rb'><pre><a name='40'> 40</a>           break
+</pre></code><code title='Line 41, app/controllers/calculations/pnsi.rb'><pre><a name='41'> 41</a>         end
+</pre></code><code title='Line 42, app/controllers/calculations/pnsi.rb'><pre><a name='42'> 42</a>       end
+</pre></code><p>If we didn&#39;t find any <strong>future joint sitting date</strong> in our calendar, we can&#39;t calculate the scrutiny period ...</p>
+<code title='Line 45, app/controllers/calculations/pnsi.rb'><pre><a name='45'> 45</a>     else
+</pre></code><p>... and this error message is displayed.</p>
+<code title='Line 48, app/controllers/calculations/pnsi.rb'><pre><a name='48'> 48</a>       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><code title='Line 49, app/controllers/calculations/pnsi.rb'><pre><a name='49'> 49</a>     end
+</pre></code><p>Return the anticipated end date of the scrutiny period for display.</p>
+<code title='Line 52, app/controllers/calculations/pnsi.rb'><pre><a name='52'> 52</a>     date
+</pre></code><code title='Line 53, app/controllers/calculations/pnsi.rb'><pre><a name='53'> 53</a>   end
+</pre></code><code title='Line 54, app/controllers/calculations/pnsi.rb'><pre><a name='54'> 54</a> end</pre></code></body></html>
