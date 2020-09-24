@@ -2,7 +2,7 @@
 
 # Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 require 'calculations/bicameral_parliamentary_days'
-require 'calculations/bicameral_first_to_ten'
+require 'calculations/pnsi'
 require 'calculations/commons_praying_days'
 require 'calculations/bicameral_praying_days_either_house_sitting'
 require 'calculations/bicameral_praying_days_both_houses_sitting'
@@ -13,7 +13,7 @@ class CalculatorController < ApplicationController
   
   # Include code from each of the modules for the different styles of calculation.
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-  include CALCULATION_BICAMERAL_FIRST_TO_TEN
+  include CALCULATION_PNSI
   include CALCULATION_COMMONS_PRAYING_DAYS
   include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
   include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
@@ -76,7 +76,7 @@ class CalculatorController < ApplicationController
       
       # * Proposed Statutory Instrument (PNSI)
       when 3
-        @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
+        @end_date = pnsi_calculation( @start_date, @day_count )
         
       # * Commons only negative Statutory Instrument and some made affirmatives
       when 5, 7
