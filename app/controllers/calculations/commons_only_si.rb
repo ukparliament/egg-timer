@@ -11,8 +11,8 @@ module CALCULATION_COMMONS_ONLY_SI
     
     # ## We start counting on the **first day when the House of Commons has a praying day**.
     # This may include the laying day of the instrument.
-    # For draft instruments this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1)
-    # For made affirmative instruments this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1)
+    # For made affirmative instruments this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph
+    # For draft instruments this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1) 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1)
     # Unless the laying day is a House of Commons praying day, then ...
     unless date.is_commons_praying_day?
       
