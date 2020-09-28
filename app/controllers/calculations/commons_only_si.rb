@@ -1,11 +1,18 @@
-module CALCULATION_COMMONS_PRAYING_DAYS
+module CALCULATION_COMMONS_ONLY_SI
   
-  # # A method for calculating the end date of scrutiny periods during which the House of Commons must be sitting or on a short adjournment, used for House of Commons only draft and made affirmative Statutory Instruments.
-  # The calculation counts a day whenever the House of Commons has a praying day, requiring the laying date and the number of days to count.
-  def commons_praying_days_calculation( date, target_day_count )
+  # # A method for calculating the end date of scutiny periods based on days on which the House of Commons must be sitting or on a short adjournment, used for Commons only negative and made affirmative Statutory Instruments.
+  # The calculation counts in actual sitting days and requires the start date and the number of days to count.
+  # The calculation is defined by the [Statutory Instruments Act 1946 Section 7 paragraph 1 ](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2) as modified by [paragraph 2](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-2).
+  
+  
+  
+  
+  def commons_only_si_calculation( date, target_day_count )
     
     # ## We start counting on the **first day when the House of Commons has a praying day**.
     # This may include the laying day of the instrument.
+    # For draft instruments this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1)
+    # For made affirmative instruments this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1)
     # Unless the laying day is a House of Commons praying day, then ...
     unless date.is_commons_praying_day?
       
