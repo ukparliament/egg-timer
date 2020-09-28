@@ -3,7 +3,7 @@
 # Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 require 'calculations/bicameral_parliamentary_days'
 require 'calculations/pnsi'
-require 'calculations/commons_praying_days'
+require 'calculations/commons_only_si'
 require 'calculations/bicameral_praying_days_either_house_sitting'
 require 'calculations/bicameral_praying_days_both_houses_sitting'
 require 'calculations/treaty'
@@ -14,7 +14,7 @@ class CalculatorController < ApplicationController
   # Include code from each of the modules for the different styles of calculation.
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
   include CALCULATION_PNSI
-  include CALCULATION_COMMONS_PRAYING_DAYS
+  include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
   include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
   include CALCULATION_TREATY
@@ -80,7 +80,7 @@ class CalculatorController < ApplicationController
         
       # * Commons only negative Statutory Instrument and some made affirmatives
       when 5, 7
-        @end_date = commons_praying_days_calculation( @start_date, @day_count )
+        @end_date = commons_only_si_calculation( @start_date, @day_count )
         
       # * Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
       when 6, 9

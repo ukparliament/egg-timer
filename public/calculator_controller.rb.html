@@ -30,8 +30,8 @@ body {color:white;background-color:black;}
   <body><h1>Calculator controller to build the form and run the calculations.</h1>
 <p>Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.</p>
 <code title='Line 4, app/controllers/calculator_controller.rb'><pre><a name='4'> 4</a> require 'calculations/bicameral_parliamentary_days'
-</pre></code><code title='Line 5, app/controllers/calculator_controller.rb'><pre><a name='5'> 5</a> require 'calculations/bicameral_first_to_ten'
-</pre></code><code title='Line 6, app/controllers/calculator_controller.rb'><pre><a name='6'> 6</a> require 'calculations/commons_praying_days'
+</pre></code><code title='Line 5, app/controllers/calculator_controller.rb'><pre><a name='5'> 5</a> require 'calculations/pnsi'
+</pre></code><code title='Line 6, app/controllers/calculator_controller.rb'><pre><a name='6'> 6</a> require 'calculations/commons_only_si'
 </pre></code><code title='Line 7, app/controllers/calculator_controller.rb'><pre><a name='7'> 7</a> require 'calculations/bicameral_praying_days_either_house_sitting'
 </pre></code><code title='Line 8, app/controllers/calculator_controller.rb'><pre><a name='8'> 8</a> require 'calculations/bicameral_praying_days_both_houses_sitting'
 </pre></code><code title='Line 9, app/controllers/calculator_controller.rb'><pre><a name='9'> 9</a> require 'calculations/treaty'
@@ -39,8 +39,8 @@ body {color:white;background-color:black;}
 <code title='Line 12, app/controllers/calculator_controller.rb'><pre><a name='12'> 12</a> class CalculatorController < ApplicationController
 </pre></code><p>Include code from each of the modules for the different styles of calculation.</p>
 <code title='Line 15, app/controllers/calculator_controller.rb'><pre><a name='15'> 15</a>   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-</pre></code><code title='Line 16, app/controllers/calculator_controller.rb'><pre><a name='16'> 16</a>   include CALCULATION_BICAMERAL_FIRST_TO_TEN
-</pre></code><code title='Line 17, app/controllers/calculator_controller.rb'><pre><a name='17'> 17</a>   include CALCULATION_COMMONS_PRAYING_DAYS
+</pre></code><code title='Line 16, app/controllers/calculator_controller.rb'><pre><a name='16'> 16</a>   include CALCULATION_PNSI
+</pre></code><code title='Line 17, app/controllers/calculator_controller.rb'><pre><a name='17'> 17</a>   include CALCULATION_COMMONS_ONLY_SI
 </pre></code><code title='Line 18, app/controllers/calculator_controller.rb'><pre><a name='18'> 18</a>   include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
 </pre></code><code title='Line 19, app/controllers/calculator_controller.rb'><pre><a name='19'> 19</a>   include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
 </pre></code><code title='Line 20, app/controllers/calculator_controller.rb'><pre><a name='20'> 20</a>   include CALCULATION_TREATY
@@ -99,12 +99,12 @@ body {color:white;background-color:black;}
 <li>Proposed Statutory Instrument (PNSI)</li>
 </ul>
 <code title='Line 78, app/controllers/calculator_controller.rb'><pre><a name='78'> 78</a>       when 3
-</pre></code><code title='Line 79, app/controllers/calculator_controller.rb'><pre><a name='79'> 79</a>         @end_date = bicameral_first_to_ten_calculation( @start_date, @day_count )
+</pre></code><code title='Line 79, app/controllers/calculator_controller.rb'><pre><a name='79'> 79</a>         @end_date = pnsi_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons only negative Statutory Instrument and some made affirmatives</li>
 </ul>
 <code title='Line 82, app/controllers/calculator_controller.rb'><pre><a name='82'> 82</a>       when 5, 7
-</pre></code><code title='Line 83, app/controllers/calculator_controller.rb'><pre><a name='83'> 83</a>         @end_date = commons_praying_days_calculation( @start_date, @day_count )
+</pre></code><code title='Line 83, app/controllers/calculator_controller.rb'><pre><a name='83'> 83</a>         @end_date = commons_only_si_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting</li>
 </ul>
