@@ -32,42 +32,43 @@ body {color:white;background-color:black;}
 <p>The calculation counts in actual sitting days and requires the start date and the number of days to count.</p>
 <p>The calculation is defined by the <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">Statutory Instruments Act 1946 Section 7 paragraph 1 </a> as modified by <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-2">paragraph 2</a>.</p>
 <code title='Line 10, app/controllers/calculations/commons_only_si.rb'><pre><a name='10'> 10</a>   def commons_only_si_calculation( date, target_day_count )
-</pre></code><h2>We start counting on the <strong>first day when the House of Commons has a praying day</strong>.</h2>
-<p>This may include the laying day of the instrument.</p>
+</pre></code><h2>We start counting on the <strong>first day when the House of Commons has a scrutiny day</strong>.</h2>
+<p>This may include the day on which the instrument was laid.</p>
+<p>In practice this will be the first actual sitting day on or following the laying day.</p>
 <p>For made affirmative instruments this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph</p>
 <p>For draft instruments this is defined by the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1">Statutory Instruments Act 1946 Section 6 paragraph 1</a> 1](<a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1</a>)</p>
-<p>Unless the laying day is a House of Commons praying day, then ...</p>
-<code title='Line 17, app/controllers/calculations/commons_only_si.rb'><pre><a name='17'> 17</a>     unless date.is_commons_praying_day?
-</pre></code><p>... if there is a future House of Commons praying day ...</p>
-<code title='Line 20, app/controllers/calculations/commons_only_si.rb'><pre><a name='20'> 20</a>       if date.first_commons_praying_day 
+<p>Unless the laying day is a House of Commons scrutiny day, then ...</p>
+<code title='Line 18, app/controllers/calculations/commons_only_si.rb'><pre><a name='18'> 18</a>     unless date.is_commons_scrutiny_day?
+</pre></code><p>... if there is a future House of Commons scrutiny day ...</p>
+<code title='Line 21, app/controllers/calculations/commons_only_si.rb'><pre><a name='21'> 21</a>       if date.first_commons_scrutiny_day 
 </pre></code><p>... we set the date to that day.</p>
-<code title='Line 23, app/controllers/calculations/commons_only_si.rb'><pre><a name='23'> 23</a>         date = date.first_commons_praying_day
-</pre></code><p>If we didn&#39;t find a <strong>future House of Commons praying day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
-<code title='Line 26, app/controllers/calculations/commons_only_si.rb'><pre><a name='26'> 26</a>       else
+<code title='Line 24, app/controllers/calculations/commons_only_si.rb'><pre><a name='24'> 24</a>         date = date.first_commons_scrutiny_day
+</pre></code><p>If we didn&#39;t find a <strong>future House of Commons scrutiny day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
+<code title='Line 27, app/controllers/calculations/commons_only_si.rb'><pre><a name='27'> 27</a>       else
 </pre></code><p>... this error message is displayed ...</p>
-<code title='Line 29, app/controllers/calculations/commons_only_si.rb'><pre><a name='29'> 29</a>         @error_message = "Unable to find a future House of Commons praying day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 30, app/controllers/calculations/commons_only_si.rb'><pre><a name='30'> 30</a>         @error_message = "Unable to find a future House of Commons scrutiny day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><p>... and we stop looking for a scrutiny period end date.</p>
-<code title='Line 32, app/controllers/calculations/commons_only_si.rb'><pre><a name='32'> 32</a>         return
-</pre></code><code title='Line 33, app/controllers/calculations/commons_only_si.rb'><pre><a name='33'> 33</a>       end
-</pre></code><p>Otherwise, we&#39;ve established the laying day is a House of Commons praying day so we don&#39;t have to cycle through the calendar to find a subsequent one.</p>
-<code title='Line 35, app/controllers/calculations/commons_only_si.rb'><pre><a name='35'> 35</a>     end
-</pre></code><p>We&#39;ve found the first House of Commons praying day so we start counting from day 1.</p>
-<code title='Line 38, app/controllers/calculations/commons_only_si.rb'><pre><a name='38'> 38</a>     day_count = 1
+<code title='Line 33, app/controllers/calculations/commons_only_si.rb'><pre><a name='33'> 33</a>         return
+</pre></code><code title='Line 34, app/controllers/calculations/commons_only_si.rb'><pre><a name='34'> 34</a>       end
+</pre></code><p>Otherwise, we&#39;ve established the laying day is a House of Commons scrutiny day so we don&#39;t have to cycle through the calendar to find a subsequent one.</p>
+<code title='Line 37, app/controllers/calculations/commons_only_si.rb'><pre><a name='37'> 37</a>     end
+</pre></code><p>We&#39;ve found the first House of Commons scrutiny day so we start counting from day 1.</p>
+<code title='Line 40, app/controllers/calculations/commons_only_si.rb'><pre><a name='40'> 40</a>     day_count = 1
 </pre></code><h2>Whilst the number of days we’re counting is less than the target number of days to count ...</h2>
-<code title='Line 41, app/controllers/calculations/commons_only_si.rb'><pre><a name='41'> 41</a>     while ( day_count < target_day_count ) do
+<code title='Line 43, app/controllers/calculations/commons_only_si.rb'><pre><a name='43'> 43</a>     while ( day_count < target_day_count ) do
 </pre></code><p>... continue to the <strong>next day</strong>.</p>
-<code title='Line 44, app/controllers/calculations/commons_only_si.rb'><pre><a name='44'> 44</a>       date = date.next_day
-</pre></code><p>... and add 1 to the day count if this is a House of Commons praying day.</p>
-<code title='Line 47, app/controllers/calculations/commons_only_si.rb'><pre><a name='47'> 47</a>       day_count +=1 if date.is_commons_praying_day?
+<code title='Line 46, app/controllers/calculations/commons_only_si.rb'><pre><a name='46'> 46</a>       date = date.next_day
+</pre></code><p>... and add 1 to the day count if this is a House of Commons scrutiny day.</p>
+<code title='Line 49, app/controllers/calculations/commons_only_si.rb'><pre><a name='49'> 49</a>       day_count +=1 if date.is_commons_scrutiny_day?
 </pre></code><p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
-<code title='Line 50, app/controllers/calculations/commons_only_si.rb'><pre><a name='50'> 50</a>       if date.is_calendar_not_populated?
+<code title='Line 52, app/controllers/calculations/commons_only_si.rb'><pre><a name='52'> 52</a>       if date.is_calendar_not_populated?
 </pre></code><p>... this error message is displayed to users ...</p>
-<code title='Line 53, app/controllers/calculations/commons_only_si.rb'><pre><a name='53'> 53</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 55, app/controllers/calculations/commons_only_si.rb'><pre><a name='55'> 55</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><p>... and we stop looking through the calendar.</p>
-<code title='Line 56, app/controllers/calculations/commons_only_si.rb'><pre><a name='56'> 56</a>         break
-</pre></code><code title='Line 57, app/controllers/calculations/commons_only_si.rb'><pre><a name='57'> 57</a>       end
-</pre></code><code title='Line 58, app/controllers/calculations/commons_only_si.rb'><pre><a name='58'> 58</a>     end
+<code title='Line 58, app/controllers/calculations/commons_only_si.rb'><pre><a name='58'> 58</a>         break
+</pre></code><code title='Line 59, app/controllers/calculations/commons_only_si.rb'><pre><a name='59'> 59</a>       end
+</pre></code><code title='Line 60, app/controllers/calculations/commons_only_si.rb'><pre><a name='60'> 60</a>     end
 </pre></code><p>Return the anticipated end date of the scrutiny period for display.</p>
-<code title='Line 61, app/controllers/calculations/commons_only_si.rb'><pre><a name='61'> 61</a>     date
-</pre></code><code title='Line 62, app/controllers/calculations/commons_only_si.rb'><pre><a name='62'> 62</a>   end
-</pre></code><code title='Line 63, app/controllers/calculations/commons_only_si.rb'><pre><a name='63'> 63</a> end</pre></code></body></html>
+<code title='Line 63, app/controllers/calculations/commons_only_si.rb'><pre><a name='63'> 63</a>     date
+</pre></code><code title='Line 64, app/controllers/calculations/commons_only_si.rb'><pre><a name='64'> 64</a>   end
+</pre></code><code title='Line 65, app/controllers/calculations/commons_only_si.rb'><pre><a name='65'> 65</a> end</pre></code></body></html>
