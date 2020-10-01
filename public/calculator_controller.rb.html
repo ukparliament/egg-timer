@@ -32,7 +32,7 @@ body {color:white;background-color:black;}
 <code title='Line 4, app/controllers/calculator_controller.rb'><pre><a name='4'> 4</a> require 'calculations/bicameral_parliamentary_days'
 </pre></code><code title='Line 5, app/controllers/calculator_controller.rb'><pre><a name='5'> 5</a> require 'calculations/pnsi'
 </pre></code><code title='Line 6, app/controllers/calculator_controller.rb'><pre><a name='6'> 6</a> require 'calculations/commons_only_si'
-</pre></code><code title='Line 7, app/controllers/calculator_controller.rb'><pre><a name='7'> 7</a> require 'calculations/bicameral_praying_days_either_house_sitting'
+</pre></code><code title='Line 7, app/controllers/calculator_controller.rb'><pre><a name='7'> 7</a> require 'calculations/bicameral_si_either_house_sitting'
 </pre></code><code title='Line 8, app/controllers/calculator_controller.rb'><pre><a name='8'> 8</a> require 'calculations/bicameral_praying_days_both_houses_sitting'
 </pre></code><code title='Line 9, app/controllers/calculator_controller.rb'><pre><a name='9'> 9</a> require 'calculations/treaty'
 </pre></code><h2>The controller itself.</h2>
@@ -41,7 +41,7 @@ body {color:white;background-color:black;}
 <code title='Line 15, app/controllers/calculator_controller.rb'><pre><a name='15'> 15</a>   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
 </pre></code><code title='Line 16, app/controllers/calculator_controller.rb'><pre><a name='16'> 16</a>   include CALCULATION_PNSI
 </pre></code><code title='Line 17, app/controllers/calculator_controller.rb'><pre><a name='17'> 17</a>   include CALCULATION_COMMONS_ONLY_SI
-</pre></code><code title='Line 18, app/controllers/calculator_controller.rb'><pre><a name='18'> 18</a>   include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
+</pre></code><code title='Line 18, app/controllers/calculator_controller.rb'><pre><a name='18'> 18</a>   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
 </pre></code><code title='Line 19, app/controllers/calculator_controller.rb'><pre><a name='19'> 19</a>   include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
 </pre></code><code title='Line 20, app/controllers/calculator_controller.rb'><pre><a name='20'> 20</a>   include CALCULATION_TREATY
 </pre></code><h3>This is the code to provide information for the form that users can fill in.</h3>
@@ -109,7 +109,7 @@ body {color:white;background-color:black;}
 <li>Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting</li>
 </ul>
 <code title='Line 86, app/controllers/calculator_controller.rb'><pre><a name='86'> 86</a>       when 6, 9
-</pre></code><code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'> 87</a>         @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count ) 
+</pre></code><code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'> 87</a>         @end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count ) 
 </pre></code><ul>
 <li>Commons and Lords affirmative Statutory Instrument where both Houses are sitting</li>
 </ul>
