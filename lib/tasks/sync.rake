@@ -2,9 +2,6 @@
 
 # If there are changes to the Google calendar data and you run this script before it’s run on Heroku, those changes may not not get picked up by the Heroku app.
 
-
-
-
 require 'google/apis/calendar_v3'
 
 task :sync => [
@@ -209,8 +206,8 @@ def get_changed_events_from_calendar( service, calendar_id )
       calendar_id,
       max_results: 100000,
       single_events: true,
-      show_deleted: true#,
-      #sync_token: sync_token.token
+      show_deleted: true,
+      sync_token: sync_token.token
     )
   else
     response = service.list_events(
