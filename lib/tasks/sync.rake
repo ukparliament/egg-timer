@@ -5,8 +5,7 @@
 
 
 
-# require 'google/apis/calendar_v3'
-require 'googleauth'
+require 'google/apis/calendar_v3'
 
 task :sync => [
   :sync_commons_sitting_days,
