@@ -5,10 +5,6 @@
 require 'google/apis/calendar_v3'
 
 task :sync => [
-  :sync_commons_sitting_days
-]
-
-task :sync2 => [
   :sync_commons_sitting_days,
   :sync_lords_sitting_days,
   :sync_lords_virtual_sitting_days,
@@ -68,14 +64,14 @@ def sync_sitting_days( calendar_id, house_id )
       # If the event is confirmed... 
       elsif event.status == 'confirmed'
         
-        # ...if this is an edit (has it been updated since created) delete it's previous incarnation.
-        delete_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes
+        # ...if this is an edit (has it been updated since created) delete its previous incarnation.
+        delete_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
       
         # ...create a new sitting day.
         start_date = ( event.start.date || event.start.date_time ).to_date
         end_date = ( event.end.date || event.end.date_time ).to_date
       
-        # ...because all day appointments end at midnight the next day subtract a day if there's no end datetime
+        # ...because all day appointments end at midnight the next day, subtract a day if there's no end datetime
         end_date = end_date - 1.day unless event.end.date_time
       
         # ...find the session this event is in.
@@ -85,11 +81,11 @@ def sync_sitting_days( calendar_id, house_id )
         # ...if no session has been found...
         unless session
         
-          # ...find the session that's not yet ended if the event isn't in a different session.
+          # ...find the session that's not yet ended.
           session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
         end
         
-        # ...if the sitting day can be associated with a sitting...
+        # ...if the sitting day can be associated with a session...
         if session
           
           # ...create and save it.
@@ -110,7 +106,7 @@ def sync_sitting_days( calendar_id, house_id )
       # ...set the page token to that returned so the next time through the loop it hits that page.
       page_token = response.next_page_token
       
-      # If the response has not returned a next page token, we're at the last page...
+    # If the response has not returned a next page token, we're at the last page...
     else
       
       # ...so we stop looping through pages.
@@ -119,54 +115,79 @@ def sync_sitting_days( calendar_id, house_id )
   end
 end
 
-
-
-
-
-#########################
-
-
-
 def sync_virtual_sitting_days( calendar_id, house_id )
   
-  # authorise to grab events from google calendar
+  # Authorise to grab events from google calendar.
   service = authorise_calendar_access
+
+  # Start with no page token because we don't know if the results are paginated.
+  page_token = ''
   
-  # get any changed events from the calendar
-  response = get_changed_events_from_calendar( service, calendar_id )
+  # Keep looping through pages to get events.
+  loop do
+    
+    # Get any changed events from - this page of - the calendar.
+    # Pass the calendar we're grabbing from and the page token (if any).
+    response = get_changed_events_from_calendar( service, calendar_id, page_token )
   
-  # loop through all changed events
-  response.items.each do |event|
-    if event.status == 'cancelled'
-      delete_virtual_sitting_days( event.id )
-    elsif event.status == 'confirmed'
-      # if this is an edit (has it been updated since created) delete it's previous incarnation
-      delete_virtual_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes
+    # Loop through all changed events.
+    response.items.each do |event|
       
-      # create (new) virtual sitting day
-      puts "creating event #{event.id}"
-      start_date = ( event.start.date || event.start.date_time ).to_date
-      end_date = ( event.end.date || event.end.date_time ).to_date
-      
-      # because all day appointments end at midnight the next day subtract a day if there's no end datetime
-      end_date = end_date - 1.day unless event.end.date_time
-      
-      # find the session this event is in
-      # Where the start date of the event is on or after the start of the session and the end date of the event is before or on the end date of the session
-      session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
-      unless session
+      # If the event is cancelled...
+      if event.status == 'cancelled'
         
-        # find the session that's not yet ended if the event isn't in a different session
-        session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
+        # ...delete it.
+        delete_virtual_sitting_days( event.id )
+        
+      # If the event is confirmed...
+      elsif event.status == 'confirmed'
+
+        # ...if this is an edit (has it been updated since created) delete its previous incarnation.
+        delete_virtual_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
+      
+        # ...create a new virtual sitting day.
+        start_date = ( event.start.date || event.start.date_time ).to_date
+        end_date = ( event.end.date || event.end.date_time ).to_date
+      
+        # ...because all day appointments end at midnight the next day, subtract a day if there's no end datetime.
+        end_date = end_date - 1.day unless event.end.date_time
+      
+        # ...find the session this event is in.
+        # Where the start date of the event is on or after the start of the session and the end date of the event is before or on the end date of the session.
+        session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
+        
+        # ...if no session has been found...
+        unless session
+        
+          # ...find the session that's not yet ended.
+          session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
+        end
+        
+        # ...if the virtual sitting day can be associated with a session....
+        if session
+          
+          # ...create and save it.
+          virtual_sitting_day = VirtualSittingDay.new
+          virtual_sitting_day.start_date = start_date
+          virtual_sitting_day.end_date = end_date
+          virtual_sitting_day.google_event_id = event.id
+          virtual_sitting_day.session = session
+          virtual_sitting_day.house_id = house_id
+          virtual_sitting_day.save
+        end
       end
-      if session
-        virtual_sitting_day = VirtualSittingDay.new
-        virtual_sitting_day.start_date = start_date
-        virtual_sitting_day.end_date = end_date
-        virtual_sitting_day.google_event_id = event.id
-        virtual_sitting_day.session = session
-        virtual_sitting_day.house_id = house_id
-        virtual_sitting_day.save
+      
+      # If the reponse has returned a next page token...
+      if response.next_page_token
+      
+        # ...set the page token to that returned so the next time through the loop it hits that page.
+        page_token = response.next_page_token
+      
+      # If the response has not returned a next page token, we're at the last page...
+      else
+      
+        # ...so we stop looping through pages.
+        break
       end
     end
   end
@@ -232,7 +253,6 @@ end
 
 # Delete any adjournment days with a given event id.
 def delete_adjournment_days( event_id )
-  #puts "deleting event #{event_id}"
   
   # Adjournment days can be created as multiday events which get split into individual days in the database calendar. So we need to...
   # ...find all the adjournment days with this event id.
@@ -248,7 +268,6 @@ end
 
 # Delete any sitting days with a given event id.
 def delete_sitting_days( event_id )
-  #puts "deleting event #{event_id}"
   
   # Find the sitting day with this event id.
   sitting_day = SittingDay.all.where( "google_event_id = ?", event_id ).first
@@ -259,9 +278,8 @@ end
 
 # Delete any virtual sitting days with a given event id.
 def delete_virtual_sitting_days( event_id )
-  #puts "deleting event #{event_id}"
   
-  # Find all the adjournment days with this event id.
+  # Find the adjournment day with this event id.
   virtual_sitting_day = VirtualSittingDay.all.where( "google_event_id = ?", event_id ).first
   
   # If you've found one, delete it.
@@ -280,7 +298,7 @@ def get_changed_events_from_calendar( service, calendar_id, page_token )
     # ...get any changes since that last sync token.
     response = service.list_events(
       calendar_id,
-      max_results: 2500, # 2500 is the maximum Google will return.
+      max_results: 2500, # 2500 is the maximum Google will return per page.
       single_events: true,
       show_deleted: true,
       page_token: page_token,
@@ -293,22 +311,25 @@ def get_changed_events_from_calendar( service, calendar_id, page_token )
     # ...get any changes since the start of that calendar's time.
     response = service.list_events(
       calendar_id,
-      max_results: 100000,
+      max_results: 2500, # 2500 is the maximum Google will return per page.
       single_events: true,
       show_deleted: true,
       page_token: page_token
     )
-    
-    # ...get ready to create a new sync token - which might not be saved if a sync token has not been returned.
-    sync_token = SyncToken.new
-    sync_token.google_calendar_id = calendar_id
   end
   
   # If a sync token has been returned by the Google API...
   if response.next_sync_token
     
+    # ..but the database doesn't already have a sync token for this calendar...
+    unless sync_token
+      
+      # ...create a new sync token in the database for this calendar
+      sync_token = SyncToken.new
+      sync_token.google_calendar_id = calendar_id
+    end
+    
     # ...set (or reset) the sync token
-    puts "setting sync token"
     sync_token.token = response.next_sync_token
     sync_token.save
   end
