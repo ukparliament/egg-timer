@@ -1,1 +1,1 @@
-<%= content_tag( 'li', "#{month[0]} #{month[2]}" ) %>
+<%= content_tag( 'li', link_to( "#{month[0]} #{month[2]}", calendar_month_url( :year => month[2], :month => month[1] ) ) ) %>
