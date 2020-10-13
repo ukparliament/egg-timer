@@ -5,18 +5,12 @@
 require 'google/apis/calendar_v3'
 
 task :sync => [
-  :sync_commons_adjournment_days
-]
-
-task :sync2 => [
   :sync_commons_sitting_days,
   :sync_lords_sitting_days,
   :sync_lords_virtual_sitting_days,
   :sync_commons_adjournment_days,
   :sync_lords_adjournment_days
 ]
-
-
 
 task :sync_commons_sitting_days => :environment do
   puts "Syncing commons sitting days"
@@ -38,8 +32,6 @@ task :sync_lords_adjournment_days => :environment do
   puts "Syncing lords adjournment days"
   sync_adjournment_days( 'ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com', 2 )
 end
-
-
 
 def sync_sitting_days( calendar_id, house_id )
   
