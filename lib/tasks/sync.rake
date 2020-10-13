@@ -5,6 +5,10 @@
 require 'google/apis/calendar_v3'
 
 task :sync => [
+  :sync_commons_adjournment_days
+]
+
+task :sync2 => [
   :sync_commons_sitting_days,
   :sync_lords_sitting_days,
   :sync_lords_virtual_sitting_days,
@@ -199,7 +203,7 @@ def sync_adjournment_days( calendar_id, house_id )
   service = authorise_calendar_access
 
   # Start with no page token because we don't know if the results are paginated.
-  page_token = ''''
+  page_token = ''
   
   # Keep looping through pages to get events.
   loop do
@@ -211,7 +215,7 @@ def sync_adjournment_days( calendar_id, house_id )
     # Loop through all changed events.
     response.items.each do |event|
       
-      # If the evnt is cancelled...
+      # If the event is cancelled...
       if event.status == 'cancelled'
         
         # ...delete it.
@@ -236,11 +240,11 @@ def sync_adjournment_days( calendar_id, house_id )
       
           # ...find the session this event is in...
           # Where the start date of the event is on or after the start of the session and the end date of the event is before or on the end date of the session.
-          session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
+          session = Session.all.where( "start_date <= ?", date ).where( "end_date >= ?", date ).first
           unless session
           
             # ...find the session that's not yet ended.
-            session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
+            session = Session.all.where( "start_date <= ?", date ).where( "end_date is null" ).first
           end
           
           # ...if the adjournment day can be associated with a session...
