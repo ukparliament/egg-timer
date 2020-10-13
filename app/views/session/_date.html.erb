@@ -1,3 +1,7 @@
 <tr>
 	<%= content_tag( 'td', date ) %>
+	<%= content_tag( 'td', date.commons_day_type ) %>
+	<%= content_tag( 'td', date.is_commons_scrutiny_day_label ) %>
+	<%= content_tag( 'td', date.lords_day_type ) %>
+	<%= content_tag( 'td', date.is_lords_scrutiny_day_label ) %>
 </tr>
