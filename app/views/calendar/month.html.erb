@@ -1,3 +1,7 @@
+<ol>
+	<%= content_tag( 'li', link_to( 'Previous month', calendar_month_url( :year => @previous_date.year, :month => @previous_date.month ) ) ) %>
+	<%= content_tag( 'li', link_to( 'Next month', calendar_month_url( :year => @next_date.year, :month => @next_date.month ) ) ) %>
+</ol>
 <table>
 	<thead>
 		<tr>

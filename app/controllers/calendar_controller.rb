@@ -24,5 +24,7 @@ class CalendarController < ApplicationController
     start_date = Date.new( year.to_i, month.to_i, 1)
     end_date = Date.new( year.to_i, month.to_i, -1)
     @date_range = ( ( start_date )..( end_date ) ).to_a
+    @previous_date = start_date - 1.month
+    @next_date = start_date + 1.month
   end
 end
