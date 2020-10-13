@@ -1,0 +1,13 @@
+<table>
+	<thead>
+		<tr>
+			<%= content_tag( 'td', 'Date' ) %>
+			<%= content_tag( 'td', 'Day' ) %>
+			<%= content_tag( 'td', 'House of Commons day type' ) %>
+			<%= content_tag( 'td', 'House of Commons praying' ) %>
+			<%= content_tag( 'td', 'House of Lords day type' ) %>
+			<%= content_tag( 'td', 'House of Lords praying' ) %>
+		</tr>
+	</thead>
+	<%= render :partial => 'date', :collection => @date_range %>
+</table>
