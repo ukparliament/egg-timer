@@ -67,7 +67,7 @@ def sync_sitting_days( calendar_id, house_id )
         # ...if this is an edit (has it been updated since created) delete its previous incarnation.
         delete_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
       
-        # ...create a new sitting day.
+        # ...set the start and end dates of the event.
         start_date = ( event.start.date || event.start.date_time ).to_date
         end_date = ( event.end.date || event.end.date_time ).to_date
       
@@ -145,7 +145,7 @@ def sync_virtual_sitting_days( calendar_id, house_id )
         # ...if this is an edit (has it been updated since created) delete its previous incarnation.
         delete_virtual_sitting_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
       
-        # ...create a new virtual sitting day.
+        # ...set the start and end dates of the event.
         start_date = ( event.start.date || event.start.date_time ).to_date
         end_date = ( event.end.date || event.end.date_time ).to_date
       
@@ -176,80 +176,102 @@ def sync_virtual_sitting_days( calendar_id, house_id )
           virtual_sitting_day.save
         end
       end
+    end
       
-      # If the reponse has returned a next page token...
-      if response.next_page_token
-      
-        # ...set the page token to that returned so the next time through the loop it hits that page.
-        page_token = response.next_page_token
-      
-      # If the response has not returned a next page token, we're at the last page...
-      else
-      
-        # ...so we stop looping through pages.
-        break
-      end
+    # If the reponse has returned a next page token...
+    if response.next_page_token
+    
+      # ...set the page token to that returned so the next time through the loop it hits that page.
+      page_token = response.next_page_token
+    
+    # If the response has not returned a next page token, we're at the last page...
+    else
+    
+      # ...so we stop looping through pages.
+      break
     end
   end
 end
 
 def sync_adjournment_days( calendar_id, house_id )
   
-  # authorise to grab events from google calendar
+  # Authorise to grab events from google calendar.
   service = authorise_calendar_access
+
+  # Start with no page token because we don't know if the results are paginated.
+  page_token = ''''
   
-  # get any changed events from the calendar
-  response = get_changed_events_from_calendar( service, calendar_id )
-  puts "****"
-  puts reponse.nextPageToken
-  puts "*****"
+  # Keep looping through pages to get events.
+  loop do
+    
+    # Get any changed events from - this page of - the calendar.
+    # Pass the calendar we're grabbing from and the page token (if any).
+    response = get_changed_events_from_calendar( service, calendar_id, page_token )
   
-  # loop through all changed events
-  response.items.each do |event|
-    if event.status == 'cancelled'
-      delete_adjournment_days( event.id )
-    elsif event.status == 'confirmed'
-      # if this is an edit (has it been updated since created) delete it's previous incarnation
-      delete_adjournment_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes
+    # Loop through all changed events.
+    response.items.each do |event|
       
-      # create (new) adjournment days
-      #puts "creating event #{event.id}"
-      start_date = ( event.start.date || event.start.date_time ).to_date
-      end_date = ( event.end.date || event.end.date_time ).to_date
+      # If the evnt is cancelled...
+      if event.status == 'cancelled'
+        
+        # ...delete it.
+        delete_adjournment_days( event.id )
+        
+      # If the event is confimed...
+      elsif event.status == 'confirmed'
+        
+        # ...if this is an edit (has it been updated since created) delete it's previous incarnation.
+        delete_adjournment_days( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
       
-      # because all day appointments end at midnight the next day subtract a day if there's no end datetime
-      end_date = end_date - 1.day unless event.end.date_time
+        # ...set the start and end dates of the event.
+        start_date = ( event.start.date || event.start.date_time ).to_date
+        end_date = ( event.end.date || event.end.date_time ).to_date
       
-      # loop through all the dates covered and created an adjournment day for each
-      (start_date..end_date).each do |date|
+        # ...because all day appointments end at midnight the next day, subtract a day if there's no end datetime.
+        end_date = end_date - 1.day unless event.end.date_time
       
-        # find the session this event is in
-        session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
-        unless session
+        # ...because adjournment days can be created as multiday events in the Google calendar but we split them out into separate days...
+        # ...loop through all the dates covered...
+        (start_date..end_date).each do |date|
+      
+          # ...find the session this event is in...
+          # Where the start date of the event is on or after the start of the session and the end date of the event is before or on the end date of the session.
+          session = Session.all.where( "start_date <= ?", start_date ).where( "end_date >= ?", end_date ).first
+          unless session
           
-          # find the session that's not yet ended if the event isn't in a different session
-          session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
-        end
-        if session
-          adjournment_day = AdjournmentDay.new
-          adjournment_day.date = date
-          adjournment_day.google_event_id = event.id
-          adjournment_day.session = session
-          adjournment_day.house_id = house_id
-          adjournment_day.save
+            # ...find the session that's not yet ended.
+            session = Session.all.where( "start_date <= ?", start_date ).where( "end_date is null" ).first
+          end
+          
+          # ...if the adjournment day can be associated with a session...
+          if session
+            
+            # ...create it and save it.
+            adjournment_day = AdjournmentDay.new
+            adjournment_day.date = date
+            adjournment_day.google_event_id = event.id
+            adjournment_day.session = session
+            adjournment_day.house_id = house_id
+            adjournment_day.save
+          end
         end
       end
     end
+      
+    # If the reponse has returned a next page token...
+    if response.next_page_token
+    
+      # ...set the page token to that returned so the next time through the loop it hits that page.
+      page_token = response.next_page_token
+    
+    # If the response has not returned a next page token, we're at the last page...
+    else
+    
+      # ...so we stop looping through pages.
+      break
+    end
   end
 end
-
-
-
-
-
-
-##################
-
 
 # Delete any adjournment days with a given event id.
 def delete_adjournment_days( event_id )
