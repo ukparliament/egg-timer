@@ -299,7 +299,7 @@ def get_changed_events_from_calendar( service, calendar_id, page_token )
       page_token: page_token
     )
     
-    ... get ready to create a new sync token - which might not be saved if a sync token has not been returned.
+    # ...get ready to create a new sync token - which might not be saved if a sync token has not been returned.
     sync_token = SyncToken.new
     sync_token.google_calendar_id = calendar_id
   end
@@ -307,7 +307,7 @@ def get_changed_events_from_calendar( service, calendar_id, page_token )
   # If a sync token has been returned by the Google API...
   if response.next_sync_token
     
-    # ..set (or reset) the sync token
+    # ...set (or reset) the sync token
     puts "setting sync token"
     sync_token.token = response.next_sync_token
     sync_token.save
