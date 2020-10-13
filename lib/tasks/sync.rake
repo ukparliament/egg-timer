@@ -234,7 +234,8 @@ end
 def delete_adjournment_days( event_id )
   #puts "deleting event #{event_id}"
   
-  # Find all the adjournment days with this event id.
+  # Adjournment days can be created as multiday events which get split into individual days in the database calendar. So we need to...
+  # ...find all the adjournment days with this event id.
   adjournment_days = AdjournmentDay.all.where( "google_event_id = ?", event_id )
   
   # Loop though all these adjournment days...
