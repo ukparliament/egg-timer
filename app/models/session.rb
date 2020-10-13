@@ -45,6 +45,14 @@ class Session < ActiveRecord::Base
     end
   end
   
+  def month_range
+    month_range = []
+    self.date_range. each do |date|
+      month_range << [date.strftime("%B"), date.month, date.year]
+    end
+    month_range.uniq!
+  end
+  
   def final_announced_day
     [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
   end
