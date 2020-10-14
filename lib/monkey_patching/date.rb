@@ -491,6 +491,10 @@ class Date
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_commons_adjournment_day?
       day_type = 'Adjournment day'
+    elsif self.is_prorogation_day?
+      day_type = 'Prorogation'
+    elsif self.is_dissolution_day?
+      day_type = 'Dissolution'
     end
     day_type
   end
@@ -507,6 +511,10 @@ class Date
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_lords_adjournment_day?
       day_type = 'Adjournment day'
+    elsif self.is_prorogation_day?
+      day_type = 'Prorogation'
+    elsif self.is_dissolution_day?
+      day_type = 'Dissolution'
     end
     day_type
   end
