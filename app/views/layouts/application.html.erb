@@ -9,6 +9,8 @@
 			button {border:1pt solid #0076d1;}
 			button.procedure-toggle {width:6rem;}
 			button.Show {font-weight:bold;}
+			p.procedureformitem {padding:0.3rem;}
+			p.procedureformitem:hover {background-color: pink;}
             </style>
 </head>
 <body class="<%= Rails.env %>">
@@ -20,7 +22,7 @@
 
 </nav>
 
-<h1 style="font-weight:normal;"><%= @title || "Parliament Calendar" %></h1>
+<h1><%= @title || "Parliament Calendar" %></h1>
 </header>
 <main style="padding:2rem 0;">
 <%= yield %>
@@ -30,11 +32,13 @@
 <nav>
 <p>
 <%= link_to( 'Parliaments', parliament_list_url )  %>
-&mdash;
+&middot;
 <%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
-&mdash;
+&middot;
 <%= link_to( 'Sessions', session_list_url )  %>
-&mdash;
+&middot;
+<%= link_to( 'Procedures', procedure_list_url )  %>
+&middot;
 <%= link_to( 'About this application', meta_list_url )  %>
 </p>
 
