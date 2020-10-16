@@ -1,13 +1,14 @@
+<p>
 <button><%= link_to( 'Previous month', calendar_month_url( :year => @previous_date.year, :month => @previous_date.month ) )  %></button>
 
 <button style="float:right;"><%= link_to( 'Next month', calendar_month_url( :year => @next_date.year, :month => @next_date.month ) )  %></button>
 
-
+</p>
 
 <table>
 	<thead>
 		<tr>
-			<th>Date</th>
+			<th style="float:right;">Date</th>
 			<th>Day</th>
 			<th>Commons day type</th>
 			<th>Commons praying</th>
