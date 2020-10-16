@@ -1,17 +1,21 @@
-<ol>
-	<%= content_tag( 'li', link_to( 'Previous month', calendar_month_url( :year => @previous_date.year, :month => @previous_date.month ) ) ) %>
-	<%= content_tag( 'li', link_to( 'Next month', calendar_month_url( :year => @next_date.year, :month => @next_date.month ) ) ) %>
-</ol>
+<button><%= link_to( 'Previous month', calendar_month_url( :year => @previous_date.year, :month => @previous_date.month ) )  %></button>
+
+<button style="float:right;"><%= link_to( 'Next month', calendar_month_url( :year => @next_date.year, :month => @next_date.month ) )  %></button>
+
+
+
 <table>
 	<thead>
 		<tr>
-			<%= content_tag( 'td', 'Date' ) %>
-			<%= content_tag( 'td', 'Day' ) %>
-			<%= content_tag( 'td', 'House of Commons day type' ) %>
-			<%= content_tag( 'td', 'House of Commons praying' ) %>
-			<%= content_tag( 'td', 'House of Lords day type' ) %>
-			<%= content_tag( 'td', 'House of Lords praying' ) %>
+			<th>Date</th>
+			<th>Day</th>
+			<th>Commons day type</th>
+			<th>Commons praying</th>
+			<th>Lords day type</th>
+			<th>Lords praying</th>
 		</tr>
 	</thead>
+	<tbody>
 	<%= render :partial => 'date', :collection => @date_range %>
+	</tbody>
 </table>

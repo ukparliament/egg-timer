@@ -11,15 +11,15 @@
 			button.Show {font-weight:bold;}
 			p.procedureformitem {padding:0.3rem;}
 			p.procedureformitem:hover {background-color: pink;}
+			ol.no-bullets { list-style-type: none; padding:0;}
             </style>
 </head>
 <body class="<%= Rails.env %>">
 <header>
 <nav>
 <p>
-<a href="/">Parliament calendar</a>
+<a href="/">Calculate scrutiny period</a>
 </p>
-
 </nav>
 
 <h1><%= @title || "Parliament Calendar" %></h1>
@@ -38,6 +38,8 @@
 <%= link_to( 'Sessions', session_list_url )  %>
 &middot;
 <%= link_to( 'Procedures', procedure_list_url )  %>
+&middot;
+<%= link_to( 'Calendar', calendar_list_url )  %>
 &middot;
 <%= link_to( 'About this application', meta_list_url )  %>
 </p>
