@@ -35,9 +35,9 @@ Rails.application.routes.draw do
   get 'meta/comments' => 'meta#comment', as: :meta_comment
   
   # hack to let us switch procedures on and off
-  get 'procedures' => 'procedure#index', as: :procedure_list
-  get 'procedures/:procedure' => 'procedure#show', as: :procedure_show
-  get 'procedures/:procedure/flip' => 'procedure#flip', as: :procedure_flip
+  get 'interface' => 'procedure#index', as: :procedure_list
+  get 'interface/:procedure' => 'procedure#show', as: :procedure_show
+  get 'interface/:procedure/flip' => 'procedure#flip', as: :procedure_flip
   
   
   
