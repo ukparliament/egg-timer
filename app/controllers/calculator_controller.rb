@@ -5,7 +5,7 @@ require 'calculations/bicameral_parliamentary_days'
 require 'calculations/pnsi'
 require 'calculations/commons_only_si'
 require 'calculations/bicameral_si_either_house_sitting'
-require 'calculations/bicameral_praying_days_both_houses_sitting'
+require 'calculations/bicameral_si_both_houses_sitting'
 require 'calculations/treaty'
 
 # ## The controller itself.
@@ -16,7 +16,7 @@ class CalculatorController < ApplicationController
   include CALCULATION_PNSI
   include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
-  include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
+  include CALCULATION_BICAMERAL_SI_BOTH_HOUSES_SITTING
   include CALCULATION_TREATY
   
   # ### This is the code to provide information for the form that users can fill in.
@@ -88,7 +88,7 @@ class CalculatorController < ApplicationController
         
       # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting
       when 8
-        @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
+        @end_date = bicameral_si_calculation_both_houses_sitting( @start_date, @day_count )
         
       # * Treaty periods A and B
       when 10, 11
