@@ -35,7 +35,7 @@ body {color:white;background-color:black;}
 <p>The rules governing the time period for Legislative Reform Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19">Legislative and Regulatory Reform Act 2006 section 19</a>.</p>
 <p>The rules governing the time period for Public Body Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12">Public Bodies Act 2011 section 11 (12)</a>.</p>
 <p>The rules governing the time period for Localism Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14">Localism Act 2011 section 19 (14)</a>.</p>
-<code title='Line 11, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='11'> 11</a>   def bicameral_si_calculation_both_houses_sitting( date, target_day_count )
+<code title='Line 11, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='11'> 11</a>   def bicameral_calculation_both_houses_sitting( date, target_day_count )
 </pre></code><h2>We start counting on the <strong>first day both Houses have a scrutiny day</strong>.</h2>
 <p>This will be the day on which the instrument was laid, if that day is a scrutiny day.</p>
 <p>For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>.</p>

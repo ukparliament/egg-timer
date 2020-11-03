@@ -8,7 +8,7 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   # The rules governing the time period for Public Body Orders are set out in the [Public Bodies Act 2011 section 11 (12)](https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12).
   # The rules governing the time period for Localism Orders are set out in the [Localism Act 2011 section 19 (14)](https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14).
   
-  def bicameral_si_calculation_both_houses_sitting( date, target_day_count )
+  def bicameral_calculation_both_houses_sitting( date, target_day_count )
     
     # ## We start counting on the **first day both Houses have a scrutiny day**.
     # This will be the day on which the instrument was laid, if that day is a scrutiny day.
