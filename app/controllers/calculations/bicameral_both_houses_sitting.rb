@@ -1,16 +1,18 @@
 module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   
-  # # A method for calculating the end date of scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act.
+  # # A method for calculating the end date of scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders and Localism Orders.
   # The Statutory Instrument Act 1946 [sets out](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1) that - in calculating the scrutiny period for an SI under that Act - “no account shall be taken of any time during which Parliament is dissolved or prorogued or during which *both* Houses are adjourned for more than four days.” This applies to the majority of made affirmative instruments.
   # Made affirmatives laid under different Acts follow other rules, for example: the National Insurance Contributions Act 2014 [sets out](https://www.legislation.gov.uk/ukpga/2014/7/section/5/enacted#section-5-9), “no account is to be taken of any time ... during which either House is adjourned for more than four days.
   # This calculation deals with the case where days are not counted if *either* House is adjourned for more than four days.
-  
+  # The rules governing the time period for Legislative Reform Orders are set out in the [Legislative and Regulatory Reform Act 2006 section 19](https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19).
+  # The rules governing the time period for Public Body Orders are set out in the [Public Bodies Act 2011 section 11 (12)](https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12).
+  # The rules governing the time period for Localism Orders are set out in the [Localism Act 2011 section 19 (14)](https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14).
   
   def bicameral_si_calculation_both_houses_sitting( date, target_day_count )
     
     # ## We start counting on the **first day both Houses have a scrutiny day**.
     # This will be the day on which the instrument was laid, if that day is a scrutiny day.
-    # For made affirmative instruments, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+    # For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
     # Unless the laying day is a scrutiny day in both Houses, then ...
     unless date.is_joint_scrutiny_day?
       
@@ -20,7 +22,7 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
         # ... we set the date to that day.
         date = date.first_joint_scrutiny_day
       
-      # If we didn't find a **future joint scrutint day** in our calendar, we can't calculate the scrutiny period, ...
+      # If we didn't find a **future joint scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
       else
   
         # ... this error message is displayed ...
