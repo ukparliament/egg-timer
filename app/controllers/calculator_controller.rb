@@ -1,22 +1,22 @@
 # # Calculator controller to build the form and run the calculations.
 
 # Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
+require 'calculations/bicameral_both_houses_sitting'
 require 'calculations/bicameral_parliamentary_days'
-require 'calculations/pnsi'
-require 'calculations/commons_only_si'
 require 'calculations/bicameral_si_either_house_sitting'
-require 'calculations/bicameral_si_both_houses_sitting'
+require 'calculations/commons_only_si'
+require 'calculations/pnsi'
 require 'calculations/treaty'
 
 # ## The controller itself.
 class CalculatorController < ApplicationController
   
   # Include code from each of the modules for the different styles of calculation.
+  include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-  include CALCULATION_PNSI
-  include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
-  include CALCULATION_BICAMERAL_SI_BOTH_HOUSES_SITTING
+  include CALCULATION_COMMONS_ONLY_SI
+  include CALCULATION_PNSI
   include CALCULATION_TREATY
   
   # ### This is the code to provide information for the form that users can fill in.
@@ -70,10 +70,10 @@ class CalculatorController < ApplicationController
       # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
       case @procedure.id
         
-      # * Legislative Reform Orders, Localism Orders and Public Bodies Orders
-      when 1, 2, 4
-        @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
-      
+      # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting, Legislative Reform Orders, Public Body Orders and Localism Orders
+      when 1, 2, 4, 8
+        @end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        
       # * Proposed Statutory Instrument (PNSI)
       when 3
         @end_date = pnsi_calculation( @start_date, @day_count )
@@ -86,11 +86,7 @@ class CalculatorController < ApplicationController
       when 6, 9
         @end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count ) 
         
-      # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting
-      when 8
-        @end_date = bicameral_si_calculation_both_houses_sitting( @start_date, @day_count )
-        
-      # * Treaty periods A and B
+        # * Treaty periods A and B
       when 10, 11
         @end_date = treaty_calculation( @start_date, @day_count )
         
