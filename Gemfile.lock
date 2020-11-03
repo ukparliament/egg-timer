@@ -61,11 +61,7 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-<<<<<<< HEAD
     google-api-client (0.44.1)
-=======
-    google-api-client (0.45.1)
->>>>>>> 770a42415257b507ee045e4cdbb92549d6e1ab4f
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.9)
       httpclient (>= 2.8.1, < 3.0)
