@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="alternate" type="text/markdown" href="bicameral_both_houses_sitting.rb.md">
+    <style>
+      body {
+        max-width: 40rem;
+        margin: auto;
+        padding: 1rem;
+        font-family: 'Helvetica Neue', system-ui;
+        color: black;
+        background-color: white;
+      }
+      p {line-height: 1.4;}
+      code {
+      line-height: 1.4;
+      color:gray;
+      }
+      code pre {word-wrap: break-word;}
+      code:hover {color:black;}
+      h1, h2 {font-weight:normal;}
+      @media (prefers-color-scheme: dark) {
+body {color:white;background-color:black;}
+}
+    </style>
+    <title>app/controllers/calculations/bicameral_both_houses_sitting.rb</title>
+  </head>
+  <body><code title='Line 1, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='1'> 1</a> module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
+</pre></code><h1>A method for calculating the end date of scrutiny periods during which <strong>both</strong> Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders and Localism Orders.</h1>
+<p>The Statutory Instrument Act 1946 <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1">sets out</a> that - in calculating the scrutiny period for an SI under that Act - “no account shall be taken of any time during which Parliament is dissolved or prorogued or during which <em>both</em> Houses are adjourned for more than four days.” This applies to the majority of made affirmative instruments.</p>
+<p>Made affirmatives laid under different Acts follow other rules, for example: the National Insurance Contributions Act 2014 <a href="https://www.legislation.gov.uk/ukpga/2014/7/section/5/enacted#section-5-9">sets out</a>, “no account is to be taken of any time ... during which either House is adjourned for more than four days.</p>
+<p>This calculation deals with the case where days are not counted if <em>either</em> House is adjourned for more than four days.</p>
+<p>The rules governing the time period for Legislative Reform Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19">Legislative and Regulatory Reform Act 2006 section 19</a>.</p>
+<p>The rules governing the time period for Public Body Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12">Public Bodies Act 2011 section 11 (12)</a>.</p>
+<p>The rules governing the time period for Localism Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14">Localism Act 2011 section 19 (14)</a>.</p>
+<code title='Line 11, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='11'> 11</a>   def bicameral_si_calculation_both_houses_sitting( date, target_day_count )
+</pre></code><h2>We start counting on the <strong>first day both Houses have a scrutiny day</strong>.</h2>
+<p>This will be the day on which the instrument was laid, if that day is a scrutiny day.</p>
+<p>For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>.</p>
+<p>Unless the laying day is a scrutiny day in both Houses, then ...</p>
+<code title='Line 17, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='17'> 17</a>     unless date.is_joint_scrutiny_day?
+</pre></code><p>... if there is a future joint scrutiny day ...</p>
+<code title='Line 20, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='20'> 20</a>       if date.first_joint_scrutiny_day
+</pre></code><p>... we set the date to that day.</p>
+<code title='Line 23, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='23'> 23</a>         date = date.first_joint_scrutiny_day
+</pre></code><p>If we didn&#39;t find a <strong>future joint scrutiny day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
+<code title='Line 26, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='26'> 26</a>       else
+</pre></code><p>... this error message is displayed ...</p>
+<code title='Line 29, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='29'> 29</a>         @error_message = "Unable to find a future joint scrutiny day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><p>... and we stop looking for a scrutiny period end date.</p>
+<code title='Line 32, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='32'> 32</a>         return
+</pre></code><code title='Line 33, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='33'> 33</a>       end
+</pre></code><p>Otherwise, we&#39;ve established the laying day is a joint scrutiny day so we don&#39;t have to cycle through the calendar to find a subsequent one.</p>
+<code title='Line 36, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='36'> 36</a>     end
+</pre></code><p>We&#39;ve found the first joint scrutiny day so we start counting from day 1.</p>
+<code title='Line 39, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='39'> 39</a>     day_count = 1
+</pre></code><h2>Whilst the number of joint scrutiny days we’re counting is less than the target number of days to count ...</h2>
+<code title='Line 42, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='42'> 42</a>     while ( day_count < target_day_count ) do
+</pre></code><p>... continue to the <strong>next day</strong>.</p>
+<code title='Line 45, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='45'> 45</a>       date = date.next_day
+</pre></code><p>... and add 1 to the day count if this is a joint scrutiny day.</p>
+<code title='Line 48, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='48'> 48</a>       day_count +=1 if date.is_joint_scrutiny_day?
+</pre></code><p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+<code title='Line 51, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='51'> 51</a>       if date.is_calendar_not_populated?
+</pre></code><p>... this error message is displayed to users ...</p>
+<code title='Line 54, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='54'> 54</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><p>... and we stop looking through the calendar.</p>
+<code title='Line 57, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='57'> 57</a>         break
+</pre></code><code title='Line 58, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='58'> 58</a>       end
+</pre></code><code title='Line 59, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='59'> 59</a>     end
+</pre></code><p>Return the anticipated end date of the scrutiny period for display.</p>
+<code title='Line 62, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='62'> 62</a>     date
+</pre></code><code title='Line 63, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='63'> 63</a>   end
+</pre></code><code title='Line 64, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='64'> 64</a> end</pre></code></body></html>
