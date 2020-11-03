@@ -22,4 +22,10 @@ class ProcedureController < ApplicationController
     @procedure.save
     redirect_to :procedure_list
   end
+  
+  def hack
+    @procedure = Procedure.find( 9 )
+    @procedure.name = "Statutory Instrument approval period under the SI Act (Commons and Lords, either House sitting)"
+    @procedure.save
+  end
 end
