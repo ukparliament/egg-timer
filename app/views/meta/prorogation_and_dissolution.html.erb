@@ -10,6 +10,8 @@
 
 <%= content_tag( 'p', "In both cases, action must be taken to:" ) %>
 <ol>
+	<%= content_tag( 'li', "Remove any previously created sitting or adjournment days set to take place during the prorogation or the dissolution period from the Google calendars." ) %>
+	<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes." ) %>
 	<%= content_tag( 'li', "Pause the application's syncing script." ) %>
 	<%= content_tag( 'li', "Pull a copy of the database from Heroku." ) %>
 	<%= content_tag( 'li', "Add data to the database by hand." ) %>
@@ -49,6 +51,7 @@
 	<%= content_tag( 'li', "Add an end date to the current session. We do this by running #{content_tag( 'code', "update sessions set end_date='DATE' where id = ID;" )} where DATE is the date of prorogation in YYYY-MM-DD format and ID is the ID of current session.".html_safe ) %>
 	<%= content_tag( 'li', "Find the ID of the current parliament. We do this by running #{content_tag( 'code', 'select * from parliament_periods order by start_date desc limit 1;')}.".html_safe ) %><%= content_tag( 'li', "Create the new prorogation. We do this by running #{content_tag( 'code', "insert into prorogation_periods (number, start_date, end_date, parliament_period_id) values (NUMBER, 'START_DATE', 'END_DATE', PARLIAMENT_ID);" )} where NUMBER is the number of the session in the parliament, START_DATE is the day following the prorogation date, END_DATE is either the day before the start date of the next session if the prorogation is followed by a session or the date of dissolution if the prorogation is followed by dissolution and PARLIAMENT_ID is the ID returned from the previous query.".html_safe ) %>
 	<%= content_tag( 'li', "Run a rake task to populate prorogation days from the prorogation period. Note that this script does not exist yet and will need to be written when the next prorogation is announced." ) %>
+	<%= content_tag( 'li', "Run a rake task to populate prorogation days from the prorogation period. Note that this script does not exist yet and will need to be written when the next prorogation is announced." ) %>
 </ol>
 
 <%= content_tag( 'h2', 'What to do upon the announcement of dissolution' ) %>
@@ -64,6 +67,10 @@
 	<%= content_tag( 'li', "Create a new dissolution period. Do this by running: #{content_tag( 'code', "insert into dissolution_periods(number, start_date, end_date) values (NUMBER, 'START_DATE', 'END_DATE');")} where NUMBER is the number of the current parliament, START DATE is the day following the dissolution date as named in the dissolution proclamation and END_DATE is the day before Parliament returns from dissolution as named in the dissolution proclamation.".html_safe ) %>
 	<%= content_tag( 'li', "Run a rake task to populate dissolution days from the dissolution period. Note that this script does not exist yet and will need to be written when the next dissolution is announced." ) %>
 </ol>
+
+<%= content_tag( 'h2', 'Reassign sitting and adjournment days to the correct session' ) %>
+<%= content_tag( 'p', "Sitting and adjournment days for today or in the future are assigned to the current session. This is because we do not know in advance the end date of the current session. On the announcement of a prorogation or dissolution, some some future days will need to be assigned to the following session." ) %>
+<%= content_tag( 'p', "Run a rake task to reassign sitting and adjournment days to the correct session. Note that this script does not exist yet and will need to be written when the next prorogation or dissolution is announced." ) %>
 
 <%= content_tag( 'h2', 'Pushing the data to Heroku' ) %>
 

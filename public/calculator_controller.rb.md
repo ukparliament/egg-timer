@@ -2,22 +2,22 @@
 
 Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 
+require 'calculations/bicameral_both_houses_sitting'
 require 'calculations/bicameral_parliamentary_days'
-require 'calculations/pnsi'
+require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
-require 'calculations/bicameral_praying_days_either_house_sitting'
-require 'calculations/bicameral_praying_days_both_houses_sitting'
+require 'calculations/pnsi'
 require 'calculations/treaty'
 ## The controller itself.
 
 class CalculatorController < ApplicationController
 Include code from each of the modules for the different styles of calculation.
 
+  include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-  include CALCULATION_PNSI
+  include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
   include CALCULATION_COMMONS_ONLY_SI
-  include CALCULATION_BICAMERAL_PRAYING_DAYS_EITHER_HOUSE_SITTING
-  include CALCULATION_BICAMERAL_PRAYING_DAYS_BOTH_HOUSES_SITTING
+  include CALCULATION_PNSI
   include CALCULATION_TREATY
 ### This is the code to provide information for the form that users can fill in.
 
@@ -70,10 +70,10 @@ If the form did provide all the required information, do the calculation:
 To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
 
       case @procedure.id
-* Legislative Reform Orders, Localism Orders and Public Bodies Orders
+* Commons and Lords affirmative Statutory Instrument where both Houses are sitting, Legislative Reform Orders, Public Body Orders and Localism Orders
 
-      when 1, 2, 4
-        @end_date = bicameral_parliamentary_days_calculation( @start_date, @day_count )
+      when 1, 2, 4, 8
+        @end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 * Proposed Statutory Instrument (PNSI)
 
       when 3
@@ -85,11 +85,7 @@ To calculate the **anticipated end date**, we select the calculation based on th
 * Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
 
       when 6, 9
-        @end_date = bicameral_praying_days_calculation_either_house_sitting( @start_date, @day_count ) 
-* Commons and Lords affirmative Statutory Instrument where both Houses are sitting
-
-      when 8
-        @end_date = bicameral_praying_days_calculation_both_houses_sitting( @start_date, @day_count )
+        @end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count ) 
 * Treaty periods A and B
 
       when 10, 11

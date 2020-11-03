@@ -1,7 +1,0 @@
-commentariat.rb takes a ruby file with comments and outputs an HTML file.
-
-There's an example in this folder called example_generated.html
-
-You can generate a file like the example and open it like this:
-
-"ruby commentariat.rb calculator_controller.rb > test.html; open test.html"

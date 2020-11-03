@@ -1,22 +1,6 @@
 <%= content_tag( 'p', @session.dates) %>
 
-<%= content_tag( 'h2', 'Houses' ) %>
+<%= content_tag( 'h2', 'Months' ) %>
 <ol>
-	<%= render :partial => 'session_house/house', :collection => @houses %>
+	<%= render :partial => 'month', :collection => @session.month_range %>
 </ol>
-
-<%= content_tag( 'h2', 'Dates' ) %>
-<table>
-	<thead>
-		<tr>
-			<%= content_tag( 'td', 'Date' ) %>
-			<%= content_tag( 'td', 'House of Commons day type' ) %>
-			<%= content_tag( 'td', 'House of Commons praying' ) %>
-			<%= content_tag( 'td', 'House of Lords day type' ) %>
-			<%= content_tag( 'td', 'House of Lords praying' ) %>
-		</tr>
-	</thead>
-	<tbody>
-		<%= render :partial => 'date', :collection => @session.date_range %>
-	</tbody>
-</table>

@@ -15,8 +15,9 @@ Rails.application.routes.draw do
   get 'sessions' => 'session#index', as: :session_list
   get 'sessions/:session' => 'session#show', as: :session_show
   
-  get 'sessions/:session/houses' => 'session_house#index', as: :session_house_list
-  get 'sessions/:session/houses/:house' => 'session_house#show', as: :session_house_show
+  get 'calendar' => 'calendar#index', as: :calendar_list
+  get 'calendar/:year' => 'calendar#year', as: :calendar_year
+  get 'calendar/:year/:month' => 'calendar#month', as: :calendar_month
   
   get 'prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
   get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
@@ -34,9 +35,10 @@ Rails.application.routes.draw do
   get 'meta/comments' => 'meta#comment', as: :meta_comment
   
   # hack to let us switch procedures on and off
-  get 'procedures' => 'procedure#index', as: :procedure_list
-  get 'procedures/:procedure' => 'procedure#show', as: :procedure_show
-  get 'procedures/:procedure/flip' => 'procedure#flip', as: :procedure_flip
+  get 'interface' => 'procedure#index', as: :procedure_list
+  get 'interface/hack' => 'procedure#hack', as: :procedure_hack
+  get 'interface/:procedure' => 'procedure#show', as: :procedure_show
+  get 'interface/:procedure/flip' => 'procedure#flip', as: :procedure_flip
   
   
   
