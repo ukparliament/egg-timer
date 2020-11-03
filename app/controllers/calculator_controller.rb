@@ -2,7 +2,6 @@
 
 # Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 require 'calculations/bicameral_both_houses_sitting'
-require 'calculations/bicameral_parliamentary_days'
 require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
 require 'calculations/pnsi'
@@ -13,7 +12,6 @@ class CalculatorController < ApplicationController
   
   # Include code from each of the modules for the different styles of calculation.
   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
-  include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
   include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_PNSI
