@@ -48,7 +48,7 @@ body {color:white;background-color:black;}
 <code title='Line 26, app/controllers/calculations/treaty.rb'><pre><a name='26'> 26</a>       while ( day_count < target_day_count ) do
 </pre></code><p>... continue to the <strong>next day</strong>.</p>
 <code title='Line 29, app/controllers/calculations/treaty.rb'><pre><a name='29'> 29</a>         date = date.next_day
-</pre></code><p>... and add 1 to the day count if this is an actual parliamentary sitting day.</p>
+</pre></code><p>... and add 1 to the day count if this is an actual joint sitting day.</p>
 <code title='Line 32, app/controllers/calculations/treaty.rb'><pre><a name='32'> 32</a>         day_count +=1 if date.is_joint_actual_sitting_day?
 </pre></code><p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
 <code title='Line 35, app/controllers/calculations/treaty.rb'><pre><a name='35'> 35</a>         if date.is_calendar_not_populated?
