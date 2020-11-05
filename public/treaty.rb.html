@@ -32,17 +32,17 @@ body {color:white;background-color:black;}
 <p>The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.</p>
 <p>For period A the start date is the day on which <q>a Minister of the Crown has laid before Parliament a copy of the treaty</q>.</p>
 <p>For period B the start date is the day on which <q>a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why</q>.</p>
-<p>The calculation is defined by <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">Constitutional Reform and Governance Act 2010 section 20 paragraph 2</a>.</p>
+<p>The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">2</a>, <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5">5</a> and <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9">9</a>.</p>
 <code title='Line 9, app/controllers/calculations/treaty.rb'><pre><a name='9'> 9</a>   def treaty_calculation( date, target_day_count )
 </pre></code><h2>We start counting on the <strong>first day when both Houses have an actual sitting</strong>.</h2>
 <p>For period A this <strong>does not</strong> include the laying day of the treaty.</p>
 <p>For period B this <strong>does not</strong> include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.</p>
 <p>We continue to the <strong>day immediately following</strong> the start day.</p>
-<p>If that day is or is followed by a joint parliamentary sitting day...</p>
-<code title='Line 17, app/controllers/calculations/treaty.rb'><pre><a name='17'> 17</a>     if date.next_day.first_joint_parliamentary_sitting_day
-</pre></code><p>... we set the date to the day of the first joint parliamentary sitting day <strong>following</strong> the start date.</p>
-<code title='Line 20, app/controllers/calculations/treaty.rb'><pre><a name='20'> 20</a>       date = date.next_day.first_joint_parliamentary_sitting_day
-</pre></code><p>... we&#39;ve found the first joint parliamentary sitting day so we start counting from day 1.</p>
+<p>If that day is or is followed by a joint actual sitting day...</p>
+<code title='Line 17, app/controllers/calculations/treaty.rb'><pre><a name='17'> 17</a>     if date.next_day.first_joint_actual_sitting_day
+</pre></code><p>... we set the date to the day of the first joint actual sitting day <strong>following</strong> the start date.</p>
+<code title='Line 20, app/controllers/calculations/treaty.rb'><pre><a name='20'> 20</a>       date = date.next_day.first_joint_actual_sitting_day
+</pre></code><p>... we&#39;ve found the first joint actual sitting day so we start counting from day 1.</p>
 <code title='Line 23, app/controllers/calculations/treaty.rb'><pre><a name='23'> 23</a>       day_count = 1
 </pre></code><p>... whilst the number of days we’re counting is less than the target number of days to count ...</p>
 <code title='Line 26, app/controllers/calculations/treaty.rb'><pre><a name='26'> 26</a>       while ( day_count < target_day_count ) do
@@ -58,7 +58,7 @@ body {color:white;background-color:black;}
 <code title='Line 41, app/controllers/calculations/treaty.rb'><pre><a name='41'> 41</a>           break
 </pre></code><code title='Line 42, app/controllers/calculations/treaty.rb'><pre><a name='42'> 42</a>         end
 </pre></code><code title='Line 43, app/controllers/calculations/treaty.rb'><pre><a name='43'> 43</a>       end
-</pre></code><p>If <strong>day immediately following</strong> the laying day is not a joint parliamentary sitting day <strong>and</strong> is not followed by a joint parliamentary sitting day...</p>
+</pre></code><p>If <strong>day immediately following</strong> the laying day is not a joint actual sitting day <strong>and</strong> is not followed by a joint actual sitting day...</p>
 <code title='Line 46, app/controllers/calculations/treaty.rb'><pre><a name='46'> 46</a>     else
 </pre></code><p>.. this error message is displayed to users.</p>
 <code title='Line 49, app/controllers/calculations/treaty.rb'><pre><a name='49'> 49</a>       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."

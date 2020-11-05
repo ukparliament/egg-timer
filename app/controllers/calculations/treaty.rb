@@ -4,7 +4,7 @@ module CALCULATION_TREATY
   # The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.
   # For period A the start date is the day on which "a Minister of the Crown has laid before Parliament a copy of the treaty".
   # For period B the start date is the day on which "a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why".
-  # The calculation is defined by [Constitutional Reform and Governance Act 2010 section 20 paragraph 2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2).
+  # The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs [2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2), [5](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5) and [9](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9).
   
   def treaty_calculation( date, target_day_count )
     
@@ -13,13 +13,13 @@ module CALCULATION_TREATY
     # For period B this **does not** include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.
     
     # We continue to the **day immediately following** the start day.
-    # If that day is or is followed by a joint parliamentary sitting day...
-    if date.next_day.first_joint_parliamentary_sitting_day
+    # If that day is or is followed by a joint actual sitting day...
+    if date.next_day.first_joint_actual_sitting_day
       
-      # ... we set the date to the day of the first joint parliamentary sitting day **following** the start date.
-      date = date.next_day.first_joint_parliamentary_sitting_day
+      # ... we set the date to the day of the first joint actual sitting day **following** the start date.
+      date = date.next_day.first_joint_actual_sitting_day
       
-      # ... we've found the first joint parliamentary sitting day so we start counting from day 1.
+      # ... we've found the first joint actual sitting day so we start counting from day 1.
       day_count = 1
       
       # ... whilst the number of days we’re counting is less than the target number of days to count ...
@@ -42,7 +42,7 @@ module CALCULATION_TREATY
         end
       end
     
-    # If **day immediately following** the laying day is not a joint parliamentary sitting day **and** is not followed by a joint parliamentary sitting day...
+    # If **day immediately following** the laying day is not a joint actual sitting day **and** is not followed by a joint actual sitting day...
     else
   
       # .. this error message is displayed to users.
