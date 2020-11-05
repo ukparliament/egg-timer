@@ -17,6 +17,7 @@
 /tmp
 *.swp
 ~*
+~#
 
 .DS_Store
 lib/tasks/credentials.json
