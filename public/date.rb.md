@@ -440,6 +440,37 @@ If this is a day on which the calendar is populated ...
       end
     end
   end
+### We want to find the first actual sitting day in both Houses.
+
+This method is used to calculate periods A and B for treaties.
+
+Even if a treaty is laid or a ministerial statement is made on a joint actual sitting day, the clock does not start until the next joint actual sitting day.
+
+  def first_joint_actual_sitting_day
+If this is a day on which the calendar is not yet populated ...
+
+    if self.is_calendar_not_populated?
+... then we cannot find a first actual sitting day in both Houses so we stop looking.
+
+      return nil
+If this is a day on which the calendar is populated ...
+
+    else
+... then if this is not an actual sitting day in both Houses ...
+
+      unless self.is_joint_actual_sitting_day?
+... then go to the next day and check that.
+
+        self.next_day.first_joint_actual_sitting_day
+... then if this is an actual sitting day in both Houses ...
+
+      else
+... then return this day as the first actual sitting day in both Houses.
+
+        self
+      end
+    end
+  end
 (End of set of methods to find the first day of a given type.)
 
 Generate label for the day type in the Commons in a session.
@@ -455,6 +486,10 @@ Generate label for the day type in the Commons in a session.
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_commons_adjournment_day?
       day_type = 'Adjournment day'
+    elsif self.is_prorogation_day?
+      day_type = 'Prorogation'
+    elsif self.is_dissolution_day?
+      day_type = 'Dissolution'
     end
     day_type
   end
@@ -471,6 +506,10 @@ Generate label for the day type in the Lords in a session.
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_lords_adjournment_day?
       day_type = 'Adjournment day'
+    elsif self.is_prorogation_day?
+      day_type = 'Prorogation'
+    elsif self.is_dissolution_day?
+      day_type = 'Dissolution'
     end
     day_type
   end
