@@ -40,7 +40,7 @@ html_out << %{<!DOCTYPE html>
       line-height: 1.4;
       color:gray;
       }
-      code pre {word-wrap: break-word;}
+      code pre {white-space: pre-wrap; word-break: break-word;}
       code:hover {color:black;}
       h1, h2 {font-weight:normal;}
       @media (prefers-color-scheme: dark) {
