@@ -33,7 +33,7 @@ If that day is or is followed by a joint actual sitting day...
 ... continue to the **next day**.
 
         date = date.next_day
-... and add 1 to the day count if this is an actual joint sitting day.
+... and add 1 to the day count if this is an joint actual sitting day.
 
         day_count +=1 if date.is_joint_actual_sitting_day?
 ... if the calendar has no record of what type of day this is, we can't calculate the end date, ...
