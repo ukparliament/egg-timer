@@ -13,12 +13,7 @@ module CALCULATION_PNSI
        # ... we set the date to start counting from as that day.
       date = date.next_day.first_joint_parliamentary_sitting_day
       
-
-
-
-
-
-      # comment this
+      # ... we have found the start of the scrutiny period.
       @scrutiny_start_date = date
 
       # PNSIs are always before both Houses, so we'll get ready to start counting the sitting days in each House.

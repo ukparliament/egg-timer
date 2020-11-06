@@ -11,8 +11,7 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   def bicameral_calculation_both_houses_sitting( date, target_day_count )
     
     # ## We start counting on the **first day both Houses have a scrutiny day**.
-    # This will be the day on which the instrument was laid, if that day is a scrutiny day.
-    # For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+    # This will be the day on which the instrument was laid, if that day is a scrutiny day. For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
     # Unless the laying day is a scrutiny day in both Houses, then ...
     unless date.is_joint_scrutiny_day?
       
@@ -21,13 +20,8 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
       
         # ... we set the date to that day.
         date = date.first_joint_scrutiny_day
-      
-
-
-
-
-
-        # comment this
+        
+        # ... we have found the start of the scrutiny period.
         @scrutiny_start_date = date
       
       # If we didn't find a **future joint scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
@@ -40,10 +34,10 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
         return
       end
       
-    # Otherwise, we've established the laying day is a joint scrutiny day so we don't have to cycle through the calendar to find a subsequent one.
+    # Otherwise, we've established the laying day is a joint scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
     else
       
-      # comment this
+      # ... and the laying day is the start of the scrutiny period.
       @scrutiny_start_date = date
     end
     
