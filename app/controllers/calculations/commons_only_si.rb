@@ -18,6 +18,14 @@ module CALCULATION_COMMONS_ONLY_SI
       
         # ... we set the date to that day. In practice this will be the first sitting day following the laying.
         date = date.first_commons_scrutiny_day
+      
+
+
+
+
+
+        # comment this
+        @scrutiny_start_date = date
         
       # If we didn't find a **future House of Commons scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
       else

@@ -20,6 +20,12 @@ module CALCULATION_TREATY
       # ... we set the date to the day of the first joint actual sitting day **following** the start date.
       date = date.next_day.first_joint_actual_sitting_day
       
+
+
+
+
+
+      # comment this
       @scrutiny_start_date = date
       
       # ... we've found the first joint actual sitting day so we start counting from day 1.

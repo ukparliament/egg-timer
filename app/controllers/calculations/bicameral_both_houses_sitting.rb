@@ -22,6 +22,14 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
         # ... we set the date to that day.
         date = date.first_joint_scrutiny_day
       
+
+
+
+
+
+        # comment this
+        @scrutiny_start_date = date
+      
       # If we didn't find a **future joint scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
       else
   

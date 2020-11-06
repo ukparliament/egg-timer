@@ -19,6 +19,14 @@ module CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
         # ... we set the date to that day.
         date = date.first_scrutiny_day_in_either_house
       
+
+
+
+
+
+        # comment this
+        @scrutiny_start_date = date
+      
       # If we didn't find a **future scrutiny day in either House** in our calendar, we can't calculate the scrutiny period, ...
       else
   
