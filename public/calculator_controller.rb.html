@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8">
@@ -30,97 +30,106 @@ body {color:white;background-color:black;}
   <body><h1>Calculator controller to build the form and run the calculations.</h1>
 <p>Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.</p>
 <code title='Line 4, app/controllers/calculator_controller.rb'><pre><a name='4'> 4</a> require 'calculations/bicameral_both_houses_sitting'
-</pre></code><code title='Line 5, app/controllers/calculator_controller.rb'><pre><a name='5'> 5</a> require 'calculations/bicameral_parliamentary_days'
-</pre></code><code title='Line 6, app/controllers/calculator_controller.rb'><pre><a name='6'> 6</a> require 'calculations/bicameral_si_either_house_sitting'
-</pre></code><code title='Line 7, app/controllers/calculator_controller.rb'><pre><a name='7'> 7</a> require 'calculations/commons_only_si'
-</pre></code><code title='Line 8, app/controllers/calculator_controller.rb'><pre><a name='8'> 8</a> require 'calculations/pnsi'
-</pre></code><code title='Line 9, app/controllers/calculator_controller.rb'><pre><a name='9'> 9</a> require 'calculations/treaty'
+</pre></code><code title='Line 5, app/controllers/calculator_controller.rb'><pre><a name='5'> 5</a> require 'calculations/bicameral_si_either_house_sitting'
+</pre></code><code title='Line 6, app/controllers/calculator_controller.rb'><pre><a name='6'> 6</a> require 'calculations/commons_only_si'
+</pre></code><code title='Line 7, app/controllers/calculator_controller.rb'><pre><a name='7'> 7</a> require 'calculations/pnsi'
+</pre></code><code title='Line 8, app/controllers/calculator_controller.rb'><pre><a name='8'> 8</a> require 'calculations/treaty'
 </pre></code><h2>The controller itself.</h2>
-<code title='Line 12, app/controllers/calculator_controller.rb'><pre><a name='12'> 12</a> class CalculatorController < ApplicationController
+<code title='Line 11, app/controllers/calculator_controller.rb'><pre><a name='11'> 11</a> class CalculatorController < ApplicationController
 </pre></code><p>Include code from each of the modules for the different styles of calculation.</p>
-<code title='Line 15, app/controllers/calculator_controller.rb'><pre><a name='15'> 15</a>   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
-</pre></code><code title='Line 16, app/controllers/calculator_controller.rb'><pre><a name='16'> 16</a>   include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
-</pre></code><code title='Line 17, app/controllers/calculator_controller.rb'><pre><a name='17'> 17</a>   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
-</pre></code><code title='Line 18, app/controllers/calculator_controller.rb'><pre><a name='18'> 18</a>   include CALCULATION_COMMONS_ONLY_SI
-</pre></code><code title='Line 19, app/controllers/calculator_controller.rb'><pre><a name='19'> 19</a>   include CALCULATION_PNSI
-</pre></code><code title='Line 20, app/controllers/calculator_controller.rb'><pre><a name='20'> 20</a>   include CALCULATION_TREATY
+<code title='Line 14, app/controllers/calculator_controller.rb'><pre><a name='14'> 14</a>   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
+</pre></code><code title='Line 15, app/controllers/calculator_controller.rb'><pre><a name='15'> 15</a>   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
+</pre></code><code title='Line 16, app/controllers/calculator_controller.rb'><pre><a name='16'> 16</a>   include CALCULATION_COMMONS_ONLY_SI
+</pre></code><code title='Line 17, app/controllers/calculator_controller.rb'><pre><a name='17'> 17</a>   include CALCULATION_PNSI
+</pre></code><code title='Line 18, app/controllers/calculator_controller.rb'><pre><a name='18'> 18</a>   include CALCULATION_TREATY
 </pre></code><h3>This is the code to provide information for the form that users can fill in.</h3>
-<code title='Line 23, app/controllers/calculator_controller.rb'><pre><a name='23'> 23</a>   def index
+<code title='Line 21, app/controllers/calculator_controller.rb'><pre><a name='21'> 21</a>   def index
 </pre></code><p>Set a title for the page.</p>
-<code title='Line 26, app/controllers/calculator_controller.rb'><pre><a name='26'> 26</a>     @title = "Calculate scrutiny periods"
+<code title='Line 24, app/controllers/calculator_controller.rb'><pre><a name='24'> 24</a>     @title = "Calculate scrutiny periods"
 </pre></code><p>Find all the active procedures in display order - to populate the procedure radio buttons on the form.</p>
-<code title='Line 29, app/controllers/calculator_controller.rb'><pre><a name='29'> 29</a>     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
-</pre></code><code title='Line 30, app/controllers/calculator_controller.rb'><pre><a name='30'> 30</a>   end
+<code title='Line 27, app/controllers/calculator_controller.rb'><pre><a name='27'> 27</a>     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
+</pre></code><code title='Line 28, app/controllers/calculator_controller.rb'><pre><a name='28'> 28</a>   end
 </pre></code><h3>When the user has pressed &#39;Calculate&#39;, this code runs the calculation.</h3>
-<code title='Line 33, app/controllers/calculator_controller.rb'><pre><a name='33'> 33</a>   def calculate
+<code title='Line 31, app/controllers/calculator_controller.rb'><pre><a name='31'> 31</a>   def calculate
 </pre></code><p>Set a title for the page.</p>
-<code title='Line 36, app/controllers/calculator_controller.rb'><pre><a name='36'> 36</a> 	  @title = "Calculated scrutiny period"
+<code title='Line 34, app/controllers/calculator_controller.rb'><pre><a name='34'> 34</a> 	  @title = "Calculated scrutiny period"
 </pre></code><p>In order to calculate the scrutiny period, we need:</p>
 <ul>
 <li>the <strong>type of the procedure</strong> itself, which we refer to by a number</li>
 </ul>
-<code title='Line 41, app/controllers/calculator_controller.rb'><pre><a name='41'> 41</a>     procedure = params['procedure'].to_i if params['procedure']
+<code title='Line 39, app/controllers/calculator_controller.rb'><pre><a name='39'> 39</a>     procedure = params['procedure'].to_i if params['procedure']
 </pre></code><ul>
 <li>the <strong>start date</strong>, for example: <q>2020-05-06</q></li>
 </ul>
-<code title='Line 44, app/controllers/calculator_controller.rb'><pre><a name='44'> 44</a>     start_date = params['start-date']
+<code title='Line 42, app/controllers/calculator_controller.rb'><pre><a name='42'> 42</a>     start_date = params['start-date']
 </pre></code><ul>
 <li>the <strong>day count</strong></li>
 </ul>
-<code title='Line 47, app/controllers/calculator_controller.rb'><pre><a name='47'> 47</a>     day_count = params['day-count']
+<code title='Line 45, app/controllers/calculator_controller.rb'><pre><a name='45'> 45</a>     day_count = params['day-count']
 </pre></code><p>Check that all the parameters have been provided by the form ...</p>
-<code title='Line 50, app/controllers/calculator_controller.rb'><pre><a name='50'> 50</a>     if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
+<code title='Line 48, app/controllers/calculator_controller.rb'><pre><a name='48'> 48</a>     if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
 </pre></code><p>... if not, set an error message ...</p>
-<code title='Line 53, app/controllers/calculator_controller.rb'><pre><a name='53'> 53</a> 	    @title = "Sorry, there was not enough information provided."
+<code title='Line 51, app/controllers/calculator_controller.rb'><pre><a name='51'> 51</a> 	    @title = "Sorry, there was not enough information provided."
 </pre></code><p>... and display the error.</p>
-<code title='Line 56, app/controllers/calculator_controller.rb'><pre><a name='56'> 56</a>       render :template => 'calculator/not_enough_information'
+<code title='Line 54, app/controllers/calculator_controller.rb'><pre><a name='54'> 54</a>       render :template => 'calculator/not_enough_information'
 </pre></code><p>If the form did provide all the required information, do the calculation:</p>
-<code title='Line 59, app/controllers/calculator_controller.rb'><pre><a name='59'> 59</a>     else
+<code title='Line 57, app/controllers/calculator_controller.rb'><pre><a name='57'> 57</a>     else
 </pre></code><ul>
 <li>find the procedure</li>
 </ul>
-<code title='Line 62, app/controllers/calculator_controller.rb'><pre><a name='62'> 62</a>       @procedure = Procedure.find( procedure )
+<code title='Line 60, app/controllers/calculator_controller.rb'><pre><a name='60'> 60</a>       @procedure = Procedure.find( procedure )
 </pre></code><ul>
 <li>the <strong>number of days</strong> to count</li>
 </ul>
-<code title='Line 65, app/controllers/calculator_controller.rb'><pre><a name='65'> 65</a>       @day_count = day_count.to_i
+<code title='Line 63, app/controllers/calculator_controller.rb'><pre><a name='63'> 63</a>       @day_count = day_count.to_i
 </pre></code><ul>
 <li>make the text of the date passed into a date format</li>
 </ul>
-<code title='Line 68, app/controllers/calculator_controller.rb'><pre><a name='68'> 68</a>       @start_date = Date.parse( start_date )
+<code title='Line 66, app/controllers/calculator_controller.rb'><pre><a name='66'> 66</a>       @start_date = Date.parse( start_date )
 </pre></code><p>To calculate the <strong>anticipated end date</strong>, we select the calculation based on the type of procedure:</p>
-<code title='Line 71, app/controllers/calculator_controller.rb'><pre><a name='71'> 71</a>       case @procedure.id
+<code title='Line 69, app/controllers/calculator_controller.rb'><pre><a name='69'> 69</a>       case @procedure.id
 </pre></code><ul>
 <li>Commons and Lords affirmative Statutory Instrument where both Houses are sitting, Legislative Reform Orders, Public Body Orders and Localism Orders</li>
 </ul>
-<code title='Line 74, app/controllers/calculator_controller.rb'><pre><a name='74'> 74</a>       when 1, 2, 4, 8
-</pre></code><code title='Line 75, app/controllers/calculator_controller.rb'><pre><a name='75'> 75</a>         @end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+<code title='Line 72, app/controllers/calculator_controller.rb'><pre><a name='72'> 72</a>       when 1, 2, 4, 8
+</pre></code><code title='Line 74, app/controllers/calculator_controller.rb'><pre><a name='74'> 74</a>         @start_date_type = "laying date"
+</pre></code><code title='Line 75, app/controllers/calculator_controller.rb'><pre><a name='75'> 75</a>         @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 </pre></code><ul>
 <li>Proposed Statutory Instrument (PNSI)</li>
 </ul>
 <code title='Line 78, app/controllers/calculator_controller.rb'><pre><a name='78'> 78</a>       when 3
-</pre></code><code title='Line 79, app/controllers/calculator_controller.rb'><pre><a name='79'> 79</a>         @end_date = pnsi_calculation( @start_date, @day_count )
+</pre></code><code title='Line 80, app/controllers/calculator_controller.rb'><pre><a name='80'> 80</a>         @start_date_type = "laying date"
+</pre></code><code title='Line 81, app/controllers/calculator_controller.rb'><pre><a name='81'> 81</a>         @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons only negative Statutory Instrument and some made affirmatives</li>
 </ul>
-<code title='Line 82, app/controllers/calculator_controller.rb'><pre><a name='82'> 82</a>       when 5, 7
-</pre></code><code title='Line 83, app/controllers/calculator_controller.rb'><pre><a name='83'> 83</a>         @end_date = commons_only_si_calculation( @start_date, @day_count )
+<code title='Line 84, app/controllers/calculator_controller.rb'><pre><a name='84'> 84</a>       when 5, 7
+</pre></code><code title='Line 86, app/controllers/calculator_controller.rb'><pre><a name='86'> 86</a>         @start_date_type = "laying date"
+</pre></code><code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'> 87</a>         @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting</li>
 </ul>
-<code title='Line 86, app/controllers/calculator_controller.rb'><pre><a name='86'> 86</a>       when 6, 9
-</pre></code><code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'> 87</a>         @end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count ) 
+<code title='Line 90, app/controllers/calculator_controller.rb'><pre><a name='90'> 90</a>       when 6, 9
+</pre></code><code title='Line 92, app/controllers/calculator_controller.rb'><pre><a name='92'> 92</a>         @start_date_type = "laying date"
+</pre></code><code title='Line 93, app/controllers/calculator_controller.rb'><pre><a name='93'> 93</a>         @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
 </pre></code><ul>
-<li>Treaty periods A and B</li>
+<li>Treaty period A</li>
 </ul>
-<code title='Line 90, app/controllers/calculator_controller.rb'><pre><a name='90'> 90</a>       when 10, 11
-</pre></code><code title='Line 91, app/controllers/calculator_controller.rb'><pre><a name='91'> 91</a>         @end_date = treaty_calculation( @start_date, @day_count )
+<code title='Line 96, app/controllers/calculator_controller.rb'><pre><a name='96'> 96</a>       when 10
+</pre></code><code title='Line 98, app/controllers/calculator_controller.rb'><pre><a name='98'> 98</a>         @start_date_type = "laying date"
+</pre></code><code title='Line 99, app/controllers/calculator_controller.rb'><pre><a name='99'> 99</a>         @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+</pre></code><ul>
+<li>Treaty period B</li>
+</ul>
+<code title='Line 102, app/controllers/calculator_controller.rb'><pre><a name='102'> 102</a>       when 11
+</pre></code><code title='Line 104, app/controllers/calculator_controller.rb'><pre><a name='104'> 104</a>         @start_date_type = "date of Ministerial statement"
+</pre></code><code title='Line 105, app/controllers/calculator_controller.rb'><pre><a name='105'> 105</a>         @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Otherwise set an error message.</li>
 </ul>
-<code title='Line 94, app/controllers/calculator_controller.rb'><pre><a name='94'> 94</a>       else
-</pre></code><code title='Line 95, app/controllers/calculator_controller.rb'><pre><a name='95'> 95</a>         @error_message = "Sorry, this procedure is not currently supported."
-</pre></code><code title='Line 96, app/controllers/calculator_controller.rb'><pre><a name='96'> 96</a>       end
-</pre></code><code title='Line 97, app/controllers/calculator_controller.rb'><pre><a name='97'> 97</a>     end
-</pre></code><code title='Line 98, app/controllers/calculator_controller.rb'><pre><a name='98'> 98</a>   end
-</pre></code><code title='Line 99, app/controllers/calculator_controller.rb'><pre><a name='99'> 99</a> end</pre></code></body></html>
+<code title='Line 108, app/controllers/calculator_controller.rb'><pre><a name='108'> 108</a>       else
+</pre></code><code title='Line 109, app/controllers/calculator_controller.rb'><pre><a name='109'> 109</a>         @error_message = "Sorry, this procedure is not currently supported."
+</pre></code><code title='Line 110, app/controllers/calculator_controller.rb'><pre><a name='110'> 110</a>       end
+</pre></code><code title='Line 111, app/controllers/calculator_controller.rb'><pre><a name='111'> 111</a>     end
+</pre></code><code title='Line 112, app/controllers/calculator_controller.rb'><pre><a name='112'> 112</a>   end
+</pre></code><code title='Line 113, app/controllers/calculator_controller.rb'><pre><a name='113'> 113</a> end</pre></code></body></html>

@@ -3,7 +3,6 @@
 Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
 
 require 'calculations/bicameral_both_houses_sitting'
-require 'calculations/bicameral_parliamentary_days'
 require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
 require 'calculations/pnsi'
@@ -14,7 +13,6 @@ class CalculatorController < ApplicationController
 Include code from each of the modules for the different styles of calculation.
 
   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
-  include CALCULATION_BICAMERAL_PARLIAMENTARY_DAYS
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
   include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_PNSI
@@ -73,23 +71,33 @@ To calculate the **anticipated end date**, we select the calculation based on th
 * Commons and Lords affirmative Statutory Instrument where both Houses are sitting, Legislative Reform Orders, Public Body Orders and Localism Orders
 
       when 1, 2, 4, 8
-        @end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        @start_date_type = "laying date"
+        @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 * Proposed Statutory Instrument (PNSI)
 
       when 3
-        @end_date = pnsi_calculation( @start_date, @day_count )
+        @start_date_type = "laying date"
+        @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
 * Commons only negative Statutory Instrument and some made affirmatives
 
       when 5, 7
-        @end_date = commons_only_si_calculation( @start_date, @day_count )
+        @start_date_type = "laying date"
+        @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
 * Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
 
       when 6, 9
-        @end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count ) 
-* Treaty periods A and B
+        @start_date_type = "laying date"
+        @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+* Treaty period A
 
-      when 10, 11
-        @end_date = treaty_calculation( @start_date, @day_count )
+      when 10
+        @start_date_type = "laying date"
+        @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+* Treaty period B
+
+      when 11
+        @start_date_type = "date of Ministerial statement"
+        @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
 * Otherwise set an error message.
 
       else
