@@ -2,8 +2,9 @@
 <% if @error_message -%>
 	"error": "<%= @error_message %>",
 <% else -%>
-	"anticipated_date": "<%= @end_date.strftime( '%A %-d %B %Y') %>",
+	"anticipated_scrutiny_start_date": "<%= @scrutiny_start_date.iso8061 %>",
+	"anticipated_scrutiny_end_date": "<%= @end_date.iso8061 %>",
 	"procedure": "<%= @procedure.name %>",
 	"day_count": "<%= @day_count %>",
-	"start_date": "<%= @start_date.strftime( '%-d %B %Y') %>"<% end -%>
+	"start_date": "<%= @start_date.iso8061 %>"<% end -%>
 }
