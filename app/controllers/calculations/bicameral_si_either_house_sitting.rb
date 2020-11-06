@@ -18,12 +18,7 @@ module CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
       
         # ... we set the date to that day.
         date = date.first_scrutiny_day_in_either_house
-      
-
-
-
-
-
+        
         # comment this
         @scrutiny_start_date = date
       
@@ -38,6 +33,9 @@ module CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
       end
       
     # Otherwise, we've established the laying day is a scrutiny day in at least one House, so we don't have to cycle through the calendar to find a subsequent one.
+    else
+      # comment this
+      @scrutiny_start_date = date
     end
     
     # We've found the first scrutiny day in either House so we start counting from day 1.
