@@ -2,9 +2,9 @@
 <% if @error_message -%>
 	"error": "<%= @error_message %>",
 <% else -%>
-	"anticipated_scrutiny_start_date": "<%= @scrutiny_start_date.to_time.iso8061 %>",
-	"anticipated_scrutiny_end_date": "<%= @end_date.to_time.iso8061 %>",
+	"anticipated_scrutiny_start_date": "<%= @scrutiny_start_date.to_time.iso8601 %>",
+	"anticipated_scrutiny_end_date": "<%= @end_date.to_time.iso8601 %>",
 	"procedure": "<%= @procedure.name %>",
 	"day_count": "<%= @day_count %>",
-	"start_date": "<%= @start_date.to_time.iso8061 %>"<% end -%>
+	"start_date": "<%= @start_date.to_time.iso8601 %>"<% end -%>
 }
