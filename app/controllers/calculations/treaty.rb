@@ -11,6 +11,7 @@ module CALCULATION_TREATY
     # ## We start counting on the **first day when both Houses have an actual sitting**.
     # For period A this **does not** include the laying day of the treaty.
     # For period B this **does not** include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.
+    # The first following joint actual sitting day is the start of the scrutiny period.
     
     # We continue to the **day immediately following** the start day.
     # If that day is or is followed by a joint actual sitting day...
