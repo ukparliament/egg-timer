@@ -23,6 +23,9 @@ Unless the laying day is a scrutiny day in either House, then ...
 ... we set the date to that day.
 
         date = date.first_scrutiny_day_in_either_house
+... we have found the start of the scrutiny period.
+
+        @scrutiny_start_date = date
 If we didn't find a **future scrutiny day in either House** in our calendar, we can't calculate the scrutiny period, ...
 
       else
@@ -33,8 +36,12 @@ If we didn't find a **future scrutiny day in either House** in our calendar, we 
 
         return
       end
-Otherwise, we've established the laying day is a scrutiny day in at least one House, so we don't have to cycle through the calendar to find a subsequent one.
+Otherwise, we've established the laying day is a scrutiny day in at least one House, so we don't have to cycle through the calendar to find a subsequent one ...
 
+    else
+... and the laying day is the start of the scrutiny period.
+
+      @scrutiny_start_date = date
     end
 We've found the first scrutiny day in either House so we start counting from day 1.
 

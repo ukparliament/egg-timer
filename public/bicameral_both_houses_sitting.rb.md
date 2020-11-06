@@ -16,9 +16,7 @@ The rules governing the time period for Localism Orders are set out in the [Loca
   def bicameral_calculation_both_houses_sitting( date, target_day_count )
 ## We start counting on the **first day both Houses have a scrutiny day**.
 
-This will be the day on which the instrument was laid, if that day is a scrutiny day.
-
-For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+This will be the day on which the instrument was laid, if that day is a scrutiny day. For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
 
 Unless the laying day is a scrutiny day in both Houses, then ...
 
@@ -29,6 +27,9 @@ Unless the laying day is a scrutiny day in both Houses, then ...
 ... we set the date to that day.
 
         date = date.first_joint_scrutiny_day
+... we have found the start of the scrutiny period.
+
+        @scrutiny_start_date = date
 If we didn't find a **future joint scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
 
       else
@@ -39,8 +40,12 @@ If we didn't find a **future joint scrutiny day** in our calendar, we can't calc
 
         return
       end
-Otherwise, we've established the laying day is a joint scrutiny day so we don't have to cycle through the calendar to find a subsequent one.
+Otherwise, we've established the laying day is a joint scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
 
+    else
+... and the laying day is the start of the scrutiny period.
+
+      @scrutiny_start_date = date
     end
 We've found the first joint scrutiny day so we start counting from day 1.
 

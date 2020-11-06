@@ -23,6 +23,9 @@ Unless the laying day is a House of Commons scrutiny day, then ...
 ... we set the date to that day. In practice this will be the first sitting day following the laying.
 
         date = date.first_commons_scrutiny_day
+... we have found the start of the scrutiny period.
+
+        @scrutiny_start_date = date
 If we didn't find a **future House of Commons scrutiny day** in our calendar, we can't calculate the scrutiny period, ...
 
       else
@@ -33,8 +36,12 @@ If we didn't find a **future House of Commons scrutiny day** in our calendar, we
 
         return
       end
-Otherwise, we've established the laying day is a House of Commons scrutiny day so we don't have to cycle through the calendar to find a subsequent one.
+Otherwise, we've established the laying day is a House of Commons scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
 
+    else
+... and the laying day is the start of the scrutiny period.
+
+      @scrutiny_start_date = date
     end
 We've found the first House of Commons scrutiny day so we start counting from day 1.
 

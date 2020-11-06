@@ -16,8 +16,6 @@ For period A this **does not** include the laying day of the treaty.
 
 For period B this **does not** include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.
 
-The first following joint actual sitting day is the start of the scrutiny period.
-
 We continue to the **day immediately following** the start day.
 
 If that day is or is followed by a joint actual sitting day...
@@ -26,6 +24,9 @@ If that day is or is followed by a joint actual sitting day...
 ... we set the date to the day of the first joint actual sitting day **following** the start date.
 
       date = date.next_day.first_joint_actual_sitting_day
+... we have found the start of the scrutiny period.
+
+      @scrutiny_start_date = date
 ... we've found the first joint actual sitting day so we start counting from day 1.
 
       day_count = 1
