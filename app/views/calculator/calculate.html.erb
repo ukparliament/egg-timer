@@ -3,6 +3,10 @@
 <% else -%>
 
 
+<p>The <u>anticipated</u> start date of the scrutiny period is:</p>
+
+	<strong><big><time><%= @scrutiny_start_date.strftime( '%A %-d %B %Y') %></time></big></strong>
+	
 <p>The <u>anticipated</u> end date of the scrutiny period is:</p>
 
 	<strong><big><time><%= @end_date.strftime( '%A %-d %B %Y') %></time></big></strong>
@@ -18,7 +22,6 @@
 	
 	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong></li>
 	
-	<%= @scrutiny_start_date %>
 	
 	
 	
