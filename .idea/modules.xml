@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/parliament-calendar.iml" filepath="$PROJECT_DIR$/.idea/parliament-calendar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parliament-calendar.iml" filepath="$PROJECT_DIR$/parliament-calendar.iml" />
     </modules>
   </component>
 </project>
