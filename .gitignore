@@ -19,7 +19,8 @@
 ~*
 ~#
 
-.idea/*
+/.idea/*
+*.iml
 
 .DS_Store
 lib/tasks/credentials.json
