@@ -14,9 +14,15 @@ For made affirmative instruments, this is defined by the [Statutory Instruments 
 
 For draft instruments, this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
 
-Unless the laying day is a House of Commons scrutiny day, then ...
+If the laying day is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
 
-    unless date.is_commons_scrutiny_day?
+    if date.is_commons_scrutiny_day?
+... and the laying day is the start of the scrutiny period.
+
+      @scrutiny_start_date = date
+Otherwise, the laying day is not a House of Commons scrutiny day, then ...
+
+    else
 ... if there is a future House of Commons scrutiny day ...
 
       if date.first_commons_scrutiny_day 
@@ -36,12 +42,6 @@ If we didn't find a **future House of Commons scrutiny day** in our calendar, we
 
         return
       end
-Otherwise, we've established the laying day is a House of Commons scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
-
-    else
-... and the laying day is the start of the scrutiny period.
-
-      @scrutiny_start_date = date
     end
 We've found the first House of Commons scrutiny day so we start counting from day 1.
 

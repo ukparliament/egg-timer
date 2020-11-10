@@ -12,8 +12,14 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
     
     # ## We start counting on the **first day both Houses have a scrutiny day**.
     # This will be the day on which the instrument was laid, if that day is a scrutiny day. For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
-    # Unless the laying day is a scrutiny day in both Houses, then ...
-    unless date.is_joint_scrutiny_day?
+    # If the laying day is a joint scrutiny day, we don't have to cycle through the calendar to find a subsequent one ...
+    if date.is_joint_scrutiny_day?
+      
+      # ... and the laying day is the start of the scrutiny period.
+      @scrutiny_start_date = date
+      
+    # Otherwise, the laying day is not a joint scrutiny day, then ...
+    else
       
       # ... if there is a future joint scrutiny day ...
       if date.first_joint_scrutiny_day
@@ -33,12 +39,6 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
         # ... and we stop looking for a scrutiny period end date.
         return
       end
-      
-    # Otherwise, we've established the laying day is a joint scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
-    else
-      
-      # ... and the laying day is the start of the scrutiny period.
-      @scrutiny_start_date = date
     end
     
     # We've found the first joint scrutiny day so we start counting from day 1.
