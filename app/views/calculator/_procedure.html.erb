@@ -1,8 +1,4 @@
-<p class="procedureformitem">
-
-
-<input type="radio" id="procedure-<%= procedure.id %>" name="procedure" value="<%= procedure.id %>">
-<label for="<%= "procedure-#{procedure.id}" %>"><%= procedure.name %></label>
-
-
+<p>
+<label class="radio">
+<input type="radio" id="procedure-<%= procedure.id %>" name="procedure" value="<%= procedure.id %>"> <%= procedure.name %></label>
 </p>
