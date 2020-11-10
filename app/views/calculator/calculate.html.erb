@@ -3,6 +3,7 @@
 <% else -%>
 
 
+
 <p>The <u>anticipated</u> start date of the scrutiny period is:</p>
 
 	<strong><big><time><%= @scrutiny_start_date.strftime( '%A %-d %B %Y') %></time></big></strong>
@@ -11,9 +12,6 @@
 
 	<strong><big><time><%= @scrutiny_end_date.strftime( '%A %-d %B %Y') %></time></big></strong>
 	
-	
-	
-
 <ul>
 
 	<li>With procedure type <strong><%= @procedure.name %></strong></li>
@@ -22,12 +20,10 @@
 	
 	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong>  (<%= @start_date_type %>)</li>
 	
-	
-	
-	
+
 	</ul>
 
-
+<p>Show the <a href="<%= request.original_fullpath.sub! '?', '.json?' %>" title="<%= request.original_fullpath.sub! '?', '.json?' %>">JSON result</a> for this calculation.</p>
 	
 <p>If sitting days change within that period, the end date of the scrutiny period will need to be <a href="/">recalculated</a>.</p>
 

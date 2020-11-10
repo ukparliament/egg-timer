@@ -15,13 +15,14 @@
 <meta name="theme-color" content="#ffffff">   
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
             <style>
-            body.development {border-bottom:4em solid pink;}
 			button {border:1pt solid #0076d1;}
-			button.procedure-toggle {width:6rem;}
-			button.Show {font-weight:bold;}
-			p.procedureformitem {padding:0.3rem;}
+			p.procedureformitem {padding:0.5rem;margin:0.5rem;}
 			p.procedureformitem:hover {background-color: pink;}
 			ol.no-bullets { list-style-type: none; padding:0;}
+			main {padding:2rem 0;}
+			p.procedureformitem input[type="radio"]:checked+label {
+  font-weight: bold;
+}
             </style>
 </head>
 <body class="<%= Rails.env %>">
@@ -34,7 +35,7 @@
 
 <h1><%= @title || "Parliament Calendar" %></h1>
 </header>
-<main style="padding:2rem 0;">
+<main>
 <%= yield %>
 </main>
 

@@ -25,7 +25,7 @@ def commentariat(with_path)
       body {
         max-width: 40rem;
         margin: auto;
-        padding: 1rem;
+        padding: 2rem 1rem;
         font-family: 'Helvetica Neue','Helvetica', system-ui;
         color: black;
         background-color: white;
@@ -42,11 +42,12 @@ def commentariat(with_path)
       a.githubline {color:gray;font-weight:bold;}
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
+a {text-decoration:underline;color:white;}
 }
     </style>
     <title>#{with_path}</title>
   </head>
-  <body><p><a href="http://parliament-calendar.herokuapp.com/">parliament-calendar.herokuapp.com</a></p>}
+  <body><p><a href="/">parliament-calendar.herokuapp.com</a></p>}
 
   File.foreach(with_path).with_index do |line, line_num|
     comment_line = /^\s*#\s*(?<content>.*)/.match(line)
