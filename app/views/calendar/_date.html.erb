@@ -1,5 +1,5 @@
 <tr>
-	<td style="float:right;"><%= date.strftime('%A')  %></td>
+	<td><%= date.strftime('%A')  %></td>
 	<td><%= date.strftime('%e').strip.to_i.ordinalize  %></td>
 	<td title="Commons day type"><%= date.commons_day_type  %></td>
 	<td title="Commons praying"><%= date.is_commons_scrutiny_day_label  %></td>
