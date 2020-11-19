@@ -68,9 +68,9 @@ If the form did provide all the required information, do the calculation:
 To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
 
       case @procedure.id
-* Commons and Lords affirmative Statutory Instrument where both Houses are sitting, Legislative Reform Orders, Public Body Orders and Localism Orders
+* Legislative Reform Orders, Public Body Orders and Localism Orders
 
-      when 1, 2, 4, 8
+      when 1, 2, 4
         @start_date_type = "laying date"
         @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 * Proposed Statutory Instrument (PNSI)
@@ -78,15 +78,30 @@ To calculate the **anticipated end date**, we select the calculation based on th
       when 3
         @start_date_type = "laying date"
         @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
-* Commons only negative Statutory Instrument and some made affirmatives
+* Commons only negative Statutory Instrument
 
-      when 5, 7
+      when 5
         @start_date_type = "laying date"
         @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-* Commons and Lords negative Statutory Instrument or a Commons and Lords affirmative Statutory Instrument where either House is sitting
+* Commons and Lords negative Statutory Instrument
 
-      when 6, 9
+      when 6
         @start_date_type = "laying date"
+        @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+* Some Commons only made affirmative Statutory Instruments
+
+      when 7
+        @start_date_type = "making date"
+        @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+* Commons and Lords affirmative Statutory Instrument where both Houses are sitting
+
+      when 8
+        @start_date_type = "making date"
+        @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+* Commons and Lords affirmative Statutory Instrument where either House is sitting
+
+      when 9
+        @start_date_type = "making date"
         @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
 * Treaty period A
 
