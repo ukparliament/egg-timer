@@ -2,36 +2,35 @@
 	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
 
-
-<p>The <u>anticipated</u> start date of the scrutiny period is:</p>
-
+<p class="box">The <em>anticipated start date</em> of the scrutiny period is
+<br>
 	<strong><big><time><%= @scrutiny_start_date.strftime( '%A %-d %B %Y') %></time></big></strong>
+	</p>
 	
-<p>The <u>anticipated</u> end date of the scrutiny period is:</p>
+	
+<p class="box">The <em>anticipated end date</em> of the scrutiny period is
+<br>
 
 	<strong><big><time><%= @scrutiny_end_date.strftime( '%A %-d %B %Y') %></time></big></strong>
-	
-	
-	
+</p>
 
+<p>This was calculated using this information:</p>
+	
 <ul>
 
-	<li>With procedure type <strong><%= @procedure.name %></strong></li>
+	<li>A procedure type <strong><%= @procedure.name %></strong></li>
 	
-	<li>For a scrutiny period of <strong><%= @day_count %> days</strong></li>
+	<li>A scrutiny period of <strong><%= @day_count %> days</strong></li>
 	
 	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong>  (<%= @start_date_type %>)</li>
 	
-	
-	
-	
+
 	</ul>
 
 
-	
-<p>If sitting days change within that period, the end date of the scrutiny period will need to be <a href="/">recalculated</a>.</p>
+<p>If sitting days change within this period, the end date of the scrutiny period will need to be recalculated.</p>
 
-
+<p>Show the <a href="<%= request.original_fullpath.sub! '?', '.json?' %>" title="<%= request.original_fullpath.sub! '?', '.json?' %>">JSON result</a> for this calculation.</p>
 	
 	
 <% end -%>

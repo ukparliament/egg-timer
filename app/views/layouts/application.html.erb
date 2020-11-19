@@ -13,18 +13,42 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 <meta name="theme-color" content="#ffffff">   
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
             <style>
-            body.development {border-bottom:4em solid pink;}
-			button {border:1pt solid #0076d1;}
-			button.procedure-toggle {width:6rem;}
-			button.Show {font-weight:bold;}
-			p.procedureformitem {padding:0.3rem;}
-			p.procedureformitem:hover {background-color: pink;}
-			ol.no-bullets { list-style-type: none; padding:0;}
+            *, *:before, *:after {box-sizing: border-box;}
+            body {font-family: "Helvetica Neue","Helvetica",sans-serif;max-width:44rem;padding:1rem;font-size:1.1rem;line-height: 1.4;margin:auto;}
+            main {margin:4rem 0;}
+            h1 {font-size:1.3rem;}
+            a {text-decoration: none;}
+            a:hover {text-decoration: underline;}
+            label.radio {padding:0.25rem 0.5rem;border-radius:0.25rem;}
+            label.radio:hover {background-color: pink;}
+            input[type=date] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
+            input[type=number] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
+            input:focus {border-color: blue;}
+            button {width:40%;padding: 0.5rem;border-radius:0.25rem;font-size:larger;color:black;background-color: white;border:2pt solid black;}
+            button:hover {border:2pt solid blue;}
+            p.box {padding: 0.75rem;border-radius:0.25rem;font-size:larger;color:black;background-color: white;border:2pt solid gray;}
+            td, th {
+  padding: 0.5rem;
+    text-align: left;
+  height: 4rem;
+  vertical-align: bottom;
+}
+tr {border-bottom: thin dotted black;}
+th {
+  color: gray;
+  border-color: white;
+}
+table {
+font-size: 1rem;
+  border-collapse: collapse;
+  width:100%;
+}
+td.commons {font-weight:bold;background-color:lightgreen;}
+td.lords {font-weight:bold;background-color:pink;}
             </style>
 </head>
-<body class="<%= Rails.env %>">
+<body>
 <header>
 <nav>
 <p>
@@ -34,7 +58,7 @@
 
 <h1><%= @title || "Parliament Calendar" %></h1>
 </header>
-<main style="padding:2rem 0;">
+<main>
 <%= yield %>
 </main>
 
