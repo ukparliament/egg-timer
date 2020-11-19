@@ -7,16 +7,15 @@ module CALCULATION_COMMONS_ONLY_SI
   def commons_only_si_calculation( date, target_day_count )
     
     # ## We start counting on the **first day the House of Commons has a scrutiny day**.
-    # This will be the day on which the instrument was laid, if that day is a scrutiny day.
-    # For made affirmative instruments, this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
-    # For draft instruments, this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
-    # If the laying day is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
+    # For draft instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
+    # For made affirmative instruments this will be the day on which the instrument was made, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+    # If the laying day - or making day for a made instrument - is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
     if date.is_commons_scrutiny_day?
       
-      # ... and the laying day is the start of the scrutiny period.
+      # ... and the laying or making day is the start of the scrutiny period.
       @scrutiny_start_date = date
       
-    # Otherwise, the laying day is not a House of Commons scrutiny day, then ...
+    # Otherwise, the laying or making day is not a House of Commons scrutiny day, then ...
     else
       
       # ... if there is a future House of Commons scrutiny day ...
