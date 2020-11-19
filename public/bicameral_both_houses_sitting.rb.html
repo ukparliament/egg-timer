@@ -8,7 +8,7 @@
       body {
         max-width: 40rem;
         margin: auto;
-        padding: 1rem;
+        padding: 2rem 1rem;
         font-family: 'Helvetica Neue','Helvetica', system-ui;
         color: black;
         background-color: white;
@@ -21,61 +21,65 @@
       code pre {white-space: pre-wrap; word-break: break-word;}
       code:hover {color:black;}
       h1, h2 {font-weight:normal;}
-      a.githubline {text-decoration:none;color:gray;font-weight:bold;}
+      a {text-decoration:none;}
+      a.githubline {color:gray;font-weight:bold;}
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
+a {text-decoration:underline;color:white;}
 }
     </style>
     <title>app/controllers/calculations/bicameral_both_houses_sitting.rb</title>
   </head>
-  <body><code title='Line 1, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='1'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L1'> 1</a> module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
+  <body><p><a href="/">parliament-calendar.herokuapp.com</a></p><code title='Line 1, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='1'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L1'> 1</a> module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
 </pre></code><h1>A method for calculating the end date of scrutiny periods during which <strong>both</strong> Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders and Localism Orders.</h1>
 <p>The Statutory Instrument Act 1946 <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1">sets out</a> that - in calculating the scrutiny period for an SI under that Act - “no account shall be taken of any time during which Parliament is dissolved or prorogued or during which <em>both</em> Houses are adjourned for more than four days.” This applies to the majority of made affirmative instruments.</p>
-<p>Made affirmatives laid under different Acts follow other rules, for example: the National Insurance Contributions Act 2014 <a href="https://www.legislation.gov.uk/ukpga/2014/7/section/5/enacted#section-5-9">sets out</a>, “no account is to be taken of any time ... during which either House is adjourned for more than four days.</p>
+<p>Made affirmatives laid under different Acts follow other rules, for example: the National Insurance Contributions Act 2014 <a href="https://www.legislation.gov.uk/ukpga/2014/7/section/5/enacted#section-5-9">sets out</a>, “no account is to be taken of any time [..] during which either House is adjourned for more than 4 days.&quot;</p>
 <p>This calculation deals with the case where days are not counted if <em>either</em> House is adjourned for more than four days.</p>
 <p>The rules governing the time period for Legislative Reform Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19">Legislative and Regulatory Reform Act 2006 section 19</a>.</p>
 <p>The rules governing the time period for Public Body Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12">Public Bodies Act 2011 section 11 (12)</a>.</p>
 <p>The rules governing the time period for Localism Orders are set out in the <a href="https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14">Localism Act 2011 section 19 (14)</a>.</p>
 <code title='Line 11, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='11'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L11'> 11</a>   def bicameral_calculation_both_houses_sitting( date, target_day_count )
 </pre></code><h2>We start counting on the <strong>first day both Houses have a scrutiny day</strong>.</h2>
-<p>This will be the day on which the instrument was laid, if that day is a scrutiny day. For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>.</p>
-<p>If the laying day is a joint scrutiny day, we don&#39;t have to cycle through the calendar to find a subsequent one ...</p>
-<code title='Line 16, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='16'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L16'> 16</a>     if date.is_joint_scrutiny_day?
-</pre></code><p>... and the laying day is the start of the scrutiny period.</p>
-<code title='Line 19, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='19'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L19'> 19</a>       @scrutiny_start_date = date
-</pre></code><p>Otherwise, the laying day is not a joint scrutiny day, then ...</p>
-<code title='Line 22, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='22'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L22'> 22</a>     else
+<p>For Legislative Reform Orders, Public Body Orders and Localism Orders this will be the day on which the instrument was laid, if that day was a scrutiny day.</p>
+<p>For made affimatives this will be the day on which the instrument was made, if that day was a scrutiny day.</p>
+<p>For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>.</p>
+<p>If the laying day - or making day for a made affirmative - is a joint scrutiny day, we don&#39;t have to cycle through the calendar to find a subsequent one ...</p>
+<code title='Line 18, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='18'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L18'> 18</a>     if date.is_joint_scrutiny_day?
+</pre></code><p>... and the laying or making day is the start of the scrutiny period.</p>
+<code title='Line 21, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='21'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L21'> 21</a>       @scrutiny_start_date = date
+</pre></code><p>Otherwise, the laying or making day is not a joint scrutiny day, then ...</p>
+<code title='Line 24, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='24'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L24'> 24</a>     else
 </pre></code><p>... if there is a future joint scrutiny day ...</p>
-<code title='Line 25, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='25'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L25'> 25</a>       if date.first_joint_scrutiny_day
+<code title='Line 27, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='27'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L27'> 27</a>       if date.first_joint_scrutiny_day
 </pre></code><p>... we set the date to that day.</p>
-<code title='Line 28, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='28'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L28'> 28</a>         date = date.first_joint_scrutiny_day
+<code title='Line 30, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='30'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L30'> 30</a>         date = date.first_joint_scrutiny_day
 </pre></code><p>... we have found the start of the scrutiny period.</p>
-<code title='Line 31, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='31'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L31'> 31</a>         @scrutiny_start_date = date
+<code title='Line 33, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='33'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L33'> 33</a>         @scrutiny_start_date = date
 </pre></code><p>If we didn&#39;t find a <strong>future joint scrutiny day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
-<code title='Line 34, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='34'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L34'> 34</a>       else
+<code title='Line 36, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='36'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L36'> 36</a>       else
 </pre></code><p>... this error message is displayed ...</p>
-<code title='Line 37, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='37'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L37'> 37</a>         @error_message = "Unable to find a future joint scrutiny day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 39, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='39'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L39'> 39</a>         @error_message = "Unable to find a future joint scrutiny day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><p>... and we stop looking for a scrutiny period end date.</p>
-<code title='Line 40, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='40'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L40'> 40</a>         return
-</pre></code><code title='Line 41, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='41'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L41'> 41</a>       end
-</pre></code><code title='Line 42, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='42'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L42'> 42</a>     end
+<code title='Line 42, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='42'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L42'> 42</a>         return
+</pre></code><code title='Line 43, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='43'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L43'> 43</a>       end
+</pre></code><code title='Line 44, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='44'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L44'> 44</a>     end
 </pre></code><p>We&#39;ve found the first joint scrutiny day so we start counting from day 1.</p>
-<code title='Line 45, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='45'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L45'> 45</a>     day_count = 1
+<code title='Line 47, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='47'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L47'> 47</a>     day_count = 1
 </pre></code><h2>Whilst the number of joint scrutiny days we’re counting is less than the target number of days to count ...</h2>
-<code title='Line 48, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='48'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L48'> 48</a>     while ( day_count < target_day_count ) do
+<code title='Line 50, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='50'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L50'> 50</a>     while ( day_count < target_day_count ) do
 </pre></code><p>... continue to the <strong>next day</strong>.</p>
-<code title='Line 51, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='51'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L51'> 51</a>       date = date.next_day
+<code title='Line 53, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='53'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L53'> 53</a>       date = date.next_day
 </pre></code><p>... and add 1 to the day count if this is a joint scrutiny day.</p>
-<code title='Line 54, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='54'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L54'> 54</a>       day_count +=1 if date.is_joint_scrutiny_day?
+<code title='Line 56, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='56'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L56'> 56</a>       day_count +=1 if date.is_joint_scrutiny_day?
 </pre></code><p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
-<code title='Line 57, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='57'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L57'> 57</a>       if date.is_calendar_not_populated?
+<code title='Line 59, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='59'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L59'> 59</a>       if date.is_calendar_not_populated?
 </pre></code><p>... this error message is displayed to users ...</p>
-<code title='Line 60, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='60'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L60'> 60</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 62, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='62'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L62'> 62</a>         @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><p>... and we stop looking through the calendar.</p>
-<code title='Line 63, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='63'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L63'> 63</a>         break
-</pre></code><code title='Line 64, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='64'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L64'> 64</a>       end
-</pre></code><code title='Line 65, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='65'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L65'> 65</a>     end
+<code title='Line 65, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='65'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L65'> 65</a>         break
+</pre></code><code title='Line 66, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='66'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L66'> 66</a>       end
+</pre></code><code title='Line 67, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='67'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L67'> 67</a>     end
 </pre></code><p>Return the anticipated end date of the scrutiny period for display.</p>
-<code title='Line 68, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='68'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L68'> 68</a>     date
-</pre></code><code title='Line 69, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='69'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L69'> 69</a>   end
-</pre></code><code title='Line 70, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='70'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L70'> 70</a> end</pre></code></body></html>
+<code title='Line 70, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='70'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L70'> 70</a>     date
+</pre></code><code title='Line 71, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='71'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L71'> 71</a>   end
+</pre></code><code title='Line 72, app/controllers/calculations/bicameral_both_houses_sitting.rb'><pre><a name='72'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculations/bicameral_both_houses_sitting.rb#L72'> 72</a> end</pre></code></body></html>
