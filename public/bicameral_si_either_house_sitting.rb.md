@@ -8,19 +8,17 @@ The calculation is defined by the [Statutory Instruments Act 1946 Section 7 para
   def bicameral_si_either_house_sitting_calculation( date, target_day_count )
 ## We start counting on the **first day either House has a scrutiny day**.
 
-This will be the day on which the instrument was laid, if that day is a scrutiny day.
+For draft Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
 
-For made affirmative instruments, this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+For made affirmatives this will be the day on which the instrument was made, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
 
-For draft instruments, this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
-
-If the laying day is a scrutiny day in at least one House, we don't have to cycle through the calendar to find a subsequent one ...
+If the laying day - or the making day for made instruments - is a scrutiny day in at least one House, we don't have to cycle through the calendar to find a subsequent one ...
 
     if date.is_either_house_scrutiny_day?
-... and the laying day is the start of the scrutiny period.
+... and the laying or making day is the start of the scrutiny period.
 
       @scrutiny_start_date = date
-Otherwise, the laying day is not a scrutiny day in at least one House, then ...
+Otherwise, the laying or making day is not a scrutiny day in at least one House, then ...
 
     else
 ... if there is a future scrutiny day in either House ...
