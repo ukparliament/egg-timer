@@ -5,9 +5,9 @@ module CALCULATION_COMMONS_ONLY_SI
 
   def commons_only_si_calculation(date, target_day_count)
     # ## We start counting on the **first day the House of Commons has a scrutiny day**.
-    # For draft instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
+    # For negative instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
     # For made affirmative instruments this will be the day on which the instrument was made, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
-    # If the laying day - or making day for a made instrument - is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
+    # If the laying day - or making day for a made affirmative instrument - is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
     if date.is_commons_scrutiny_day?
       
       # ... and the laying or making day is the start of the scrutiny period.
