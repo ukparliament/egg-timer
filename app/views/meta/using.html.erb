@@ -1,29 +1,68 @@
 <%= content_tag( 'h2', 'Legislative Reform Order scrutiny period' ) %>
-<%= content_tag( 'p', "Use date of laying, 40 days for negative or affirmative, 60 for super affirmative, #{link_to( 'contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 40 for negative or affirmative." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 60 for super affirmative.
+" ) %>
+	<%= content_tag( 'li', "#{link_to( 'Contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
+</ul>
  
 <%= content_tag( 'h2', 'Localism Order scrutiny period' ) %>
-<%= content_tag( 'p', "Use date of laying, 40 days for negative or affirmative, 60 for super affirmative, #{link_to( 'contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 40 for negative or affirmative." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 60 for super affirmative.
+" ) %>
+	<%= content_tag( 'li', "#{link_to( 'Contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
+</ul>
 
 <%= content_tag( 'h2', 'Proposed Negative Statutory Instrument committee sifting period' ) %>
-<%= content_tag( 'p', 'Use date of laying as start date with 10 days to count.' ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 10." ) %>
+</ul>
 
 <%= content_tag( 'h2', 'Negative Statutory Instrument praying period (Commons only)' ) %>
-<%= content_tag( 'p', 'Use date of laying as start date with 40 days to count.' ) %>
- 
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
+</ul>
+
 <%= content_tag( 'h2', 'Negative Statutory Instrument praying period (Commons and Lords)' ) %>
-<%= content_tag( 'p', 'Use date of laying as start date with 40 days to count.' ) %>
- 
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
+</ul>
+
 <%= content_tag( 'h2', 'Made affirmative approval period (Commons only)' ) %>
-<%= content_tag( 'p', "Use date of making as start date with the number of days specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
- 
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
+</ul>
+
 <%= content_tag( 'h2', 'Made Affirmative approval period (laid before both Houses, clock stops if either House rises)' ) %>
-<%= content_tag( 'p', "Use date of making as  start date with the number of days specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}. See the enabling act to check whether the clock stops if either House rises.".html_safe ) %>
- 
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Refer to the enabling Act to check if the clock stops if either House rises.
+" ) %>
+</ul>
+
 <%= content_tag( 'h2', 'Made Affirmative approval period (laid before both Houses, clock stops if both Houses rise)' ) %>
-<%= content_tag( 'p', "Use date of making as start date with the number of days specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}. See the enabling act to check whether the clock stops if both Houses rise.".html_safe ) %>
- 
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Refer to the enabling Act to check if the clock stops if both Houses rise." ) %>
+</ul>
+
 <%= content_tag( 'h2', 'Treaty objection period A' ) %>
-<%= content_tag( 'p', 'Use date of laying as start date with 21 days to count.' ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 21." ) %>
+</ul>
  
 <%= content_tag( 'h2', 'Treaty objection period B' ) %>
-<%= content_tag( 'p', 'Use date of ministerial statement as start date with 21 days to count.' ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of the ministerial statement." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 21." ) %>
+</ul>
