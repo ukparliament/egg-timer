@@ -1,5 +1,5 @@
 module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
-# A method for calculating the end date of scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments where this is set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders and Localism Orders.
+# A method for calculating the end date of scrutiny periods during which **both** Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments as set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders and Localism Orders.
 
 The Statutory Instrument Act 1946 [sets out](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1) that - in calculating the scrutiny period for an SI under that Act - “no account shall be taken of any time during which Parliament is dissolved or prorogued or during which *both* Houses are adjourned for more than four days.” This applies to the majority of made affirmative instruments.
 
