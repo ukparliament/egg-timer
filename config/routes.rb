@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'calculator/:calculate' => 'calculator#calculate', as: :calculator_calculate
   
   get 'meta' => 'meta#index', as: :meta_list
+  get 'meta/using' => 'meta#using', as: :meta_using
   get 'meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
   get 'meta/prorogation-and-dissolution' => 'meta#prorogation_and_dissolution', as: :meta_prorogation_dissolution
   get 'meta/schema' => 'meta#schema', as: :meta_schema

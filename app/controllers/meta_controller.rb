@@ -4,6 +4,10 @@ class MetaController < ApplicationController
   	@title = "About this application"
   end
   
+  def using
+  	@title = "Using the application"
+  end
+  
   def calendar_sync
   	@title = "How the calendar uses the information you create"
   end
