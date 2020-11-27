@@ -34,10 +34,6 @@ module CALCULATION_COMMONS_ONLY_SI
         # ... and we stop looking for a scrutiny period end date.
         return
       end
-
-
-      # Otherwise, we've established the laying day is a House of Commons scrutiny day so we don't have to cycle through the calendar to find a subsequent one ...
-
     end
 
     # We've found the first House of Commons scrutiny day so we start counting from day 1.
