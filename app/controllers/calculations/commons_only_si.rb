@@ -1,12 +1,12 @@
 module CALCULATION_COMMONS_ONLY_SI
-  # # A method for calculating the end date of a scrutiny period, based on days on which the House of Commons must be sitting or on a short adjournment. This method is used for Commons only negative and made affirmative Statutory Instruments.
+  # # A method for calculating the end date of a scrutiny period, based on days on which the House of Commons must be sitting or on a short adjournment. This method is used for Commons only negative Statutory Instruments as set out by the Statutory Instruments Act 1946 and for made affirmative Statutory Instruments as set out by their enabling Act.
   # The calculation counts in actual sitting days, requiring the start date and the number of days to count.
   # The calculation is defined by paragraphs 1 and 2 of [Section 7 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7), though a different calculation may be required if the instrument is laid under another Act - as per [paragraph 3](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3).
 
   def commons_only_si_calculation(date, target_day_count)
     # ## We start counting on the **first day the House of Commons has a scrutiny day**.
-    # For negative instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
-    # For made affirmative instruments this will be the day on which the instrument was made, if that day was a scrutiny day. This is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
+    # For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1). For draft negative Statutory Instruments, this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
+    # For made affirmatives this will be the day on which the instrument was made, if that day was a scrutiny day.
     # If the laying day - or making day for a made affirmative instrument - is a House of Commons scrutiny day we don't have to cycle through the calendar to find a subsequent one ...
     if date.is_commons_scrutiny_day?
       
