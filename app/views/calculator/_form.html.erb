@@ -1,6 +1,9 @@
 <% if @procedures.empty?%> 
 	<%= content_tag( 'p', 'The scrutiny period calculator is currently undergoing maintenance. We hope to have it back fairly soon.' ) %>
 <% else -%>
+
+	<%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
+	
 	<form action="calculator/calculate" method="GET" id="calculator">
 
 	<fieldset>
