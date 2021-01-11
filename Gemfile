@@ -6,7 +6,7 @@ gem 'google-api-client', '~> 0.34'
 
 ruby '2.6.0'
 
-gem 'redcarpet'
+gem 'redcarpet', '3.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.11.1'
