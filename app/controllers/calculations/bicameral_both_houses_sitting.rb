@@ -7,11 +7,13 @@ module CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   # The rules governing the time period for Legislative Reform Orders are set out in the [Legislative and Regulatory Reform Act 2006 section 19](https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19).
   # The rules governing the time period for Public Body Orders are set out in the [Public Bodies Act 2011 section 11 (12)](https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12).
   # The rules governing the time period for Localism Orders are set out in the [Localism Act 2011 section 19 (14)](https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14).
+  # The rules governing the time period for published drafts are set out in [paragraph 14 of schedule 8 of the European Union (Withdrawal) Act 2018](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14).
   
   def bicameral_calculation_both_houses_sitting( date, target_day_count )
     
     # ## We start counting on the **first day both Houses have a scrutiny day**.
     # For Legislative Reform Orders, Public Body Orders and Localism Orders this will be the day on which the instrument was laid, if that day was a scrutiny day.
+    # For published drafts under the European Union (Withdrawal) Act 2018, this will be the day on which the draft was published, if that day was a scrutiny day.
     # For made affimatives this will be the day on which the instrument was made, if that day was a scrutiny day.
     # For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1).
     # If the laying day - or making day for a made affirmative - is a joint scrutiny day, we don't have to cycle through the calendar to find a subsequent one ...

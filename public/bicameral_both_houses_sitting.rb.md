@@ -13,10 +13,14 @@ The rules governing the time period for Public Body Orders are set out in the [P
 
 The rules governing the time period for Localism Orders are set out in the [Localism Act 2011 section 19 (14)](https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14).
 
+The rules governing the time period for published drafts are set out in [paragraph 14 of schedule 8 of the European Union (Withdrawal) Act 2018](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14).
+
   def bicameral_calculation_both_houses_sitting( date, target_day_count )
 ## We start counting on the **first day both Houses have a scrutiny day**.
 
 For Legislative Reform Orders, Public Body Orders and Localism Orders this will be the day on which the instrument was laid, if that day was a scrutiny day.
+
+For published drafts under the European Union (Withdrawal) Act 2018, this will be the day on which the draft was published, if that day was a scrutiny day.
 
 For made affimatives this will be the day on which the instrument was made, if that day was a scrutiny day.
 
