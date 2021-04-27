@@ -16,12 +16,6 @@
 	<%= content_tag( 'li', "#{link_to( 'Contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
 </ul>
 
-<%= content_tag( 'h2', 'Proposed Negative Statutory Instrument committee sifting period' ) %>
-<ul>
-	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
-	<%= content_tag( 'li', "Set the number of days to count as 10." ) %>
-</ul>
-
 <%= content_tag( 'h2', 'Negative Statutory Instrument praying period (Commons only)' ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
@@ -53,6 +47,18 @@
 	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Refer to the enabling Act to check if the clock stops if both Houses rise." ) %>
+</ul>
+
+<%= content_tag( 'h2', 'Proposed Negative Statutory Instrument committee sifting period' ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 10." ) %>
+</ul>
+
+<%= content_tag( 'h2', 'Published draft under the European Union (Withdrawal) Act 2018' ) %>
+<ul>
+	<%= content_tag( 'li', "Set the start date to the date of publication of the draft." ) %>
+	<%= content_tag( 'li', "Set the number of days to count as 28." ) %>
 </ul>
 
 <%= content_tag( 'h2', 'Treaty objection period A' ) %>
