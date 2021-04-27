@@ -14,7 +14,7 @@
 	<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes." ) %>
 	<%= content_tag( 'li', "Pause the application's syncing script." ) %>
 	<%= content_tag( 'li', "Pull a copy of the database from Heroku." ) %>
-	<%= content_tag( 'li', "Add data to the database by hand." ) %>
+	<%= content_tag( 'li', "Add data to the database to close off the current session, add the next session and add a new Parliament period if appropriate." ) %>
 	<%= content_tag( 'li', "Push the updated database to Heroku." ) %>
 	<%= content_tag( 'li', "Restart the syncing scripts." ) %>
 </ol>
@@ -58,33 +58,35 @@
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
 	<%= content_tag( 'li', "From 'Heroku Scheduler', click 'Create job'." ) %>
 	<%= content_tag( 'li', "Enter the command #{content_tag( 'code', 'rake sync' )} in the 'Run Command' box.".html_safe ) %>
-	<%= content_tag( 'li', "Wait until the scheduler job runs.." ) %>
+	<%= content_tag( 'li', "Wait until the scheduler job runs." ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
 </ol>
 
-
-
-
-
-
-
-
 <%= content_tag( 'h2', 'What to do upon the announcement of dissolution' ) %>
-
-<%= content_tag( 'p', "If the dissolution is immediately preceded by a short prorogation period, we need to set an end date for the current session and create the prorogation period, following steps 1 to 5 above. If the dissolution period is not immediately preceded by a short prorogation period, we need to set an end date for the current session following steps 1 and 2 above." ) %>
-
-<%= content_tag( 'p', " We then need to create a new dissolution period and a new parliament period." ) %>
-
-<%= content_tag( 'p', " The steps are:" ) %>
-
 <ol>
-	<%= content_tag( 'li', "Find the number of the current parliament. Do this by running #{content_tag( 'code','select * from parliament_periods order by start_date desc limit 1;' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Create a new dissolution period. Do this by running: #{content_tag( 'code', "insert into dissolution_periods(number, start_date, end_date) values (NUMBER, 'START_DATE', 'END_DATE');")} where NUMBER is the number of the current parliament, START DATE is the day following the dissolution date as named in the dissolution proclamation and END_DATE is the day before Parliament returns from dissolution as named in the dissolution proclamation.".html_safe ) %>
-	<%= content_tag( 'li', "Run a rake task to populate dissolution days from the dissolution period. Note that this script does not exist yet and will need to be written when the next dissolution is announced." ) %>
+	<%= content_tag( 'li', "On the command line, navigate to the #{content_tag( 'code', 'parliament-calendar' )} application.".html_safe ) %>
+	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Add the end date of the current session to the first row. If the dissolution is directly preceded by a prorogation period, this will be the date of prorogation. If dissolution is not directly preceded by a prorogation period, this will be the date of dissolution.".html_safe ) %>
+	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the next Parliament period, the number of the session in that Parliament - always 1 - and the start date of the session. This will be the same as the start date of the next Parliament period.".html_safe ) %>
+	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Add the dissolution date of the current Parliament period to the fifth column last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add a citation to the House of Commons Journal to the tenth column in last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add a citation to the London Gazette to the eleventh column in last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add a new row at the bottom of the CSV.".html_safe ) %>
+	<%= content_tag( 'li', "Add the number of the Parliament to the first column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the polling date to the second column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the first date of the new Parliament period to the third column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the date of State Opening of the new Parliament period to the fourth column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the Wikidata ID for the General Election to the seventh column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Ensure that the #{link_to( 'Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-calendar' )} to reset the database: this removes information from the database.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
+	<%= content_tag( 'li', "From 'Heroku Scheduler', click 'Create job'." ) %>
+	<%= content_tag( 'li', "Enter the command #{content_tag( 'code', 'rake sync' )} in the 'Run Command' box.".html_safe ) %>
+	<%= content_tag( 'li', "Wait until the scheduler job runs." ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
 </ol>
-
-
-
-
-
-
