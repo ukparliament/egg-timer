@@ -1,8 +1,8 @@
 <%= content_tag( 'h1', 'What to do at prorogation and dissolution' ) %>
 
-<%= content_tag( 'p', 'At the end of a session, Parliament prorogues. Prorogation is the formal end to the parliamentary year.  At the end of a parliament period, Parliament dissolves. Dissolution is the official term for the end of a Parliament before a general election. Dissolution may be preceded by a short period of prorogation.' ) %>
+<%= content_tag( 'p', 'At the end of a session, Parliament prorogues. Prorogation is the formal end to the parliamentary year.  At the end of a parliament period, Parliament dissolves. Dissolution is the official term for the end of a Parliament before a general election. Dissolution may be immediately preceded by a short period of prorogation.' ) %>
 
-<%= content_tag( 'p', "Our Google calendars are designed to cope with periods when Parliament is in session. They allow us to state when a House is sitting, sitting virtually or adjourned. Adjournment includes 'non-sitting Fridays', weekends, bank holidays and recess." ) %>
+<%= content_tag( 'p', "Our Google calendars are designed to cope with periods when Parliament is in session. They allow us to state when a House is sitting, sitting virtually or adjourned. Adjournment includes non-sitting Fridays, weekends, bank holidays and recess." ) %>
 
 <%= content_tag( 'p', 'The calendars are not designed to cope with periods when Parliament is either prorogued or dissolved. Upon announcement of these periods certain actions should be taken.' ) %>
 
@@ -31,7 +31,6 @@
 	<%= content_tag( 'li', "Click on the cross with tooltip 'Delete this job'. This will stop the application importing updates from the Google calendars until we've finished." ) %>
 	<%= content_tag( 'li', "Open your terminal and navigate to the application directory." ) %>
 	<%= content_tag( 'li', "Pull the database from Heroku by running #{content_tag( 'code', 'heroku pg:pull DATABASE_URL parliament_calendar' )}. This will give you an up to date copy of the database on your machine.".html_safe ) %>
-	<%= content_tag( 'li', "In your terminal, run #{content_tag( 'code', 'psql parliament_calendar' )} to open the database.".html_safe ) %>
 	<%= content_tag( 'li', "The database dump is taken as a backup in case things go wrong. It is not used for the rest of this task." ) %>
 </ol>
 
@@ -39,9 +38,7 @@
 
 <%= content_tag( 'p', 'Prorogation is announced in a proclamation which gives a start date for the prorogation period. For the purposes of this calendar, the prorogation period starts on the day after the date of prorogation.' ) %>
 
-<%= content_tag( 'p', "For prorogations between sessions in a parliament period, the proclamation also names the start date of the next session. For the purposes of this calendar, the prorogation period ends on the day before the start of the next session." ) %>
-
-<%= content_tag( 'p', "A prorogation may immediately precede a dissolution. For the purposes of this calendar, the prorogation period ends on the day of dissolution as named in the dissolution proclamation." ) %>
+<%= content_tag( 'p', "For prorogations between sessions in a Parliament period, the proclamation also names the start date of the next session. For the purposes of this calendar, the prorogation period ends on the day before the start of the next session." ) %>
 
 <%= content_tag( 'p', "In order for the application to continue to function, we need to upload a clean copy of the database with an end date for the current session and a start date for the subsequent session." ) %>
 
@@ -69,16 +66,16 @@
 	<%= content_tag( 'li', "Add the end date of the current session to the first row. If the dissolution is directly preceded by a prorogation period, this will be the date of prorogation. If dissolution is not directly preceded by a prorogation period, this will be the date of dissolution.".html_safe ) %>
 	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the next Parliament period, the number of the session in that Parliament - always 1 - and the start date of the session. This will be the same as the start date of the next Parliament period.".html_safe ) %>
 	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Add the dissolution date of the current Parliament period to the fifth column last row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a citation to the House of Commons Journal to the tenth column in last row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a citation to the London Gazette to the eleventh column in last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the dissolution date of the current Parliament period to the fifth column of the last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add a citation to the House of Commons Journal to the tenth column of the last row.".html_safe ) %>
+	<%= content_tag( 'li', "Add a citation to the London Gazette to the eleventh column of the last row.".html_safe ) %>
 	<%= content_tag( 'li', "Add a new row at the bottom of the CSV.".html_safe ) %>
-	<%= content_tag( 'li', "Add the number of the Parliament to the first column in the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the polling date to the second column in the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the first date of the new Parliament period to the third column in the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the date of State Opening of the new Parliament period to the fourth column in the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column in the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the Wikidata ID for the General Election to the seventh column in the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the number of the Parliament to the first column of the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the polling date to the second column of the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the first date of the new Parliament period to the third column of the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the date of State Opening of the new Parliament period to the fourth column of the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column of the new row.".html_safe ) %>
+	<%= content_tag( 'li', "Add the Wikidata ID for the general election to the seventh column of the new row.".html_safe ) %>
 	<%= content_tag( 'li', "Ensure that the #{link_to( 'Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}.".html_safe ) %>
