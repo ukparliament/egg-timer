@@ -48,15 +48,7 @@
 	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Add the end date of the current session to the first row.".html_safe ) %>
 	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the current Parliament period, the number of the session in that Parliament and the start date of the session.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-calendar' )} to reset the database: this removes information from the database.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
-	<%= content_tag( 'li', "From 'Heroku Scheduler', click 'Create job'." ) %>
-	<%= content_tag( 'li', "Enter the command #{content_tag( 'code', 'rake sync' )} in the 'Run Command' box.".html_safe ) %>
-	<%= content_tag( 'li', "Wait until the scheduler job runs." ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
+	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}".html_safe ) %>
 </ol>
 
 <%= content_tag( 'h2', 'What to do upon the announcement of dissolution' ) %>
@@ -77,6 +69,11 @@
 	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column of the new row.".html_safe ) %>
 	<%= content_tag( 'li', "Add the Wikidata ID for the general election to the seventh column of the new row.".html_safe ) %>
 	<%= content_tag( 'li', "Ensure that the #{link_to( 'Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
+	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}".html_safe ) %>
+</ol>
+
+<%= content_tag( 'h2', 'Resetting the database', :id => 'resetting-the-database' ) %>
+<ol>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
