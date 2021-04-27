@@ -54,7 +54,20 @@ class Session < ActiveRecord::Base
   end
   
   def final_announced_day
-    [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
+    # We need to check if there are any virtual sitting days in this session.
+    # If there are virtual sitting days in this session ...
+    if self.final_announced_virtual_sitting_day
+      
+      # ... include sitting days, adjournment days *and* virtual sitting days when attemtping to calculate the final announced day.
+      final_announced_day = [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date, self.final_announced_virtual_sitting_day.end_date].sort.last
+      
+    #  If there are no virtual sitting days in this session ...
+    else
+      
+      # ... include sitting days and adjournment days only when attemtping to calculate the final announced day.
+      final_announced_day = [self.final_announced_adjournment_day.date, self.final_announced_sitting_day.end_date].sort.last
+    end
+    final_announced_day
   end
   
   def final_announced_sitting_day
