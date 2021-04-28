@@ -48,6 +48,7 @@
 	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Add the end date of the current session to the first row.".html_safe ) %>
 	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the current Parliament period, the number of the session in that Parliament and the start date of the session.".html_safe ) %>
+	<%= content_tag( 'li', "Ensure that the #{link_to( 'Sessions Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}".html_safe ) %>
 </ol>
 
@@ -68,7 +69,7 @@
 	<%= content_tag( 'li', "Add the date of State Opening of the new Parliament period to the fourth column of the new row.".html_safe ) %>
 	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column of the new row.".html_safe ) %>
 	<%= content_tag( 'li', "Add the Wikidata ID for the general election to the seventh column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Ensure that the #{link_to( 'Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
+	<%= content_tag( 'li', "Ensure that the #{link_to( 'Parliament periods Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}".html_safe ) %>
 </ol>
 
