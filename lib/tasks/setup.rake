@@ -106,6 +106,8 @@ task :import_procedures => :environment do
     procedure.display_order = row[0]
     procedure.name = row[1]
     procedure.active = row[2]
+    procedure.typical_day_count = row[3]
+    procedure.has_day_count_caveats = row[4]
     procedure.save
   end
 end
