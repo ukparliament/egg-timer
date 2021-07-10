@@ -27,11 +27,8 @@ class CalculatorController < ApplicationController
     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
   
-  # ### When the user has pressed 'Calculate', this code runs the calculation.
+  # ### This code runs the calculation.
   def calculate
-    
-    # Set a title for the page.
-	  @title = "Calculated scrutiny period"
     
     # In order to calculate the scrutiny period, we need:
     
@@ -44,97 +41,118 @@ class CalculatorController < ApplicationController
     # * the **day count**
     day_count = params['day-count']
     
-    # Check that all the parameters have been provided by the form ...
-    if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
+    # If the procedure and the start date have not been provided by the initial form ...
+    if start_date.blank? or procedure.nil?
       
-      # ... if not, set an error message ...
+      # ... we set an error message ...
 	    @title = "Sorry, there was not enough information provided."
       
       # ... and display the error.
       render :template => 'calculator/not_enough_information'
       
-    # If the form did provide all the required information, do the calculation:
+    # If the **procedure** and the **start date** have been provided by the initial form, we ...
     else
       
-      # * find the procedure
+      # # * find the procedure
       @procedure = Procedure.find( procedure )
-      
-      # * the **number of days** to count
-      @day_count = day_count.to_i
       
       # * make the text of the date passed into a date format
       @start_date = Date.parse( start_date )
       
-      # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
-      case @procedure.id
+      # If the day count has not been provided by the day count form or the day count is 0 ...
+      if day_count.blank? or day_count.to_i == 0
+    
+        # ... we set a title for the page.
+    	  @title = "Calculate scrutiny period"
         
-      # * Legislative Reform Orders, Public Body Orders and Localism Orders
-      when 1, 2, 4
+        # We render the day count form.
+        render :template => 'calculator/day_count_form'
         
-        @start_date_type = "laying date"
-        @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-        
-      # * Proposed Statutory Instrument (PNSI)
-      when 3
-        
-        @start_date_type = "laying date"
-        @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
-        
-      # * Commons only negative Statutory Instrument
-      when 5
-        
-        @start_date_type = "laying date"
-        @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-        
-      # * Commons and Lords negative Statutory Instrument
-      when 6
-      
-        @start_date_type = "laying date"
-        @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
-        
-      # * Some Commons only made affirmative Statutory Instruments
-      when 7
-      
-        @start_date_type = "making date"
-        @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-        
-      # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting
-      when 8
-        
-        @start_date_type = "making date"
-        @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-        
-      # * Commons and Lords affirmative Statutory Instrument where either House is sitting
-      when 9
-      
-        @start_date_type = "making date"
-        @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
-        
-      # * Treaty period A
-      when 10
-        
-        @start_date_type = "laying date"
-        @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
-        
-      # * Treaty period B
-      when 11
-        
-        @start_date_type = "date of Ministerial statement"
-        @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
-        
-      # * Published draft under the European Union (Withdrawal) Act 2018
-      when 12
-        
-        # [Paragraph 14(2) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2) sets out that that the calculation starts from the date the draft is published.
-        @start_date_type = "date of publication"
-        
-        # [Paragraph 14(9d) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-9-d) sets out that "no account is to be taken of any time during which [...] *either* House of Parliament is adjourned for more than four days".
-        @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-        
-      # * Otherwise set an error message.
+      # If the day count has been provided by the day count form ...
       else
-        @error_message = "Sorry, this procedure is not currently supported."
+    
+        # ... we set a title for the page.
+    	  @title = "Calculated scrutiny period"
+        
+        # We get the day count as an integer.
+        @day_count = day_count.to_i
+        
+        # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
+        case @procedure.id
+        
+        # * Legislative Reform Orders, Public Body Orders and Localism Orders
+        when 1, 2, 4
+        
+          @start_date_type = "laying date"
+          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        
+        # * Proposed Statutory Instrument (PNSI)
+        when 3
+        
+          @start_date_type = "laying date"
+          @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
+        
+        # * Commons only negative Statutory Instrument
+        when 5
+        
+          @start_date_type = "laying date"
+          @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+        
+        # * Commons and Lords negative Statutory Instrument
+        when 6
+      
+          @start_date_type = "laying date"
+          @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+        
+        # * Some Commons only made affirmative Statutory Instruments
+        when 7
+      
+          @start_date_type = "making date"
+          @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+        
+        # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting
+        when 8
+        
+          @start_date_type = "making date"
+          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        
+        # * Commons and Lords affirmative Statutory Instrument where either House is sitting
+        when 9
+      
+          @start_date_type = "making date"
+          @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+        
+        # * Treaty period A
+        when 10
+        
+          @start_date_type = "laying date"
+          @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+        
+        # * Treaty period B
+        when 11
+        
+          @start_date_type = "date of Ministerial statement"
+          @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+        
+        # * Published draft under the European Union (Withdrawal) Act 2018
+        when 12
+        
+          # [Paragraph 14(2) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2) sets out that that the calculation starts from the date the draft is published.
+          @start_date_type = "date of publication"
+        
+          # [Paragraph 14(9d) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-9-d) sets out that "no account is to be taken of any time during which [...] *either* House of Parliament is adjourned for more than four days".
+          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        end
       end
     end
   end
 end
+    
+    
+    
+    
+    
+    
+    
+      
+      
