@@ -30,9 +30,6 @@ Find all the active procedures in display order - to populate the procedure radi
 ### This code runs the calculation.
 
   def calculate
-We set a title for the page.
-
-	  @title = "Calculated scrutiny period"
 In order to calculate the scrutiny period, we need:
 
 * the **type of the procedure** itself, which we refer to by a number
@@ -65,12 +62,18 @@ If the **procedure** and the **start date** have been provided by the initial fo
 If the day count has not been provided by the day count form or the day count is 0 ...
 
       if day_count.blank? or day_count.to_i == 0
-... we render the day count form.
+... we set a title for the page.
+
+    	  @title = "Calculate scrutiny period"
+We render the day count form.
 
         render :template => 'calculator/day_count_form'
 If the day count has been provided by the day count form ...
 
       else
+... we set a title for the page.
+
+    	  @title = "Calculated scrutiny period"
 We get the day count as an integer.
 
         @day_count = day_count.to_i
