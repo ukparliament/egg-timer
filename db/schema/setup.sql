@@ -109,5 +109,7 @@ create table procedures (
 	display_order int not null,
 	name varchar(255) not null,
 	active boolean not null,
+	typical_day_count int,
+	has_day_count_caveats boolean,
 	primary key (id)
 );
