@@ -52,9 +52,9 @@ a {text-decoration:underline;color:white;}
 </pre></code><p>Find all the active procedures in display order - to populate the procedure radio buttons on the form.</p>
 <code title='Line 27, app/controllers/calculator_controller.rb'><pre><a name='27'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L27'> 27</a>     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
 </pre></code><code title='Line 28, app/controllers/calculator_controller.rb'><pre><a name='28'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L28'> 28</a>   end
-</pre></code><h3>When the user has pressed &#39;Calculate&#39;, this code runs the calculation.</h3>
+</pre></code><h3>This code runs the calculation.</h3>
 <code title='Line 31, app/controllers/calculator_controller.rb'><pre><a name='31'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L31'> 31</a>   def calculate
-</pre></code><p>Set a title for the page.</p>
+</pre></code><p>We set a title for the page.</p>
 <code title='Line 34, app/controllers/calculator_controller.rb'><pre><a name='34'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L34'> 34</a> 	  @title = "Calculated scrutiny period"
 </pre></code><p>In order to calculate the scrutiny period, we need:</p>
 <ul>
@@ -69,96 +69,95 @@ a {text-decoration:underline;color:white;}
 <li>the <strong>day count</strong></li>
 </ul>
 <code title='Line 45, app/controllers/calculator_controller.rb'><pre><a name='45'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L45'> 45</a>     day_count = params['day-count']
-</pre></code><p>Check that all the parameters have been provided by the form ...</p>
-<code title='Line 48, app/controllers/calculator_controller.rb'><pre><a name='48'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L48'> 48</a>     if start_date.blank? or day_count.blank? or day_count.to_i == 0 or procedure.nil?
-</pre></code><p>... if not, set an error message ...</p>
+</pre></code><p>If the procedure and the start date have not been provided by the initial form ...</p>
+<code title='Line 48, app/controllers/calculator_controller.rb'><pre><a name='48'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L48'> 48</a>     if start_date.blank? or procedure.nil?
+</pre></code><p>... we set an error message ...</p>
 <code title='Line 51, app/controllers/calculator_controller.rb'><pre><a name='51'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L51'> 51</a> 	    @title = "Sorry, there was not enough information provided."
 </pre></code><p>... and display the error.</p>
 <code title='Line 54, app/controllers/calculator_controller.rb'><pre><a name='54'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L54'> 54</a>       render :template => 'calculator/not_enough_information'
-</pre></code><p>If the form did provide all the required information, do the calculation:</p>
+</pre></code><p>If the <strong>procedure</strong> and the <strong>start date</strong> have been provided by the initial form, we ...</p>
 <code title='Line 57, app/controllers/calculator_controller.rb'><pre><a name='57'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L57'> 57</a>     else
-</pre></code><ul>
-<li>find the procedure</li>
-</ul>
+</pre></code><h1>* find the procedure</h1>
 <code title='Line 60, app/controllers/calculator_controller.rb'><pre><a name='60'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L60'> 60</a>       @procedure = Procedure.find( procedure )
-</pre></code><ul>
-<li>the <strong>number of days</strong> to count</li>
-</ul>
-<code title='Line 63, app/controllers/calculator_controller.rb'><pre><a name='63'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L63'> 63</a>       @day_count = day_count.to_i
 </pre></code><ul>
 <li>make the text of the date passed into a date format</li>
 </ul>
-<code title='Line 66, app/controllers/calculator_controller.rb'><pre><a name='66'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L66'> 66</a>       @start_date = Date.parse( start_date )
+<code title='Line 63, app/controllers/calculator_controller.rb'><pre><a name='63'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L63'> 63</a>       @start_date = Date.parse( start_date )
+</pre></code><p>If the day count has not been provided by the day count form or the day count is 0 ...</p>
+<code title='Line 66, app/controllers/calculator_controller.rb'><pre><a name='66'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L66'> 66</a>       if day_count.blank? or day_count.to_i == 0
+</pre></code><p>... we render the day count form.</p>
+<code title='Line 69, app/controllers/calculator_controller.rb'><pre><a name='69'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L69'> 69</a>         render :template => 'calculator/day_count_form'
+</pre></code><p>If the day count has been provided by the day count form ...</p>
+<code title='Line 72, app/controllers/calculator_controller.rb'><pre><a name='72'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L72'> 72</a>       else
+</pre></code><p>We get the day count as an integer.</p>
+<code title='Line 75, app/controllers/calculator_controller.rb'><pre><a name='75'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L75'> 75</a>         @day_count = day_count.to_i
 </pre></code><p>To calculate the <strong>anticipated end date</strong>, we select the calculation based on the type of procedure:</p>
-<code title='Line 69, app/controllers/calculator_controller.rb'><pre><a name='69'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L69'> 69</a>       case @procedure.id
+<code title='Line 78, app/controllers/calculator_controller.rb'><pre><a name='78'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L78'> 78</a>         case @procedure.id
 </pre></code><ul>
 <li>Legislative Reform Orders, Public Body Orders and Localism Orders</li>
 </ul>
-<code title='Line 72, app/controllers/calculator_controller.rb'><pre><a name='72'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L72'> 72</a>       when 1, 2, 4
-</pre></code><code title='Line 74, app/controllers/calculator_controller.rb'><pre><a name='74'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L74'> 74</a>         @start_date_type = "laying date"
-</pre></code><code title='Line 75, app/controllers/calculator_controller.rb'><pre><a name='75'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L75'> 75</a>         @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+<code title='Line 81, app/controllers/calculator_controller.rb'><pre><a name='81'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L81'> 81</a>         when 1, 2, 4
+</pre></code><code title='Line 83, app/controllers/calculator_controller.rb'><pre><a name='83'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L83'> 83</a>           @start_date_type = "laying date"
+</pre></code><code title='Line 84, app/controllers/calculator_controller.rb'><pre><a name='84'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L84'> 84</a>           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 </pre></code><ul>
 <li>Proposed Statutory Instrument (PNSI)</li>
 </ul>
-<code title='Line 78, app/controllers/calculator_controller.rb'><pre><a name='78'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L78'> 78</a>       when 3
-</pre></code><code title='Line 80, app/controllers/calculator_controller.rb'><pre><a name='80'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L80'> 80</a>         @start_date_type = "laying date"
-</pre></code><code title='Line 81, app/controllers/calculator_controller.rb'><pre><a name='81'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L81'> 81</a>         @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
+<code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L87'> 87</a>         when 3
+</pre></code><code title='Line 89, app/controllers/calculator_controller.rb'><pre><a name='89'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L89'> 89</a>           @start_date_type = "laying date"
+</pre></code><code title='Line 90, app/controllers/calculator_controller.rb'><pre><a name='90'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L90'> 90</a>           @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons only negative Statutory Instrument</li>
 </ul>
-<code title='Line 84, app/controllers/calculator_controller.rb'><pre><a name='84'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L84'> 84</a>       when 5
-</pre></code><code title='Line 86, app/controllers/calculator_controller.rb'><pre><a name='86'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L86'> 86</a>         @start_date_type = "laying date"
-</pre></code><code title='Line 87, app/controllers/calculator_controller.rb'><pre><a name='87'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L87'> 87</a>         @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+<code title='Line 93, app/controllers/calculator_controller.rb'><pre><a name='93'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L93'> 93</a>         when 5
+</pre></code><code title='Line 95, app/controllers/calculator_controller.rb'><pre><a name='95'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L95'> 95</a>           @start_date_type = "laying date"
+</pre></code><code title='Line 96, app/controllers/calculator_controller.rb'><pre><a name='96'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L96'> 96</a>           @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons and Lords negative Statutory Instrument</li>
 </ul>
-<code title='Line 90, app/controllers/calculator_controller.rb'><pre><a name='90'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L90'> 90</a>       when 6
-</pre></code><code title='Line 92, app/controllers/calculator_controller.rb'><pre><a name='92'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L92'> 92</a>         @start_date_type = "laying date"
-</pre></code><code title='Line 93, app/controllers/calculator_controller.rb'><pre><a name='93'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L93'> 93</a>         @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+<code title='Line 99, app/controllers/calculator_controller.rb'><pre><a name='99'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L99'> 99</a>         when 6
+</pre></code><code title='Line 101, app/controllers/calculator_controller.rb'><pre><a name='101'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L101'> 101</a>           @start_date_type = "laying date"
+</pre></code><code title='Line 102, app/controllers/calculator_controller.rb'><pre><a name='102'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L102'> 102</a>           @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Some Commons only made affirmative Statutory Instruments</li>
 </ul>
-<code title='Line 96, app/controllers/calculator_controller.rb'><pre><a name='96'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L96'> 96</a>       when 7
-</pre></code><code title='Line 98, app/controllers/calculator_controller.rb'><pre><a name='98'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L98'> 98</a>         @start_date_type = "making date"
-</pre></code><code title='Line 99, app/controllers/calculator_controller.rb'><pre><a name='99'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L99'> 99</a>         @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+<code title='Line 105, app/controllers/calculator_controller.rb'><pre><a name='105'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L105'> 105</a>         when 7
+</pre></code><code title='Line 107, app/controllers/calculator_controller.rb'><pre><a name='107'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L107'> 107</a>           @start_date_type = "making date"
+</pre></code><code title='Line 108, app/controllers/calculator_controller.rb'><pre><a name='108'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L108'> 108</a>           @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons and Lords affirmative Statutory Instrument where both Houses are sitting</li>
 </ul>
-<code title='Line 102, app/controllers/calculator_controller.rb'><pre><a name='102'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L102'> 102</a>       when 8
-</pre></code><code title='Line 104, app/controllers/calculator_controller.rb'><pre><a name='104'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L104'> 104</a>         @start_date_type = "making date"
-</pre></code><code title='Line 105, app/controllers/calculator_controller.rb'><pre><a name='105'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L105'> 105</a>         @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+<code title='Line 111, app/controllers/calculator_controller.rb'><pre><a name='111'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L111'> 111</a>         when 8
+</pre></code><code title='Line 113, app/controllers/calculator_controller.rb'><pre><a name='113'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L113'> 113</a>           @start_date_type = "making date"
+</pre></code><code title='Line 114, app/controllers/calculator_controller.rb'><pre><a name='114'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L114'> 114</a>           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 </pre></code><ul>
 <li>Commons and Lords affirmative Statutory Instrument where either House is sitting</li>
 </ul>
-<code title='Line 108, app/controllers/calculator_controller.rb'><pre><a name='108'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L108'> 108</a>       when 9
-</pre></code><code title='Line 110, app/controllers/calculator_controller.rb'><pre><a name='110'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L110'> 110</a>         @start_date_type = "making date"
-</pre></code><code title='Line 111, app/controllers/calculator_controller.rb'><pre><a name='111'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L111'> 111</a>         @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+<code title='Line 117, app/controllers/calculator_controller.rb'><pre><a name='117'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L117'> 117</a>         when 9
+</pre></code><code title='Line 119, app/controllers/calculator_controller.rb'><pre><a name='119'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L119'> 119</a>           @start_date_type = "making date"
+</pre></code><code title='Line 120, app/controllers/calculator_controller.rb'><pre><a name='120'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L120'> 120</a>           @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Treaty period A</li>
 </ul>
-<code title='Line 114, app/controllers/calculator_controller.rb'><pre><a name='114'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L114'> 114</a>       when 10
-</pre></code><code title='Line 116, app/controllers/calculator_controller.rb'><pre><a name='116'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L116'> 116</a>         @start_date_type = "laying date"
-</pre></code><code title='Line 117, app/controllers/calculator_controller.rb'><pre><a name='117'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L117'> 117</a>         @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+<code title='Line 123, app/controllers/calculator_controller.rb'><pre><a name='123'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L123'> 123</a>         when 10
+</pre></code><code title='Line 125, app/controllers/calculator_controller.rb'><pre><a name='125'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L125'> 125</a>           @start_date_type = "laying date"
+</pre></code><code title='Line 126, app/controllers/calculator_controller.rb'><pre><a name='126'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L126'> 126</a>           @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Treaty period B</li>
 </ul>
-<code title='Line 120, app/controllers/calculator_controller.rb'><pre><a name='120'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L120'> 120</a>       when 11
-</pre></code><code title='Line 122, app/controllers/calculator_controller.rb'><pre><a name='122'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L122'> 122</a>         @start_date_type = "date of Ministerial statement"
-</pre></code><code title='Line 123, app/controllers/calculator_controller.rb'><pre><a name='123'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L123'> 123</a>         @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+<code title='Line 129, app/controllers/calculator_controller.rb'><pre><a name='129'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L129'> 129</a>         when 11
+</pre></code><code title='Line 131, app/controllers/calculator_controller.rb'><pre><a name='131'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L131'> 131</a>           @start_date_type = "date of Ministerial statement"
+</pre></code><code title='Line 132, app/controllers/calculator_controller.rb'><pre><a name='132'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L132'> 132</a>           @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
 </pre></code><ul>
 <li>Published draft under the European Union (Withdrawal) Act 2018</li>
 </ul>
-<code title='Line 126, app/controllers/calculator_controller.rb'><pre><a name='126'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L126'> 126</a>       when 12
+<code title='Line 135, app/controllers/calculator_controller.rb'><pre><a name='135'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L135'> 135</a>         when 12
 </pre></code><p><a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2">Paragraph 14(2) of Schedule 8 of the European Union (Withdrawal) Act 2018 </a> sets out that that the calculation starts from the date the draft is published.</p>
-<code title='Line 129, app/controllers/calculator_controller.rb'><pre><a name='129'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L129'> 129</a>         @start_date_type = "date of publication"
+<code title='Line 138, app/controllers/calculator_controller.rb'><pre><a name='138'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L138'> 138</a>           @start_date_type = "date of publication"
 </pre></code><p><a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-9-d">Paragraph 14(9d) of Schedule 8 of the European Union (Withdrawal) Act 2018 </a> sets out that <q>no account is to be taken of any time during which [...] *either* House of Parliament is adjourned for more than four days</q>.</p>
-<code title='Line 132, app/controllers/calculator_controller.rb'><pre><a name='132'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L132'> 132</a>         @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-</pre></code><ul>
-<li>Otherwise set an error message.</li>
-</ul>
-<code title='Line 135, app/controllers/calculator_controller.rb'><pre><a name='135'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L135'> 135</a>       else
-</pre></code><code title='Line 136, app/controllers/calculator_controller.rb'><pre><a name='136'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L136'> 136</a>         @error_message = "Sorry, this procedure is not currently supported."
-</pre></code><code title='Line 137, app/controllers/calculator_controller.rb'><pre><a name='137'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L137'> 137</a>       end
-</pre></code><code title='Line 138, app/controllers/calculator_controller.rb'><pre><a name='138'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L138'> 138</a>     end
-</pre></code><code title='Line 139, app/controllers/calculator_controller.rb'><pre><a name='139'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L139'> 139</a>   end
-</pre></code><code title='Line 140, app/controllers/calculator_controller.rb'><pre><a name='140'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L140'> 140</a> end</pre></code></body></html>
+<code title='Line 141, app/controllers/calculator_controller.rb'><pre><a name='141'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L141'> 141</a>           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+</pre></code><code title='Line 142, app/controllers/calculator_controller.rb'><pre><a name='142'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L142'> 142</a>         end
+</pre></code><code title='Line 143, app/controllers/calculator_controller.rb'><pre><a name='143'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L143'> 143</a>       end
+</pre></code><code title='Line 144, app/controllers/calculator_controller.rb'><pre><a name='144'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L144'> 144</a>     end
+</pre></code><code title='Line 145, app/controllers/calculator_controller.rb'><pre><a name='145'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L145'> 145</a>   end
+</pre></code><code title='Line 146, app/controllers/calculator_controller.rb'><pre><a name='146'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/app/controllers/calculator_controller.rb#L146'> 146</a> end
+</pre></code></body></html>
