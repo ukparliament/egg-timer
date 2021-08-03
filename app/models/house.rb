@@ -43,7 +43,7 @@ class House < ActiveRecord::Base
   def upcoming_adjournment_days
     AdjournmentDay.find_by_sql(
       "
-        SELECT date AS start_date, NULL AS end_date, 'Adjournment day' AS day_type
+        SELECT date AS start_date, date AS end_date, 'Adjournment day' AS day_type
         FROM adjournment_days
         WHERE house_id = #{self.id}
         AND date >= '#{Date.today}'
