@@ -41,9 +41,6 @@ class House < ActiveRecord::Base
   end
   
   def upcoming
-    upcoming = []
-    upcoming << self.upcoming_sitting_days
-    upcoming << self.upcoming_virtual_sitting_days
-    upcoming
+    upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days
   end
 end
