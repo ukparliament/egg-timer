@@ -1,6 +1,7 @@
 class House < ActiveRecord::Base
   
   has_many :sitting_days, -> { order( 'start_date desc' ) }
+  has_many :virtual_sitting_days, -> { order( 'start_date desc' ) }
   has_many :adjournment_days, -> { order( 'date desc' ) }
   
   def sitting_days_in_session( session )
