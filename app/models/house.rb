@@ -19,7 +19,7 @@ class House < ActiveRecord::Base
   def upcoming_sitting_days
     SittingDay.find_by_sql(
       "
-        SELECT start_date AS start_date, end_date AS end_date, 'sitting_day' AS day_type
+        SELECT start_date AS start_date, end_date AS end_date, 'Sitting day' AS day_type
         FROM sitting_days
         WHERE house_id = #{self.id}
         AND start_date >= '#{Date.today}'
@@ -31,7 +31,7 @@ class House < ActiveRecord::Base
   def upcoming_virtual_sitting_days
     VirtualSittingDay.find_by_sql(
       "
-        SELECT start_date AS start_date, end_date AS end_date, 'virtual_sitting_day' AS day_type
+        SELECT start_date AS start_date, end_date AS end_date, 'Virtual sitting day' AS day_type
         FROM virtual_sitting_days
         WHERE house_id = #{self.id}
         AND start_date >= '#{Date.today}'
@@ -43,7 +43,7 @@ class House < ActiveRecord::Base
   def upcoming_adjournment_days
     AdjournmentDay.find_by_sql(
       "
-        SELECT date AS start_date, '' AS end_date, 'adjounrment_day' AS day_type
+        SELECT date AS start_date, '' AS end_date, 'Adjournment day' AS day_type
         FROM adjournment_days
         WHERE house_id = #{self.id}
         AND date >= '#{Date.today}'
