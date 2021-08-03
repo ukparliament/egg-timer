@@ -1,11 +1,22 @@
 <%= content_tag( 'h1', @house.name ) %>
 
-<%= content_tag( 'h2', 'Sitting days' ) %>
-<ol>
-	<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days %>
-</ol>
+<details>
+    <summary>Sitting days</summary>
+	<ol>
+		<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days %>
+	</ol>
+</details>
 
-<%= content_tag( 'h2', 'Adjournment days' ) %>
-<ol>
+<details>
+    <summary>Virtual sitting days</summary>
+	<ol>
+		<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.virtual_sitting_days %>
+	</ol>
+</details>
+
+<details>
+    <summary>Adjournment days</summary>
+	<ol>
 	<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.adjournment_days %>
-</ol>
+	</ol>
+</details>
