@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   
   get 'houses' => 'house#index', as: :house_list
   get 'houses/:house' => 'house#show', as: :house_show
+  get 'houses/:house/upcoming' => 'house#upcoming', as: :house_upcoming
   
   get 'calculator' => 'calculator#index', as: :calculator_form
   get 'calculator/:calculate' => 'calculator#calculate', as: :calculator_calculate
