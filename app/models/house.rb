@@ -28,8 +28,22 @@ class House < ActiveRecord::Base
     )
   end
   
+  def upcoming_virtual_sitting_days
+    VirtualSittingDay.find_by_sql(
+      "
+        SELECT start_date AS start_date, end_date AS end_date, 'virtual_sitting_day' AS day_type
+        FROM virtual_sitting_days
+        WHERE house_id = #{self.id}
+        AND start_date >= '#{Date.today}'
+        ORDER BY start_date ASC
+      "
+    )
+  end
+  
   def upcoming
-    upcoming = self.upcoming_sitting_days
+    upcoming = []
+    upcoming << self.upcoming_sitting_days
+    upcoming << self.upcoming_virtual_sitting_days
     upcoming
   end
 end
