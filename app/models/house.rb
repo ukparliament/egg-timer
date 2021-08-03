@@ -40,7 +40,19 @@ class House < ActiveRecord::Base
     )
   end
   
+  def upcoming_adjournment_days
+    AdjournmentDay.find_by_sql(
+      "
+        SELECT date AS start_date, '' AS end_date, 'adjounrment_day' AS day_type
+        FROM adjournment_days
+        WHERE house_id = #{self.id}
+        AND date >= '#{Date.today}'
+        ORDER BY start_date ASC
+      "
+    )
+  end
+  
   def upcoming
-    upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days
+    upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days + upcoming_adjournment_days
   end
 end
