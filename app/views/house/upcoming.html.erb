@@ -1,5 +1,5 @@
 <%= content_tag( 'h1', 'Upcoming' ) %>
 
 <ol>
-	<%= render :partial => 'day', :partial => @house.upcoming %>
+	<%= render :partial => 'day', :collection => @house.upcoming %>
 </ol>
