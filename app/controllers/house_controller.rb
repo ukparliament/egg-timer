@@ -9,4 +9,9 @@ class HouseController < ApplicationController
     house = params[:house]
     @house = House.find( house )
   end
+  
+  def upcoming
+    house = params[:house]
+    @house = House.find( house )
+  end
 end
