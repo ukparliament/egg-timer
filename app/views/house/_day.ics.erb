@@ -1,5 +1,7 @@
 BEGIN:VEVENT
 SUMMARY:<%= day.day_type %>
-DSTART;TZID=Europe/London:<%= day.start_date.strftime( '%Y%m%d' ) %>
+UID:<%= day.start_date.strftime( '%Y%m%d' ) %>000000
+DTSTAMP:<%= day.start_date.strftime( '%Y%m%d' ) %>T000000
+DTSTART:<%= day.start_date.strftime( '%Y%m%d' ) %>
 STATUS:TENTATIVE
 END:VEVENT
