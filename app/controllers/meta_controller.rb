@@ -23,4 +23,8 @@ class MetaController < ApplicationController
   def comment
   	@title = "Comments"
   end
+  
+  def subscribe
+  	@title = "Subscribe to calendars"
+  end
 end

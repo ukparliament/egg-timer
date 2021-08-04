@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get 'meta/prorogation-and-dissolution' => 'meta#prorogation_and_dissolution', as: :meta_prorogation_dissolution
   get 'meta/schema' => 'meta#schema', as: :meta_schema
   get 'meta/comments' => 'meta#comment', as: :meta_comment
+  get 'meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   
 
   # Example of regular route:

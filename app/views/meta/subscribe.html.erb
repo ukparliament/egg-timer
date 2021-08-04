@@ -1,0 +1,8 @@
+<p>You can subscribe to calendars for upcoming days for both Houses in your favourite calendar application. Dates are based on business statements and on typical patterns and are subject to change. The further into the future the date, the less reliable the information. By subscribing to a calendar, your calendar will be updated as new information becomes available.</p>
+
+
+<%= content_tag( 'h2', 'House of Commons' ) %>
+<input value="<%= house_upcoming_url( :house => 1 ) %>" size="50" />
+
+<%= content_tag( 'h2', 'House of Lords' ) %>
+<input value="<%= house_upcoming_url( :house => 2 ) %>" size="50" />
