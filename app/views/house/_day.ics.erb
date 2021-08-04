@@ -1,6 +1,6 @@
 BEGIN:VEVENT
 SUMMARY:<%= day.day_type %>
 DTSTART;TZID=Europe/London:<%= day.start_date.strftime( '%Y%m%d' ) %>
-DTEND;TZID=Europe/London:<%= day.end_date + 1.strftime( '%Y%m%d' ) %>
+DTEND;TZID=Europe/London:<%= day.end_date.next_day.strftime( '%Y%m%d' ) %>
 STATUS:TENTATIVE
 END:VEVENT
