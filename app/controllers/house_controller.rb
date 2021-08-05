@@ -20,7 +20,7 @@ class HouseController < ApplicationController
       "
         SELECT house_id as house_id, start_date AS start_date, end_date AS end_date, 'Sitting day' AS day_type
         FROM sitting_days
-        WHERE start_date >= '#{Date.today - 1.year}'
+        WHERE start_date >= '#{Date.today}'
         ORDER BY start_date ASC
       "
     )
@@ -29,7 +29,7 @@ class HouseController < ApplicationController
       "
         SELECT house_id as house_id, start_date AS start_date, end_date AS end_date, 'Virtual sitting day' AS day_type
         FROM virtual_sitting_days
-        WHERE start_date >= '#{Date.today - 1.year}'
+        WHERE start_date >= '#{Date.today}'
         ORDER BY start_date ASC
       "
     )
@@ -38,7 +38,7 @@ class HouseController < ApplicationController
       "
         SELECT house_id as house_id, date AS start_date, date AS end_date, 'Adjournment day' AS day_type
         FROM adjournment_days
-        WHERE date >= '#{Date.today - 1.year}'
+        WHERE date >= '#{Date.today}'
         ORDER BY date ASC
       "
     )
