@@ -1,0 +1,7 @@
+<%= content_tag( 'h1', "Upcoming" ) %>
+
+<%= @upcoming.size %>
+
+<ol>
+	<%= render :partial => 'day_with_house', :collection => @upcoming %>
+</ol>

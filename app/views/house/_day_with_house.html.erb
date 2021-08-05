@@ -1,0 +1,17 @@
+<li>
+	<h2>
+		<% if day_with_house.house_id ==  1 -%>
+			House of Commons
+		<% elsif day_with_house.house_id ==  2 -%>
+			House of Lords
+		<% end -%>
+		-
+		<%= day_with_house.start_date.strftime( '%A, ' ) %><%= day_with_house.start_date.strftime('%e').strip.to_i.ordinalize  %><%= day_with_house.start_date.strftime( ' %B %Y' ) %>
+		
+		<% if day_with_house.start_date != day_with_house.end_date %>
+			- 
+			<%= day_with_house.end_date.strftime( '%A, ' ) %><%= day_with_house.end_date.strftime('%e').strip.to_i.ordinalize  %><%= day_with_house.end_date.strftime( ' %B %Y' ) %>
+		<% end%>
+	</h2>
+	<%= content_tag( 'p', day_with_house.day_type ) %>
+</li>

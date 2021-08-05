@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
   
   get 'houses' => 'house#index', as: :house_list
+  get 'houses/upcoming' => 'house#upcoming_all', as: :house_upcoming_all
   get 'houses/:house' => 'house#show', as: :house_show
   get 'houses/:house/upcoming' => 'house#upcoming', as: :house_upcoming
   
