@@ -1,0 +1,7 @@
+BEGIN:VEVENT
+SUMMARY:<% if day_with_house.house_id == 1 -%>House of Commons<% elsif day_with_house.house_id == 2 -%>House of Lords<% end -%> - <%= day_with_house.day_type %>
+UID:<%= day_with_house.start_date.strftime( '%Y%m%d' ) %>000000
+DTSTAMP:<%= day_with_house.start_date.strftime( '%Y%m%d' ) %>T000000
+DTSTART;VALUE=DATE:<%= day_with_house.start_date.strftime( '%Y%m%d' ) %>
+STATUS:TENTATIVE
+END:VEVENT
