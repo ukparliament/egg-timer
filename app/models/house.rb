@@ -53,7 +53,7 @@ class House < ActiveRecord::Base
   end
   
   def upcoming
-    upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days + upcoming_adjournment_days
+    upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days + self.upcoming_adjournment_days
     upcoming.sort! { |a, b|  a.start_date <=> b.start_date }
   end
 end
