@@ -1,16 +1,24 @@
 module CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
-# A method for calculating the end date of a scrutiny period, based on days on which **either** House must be sitting or on a short adjournment. This method is used for bicameral negative Statutory Instruments as set out by the Statutory Instruments Act 1946 and for made affirmative Statutory Instruments as set out by their enabling Act.
+# A method for calculating the end date of a scrutiny period, based on days on which **either** House must be sitting or on a short adjournment.
+
+This method is used for bicameral negative Statutory Instruments as set out by the Statutory Instruments Act 1946 and for made affirmative Statutory Instruments as set out by their enabling Act.
+
+The calculation is set out in [paragraph 1 Section 7 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1), though a different calculation may be required if the instrument is laid under another Act - as per [paragraph 3](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3).
+
+This method is also used for calculations of scrutiny periods for proposed draft remedial orders and draft affirmative remedial orders and for scrutiny and approval periods for made affirmative remedial orders as set out in [Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2).
 
 The calculation counts in actual sitting days, requiring the start date and the number of days to count.
-
-The calculation is defined by the [Statutory Instruments Act 1946 Section 7 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1), though a different calculation may be required if the instrument is laid under another Act - as per [paragraph 3](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3).
 
   def bicameral_si_either_house_sitting_calculation( date, target_day_count )
 ## We start counting on the **first day either House has a scrutiny day**.
 
-For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is defined by the [Statutory Instruments Act 1946 Section 5 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1). For draft negative Statutory Instruments, this is defined by the [Statutory Instruments Act 1946 Section 6 paragraph 1](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
+For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is set out in [paragraph 1 of Section 5 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1). For draft negative Statutory Instruments, this is set out in [paragraph 1 of Section 6 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).
 
 For made affirmatives this will be the day on which the instrument was made, if that day was a scrutiny day.
+
+For proposed draft remedial orders and draft affirmative remedial orders, this will be the day on which the instrument was laid, if that day was a scrutiny day. For proposed draft remedial orders, this is set out in [paragraph 3(1)(a) of Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2-paragraph-3-1-a). For draft affirmative remedial orders, this is set out in [paragraph 2(a) of Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2-paragraph-2-a).
+
+For made affirmative remedial orders, this will be the day on which the instrument was made, if that day was a scrutiny day. For the scrutiny period of a made affirmative remedial order, this is set out in [paragraph 4(2) of Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2-paragraph-4-2). For the approval period of a made affirmative remedial order, this is set out in [paragraph 4(4) of Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2-paragraph-4-4).
 
 If the laying day - or the making day for made affirmative instruments - is a scrutiny day in at least one House, we don't have to cycle through the calendar to find a subsequent one ...
 
