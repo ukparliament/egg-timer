@@ -86,20 +86,20 @@ class CalculatorController < ApplicationController
           @start_date_type = "laying date"
           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
         
-        # * Proposed Statutory Instrument (PNSI)
+        # * Proposed Statutory Instruments (PNSIs)
         when 3
         
           @start_date_type = "laying date"
           @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
         
-        # * Commons only negative Statutory Instrument
+        # * Commons only negative Statutory Instruments
         when 5
         
           @start_date_type = "laying date"
           @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
         
-        # * Commons and Lords negative Statutory Instrument
-        when 6
+        # * Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders
+        when 6, 13, 14
       
           @start_date_type = "laying date"
           @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
@@ -110,14 +110,14 @@ class CalculatorController < ApplicationController
           @start_date_type = "making date"
           @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
         
-        # * Commons and Lords affirmative Statutory Instrument where both Houses are sitting
+        # * Commons and Lords made affirmative Statutory Instruments where both Houses are sitting
         when 8
         
           @start_date_type = "making date"
           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
         
-        # * Commons and Lords affirmative Statutory Instrument where either House is sitting
-        when 9
+        # * Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders
+        when 9, 15, 16
       
           @start_date_type = "making date"
           @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
@@ -134,13 +134,10 @@ class CalculatorController < ApplicationController
           @start_date_type = "date of Ministerial statement"
           @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
         
-        # * Published draft under the European Union (Withdrawal) Act 2018
+        # * Published drafts under the European Union (Withdrawal) Act 2018
         when 12
-        
-          # [Paragraph 14(2) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2) sets out that that the calculation starts from the date the draft is published.
+          
           @start_date_type = "date of publication"
-        
-          # [Paragraph 14(9d) of Schedule 8 of the European Union (Withdrawal) Act 2018 ](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-9-d) sets out that "no account is to be taken of any time during which [...] *either* House of Parliament is adjourned for more than four days".
           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
         end
       end
