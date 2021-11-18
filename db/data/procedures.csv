@@ -1,12 +1,16 @@
-1,Legislative Reform Order scrutiny period,true,40,true
-2,Localism Order scrutiny period,true,40,true
+1,Legislative Reform order scrutiny period,true,40,true
+2,Localism order scrutiny period,true,40,true
 8,Proposed Negative Statutory Instrument committee sifting period,true,10,false
-10,Public Bodies Order scrutiny period,false,40,true
-6,Negative Statutory Instrument praying period (Commons only),true,40,false
-7,Negative Statutory Instrument praying period (Commons and Lords),true,40,false
+9,Public Bodies order scrutiny period,false,40,true
+7,Negative statutory instrument praying period (Commons only),true,40,false
+6,Negative statutory instrument praying period (Commons and Lords),true,40,false
 3,Made affirmative approval period (Commons only),true,,true
-4,"Made Affirmative approval period (laid before both Houses, clock stops if either House rises)",true,,true
-5,"Made Affirmative approval period (laid before both Houses, clock stops if both Houses rise)",true,,true
-11,Treaty objection period A,true,21,true
-12,Treaty objection period B,true,21,false
-9,Published draft under the European Union (Withdrawal) Act 2018 ,true,28,false
+5,"Made affirmative approval period (laid before both Houses, clock stops if either House rises)",true,,true
+4,"Made affirmative approval period (laid before both Houses, clock stops if both Houses rise)",true,,true
+15,Treaty objection period A,true,21,true
+16,Treaty objection period B,true,21,false
+10,Published draft under the European Union (Withdrawal) Act 2018 ,true,28,false
+14,Remedial order - Proposed draft scrutiny period,true,60,false
+11,Remedial order - Draft affirmative scrutiny period,true,60,false
+13,Remedial order - Made affirmative scrutiny period,true,60,false
+12,Remedial order - Made affirmative approval period,true,120,false
