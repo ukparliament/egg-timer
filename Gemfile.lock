@@ -204,7 +204,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  addressable (>= 2.8.0)
   byebug
   coffee-rails (~> 4.1.0)
   google-api-client (~> 0.34)
