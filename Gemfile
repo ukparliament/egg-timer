@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem "addressable", ">= 2.8.0"
+
 gem 'google-api-client', '~> 0.34'
 
 # gem 'rails_12factor', '0.0.3'
