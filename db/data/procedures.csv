@@ -1,7 +1,7 @@
-1,Legislative Reform order scrutiny period,true,40,true
+1,Legislative reform order scrutiny period,true,40,true
 2,Localism order scrutiny period,true,40,true
-8,Proposed Negative Statutory Instrument committee sifting period,true,10,false
-9,Public Bodies order scrutiny period,false,40,true
+8,Proposed negative statutory instrument - committee sifting period,true,10,false
+9,Public bodies order scrutiny period,false,40,true
 7,Negative statutory instrument praying period (laid before Commons only),true,40,false
 6,Negative statutory instrument praying period (laid before both Houses),true,40,false
 3,Made affirmative approval period (laid before Commons only),true,,true
