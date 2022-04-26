@@ -3,11 +3,11 @@ drop table if exists prorogation_days;
 drop table if exists adjournment_days;
 drop table if exists virtual_sitting_days;
 drop table if exists sitting_days;
+drop table if exists houses;
 drop table if exists sessions;
 drop table if exists prorogation_periods;
-drop table if exists parliament_periods;
 drop table if exists dissolution_periods;
-drop table if exists houses;
+drop table if exists parliament_periods;
 
 create table parliament_periods (
 	id serial,
