@@ -9,6 +9,8 @@ ruby '3.0.3'
 
 gem 'redcarpet', '3.5.1'
 
+gem "nokogiri", ">= 1.13.4"
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
