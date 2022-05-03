@@ -25,6 +25,6 @@ module ParliamentCalendar
     #config.active_record.raise_in_transactional_callbacks = true
     
 
-    config.autoloader = :classic
+    #config.autoloader = :classic
   end
 end
