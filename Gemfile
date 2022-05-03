@@ -15,6 +15,9 @@ gem 'redcarpet', '3.5.1'
 gem 'rails', '7.0.2.4'
 
 
+gem 'nokogiri', '>= 1.13.4'
+
+
 
 #gem 'pg', '~> 0.18.4'
 gem 'pg', '~> 1.1'

@@ -258,6 +258,7 @@ DEPENDENCIES
   coffee-rails
   google-api-client (~> 0.34)
   jquery-rails
+  nokogiri (>= 1.13.4)
   pg (~> 1.1)
   rails (= 7.0.2.4)
   redcarpet (= 3.5.1)
