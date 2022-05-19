@@ -7,7 +7,7 @@ Made affirmatives laid under different Acts follow other rules, for example: [pa
 
 This calculation deals with the case where days are not counted if *either* House is adjourned for more than four days.
 
-The rules governing the time period for Legislative Reform Orders are set out in [section 19 of the Legislative and Regulatory Reform Act 2006](https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19).
+The rules governing the time periods for Legislative Reform Orders are set out in sections [18](https://www.legislation.gov.uk/ukpga/2006/51/section/18#section-18) and [19](https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19) of the Legislative and Regulatory Reform Act 2006.
 
 The rules governing the time period for Public Body Orders are set out in [paragraph 12 of section 11 of the Public Bodies Act 2011](https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12).
 
