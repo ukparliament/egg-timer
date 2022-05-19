@@ -82,7 +82,7 @@ To calculate the **anticipated end date**, we select the calculation based on th
         case @procedure.id
 * Legislative Reform Orders, Public Body Orders and Localism Orders
 
-        when 1, 2, 4
+        when 1, 17, 18, 19, 2, 4
           @start_date_type = "laying date"
           @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 * Proposed Statutory Instruments (PNSIs)
