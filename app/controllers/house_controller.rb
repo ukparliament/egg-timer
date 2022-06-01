@@ -10,6 +10,21 @@ class HouseController < ApplicationController
     @house = House.find( house )
   end
   
+  def sitting_day_list
+    house = params[:house]
+    @house = House.find( house )
+  end
+  
+  def virtual_sitting_day_list
+    house = params[:house]
+    @house = House.find( house )
+  end
+  
+  def adjournment_day_list
+    house = params[:house]
+    @house = House.find( house )
+  end
+  
   def upcoming
     house = params[:house]
     @house = House.find( house )
