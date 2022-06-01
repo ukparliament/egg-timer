@@ -1,1 +1,1 @@
-<%= content_tag( 'li', virtual_sitting_day.label ) %>
+<%= content_tag( 'li', link_to( virtual_sitting_day.label, calendar_day_url( :year => virtual_sitting_day.start_date.year, :month => virtual_sitting_day.start_date.month, :day => virtual_sitting_day.start_date.day ) ) ) %>

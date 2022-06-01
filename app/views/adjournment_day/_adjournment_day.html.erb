@@ -1,1 +1,4 @@
 <%= content_tag( 'li', adjournment_day.label ) %>
+
+
+<%= content_tag( 'li', link_to( adjournment_day.label, calendar_day_url( :year => adjournment_day.date.year, :month => adjournment_day.date.month, :day => adjournment_day.date.day ) ) ) %>
