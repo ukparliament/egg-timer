@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get 'houses' => 'house#index', as: :house_list
   get 'houses/upcoming' => 'house#upcoming_all', as: :house_upcoming_all
   get 'houses/:house' => 'house#show', as: :house_show
+  get 'houses/:house/sitting-days' => 'house#sitting_day_list', as: :house_sitting_day_list
+  get 'houses/:house/virtual-sitting-days' => 'house#virtual_sitting_day_list', as: :house_virtual_sitting_day_list
+  get 'houses/:house/adjournment-days' => 'house#adjournment_day_list', as: :house_adjournment_day_list
   get 'houses/:house/upcoming' => 'house#upcoming', as: :house_upcoming
   
   get 'calculator' => 'calculator#index', as: :calculator_form
