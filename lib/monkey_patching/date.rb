@@ -510,7 +510,31 @@ class Date
   end
   
   # (End of set of methods to find the first day of a given type.)
-
+  
+  ### A set of methods to return which higher level parliamentary time periods a calendar day sits in.
+  # A calendar day may sit in either a dissolution period or a Parliament period.
+  # If a calendar day sits inside a Parliament period, it may sit inside either a session or a dissolution period.
+  
+  #### We want to find which dissolution period a calendar day sits in, if any.
+  def dissolution_period
+    DissolutionPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
+  end
+  
+  #### We want to find which Parliament period a calendar day sits in, if any.
+  def parliament_period
+    ParliamentPeriod.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
+  end
+  
+  #### We want to find which prorogoration period a calendar day sits in, if any.
+  def prorogation_period
+    ProrogationPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
+  end
+  
+  #### We want to find which session a calendar day sits in, if any.
+  def session
+    Session.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
+  end
+  
   # Generate label for the day type in the Commons in a session.
   def commons_day_type
     if self.is_commons_parliamentary_sitting_day?
