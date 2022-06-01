@@ -1,0 +1,11 @@
+<div id="parliamentary-time">
+	<% if parliamentary_time.dissolution_period -%>
+		<%= content_tag( 'p', "#{@title} is in #{link_to( "dissolution period #{parliamentary_time.dissolution_period.number}", dissolution_period_show_url( :dissolution_period => parliamentary_time.dissolution_period ) )}.".html_safe ) %>
+	<% elsif parliamentary_time.parliament_period -%>
+		<% if parliamentary_time.prorogation_period -%>
+			<%= content_tag( 'p', "#{@title} is in #{link_to( "prorogation #{parliamentary_time.prorogation_period.number}", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of #{link_to( "Parliament #{parliamentary_time.parliament_period.number}", parliament_show_url( :parliament => parliamentary_time.parliament_period ) )}.".html_safe ) %>
+		<% elsif parliamentary_time.session -%>
+		<%= content_tag( 'p', "#{@title} is in #{link_to( "session #{parliamentary_time.session.number}", session_show_url( :session => parliamentary_time.session ) )} of #{link_to( "Parliament #{parliamentary_time.parliament_period.number}", parliament_show_url( :parliament => parliamentary_time.parliament_period ) )}.".html_safe ) %>
+		<% end -%>
+	<% end -%>
+</div>
