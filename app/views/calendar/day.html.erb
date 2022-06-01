@@ -1,0 +1,22 @@
+<p>
+<button><%= link_to( 'Previous day', calendar_day_url( :year => @previous_date.year, :month => @previous_date.month, :day =>  @previous_date.day ) )  %></button>
+
+<button style="float:right;"><%= link_to( 'Next day', calendar_day_url( :year => @next_date.year, :month => @next_date.month, :day => @next_date.day ) )  %></button>
+
+<table>
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Day</th>
+			<th>Commons day type</th>
+			<th>Commons praying</th>
+			<th>Lords day type</th>
+			<th>Lords praying</th>
+		</tr>
+	</thead>
+	<tbody>
+	<%= render :partial => 'date', :object => @date %>
+	</tbody>
+</table>
+
+<%= render :partial => 'parliamentary_time', :object => @date %>
