@@ -110,4 +110,14 @@ class CalendarController < ApplicationController
     @previous_date = start_date - 1.month
     @next_date = start_date + 1.month
   end
+
+  def day
+    year = params[:year]
+    month = params[:month]
+    day = params[:day]
+    @title = "#{day.to_i.ordinalize} #{Date::MONTHNAMES[month.to_i]} #{year}"
+    @date = Date.new( year.to_i, month.to_i, day.to_i)
+    @previous_date = @date - 1.day
+    @next_date = @date + 1.day
+  end
 end
