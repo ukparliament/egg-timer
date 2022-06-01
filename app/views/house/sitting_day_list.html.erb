@@ -1,0 +1,5 @@
+<%= content_tag( 'h1', "#{@house.name} - Sitting days" ) %>
+
+<ol>
+	<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days %>
+</ol>
