@@ -1,0 +1,8 @@
+<tr id="date-<%= day.strftime('%e').strip.to_i  %>" title="date-<%= day.strftime('%e').strip.to_i  %>">
+	<td><%= day.strftime('%A')  %></td>
+	<td><%= link_to( day.strftime('%e').strip.to_i.ordinalize, calendar_day_url( :day => day.strftime('%e').strip ) ) %></td>
+	<td title="Commons day type" class="commons"><%= day.commons_day_type  %></td>
+	<td title="Commons praying"><%= day.is_commons_scrutiny_day_label  %></td>
+	<td title="Lords day type" class="lords"><%= day.lords_day_type  %></td>
+	<td title="Lords praying"><%= day.is_lords_scrutiny_day_label  %></td>
+</tr>
