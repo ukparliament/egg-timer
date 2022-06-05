@@ -74,6 +74,13 @@ class CalendarController < ApplicationController
     @years = [*earliest_year..latest_year].reverse
   end
   
+  def today
+    today = Date.today
+    puts "*****"
+    puts today
+    redirect_to calendar_day_url( :year => today.strftime('%Y'), :month => today.strftime('%-m'), :day => today.strftime('%e').strip )
+  end
+  
   def year
     year = params[:year]
     @title = year

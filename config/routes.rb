@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
   
   get 'calendar' => 'calendar#index', as: :calendar_list
+  get 'calendar/today' => 'calendar#today', as: :calendar_today
   get 'calendar/:year' => 'calendar#year', as: :calendar_year
   get 'calendar/:year/:month' => 'calendar#month', as: :calendar_month
   get 'calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day
