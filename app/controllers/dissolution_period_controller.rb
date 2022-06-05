@@ -8,5 +8,6 @@ class DissolutionPeriodController < ApplicationController
   def show
     dissolution_period = params[:dissolution_period]
     @dissolution_period = DissolutionPeriod.find( dissolution_period )
+    @title = @dissolution_period.label
   end
 end

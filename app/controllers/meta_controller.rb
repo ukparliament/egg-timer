@@ -12,7 +12,7 @@ class MetaController < ApplicationController
   	@title = "How the calendar uses the information you create"
   end
   
-  def prorogation_dissolution
+  def prorogation_and_dissolution
   	@title = "What to do at prorogation and dissolution"
   end
   

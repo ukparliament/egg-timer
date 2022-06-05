@@ -8,5 +8,6 @@ class ProrogationPeriodController < ApplicationController
   def show
     prorogation_period = params[:prorogation_period]
     @prorogation_period = ProrogationPeriod.find( prorogation_period )
+    @title = @prorogation_period.label_with_parliament
   end
 end

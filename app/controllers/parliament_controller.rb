@@ -8,5 +8,6 @@ class ParliamentController < ApplicationController
   def show
     parliament = params[:parliament]
     @parliament = ParliamentPeriod.find( parliament )
+    @title = @parliament.label
   end
 end
