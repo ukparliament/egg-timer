@@ -8,6 +8,7 @@ class HouseController < ApplicationController
   def show
     house = params[:house]
     @house = House.find( house )
+    @title = @house.name
   end
   
   def upcoming_all
