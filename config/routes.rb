@@ -31,6 +31,15 @@ Rails.application.routes.draw do
   get 'houses/:house/sitting-days' => 'house_days#sitting_day_list', as: :house_days_sitting_day_list
   get 'houses/:house/sitting-days/upcoming' => 'house_days#sitting_day_upcoming', as: :house_days_sitting_day_upcoming
   get 'houses/:house/sitting-days/upcoming/next' => 'house_days#sitting_day_next', as: :house_days_sitting_day_next
+  
+  get 'houses/:house/sitting-days/preceding' => 'house_days#sitting_day_preceding', as: :house_days_sitting_day_preceding
+  get 'houses/:house/sitting-days/preceding/last' => 'house_days#sitting_day_last', as: :house_days_sitting_day_last
+  
+  
+  
+  
+  
+  
   get 'houses/:house/virtual-sitting-days' => 'house_days#virtual_sitting_day_list', as: :house_days_virtual_sitting_day_list
   get 'houses/:house/virtual-sitting-days/upcoming' => 'house_days#virtual_sitting_day_upcoming', as: :house_days_virtual_sitting_day_upcoming
   get 'houses/:house/virtual-sitting-days/upcoming/next' => 'house_days#virtual_sitting_day_next', as: :house_days_virtual_sitting_day_next
