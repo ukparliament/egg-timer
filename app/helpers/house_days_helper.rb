@@ -1,0 +1,2 @@
+module HouseDaysHelper
+end

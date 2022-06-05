@@ -1,0 +1,5 @@
+<%= content_tag( 'h1', "#{@house.name} - upcoming" ) %>
+
+<ol>
+	<%= render :partial => 'day_with_type', :collection => @house.upcoming %>
+</ol>

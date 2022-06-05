@@ -1,0 +1,11 @@
+<li>
+	<h2>
+		<%= day_with_type.start_date.strftime( '%A, ' ) %><%= day_with_type.start_date.strftime('%e').strip.to_i.ordinalize  %><%= day_with_type.start_date.strftime( ' %B %Y' ) %>
+		
+		<% if day_with_type.start_date != day_with_type.end_date %>
+			- 
+			<%= day_with_type.end_date.strftime( '%A, ' ) %><%= day_with_type.end_date.strftime('%e').strip.to_i.ordinalize  %><%= day_with_type.end_date.strftime( ' %B %Y' ) %>
+		<% end%>
+	</h2>
+	<%= content_tag( 'p', day_with_type.day_type ) %>
+</li>

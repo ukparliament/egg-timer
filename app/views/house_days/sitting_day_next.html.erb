@@ -1,0 +1,7 @@
+<%= content_tag( 'h1', "#{@house.name} - next sitting day" ) %>
+
+<% if @house.next_sitting_day -%>
+	<%= content_tag( 'p', link_to( @house.next_sitting_day.label, calendar_day_url( :year => @house.next_sitting_day.start_date.year, :month => @house.next_sitting_day.start_date.month, :day => @house.next_sitting_day.start_date.day ) ) ) %>
+<% else -%>
+	<%= content_tag( 'p', "There are no upcoming sitting days in the #{@house.name}." ) %>
+<% end -%>

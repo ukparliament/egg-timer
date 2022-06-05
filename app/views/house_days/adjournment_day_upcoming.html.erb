@@ -1,0 +1,5 @@
+<%= content_tag( 'h1', "#{@house.name} - upcoming adjournment days" ) %>
+
+<ol>
+	<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.upcoming_adjournment_days %>
+</ol>
