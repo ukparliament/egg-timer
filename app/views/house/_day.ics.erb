@@ -1,7 +1,0 @@
-BEGIN:VEVENT
-SUMMARY:<%= day.day_type %>
-UID:<%= day.start_date.strftime( '%Y%m%d' ) %>000000
-DTSTAMP:<%= day.start_date.strftime( '%Y%m%d' ) %>T000000
-DTSTART;VALUE=DATE:<%= day.start_date.strftime( '%Y%m%d' ) %>
-STATUS:TENTATIVE
-END:VEVENT
