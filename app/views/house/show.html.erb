@@ -1,22 +1,28 @@
 <%= content_tag( 'h1', @house.name ) %>
 
-<details>
-    <summary>Sitting days</summary>
-	<ol>
-		<%= render :partial => 'sitting_day/sitting_day', :collection => @house.sitting_days %>
-	</ol>
-</details>
+<div id="sitting-days">
+	<%= content_tag( 'h2', 'Sitting days' ) %>
+	<ul>
+		<%= content_tag( 'li', link_to( 'Upcoming sitting days', house_days_sitting_day_upcoming_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Next sitting day', house_days_sitting_day_next_url ) ) %>
+		<%= content_tag( 'li', link_to( 'All sitting days', house_days_sitting_day_list_url ) ) %>
+	</ul>
+</div>
 
-<details>
-    <summary>Virtual sitting days</summary>
-	<ol>
-		<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.virtual_sitting_days %>
-	</ol>
-</details>
+<div id="virtual-sitting-days">
+	<%= content_tag( 'h2', 'Virtual sitting days' ) %>
+	<ul>
+		<%= content_tag( 'li', link_to( 'Upcoming virtual sitting days', house_days_virtual_sitting_day_upcoming_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Next virtual sitting day', house_days_virtual_sitting_day_next_url ) ) %>
+		<%= content_tag( 'li', link_to( 'All virtual sitting days', house_days_virtual_sitting_day_list_url ) ) %>
+	</ul>
+</div>
 
-<details>
-    <summary>Adjournment days</summary>
-	<ol>
-	<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.adjournment_days %>
-	</ol>
-</details>
+<div id="adjournment-days">
+	<%= content_tag( 'h2', 'Adjournment days' ) %>
+	<ul>
+		<%= content_tag( 'li', link_to( 'Upcoming adjournment days', house_days_adjournment_day_upcoming_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Next adjournment day', house_days_adjournment_day_next_url ) ) %>
+		<%= content_tag( 'li', link_to( 'All adjournment days', house_days_adjournment_day_list_url ) ) %>
+	</ul>
+</div>
