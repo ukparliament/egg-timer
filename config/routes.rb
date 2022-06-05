@@ -15,21 +15,27 @@ Rails.application.routes.draw do
   get 'sessions' => 'session#index', as: :session_list
   get 'sessions/:session' => 'session#show', as: :session_show
   
+  get 'prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
+  get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
+  
   get 'calendar' => 'calendar#index', as: :calendar_list
   get 'calendar/:year' => 'calendar#year', as: :calendar_year
   get 'calendar/:year/:month' => 'calendar#month', as: :calendar_month
   get 'calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day
   
-  get 'prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
-  get 'prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
-  
   get 'houses' => 'house#index', as: :house_list
   get 'houses/upcoming' => 'house#upcoming_all', as: :house_upcoming_all
   get 'houses/:house' => 'house#show', as: :house_show
-  get 'houses/:house/sitting-days' => 'house#sitting_day_list', as: :house_sitting_day_list
-  get 'houses/:house/virtual-sitting-days' => 'house#virtual_sitting_day_list', as: :house_virtual_sitting_day_list
-  get 'houses/:house/adjournment-days' => 'house#adjournment_day_list', as: :house_adjournment_day_list
-  get 'houses/:house/upcoming' => 'house#upcoming', as: :house_upcoming
+  get 'houses/:house/upcoming' => 'house_days#upcoming', as: :house_days_upcoming
+  get 'houses/:house/sitting-days' => 'house_days#sitting_day_list', as: :house_days_sitting_day_list
+  get 'houses/:house/sitting-days/upcoming' => 'house_days#sitting_day_upcoming', as: :house_days_sitting_day_upcoming
+  get 'houses/:house/sitting-days/upcoming/next' => 'house_days#sitting_day_next', as: :house_days_sitting_day_next
+  get 'houses/:house/virtual-sitting-days' => 'house_days#virtual_sitting_day_list', as: :house_days_virtual_sitting_day_list
+  get 'houses/:house/virtual-sitting-days/upcoming' => 'house_days#virtual_sitting_day_upcoming', as: :house_days_virtual_sitting_day_upcoming
+  get 'houses/:house/virtual-sitting-days/upcoming/next' => 'house_days#virtual_sitting_day_next', as: :house_days_virtual_sitting_day_next
+  get 'houses/:house/adjournment-days' => 'house_days#adjournment_day_list', as: :house_days_adjournment_day_list
+  get 'houses/:house/adjournment-days/upcoming' => 'house_days#adjournment_day_upcoming', as: :house_days_adjournment_day_upcoming
+  get 'houses/:house/adjournment-days/upcoming/next' => 'house_days#adjournment_day_next', as: :house_days_adjournment_day_next
   
   get 'calculator' => 'calculator#index', as: :calculator_form
   get 'calculator/:calculate' => 'calculator#calculate', as: :calculator_calculate
