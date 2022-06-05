@@ -24,6 +24,26 @@ class HouseDaysController < ApplicationController
     @title = @house.name + ' - next sitting day'
   end
   
+  def sitting_day_preceding
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - preceding sitting days'
+  end
+  
+  def sitting_day_last
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - last sitting day'
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
   def virtual_sitting_day_list
     house = params[:house]
     @house = House.find( house )
