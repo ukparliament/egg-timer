@@ -1,9 +1,11 @@
 <div id="sitting-days">
 	<%= content_tag( 'h2', 'Sitting days' ) %>
 	<ul>
-		<%= content_tag( 'li', link_to( 'Upcoming sitting days', house_days_sitting_day_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'Next sitting day', house_days_sitting_day_next_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Upcoming sitting days', house_days_sitting_day_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'All sitting days', house_days_sitting_day_list_url ) ) %>
+		<%= content_tag( 'li', link_to( 'All preceding sitting days', house_days_sitting_day_preceding_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Last sitting day', house_days_sitting_day_last_url ) ) %>
 	</ul>
 </div>
 
