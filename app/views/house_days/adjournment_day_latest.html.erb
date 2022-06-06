@@ -1,0 +1,5 @@
+<% if @house.latest_adjournment_day -%>
+	<%= content_tag( 'p', link_to( @house.latest_adjournment_day.label, calendar_day_url( :year => @house.latest_adjournment_day.start_date.year, :month => @house.latest_adjournment_day.start_date.month, :day => @house.latest_adjournment_day.start_date.day ) ) ) %>
+<% else -%>
+	<%= content_tag( 'p', "There are no preceding adjournment days in the #{@house.name}." ) %>
+<% end -%>
