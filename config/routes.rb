@@ -31,18 +31,20 @@ Rails.application.routes.draw do
   get 'houses/:house/sitting-days' => 'house_days#sitting_day_list', as: :house_days_sitting_day_list
   get 'houses/:house/sitting-days/upcoming' => 'house_days#sitting_day_upcoming', as: :house_days_sitting_day_upcoming
   get 'houses/:house/sitting-days/upcoming/next' => 'house_days#sitting_day_next', as: :house_days_sitting_day_next
-  
   get 'houses/:house/sitting-days/preceding' => 'house_days#sitting_day_preceding', as: :house_days_sitting_day_preceding
   get 'houses/:house/sitting-days/preceding/latest' => 'house_days#sitting_day_latest', as: :house_days_sitting_day_latest
-  
-  
-  
-  
-  
-  
   get 'houses/:house/virtual-sitting-days' => 'house_days#virtual_sitting_day_list', as: :house_days_virtual_sitting_day_list
   get 'houses/:house/virtual-sitting-days/upcoming' => 'house_days#virtual_sitting_day_upcoming', as: :house_days_virtual_sitting_day_upcoming
   get 'houses/:house/virtual-sitting-days/upcoming/next' => 'house_days#virtual_sitting_day_next', as: :house_days_virtual_sitting_day_next
+  get 'houses/:house/virtual-sitting-days/preceding' => 'house_days#virtual_sitting_day_preceding', as: :house_days_virtual_sitting_day_preceding
+  get 'houses/:house/virtual-sitting-days/preceding/latest' => 'house_days#virtual_sitting_day_latest', as: :house_days_virtual_sitting_day_latest
+  
+  
+  
+  
+  
+  
+  
   get 'houses/:house/adjournment-days' => 'house_days#adjournment_day_list', as: :house_days_adjournment_day_list
   get 'houses/:house/adjournment-days/upcoming' => 'house_days#adjournment_day_upcoming', as: :house_days_adjournment_day_upcoming
   get 'houses/:house/adjournment-days/upcoming/next' => 'house_days#adjournment_day_next', as: :house_days_adjournment_day_next
