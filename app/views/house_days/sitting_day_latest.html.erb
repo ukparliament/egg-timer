@@ -1,5 +1,5 @@
-<% if @house.last_sitting_day -%>
-	<%= content_tag( 'p', link_to( @house.last_sitting_day.label, calendar_day_url( :year => @house.last_sitting_day.start_date.year, :month => @house.last_sitting_day.start_date.month, :day => @house.last_sitting_day.start_date.day ) ) ) %>
+<% if @house.latest_sitting_day -%>
+	<%= content_tag( 'p', link_to( @house.latest_sitting_day.label, calendar_day_url( :year => @house.latest_sitting_day.start_date.year, :month => @house.latest_sitting_day.start_date.month, :day => @house.latest_sitting_day.start_date.day ) ) ) %>
 <% else -%>
 	<%= content_tag( 'p', "There are no preceding sitting days in the #{@house.name}." ) %>
 <% end -%>
