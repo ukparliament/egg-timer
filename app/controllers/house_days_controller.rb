@@ -30,10 +30,10 @@ class HouseDaysController < ApplicationController
     @title = @house.name + ' - preceding sitting days'
   end
   
-  def sitting_day_last
+  def sitting_day_latest
     house = params[:house]
     @house = House.find( house )
-    @title = @house.name + ' - last sitting day'
+    @title = @house.name + ' - latest sitting day'
   end
   
   
