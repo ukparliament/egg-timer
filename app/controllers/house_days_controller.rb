@@ -36,14 +36,6 @@ class HouseDaysController < ApplicationController
     @title = @house.name + ' - latest sitting day'
   end
   
-  
-  
-  
-  
-  
-  
-  
-  
   def virtual_sitting_day_list
     house = params[:house]
     @house = House.find( house )
@@ -61,6 +53,25 @@ class HouseDaysController < ApplicationController
     @house = House.find( house )
     @title = @house.name + ' - next virtual sitting day'
   end
+  
+  def virtual_sitting_day_preceding
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - preceding virtual sitting days'
+  end
+  
+  def virtual_sitting_day_latest
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - latest virtual sitting day'
+  end
+  
+  
+  
+  
+  
+  
+  
   
   def adjournment_day_list
     house = params[:house]
