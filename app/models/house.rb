@@ -44,7 +44,7 @@ class House < ActiveRecord::Base
     )
   end
   
-  def last_sitting_day
+  def latest_sitting_day
     self.preceding_sitting_days.first
   end
   
@@ -62,6 +62,22 @@ class House < ActiveRecord::Base
   
   def next_virtual_sitting_day
     self.upcoming_virtual_sitting_days.first
+  end
+  
+  def preceding_virtual_sitting_days
+    VirtualSittingDay.find_by_sql(
+      "
+        SELECT start_date AS start_date, end_date AS end_date, 'Virtual sitting day' AS day_type
+        FROM virtual_sitting_days
+        WHERE house_id = #{self.id}
+        AND start_date < '#{Date.today}'
+        ORDER BY start_date DESC
+      "
+    )
+  end
+  
+  def latest_virtual_sitting_day
+    self.preceding_virtual_sitting_days.first
   end
   
   def upcoming_adjournment_days
