@@ -28,6 +28,7 @@ task :import_sessions => :environment do
     session.number = row[1]
     session.start_date = row[2].to_date
     session.end_date = row[3].to_date if row[3]
+    session.citation = row[4].strip
     parliament_period = ParliamentPeriod.find_by number: row[0]
     session.parliament_period = parliament_period
     session.save
