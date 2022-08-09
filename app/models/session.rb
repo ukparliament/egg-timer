@@ -19,6 +19,7 @@ class Session < ActiveRecord::Base
     label = label + self.parliament_period.number.to_s
     label = label + ' Session '
     label = label + self.number.to_s
+    label = label + ' (' + self.citation + ')'
     label
   end
   
