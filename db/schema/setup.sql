@@ -37,6 +37,7 @@ create table sessions (
 	number int not null,
 	start_date date not null,
 	end_date date null,
+	citation varchar(255) not null,
 	parliament_period_id int not null,
 	constraint fk_parliament_period foreign key (parliament_period_id) references parliament_periods(id),
 	primary key (id)
