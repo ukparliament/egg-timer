@@ -1,5 +1,8 @@
 class SyncController < ApplicationController
   
+  # Require Google calendar api.
+  require 'google/apis/calendar_v3'
+  
   # Require the syncing code.
   require 'syncing/sync'
 
