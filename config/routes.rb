@@ -55,6 +55,8 @@ Rails.application.routes.draw do
   get 'meta/comments' => 'meta#comment', as: :meta_comment
   get 'meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   
+  get 'sync' => 'sync#sync', as: :sync
+  
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
