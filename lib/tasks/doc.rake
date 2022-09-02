@@ -47,7 +47,7 @@ a {text-decoration:underline;color:white;}
     </style>
     <title>#{with_path}</title>
   </head>
-  <body><p><a href="/">parliament-calendar.herokuapp.com</a></p>}
+  <body>}
 
   File.foreach(with_path).with_index do |line, line_num|
     comment_line = /^\s*#\s*(?<content>.*)/.match(line)
