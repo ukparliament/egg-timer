@@ -8,8 +8,8 @@
       body {
         max-width: 40rem;
         margin: auto;
-        padding: 1rem;
-        font-family: 'Helvetica Neue', system-ui;
+        padding: 2rem 1rem;
+        font-family: 'Helvetica Neue','Helvetica', system-ui;
         color: black;
         background-color: white;
       }
@@ -21,51 +21,54 @@
       code pre {white-space: pre-wrap; word-break: break-word;}
       code:hover {color:black;}
       h1, h2 {font-weight:normal;}
+      a {text-decoration:none;}
+      a.githubline {color:gray;font-weight:bold;}
       @media (prefers-color-scheme: dark) {
 body {color:white;background-color:black;}
+a {text-decoration:underline;color:white;}
 }
     </style>
-    <title>app/controllers/calculations/treaty.rb</title>
+    <title>lib/calculations/treaty.rb</title>
   </head>
-  <body><code title='Line 1, app/controllers/calculations/treaty.rb'><pre><a name='1'> 1</a> module CALCULATION_TREATY
+  <body><code title='Line 1, lib/calculations/treaty.rb'><pre><a name='1'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L1'> 1</a> module CALCULATION_TREATY
 </pre></code><h1>A method for calculating the end date for treaty periods A and B.</h1>
 <p>The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.</p>
 <p>For period A the start date is the day on which <q>a Minister of the Crown has laid before Parliament a copy of the treaty</q>.</p>
 <p>For period B the start date is the day on which <q>a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why</q>.</p>
 <p>The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">2</a>, <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5">5</a> and <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9">9</a>.</p>
-<code title='Line 9, app/controllers/calculations/treaty.rb'><pre><a name='9'> 9</a>   def treaty_calculation( date, target_day_count )
+<code title='Line 9, lib/calculations/treaty.rb'><pre><a name='9'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L9'> 9</a>   def treaty_calculation( date, target_day_count )
 </pre></code><h2>We start counting on the <strong>first day when both Houses have an actual sitting</strong>.</h2>
 <p>For period A this <strong>does not</strong> include the laying day of the treaty.</p>
 <p>For period B this <strong>does not</strong> include the day on which a Minister makes a statement that the treaty should nevertheless be ratified.</p>
 <p>We continue to the <strong>day immediately following</strong> the start day.</p>
 <p>If that day is or is followed by a joint actual sitting day...</p>
-<code title='Line 17, app/controllers/calculations/treaty.rb'><pre><a name='17'> 17</a>     if date.next_day.first_joint_actual_sitting_day
+<code title='Line 17, lib/calculations/treaty.rb'><pre><a name='17'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L17'> 17</a>     if date.next_day.first_joint_actual_sitting_day
 </pre></code><p>... we set the date to the day of the first joint actual sitting day <strong>following</strong> the start date.</p>
-<code title='Line 20, app/controllers/calculations/treaty.rb'><pre><a name='20'> 20</a>       date = date.next_day.first_joint_actual_sitting_day
+<code title='Line 20, lib/calculations/treaty.rb'><pre><a name='20'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L20'> 20</a>       date = date.next_day.first_joint_actual_sitting_day
 </pre></code><p>... we have found the start of the scrutiny period.</p>
-<code title='Line 23, app/controllers/calculations/treaty.rb'><pre><a name='23'> 23</a>       @scrutiny_start_date = date
+<code title='Line 23, lib/calculations/treaty.rb'><pre><a name='23'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L23'> 23</a>       @scrutiny_start_date = date
 </pre></code><p>... we&#39;ve found the first joint actual sitting day so we start counting from day 1.</p>
-<code title='Line 26, app/controllers/calculations/treaty.rb'><pre><a name='26'> 26</a>       day_count = 1
+<code title='Line 26, lib/calculations/treaty.rb'><pre><a name='26'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L26'> 26</a>       day_count = 1
 </pre></code><p>... whilst the number of days we’re counting is less than the target number of days to count ...</p>
-<code title='Line 29, app/controllers/calculations/treaty.rb'><pre><a name='29'> 29</a>       while ( day_count < target_day_count ) do
+<code title='Line 29, lib/calculations/treaty.rb'><pre><a name='29'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L29'> 29</a>       while ( day_count < target_day_count ) do
 </pre></code><p>... continue to the <strong>next day</strong>.</p>
-<code title='Line 32, app/controllers/calculations/treaty.rb'><pre><a name='32'> 32</a>         date = date.next_day
+<code title='Line 32, lib/calculations/treaty.rb'><pre><a name='32'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L32'> 32</a>         date = date.next_day
 </pre></code><p>... and add 1 to the day count if this is an joint actual sitting day.</p>
-<code title='Line 35, app/controllers/calculations/treaty.rb'><pre><a name='35'> 35</a>         day_count +=1 if date.is_joint_actual_sitting_day?
+<code title='Line 35, lib/calculations/treaty.rb'><pre><a name='35'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L35'> 35</a>         day_count +=1 if date.is_joint_actual_sitting_day?
 </pre></code><p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
-<code title='Line 38, app/controllers/calculations/treaty.rb'><pre><a name='38'> 38</a>         if date.is_calendar_not_populated?
+<code title='Line 38, lib/calculations/treaty.rb'><pre><a name='38'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L38'> 38</a>         if date.is_calendar_not_populated?
 </pre></code><p>... this error message is displayed to users ...</p>
-<code title='Line 41, app/controllers/calculations/treaty.rb'><pre><a name='41'> 41</a>           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+<code title='Line 41, lib/calculations/treaty.rb'><pre><a name='41'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L41'> 41</a>           @error_message = "It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
 </pre></code><p>... and we stop looking through the calendar.</p>
-<code title='Line 44, app/controllers/calculations/treaty.rb'><pre><a name='44'> 44</a>           break
-</pre></code><code title='Line 45, app/controllers/calculations/treaty.rb'><pre><a name='45'> 45</a>         end
-</pre></code><code title='Line 46, app/controllers/calculations/treaty.rb'><pre><a name='46'> 46</a>       end
+<code title='Line 44, lib/calculations/treaty.rb'><pre><a name='44'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L44'> 44</a>           break
+</pre></code><code title='Line 45, lib/calculations/treaty.rb'><pre><a name='45'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L45'> 45</a>         end
+</pre></code><code title='Line 46, lib/calculations/treaty.rb'><pre><a name='46'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L46'> 46</a>       end
 </pre></code><p>If <strong>day immediately following</strong> the laying day is not a joint actual sitting day <strong>and</strong> is not followed by a joint actual sitting day...</p>
-<code title='Line 49, app/controllers/calculations/treaty.rb'><pre><a name='49'> 49</a>     else
+<code title='Line 49, lib/calculations/treaty.rb'><pre><a name='49'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L49'> 49</a>     else
 </pre></code><p>.. this error message is displayed to users.</p>
-<code title='Line 52, app/controllers/calculations/treaty.rb'><pre><a name='52'> 52</a>       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
-</pre></code><code title='Line 53, app/controllers/calculations/treaty.rb'><pre><a name='53'> 53</a>     end
+<code title='Line 52, lib/calculations/treaty.rb'><pre><a name='52'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L52'> 52</a>       @error_message = "Unable to find a future joint sitting day. It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced."
+</pre></code><code title='Line 53, lib/calculations/treaty.rb'><pre><a name='53'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L53'> 53</a>     end
 </pre></code><p>Return the anticipated end date of the scrutiny period for display.</p>
-<code title='Line 56, app/controllers/calculations/treaty.rb'><pre><a name='56'> 56</a>     date
-</pre></code><code title='Line 57, app/controllers/calculations/treaty.rb'><pre><a name='57'> 57</a>   end
-</pre></code><code title='Line 58, app/controllers/calculations/treaty.rb'><pre><a name='58'> 58</a> end</pre></code></body></html>
+<code title='Line 56, lib/calculations/treaty.rb'><pre><a name='56'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L56'> 56</a>     date
+</pre></code><code title='Line 57, lib/calculations/treaty.rb'><pre><a name='57'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L57'> 57</a>   end
+</pre></code><code title='Line 58, lib/calculations/treaty.rb'><pre><a name='58'  class='githubline' href='https://github.com/fantasticlife/egg-timer/tree/master/lib/calculations/treaty.rb#L58'> 58</a> end</pre></code></body></html>
