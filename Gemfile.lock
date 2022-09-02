@@ -159,10 +159,6 @@ GEM
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.8-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.8-x86_64-linux)
-      racc (~> 1.4)
     os (1.1.4)
     pg (1.4.3)
     public_suffix (5.0.0)
@@ -258,9 +254,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-darwin-19
-  x86_64-linux
-  x86_64-unknown
 
 DEPENDENCIES
   byebug
@@ -281,4 +274,4 @@ RUBY VERSION
    ruby 2.7.3p183
 
 BUNDLED WITH
-   2.2.32
+   2.1.4
