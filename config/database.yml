@@ -4,3 +4,11 @@ development:
   database: parliament_calendar
   host: localhost
   pool: 5
+  
+production:
+  <<: *default
+  host: <%= ENV[‘DB_HOST’] %>
+  port: 5432
+  database: <%= ENV[‘DB_DATABASE’] %>
+  username: <%= ENV[‘DB_USERNAME’] %>
+  password: <%= ENV[‘DB_PASSWORD’] %>
