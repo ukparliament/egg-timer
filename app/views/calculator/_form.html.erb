@@ -1,5 +1,5 @@
 <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
-<form action="calculator/calculate" method="GET" id="calculator">
+<form action="egg-timer/calculator/calculate" method="GET" id="calculator">
 	<fieldset>
 		<legend>Period to calculate</legend>
 		<%= render :partial => 'calculator/procedure', :collection => @procedures %>
