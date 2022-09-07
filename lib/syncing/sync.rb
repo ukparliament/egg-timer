@@ -278,20 +278,20 @@ module SYNC
     sync_token = SyncToken.find_by_google_calendar_id( calendar_id )
   
     # If there is a sync token for this calendar...
-    #if sync_token
+    if sync_token
     
       # ...get any changes since that last sync token.
-      #response = service.list_events(
-        #calendar_id,
-        #max_results: 2500, # 2500 is the maximum Google will return per page.
-        #single_events: true,
-        #show_deleted: true,
-        #page_token: page_token,
-        #sync_token: sync_token.token
-      #)
+      response = service.list_events(
+        calendar_id,
+        max_results: 2500, # 2500 is the maximum Google will return per page.
+        single_events: true,
+        show_deleted: true,
+        page_token: page_token,
+        sync_token: sync_token.token
+      )
     
     # If there is no sync token for this calendar...
-    #else
+    else
     
       # ...get any changes since the start of that calendar's time.
       response = service.list_events(
@@ -301,7 +301,7 @@ module SYNC
         show_deleted: true,
         page_token: page_token
       )
-      #end
+    end
   
     # If a sync token has been returned by the Google API...
     if response.next_sync_token
