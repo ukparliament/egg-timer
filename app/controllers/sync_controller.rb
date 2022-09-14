@@ -27,4 +27,13 @@ class SyncController < ApplicationController
     # Sync lords adjournment days.
     sync_adjournment_days( 'ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com', 2 )
   end
+  
+  def test
+    sync_token = SyncToken.new
+    sync_token.google_calendar_id = 'dog'
+    sync_token.token = 'cat'
+    sync_token.save
+    
+    @sync_tokens = SyncToken.all
+  end
 end

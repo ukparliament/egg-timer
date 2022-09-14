@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   get 'meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   
   get 'sync' => 'sync#sync', as: :sync
+  get 'sync/test' => 'sync#test', as: :sync_test
   
 
   # Example of regular route:

@@ -1,0 +1,14 @@
+<%= content_tag( 'h1', 'Sync tokens' ) %>
+
+<table>
+	<thead>
+		<tr>
+			<%= content_tag( 'td', 'ID' ) %>
+			<%= content_tag( 'td', 'Calendar ID' ) %>
+			<%= content_tag( 'td', 'Token' ) %>
+		</tr>
+	</thead>
+	<tbody>
+		<%= render :partial => 'sync_token', :collection => @sync_tokens %>
+	</tbody>
+</table>
