@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+PRODID:ukparliament/egg-timer
+VERSION:2.0
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SUMMARY:Scrutiny end date for an instrument starting from <%= @start_date.strftime( '%-d %B %Y') %> (<%= @start_date_type %>) subject to then <%= @procedure.name %> for <%= @day_count %> days
+UID:<%= @scrutiny_end_date.strftime( '%Y%m%d' ) %>000000
+DTSTAMP:<%= @scrutiny_end_date.strftime( '%Y%m%d' ) %>T000000
+DTSTART;VALUE=DATE:<%= @scrutiny_end_date.strftime( '%Y%m%d' ) %>
+STATUS:TENTATIVE
+END:VEVENT
+END:VCALENDAR
