@@ -43,13 +43,10 @@ ol#prorogations {list-style: none;padding-left:0;}
 </head>
 <body>
 <header>
-<nav>
-<p>
 
-<%= link_to( 'Calculate scrutiny period', home_url ) %>
-</p>
-<p>Powered by House of Commons librarians.</p>
-</nav>
+<img src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
+
+<p><%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
 
 <h1><%= @title || "Parliament Calendar" %></h1>
 </header>
