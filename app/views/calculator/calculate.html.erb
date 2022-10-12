@@ -18,11 +18,13 @@
 	
 <ul>
 
-	<li>A procedure type <strong><%= @procedure.name %></strong></li>
+	<% if @procedure -%>
+		<li>A procedure type <strong><%= @procedure.name %></strong></li>
+	<% end -%>
 	
 	<li>A scrutiny period of <strong><%= @day_count %> days</strong></li>
 	
-	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong>  (<%= @start_date_type %>)</li>
+	<li>Starting from <strong><%= @start_date.strftime( '%-d %B %Y') %></strong> <% if @start_date_type -%>(<%= @start_date_type %>)<% end -%></li>
 	
 
 	</ul>
