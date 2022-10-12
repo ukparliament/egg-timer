@@ -1,0 +1,41 @@
+<form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
+	<fieldset>
+		<legend>Calculation style</legend>
+		<p>
+		<label class="radio">
+		<input type="radio" id="calculation-style-1" name="calculation-style" value="1" required> Bicameral instruments (counts when both Houses sitting)</label>
+		</p>
+		<p>
+		<label class="radio">
+		<input type="radio" id="calculation-style-2" name="calculation-style" value="2"> Bicameral instruments (counts when either House sitting)</label>
+		</p>
+		<p>
+		<label class="radio">
+		<input type="radio" id="calculation-style-3" name="calculation-style" value="3"> Commons only instruments</label>
+		</p>
+		<p>
+		<label class="radio">
+		<input type="radio" id="calculation-style-4" name="calculation-style" value="4"> Proposed negative statutory instruments</label>
+		</p>
+		<p>
+		<label class="radio">
+		<input type="radio" id="calculation-style-5" name="calculation-style" value="5"> Treaty periods A and B</label>
+		</p>
+	</fieldset>
+	<p>
+		<label>Start date: DD-MM-YYYY
+			<br>
+			<input type="date" name="start-date" id="start-date" required>
+		</label>
+	</p>
+	
+	<p>
+		<label>
+			Number of days to count
+			<br>
+			<input type="number" name="day-count" id="day-count" required>
+		</label>
+	</p>
+	
+	<button type="submit" id="calculate">Start</button>
+</form>
