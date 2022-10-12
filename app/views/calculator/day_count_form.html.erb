@@ -2,26 +2,33 @@
 
 <form action="" method="GET" id="calculator">
 	
-	<!-- Include start date and procedure ID parameters - passed from main form - as hidden fields -->
+	<!-- Include start date, procedure ID and calculation style parameters - passed from main form - as hidden fields -->
 	<input type="hidden" value="<%= @start_date %>" name="start-date" id="start-date" />
-	<input type="hidden" id="procedure-<%= @procedure.id %>" name="procedure" value="<%= @procedure.id %>">
+	<% if @procedure -%>
+		<input type="hidden" id="procedure-<%= @procedure.id %>" name="procedure" value="<%= @procedure.id %>">
+	<% elsif @calculation_style -%>
+		<input type="hidden" id="calculation-style-<%= @calculation_style %>" name="calculation-style" value="<%= @calculation_style %>">
+	<% end -%>
 	
 	<p>
 		<label>
 			Number of days to count
 			<br>
-			<% if @procedure.typical_day_count -%>
+			
+			<% if @procedure and @procedure.typical_day_count -%>
 				<input type="number" name="day-count" id="day-count" value="<%= @procedure.typical_day_count %>" required>
 			<% else -%>
 				<input type="number" name="day-count" id="day-count" required>
-			<% end -%>
+			<% end -%>	
 		</label>
 	</p>
+	<% if @procedure -%>
 	
-	<% if @procedure.typical_day_count && @procedure.has_day_count_caveats == true  -%>
-		<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
-	<% elsif @procedure.has_day_count_caveats == true -%>
-		<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+		<% if @procedure.typical_day_count && @procedure.has_day_count_caveats == true  -%>
+			<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+		<% elsif @procedure.has_day_count_caveats == true -%>
+			<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+		<% end -%>
 	<% end -%>
 	
 	<button type="submit" id="calculate">Calculate</button>
