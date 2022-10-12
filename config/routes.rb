@@ -45,7 +45,8 @@ Rails.application.routes.draw do
   get 'houses/:house/adjournment-days/preceding/latest' => 'house_days#adjournment_day_latest', as: :house_days_adjournment_day_latest
   
   get 'calculator' => 'calculator#index', as: :calculator_form
-  get 'calculator/:calculate' => 'calculator#calculate', as: :calculator_calculate
+  get 'calculator/styles' => 'calculator#style', as: :calculator_style_form
+  get 'calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
   
   get 'meta' => 'meta#index', as: :meta_list
   get 'meta/using' => 'meta#using', as: :meta_using
