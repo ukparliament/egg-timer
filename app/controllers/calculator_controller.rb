@@ -27,22 +27,32 @@ class CalculatorController < ApplicationController
     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
   end
   
+  # ### This is the code to provide information for the form that users wishing to run a specific calculation style can fill in.
+  def style
+    
+    # Set a title for the page.
+    @title = "Calculate scrutiny periods"
+  end
+  
   # ### This code runs the calculation.
   def calculate
     
     # In order to calculate the scrutiny period, we need:
     
-	  # * the **type of the procedure** itself, which we refer to by a number
-    procedure = params['procedure'].to_i if params['procedure']
-    
     # * the **start date**, for example: "2020-05-06"
     start_date = params['start-date']
     
-    # * the **day count**
+    # * the **day count** and
     day_count = params['day-count']
     
-    # If the procedure and the start date have not been provided by the initial form ...
-    if start_date.blank? or procedure.nil?
+	  # * either the **type of the procedure** itself, which we refer to by a number
+    procedure = params['procedure'].to_i if params['procedure']
+    
+    # * or the **calculation style**, which we also refer to by a number
+    calculation_style = params['calculation-style'].to_i if params['calculation-style']
+    
+    # If neither the **procedure**  nor the **calculation style** have been provided, or the **start date** has not been provided ...
+    if ( procedure.nil? and calculation_style.nil? ) or start_date.blank?
       
       # ... we set an error message ...
 	    @title = "Sorry, there was not enough information provided."
@@ -50,14 +60,17 @@ class CalculatorController < ApplicationController
       # ... and display the error.
       render :template => 'calculator/not_enough_information'
       
-    # If the **procedure** and the **start date** have been provided by the initial form, we ...
+    # If the **start date** and either the **procedure** or the **calculation style** have been provided by the initial form, we ...
     else
-      
-      # # * find the procedure
-      @procedure = Procedure.find( procedure )
       
       # * make the text of the date passed into a date format
       @start_date = Date.parse( start_date )
+      
+      # # * find the procedure if there is one
+      @procedure = Procedure.find( procedure ) if procedure
+      
+      # # * set the calculation style if there is one
+      @calculation_style = calculation_style if calculation_style
       
       # If the day count has not been provided by the day count form or the day count is 0 ...
       if day_count.blank? or day_count.to_i == 0
@@ -70,75 +83,111 @@ class CalculatorController < ApplicationController
         
       # If the day count has been provided by the day count form ...
       else
-    
+        
         # ... we set a title for the page.
     	  @title = "Calculated scrutiny period"
         
         # We get the day count as an integer.
         @day_count = day_count.to_i
         
-        # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
-        case @procedure.id
-        
-        # * Legislative Reform Orders, Public Body Orders and Localism Orders
-        when 1, 17, 18, 19, 2, 4
-        
-          @start_date_type = "laying date"
-          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-        
-        # * Proposed Statutory Instruments (PNSIs)
-        when 3
-        
-          @start_date_type = "laying date"
-          @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
-        
-        # * Commons only negative Statutory Instruments
-        when 5
-        
-          @start_date_type = "laying date"
-          @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-        
-        # * Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders
-        when 6, 13, 14
-      
-          @start_date_type = "laying date"
-          @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
-        
-        # * Some Commons only made affirmative Statutory Instruments
-        when 7
-      
-          @start_date_type = "making date"
-          @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-        
-        # * Commons and Lords made affirmative Statutory Instruments where both Houses are sitting
-        when 8
-        
-          @start_date_type = "making date"
-          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-        
-        # * Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders
-        when 9, 15, 16
-      
-          @start_date_type = "making date"
-          @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
-        
-        # * Treaty period A
-        when 10
-        
-          @start_date_type = "laying date"
-          @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
-        
-        # * Treaty period B
-        when 11
-        
-          @start_date_type = "date of Ministerial statement"
-          @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
-        
-        # * Published drafts under the European Union (Withdrawal) Act 2018
-        when 12
+        # If the procedure has been selected ...
+        if @procedure
           
-          @start_date_type = "date of publication"
-          @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+          # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
+          case @procedure.id
+        
+          # * Legislative Reform Orders, Public Body Orders and Localism Orders
+          when 1, 17, 18, 19, 2, 4
+        
+            @start_date_type = "laying date"
+            @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        
+          # * Proposed Statutory Instruments (PNSIs)
+          when 3
+        
+            @start_date_type = "laying date"
+            @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
+        
+          # * Commons only negative Statutory Instruments
+          when 5
+        
+            @start_date_type = "laying date"
+            @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+        
+          # * Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders
+          when 6, 13, 14
+      
+            @start_date_type = "laying date"
+            @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+        
+          # * Some Commons only made affirmative Statutory Instruments
+          when 7
+      
+            @start_date_type = "making date"
+            @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+        
+          # * Commons and Lords made affirmative Statutory Instruments where both Houses are sitting
+          when 8
+        
+            @start_date_type = "making date"
+            @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+        
+          # * Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders
+          when 9, 15, 16
+      
+            @start_date_type = "making date"
+            @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+        
+          # * Treaty period A
+          when 10
+        
+            @start_date_type = "laying date"
+            @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+        
+          # * Treaty period B
+          when 11
+        
+            @start_date_type = "date of Ministerial statement"
+            @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+        
+          # * Published drafts under the European Union (Withdrawal) Act 2018
+          when 12
+          
+            @start_date_type = "date of publication"
+            @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+          end
+          
+        # Otherwise, if the calculation style has been selected ...
+        elsif @calculation_style
+          
+          # ... to calculate the **anticipated end date**, we select the calculation based on the calculation style:
+          case @calculation_style
+        
+          # * Calculation style 1
+          when 1
+            
+            @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+          
+          # * Calculation style 2
+          when 2
+            
+            @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+          
+          # * Calculation style 3
+          when 3
+            
+            @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+          
+          # * Calculation style 4
+          when 4
+            
+            @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
+          
+          # * Calculation style 5
+          when 5
+            
+            @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+          end
         end
       end
     end
