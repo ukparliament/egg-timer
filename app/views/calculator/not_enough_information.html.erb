@@ -1,1 +1,6 @@
-<%= content_tag( 'p', "You must enter a start date, a day count and either a procedure or a calculation style. The day count must be greater than 0." ) %>
+<%= content_tag( 'p', "You must enter:" ) %>
+<ul>
+	<%= content_tag( 'li', "A start date" ) if params['start-date'].nil? %>
+	<%= content_tag( 'li', "A day count" ) if params['day-count'].nil? %>
+	<%= content_tag( 'li', "Either a procedure or a calculation style" )  if params['procedure'].nil? and params['calculation-style'].nil?%>
+</ul>
