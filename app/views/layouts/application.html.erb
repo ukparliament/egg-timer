@@ -8,7 +8,7 @@
             *, *:before, *:after {box-sizing: border-box;}
             body {font-family: system-ui,sans-serif;max-width:48rem;padding:1rem;font-size:1.2rem;line-height: 1.4;margin:auto;}
             main {margin:4rem 0;}
-            h1 {font-size:1.3rem;}
+            h1 {font-size:1.75rem;font-weight:normal;}
             p.radio * {cursor:pointer;}
             p.radio {padding:0.25rem;border-radius:0.5rem;width:100%;}
             p.radio:hover {background-color: powderblue;}
@@ -41,12 +41,23 @@ td.commons {font-weight:bold;background-color:lightgreen;}
 td.lords {font-weight:bold;background-color:pink;}
 ol#sessions {list-style: none;padding-left:0;}
 ol#prorogations {list-style: none;padding-left:0;}
+
+#logo {
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+#logo:hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+}
+
             </style>
 </head>
 <body>
 <header>
 
-<img src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
+<img id="logo" src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
 
 <p><%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
 
