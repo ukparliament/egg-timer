@@ -7,7 +7,6 @@
             <style>
             *, *:before, *:after {box-sizing: border-box;}
             body {font-family: system-ui,sans-serif;max-width:48rem;padding:1rem;font-size:1.2rem;line-height: 1.4;margin:auto;}
-            main {margin:4rem 0;}
             h1 {font-size:1.75rem;font-weight:normal;}
             p.radio * {cursor:pointer;}
             p.radio {padding:0.25rem;border-radius:0.5rem;width:100%;}
@@ -51,7 +50,7 @@ ol#prorogations {list-style: none;padding-left:0;}
     transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
 }
-
+footer {margin-top:4rem;}
             </style>
 </head>
 <body>
@@ -59,9 +58,11 @@ ol#prorogations {list-style: none;padding-left:0;}
 
 <img id="logo" src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
 
-<p><%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
+<p>
+<%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
 
 <h1><%= @title || "Egg Timer" %></h1>
+
 </header>
 <main>
 <%= yield %>
