@@ -55,7 +55,7 @@ class CalculatorController < ApplicationController
     if ( procedure.nil? and calculation_style.nil? ) or start_date.blank?
       
       # ... we set an error message ...
-	    @title = "Sorry, there was not enough information provided."
+	    @title = "Sorry, we need more information to complete the calculation"
       
       # ... and display the error.
       render :template => 'calculator/not_enough_information'

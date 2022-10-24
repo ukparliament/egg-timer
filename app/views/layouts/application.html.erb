@@ -6,25 +6,27 @@
    <meta name="viewport" content="width=device-width">     
             <style>
             *, *:before, *:after {box-sizing: border-box;}
-            body {font-family: system-ui,sans-serif;max-width:44rem;padding:1rem;font-size:1.1rem;line-height: 1.4;margin:auto;}
-            main {margin:4rem 0;}
-            h1 {font-size:1.3rem;}
-            a {text-decoration: none;}
-            a:hover {text-decoration: underline;}
-            label.radio {padding:0.25rem 0.5rem;border-radius:0.25rem;}
-            label.radio:hover {background-color: pink;}
+            body {font-family: system-ui,sans-serif;max-width:48rem;padding:1rem;font-size:1.2rem;line-height: 1.4;margin:auto;}
+            h1 {font-size:1.75rem;font-weight:normal;}
+            h2 {font-size:1.5rem;font-weight:normal;}
+            p.radio * {cursor:pointer;}
+            p.radio {padding:0.25rem;border-radius:0.5rem;width:100%;}
+            p.radio:hover {background-color: powderblue;}
+            input[type=radio] {transform: scale(1.5);}
             input[type=date] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
             input[type=number] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
             input:focus {border-color: blue;}
-            button {width:40%;padding: 0.5rem;border-radius:0.25rem;font-size:larger;color:black;background-color: white;border:2pt solid black;}
+            button {padding: 1rem;border-radius:0.25rem;font-size:1.2rem;color:blue;background-color: white;border:2pt solid blue;font-weight:bold;cursor:pointer;}
             button:hover {border:2pt solid blue;}
             p.box {padding: 0.75rem;border-radius:0.25rem;font-size:larger;color:black;background-color: white;border:2pt solid gray;}
+            fieldset {margin-bottom:1.5rem;}
             td, th {
   padding: 0.5rem;
     text-align: left;
   height: 4rem;
   vertical-align: bottom;
 }
+em {font-style: normal; text-decoration:underline;}
 tr {border-bottom: thin dotted black;}
 th {
   color: gray;
@@ -39,16 +41,29 @@ td.commons {font-weight:bold;background-color:lightgreen;}
 td.lords {font-weight:bold;background-color:pink;}
 ol#sessions {list-style: none;padding-left:0;}
 ol#prorogations {list-style: none;padding-left:0;}
+
+#logo {
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+#logo:hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+}
+footer {margin-top:4rem;}
             </style>
 </head>
 <body>
 <header>
 
-<img src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
+<img id="logo" src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
 
-<p><%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
+<p>
+<%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
 
-<h1><%= @title || "Parliament Calendar" %></h1>
+<h1><%= @title || "Egg Timer" %></h1>
+
 </header>
 <main>
 <%= yield %>
@@ -58,20 +73,21 @@ ol#prorogations {list-style: none;padding-left:0;}
 <nav>
 <p>
 <%= link_to( 'Parliaments', parliament_list_url )  %>
-&middot;
+<br>
 <%= link_to( 'Dissolutions', dissolution_period_list_url )  %>
-&middot;
+<br>
 <%= link_to( 'Sessions', session_list_url )  %>
-&middot;
+<br>
 <%= link_to( 'Calendar', calendar_list_url )  %>
-&middot;
+<br>
 <%= link_to( 'About this application', meta_list_url )  %>
-&middot;
+<br>
 <%= link_to( 'Contact us', "mailto:RIIDMSMailbox@parliament.uk" )  %>
-</p>
-
+<br>
+<br>
+<%= link_to( 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/' ) %>
 </nav>
-<p>Made available under an <%= link_to( 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/' ) %>.</p>
+
 </footer>
 
 

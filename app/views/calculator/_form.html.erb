@@ -1,14 +1,17 @@
-<%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
+<%= content_tag( 'p', link_to( 'How to use the Egg Timer to calculate a scrutiny period', meta_using_url ) ) %>
+
 <form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
 	<fieldset>
-		<legend>Period to calculate</legend>
+		<legend>Choose a period to calculate</legend>
 		<%= render :partial => 'calculator/procedure', :collection => @procedures %>
 	</fieldset>
-	<p>
-		<label>Start date: DD-MM-YYYY
-			<br>
-			<input type="date" name="start-date" id="start-date" required>
-		</label>
-	</p>
-	<button type="submit" id="calculate">Start</button>
+	
+	<fieldset>
+		<legend>Choose a starting date</legend>
+			
+			<p><input type="date" name="start-date" id="start-date" required>
+		
+	</fieldset>
+	
+	<button type="submit" id="calculate">Continue with this period and starting date</button>
 </form>
