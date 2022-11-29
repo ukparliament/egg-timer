@@ -27,4 +27,8 @@ class MetaController < ApplicationController
   def subscribe
   	@title = "Subscribe to calendars"
   end
+  
+  def app
+  	@title = "MacOS application"
+  end
 end
