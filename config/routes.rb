@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'meta/schema' => 'meta#schema', as: :meta_schema
   get 'meta/comments' => 'meta#comment', as: :meta_comment
   get 'meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
+  get 'meta/app' => 'meta#app', as: :meta_app
   
   get 'sync' => 'sync#sync', as: :sync
   get 'sync/test' => 'sync#test', as: :sync_test
