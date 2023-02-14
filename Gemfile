@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'google-api-client', '~> 0.34'
 
 # gem 'rails_12factor', '0.0.3'
-ruby '2.7.3'
+ruby '3.2.1'
 
 gem 'redcarpet', '3.5.1'
 
