@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'egg-timer' => 'home#index', as: :home
+  get 'egg-timer' => 'home#index', as: :home
   
   
   get 'egg-timer/parliament-periods' => 'parliament#index', as: :parliament_list
