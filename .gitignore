@@ -26,3 +26,5 @@ lib/tasks/credentials.json
 google-credentials.json
 
 .idea/
+
+*.icloud
