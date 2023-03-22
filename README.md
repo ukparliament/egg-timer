@@ -1,2 +1,3 @@
 # egg-timer
 
+Egg timer.
