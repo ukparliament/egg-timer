@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   get 'egg-timer/houses/:house/adjournment-days/upcoming/next' => 'house_days#adjournment_day_next', as: :house_days_adjournment_day_next
   get 'egg-timer/houses/:house/adjournment-days/preceding' => 'house_days#adjournment_day_preceding', as: :house_days_adjournment_day_preceding
   get 'egg-timer/houses/:house/adjournment-days/preceding/latest' => 'house_days#adjournment_day_latest', as: :house_days_adjournment_day_latest
+  get 'egg-timer/houses/:house/recess-dates' => 'house_days#recess_dates', as: :house_days_recess_dates_list
+  get 'egg-timer/houses/:house/recess-dates/upcoming' => 'house_days#recess_dates_upcoming', as: :house_days_recess_dates_upcoming
   
   get 'egg-timer/calculator' => 'calculator#index', as: :calculator_form
   get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
