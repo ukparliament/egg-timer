@@ -95,4 +95,16 @@ class HouseDaysController < ApplicationController
     @house = House.find( house )
     @title = @house.name + ' - latest adjournment day'
   end
+  
+  def recess_dates
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - recess dates'
+  end
+  
+  def recess_dates_upcoming
+    house = params[:house]
+    @house = House.find( house )
+    @title = @house.name + ' - upcoming recess dates'
+  end
 end
