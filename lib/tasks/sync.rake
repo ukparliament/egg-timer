@@ -15,7 +15,9 @@ task :sync => [
   :sync_lords_sitting_days,
   :sync_lords_virtual_sitting_days,
   :sync_commons_adjournment_days,
-  :sync_lords_adjournment_days
+  :sync_lords_adjournment_days,
+  :sync_commons_recess_dates,
+  :sync_lords_recess_dates
 ]
 
 task :sync_commons_sitting_days => :environment do
@@ -37,4 +39,12 @@ end
 task :sync_lords_adjournment_days => :environment do
   puts "Syncing lords adjournment days"
   sync_adjournment_days( 'ibbc1cen1mdm6rsf6kkno17i0c@group.calendar.google.com', 2 )
+end
+task :sync_commons_recess_dates => :environment do
+  puts "Syncing commons recess dates"
+  sync_recess_dates( 'eefeb6980f4ee93bd3d486b318141524452c82b8388066ef868e3443a549e3c3@group.calendar.google.com', 1 )
+end
+task :sync_lords_recess_dates => :environment do
+  puts "Syncing lords recess dates"
+  sync_recess_dates( '45591a2f31eb089019ba1b200e5ec635f8d25a9620f120e96e881b3165e714d4@group.calendar.google.com', 2 )
 end
