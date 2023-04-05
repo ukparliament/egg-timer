@@ -3,6 +3,7 @@ class House < ActiveRecord::Base
   has_many :sitting_days, -> { order( 'start_date desc' ) }
   has_many :virtual_sitting_days, -> { order( 'start_date desc' ) }
   has_many :adjournment_days, -> { order( 'date desc' ) }
+  has_many :recess_dates, -> { order( 'start_date desc' ) }
   
   def sitting_days_in_session( session )
     SittingDay.all.where( house_id: self.id ).where( session_id: session.id ).order( 'start_date asc' )
@@ -115,5 +116,16 @@ class House < ActiveRecord::Base
   def upcoming
     upcoming = self.upcoming_sitting_days + self.upcoming_virtual_sitting_days + self.upcoming_adjournment_days
     upcoming.sort! { |a, b|  a.start_date <=> b.start_date }
+  end
+  
+  def upcoming_recess_dates
+    RecessDate.find_by_sql(
+      "
+        SELECT rd.*
+        FROM recess_dates rd
+        WHERE rd.house_id =#{self.id}
+        AND rd.end_date >= '#{Date.today}'
+      "
+    )
   end
 end
