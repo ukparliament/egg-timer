@@ -1,0 +1,8 @@
+BEGIN:VEVENT
+SUMMARY:<%= recess_date.description %>
+UID:<%= recess_date.start_date.strftime( '%Y%m%d' ) %>000000
+DTSTAMP:<%= recess_date.start_date.strftime( '%Y%m%d' ) %>T000000
+DTSTART;VALUE=DATE:<%= recess_date.start_date.strftime( '%Y%m%d' ) %>
+DTEND;VALUE=DATE:<%= recess_date.end_date.strftime( '%Y%m%d' ) %>
+STATUS:TENTATIVE
+END:VEVENT

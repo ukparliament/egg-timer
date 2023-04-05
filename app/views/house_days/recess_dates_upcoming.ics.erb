@@ -1,0 +1,5 @@
+BEGIN:VCALENDAR
+PRODID:ukparliament/egg-timer
+VERSION:2.0
+CALSCALE:GREGORIAN
+<%= render :partial => 'recess_date', :collection => @house.upcoming_recess_dates %>END:VCALENDAR
