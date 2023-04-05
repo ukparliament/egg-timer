@@ -1,5 +1,71 @@
 module SYNC
   
+  def sync_recess_dates( calendar_id, house_id )
+    
+    # Authorise to grab events from google calendar.
+    service = authorise_calendar_access
+  
+    # Start with no page token because we don't know if the results are paginated.
+    page_token = ''
+  
+    # Keep looping through pages to get events.
+    loop do
+  
+      # Get any changed events from - this page of - the calendar.
+      # Pass the calendar we're grabbing from and the page token (if any).
+      response = get_changed_events_from_calendar( service, calendar_id, page_token )
+  
+      # Loop through all changed events.
+      response.items.each do |event|
+        
+        # If the event is cancelled...
+        if event.status == 'cancelled'
+        
+          # ...delete it.
+          delete_recess_date( event.id )
+        
+        # If the event is confirmed... 
+        elsif event.status == 'confirmed'
+        
+          # ...if this is an edit (has it been updated since created) delete its previous incarnation.
+          delete_recess_date( event.id ) if ( event.updated.to_i > event.created.to_i ) # convert to integer because blasted DateTimes.
+      
+          # We set the start and end dates of the event.
+          start_date = ( event.start.date || event.start.date_time ).to_date
+          end_date = ( event.end.date || event.end.date_time ).to_date
+          
+          # We set the description of the event.
+          description = event.summary
+      
+          # ...because all day appointments end at midnight the next day, subtract a day if there's no end datetime
+          end_date = end_date - 1.day unless event.end.date_time
+          
+          # Create the recess and save it.
+          recess_date = RecessDate.new
+          recess_date.description = description
+          recess_date.start_date = start_date
+          recess_date.end_date = end_date
+          recess_date.google_event_id = event.id
+          recess_date.house_id = house_id
+          recess_date.save
+        end
+      end
+    
+      # If the reponse has returned a next page token...
+      if response.next_page_token
+      
+        # ...set the page token to that returned so the next time through the loop it hits that page.
+        page_token = response.next_page_token
+      
+      # If the response has not returned a next page token, we're at the last page...
+      else
+      
+        # ...so we stop looping through pages.
+        break
+      end
+    end
+  end
+  
   def sync_sitting_days( calendar_id, house_id )
   
     # Authorise to grab events from google calendar.
@@ -236,7 +302,7 @@ module SYNC
     end
   end
 
-  # Delete any adjournment days with a given event id.
+  # Delete an adjournment day with a given event id.
   def delete_adjournment_days( event_id )
   
     # Adjournment days can be created as multiday events which get split into individual days in the database calendar. So we need to...
@@ -251,7 +317,7 @@ module SYNC
     end
   end
 
-  # Delete any sitting days with a given event id.
+  # Delete a sitting day with a given event id.
   def delete_sitting_days( event_id )
   
     # Find the sitting day with this event id.
@@ -261,7 +327,7 @@ module SYNC
     sitting_day.destroy if sitting_day
   end
 
-  # Delete any virtual sitting days with a given event id.
+  # Delete a virtual sitting day with a given event id.
   def delete_virtual_sitting_days( event_id )
   
     # Find the adjournment day with this event id.
@@ -269,6 +335,16 @@ module SYNC
   
     # If you've found one, delete it.
     virtual_sitting_day.destroy if virtual_sitting_day
+  end
+  
+  # Delete a recess with a given event id.
+  def delete_recess_date( event_id )
+  
+    # Find the recess date with this event id.
+    recess_date = RecessDate.all.where( "google_event_id = ?", event_id ).first
+  
+    # If we've found one, delete it.
+    recess_date.destroy if recess_date
   end
 
   # Get a list of changed events from a - page of a - calendar (created, updated and deleted).
