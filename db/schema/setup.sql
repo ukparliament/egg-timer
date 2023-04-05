@@ -1,3 +1,4 @@
+drop table if exists recess_dates;
 drop table if exists dissolution_days;
 drop table if exists prorogation_days;
 drop table if exists adjournment_days;
@@ -159,3 +160,17 @@ create table procedures (
 );
 alter sequence procedures_id_seq owned by procedures.id;
 alter table procedures alter column id set default nextval('procedures_id_seq');
+
+create sequence recess_dates_id_seq;
+create table recess_dates (
+	id int not null,
+	description varchar(255) not null,
+	start_date date not null,
+	end_date date not null,
+	google_event_id varchar(255) not null,
+	house_id int not null,
+	constraint fk_house foreign key (house_id) references houses(id),
+	primary key (id)
+);
+alter sequence recess_dates_id_seq owned by recess_dates.id;
+alter table recess_dates alter column id set default nextval('recess_dates_id_seq');
