@@ -1,15 +1,29 @@
-<p>You can subscribe to calendars for upcoming days for both Houses in any application that reads .ics files, including Google Calendar, Apple Calendar and Outlook.</p>
+<p>You can subscribe to calendars for recess periods and upcoming days for both Houses in any application that reads .ics files, including Google Calendar, Apple Calendar and Outlook.</p>
 
-<p>The calendar is based on expected business, which is subject to change. Sittings for dates further in the future are more likely to change.</p> 
+<p>The calendars are based on expected business, which is subject to change. Sittings for dates further in the future are more likely to change.</p> 
 
 <p>Once you've subscribed to a calendar, any new information will be made available when the calendar is updated.</p>
 
+<div id="recess-dates">
+	<%= content_tag( 'h2', 'Recess dates' ) %>
 
-<%= content_tag( 'h2', 'House of Commons' ) %>
-<input value="<%= house_days_upcoming_url( :house => 1 ) %>.ics" size="70" />
+	<%= content_tag( 'h3', 'House of Commons' ) %>
+	<input value="<%= house_days_recess_dates_upcoming_url( :house => 1 ) %>.ics" size="70" />
 
-<%= content_tag( 'h2', 'House of Lords' ) %>
-<input value="<%= house_days_upcoming_url( :house => 2 ) %>.ics" size="70" />
+	<%= content_tag( 'h3', 'House of Lords' ) %>
+	<input value="<%= house_days_recess_dates_upcoming_url( :house => 2 ) %>.ics" size="70" />
+</div>
 
-<%= content_tag( 'h2', 'Both Houses' ) %>
-<input value="<%= house_upcoming_all_url %>.ics" size="70" />
+<div id="upcoming-days">
+
+	<%= content_tag( 'h2', 'Upcoming days' ) %>
+
+	<%= content_tag( 'h3', 'House of Commons' ) %>
+	<input value="<%= house_days_upcoming_url( :house => 1 ) %>.ics" size="70" />
+
+	<%= content_tag( 'h3', 'House of Lords' ) %>
+	<input value="<%= house_days_upcoming_url( :house => 2 ) %>.ics" size="70" />
+
+	<%= content_tag( 'h3', 'Both Houses' ) %>
+	<input value="<%= house_upcoming_all_url %>.ics" size="70" />
+</div>
