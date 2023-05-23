@@ -31,4 +31,48 @@ class MetaController < ApplicationController
   def app
   	@title = "MacOS application"
   end
+  
+  def recess_checker
+  	@title = "Recess date checker"
+    
+    # We create an array to hold the error log.
+    @error_log = []
+    
+    # We find all upcoming recess dates.
+    upcoming_recess_dates = RecessDate.find_by_sql(
+      "
+        SELECT rd.*
+        FROM recess_dates rd
+        WHERE rd.end_date >= '#{Date.today}'
+      "
+    )
+    
+    # For each upcoming recess date ...
+    upcoming_recess_dates.each do |upcoming_recess_date|
+      
+      # ... for each day in the recess ...
+      (upcoming_recess_date.start_date..upcoming_recess_date.end_date).each do |recess_day|
+        
+        # ... we attempt to find an adjournment day in the same House on that date.
+        adjournment_day = AdjournmentDay.find_by_sql(
+          "
+            SELECT ad.*
+            FROM adjournment_days ad
+            WHERE ad.house_id = #{upcoming_recess_date.house_id}
+            AND ad.date = '#{recess_day}'
+          "
+        ).first
+        
+        # If there is not an adjournment day in this House on this day ...
+        unless adjournment_day
+          
+          # ... we constuct an error message ...
+          error_message = "#{recess_day} is not an adjournment day in House #{upcoming_recess_date.house_id}"
+          
+          # ... and append it to the log.
+          @error_log << error_message
+        end
+      end
+    end
+  end
 end
