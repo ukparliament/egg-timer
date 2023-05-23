@@ -18,13 +18,13 @@ module SYNC
       # Loop through all changed events.
       response.items.each do |event|
         
-        # If the event is cancelled...
+        # If the event is cancelled ...
         if event.status == 'cancelled'
-        
-          # ...delete it.
+          
+          # ... we delete it.
           delete_recess_date( event.id )
         
-        # If the event is confirmed... 
+        # If the event is confirmed ... 
         elsif event.status == 'confirmed'
         
           # ...if this is an edit (has it been updated since created) delete its previous incarnation.
@@ -49,6 +49,9 @@ module SYNC
           recess_date.house_id = house_id
           recess_date.save
         end
+        
+        # We group adjournment days in a House into the recess.
+        group_adjournment_days_in_house_into_recess( house_id, recess_date )
       end
     
       # If the reponse has returned a next page token...
@@ -62,6 +65,40 @@ module SYNC
       
         # ...so we stop looping through pages.
         break
+      end
+    end
+  end
+  
+  # ## A method to group adjournment days in a House into a recess.
+  def group_adjournment_days_in_house_into_recess( house_id, recess_date )
+    
+    # For each day in the recess ...
+    ( recess_date.start_date .. recess_date.end_date ).each do |recess_day|
+      
+      # ... we attempt to find an adjournment on that day, in that House.
+      adjournment_day = AdjournmentDay.find_by_sql(
+        "
+          SELECT ad.*
+          FROM adjournment_days ad
+          WHERE ad.house_id = #{house_id}
+          AND ad.date = '#{recess_day}'
+        "
+      ).first
+      
+      # If we find an adjournment on that day, in that House ...
+      if adjournment_day
+        
+        # ... we associate the adjournment day with the recess ...
+        adjournment_day.recess_date = recess_date
+        
+        # ... and save the adjournment day.
+        adjournment_day.save
+        
+      # Otherwise, if we don't find an adjournment on that day in that House ...
+      else
+        
+        # ... we flag an error.
+        puts "Error #{recess_day} is not an adjournment day in House #{house_id}"
       end
     end
   end
@@ -271,6 +308,18 @@ module SYNC
               # ...find the session that's not yet ended.
               session = Session.all.where( "start_date <= ?", date ).where( "end_date is null" ).first
             end
+            
+            # We attempt to find any recess date in this House that the adjournment date is in.
+            # In case the recess has been created before the adjournment.
+            recess_date = RecessDate.find_by_sql(
+              "
+                SELECT rd.*
+                FROM recess_dates rd
+                WHERE rd.house_id = #{house_id}
+                AND rd.start_date <= '#{date}'
+                AND rd.end_date >= '#{date}'
+              "
+            ).first
           
             # ...if the adjournment day can be associated with a session...
             if session
@@ -281,6 +330,7 @@ module SYNC
               adjournment_day.google_event_id = event.id
               adjournment_day.session = session
               adjournment_day.house_id = house_id
+              adjournment_day.recess_date = recess_date if recess_date
               adjournment_day.save
             end
           end
@@ -342,9 +392,23 @@ module SYNC
   
     # Find the recess date with this event id.
     recess_date = RecessDate.all.where( "google_event_id = ?", event_id ).first
+    
+    # If we find the recess date ...
+    if recess_date
+    
+      # ... for each adjournment day grouped in this recess ...
+      recess_date.adjournment_days.each do |adjournment_day|
+      
+        # ... we set the recess date ID to nil ...
+        adjournment_date.recess_date = nil
+      
+        # ... and save the adjournment day.
+        adjournment_day.save
+      end
   
-    # If we've found one, delete it.
-    recess_date.destroy if recess_date
+      # We delete the recess date.
+      recess_date.destroy
+    end
   end
 
   # Get a list of changed events from a - page of a - calendar (created, updated and deleted).
