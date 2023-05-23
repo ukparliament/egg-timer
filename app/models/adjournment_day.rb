@@ -2,6 +2,8 @@ class AdjournmentDay < ActiveRecord::Base
   
   belongs_to :session
   belongs_to :calendar_date
+  belongs_to :recess_date, optional: true
+  
   
   def label
     label = ''
