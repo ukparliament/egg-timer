@@ -1,7 +1,7 @@
+drop table if exists adjournment_days;
 drop table if exists recess_dates;
 drop table if exists dissolution_days;
 drop table if exists prorogation_days;
-drop table if exists adjournment_days;
 drop table if exists virtual_sitting_days;
 drop table if exists sitting_days;
 drop table if exists houses;
@@ -100,20 +100,6 @@ create table virtual_sitting_days (
 alter sequence virtual_sitting_days_id_seq owned by virtual_sitting_days.id;
 alter table virtual_sitting_days alter column id set default nextval('virtual_sitting_days_id_seq');
 
-create sequence adjournment_days_id_seq;
-create table adjournment_days (
-	id int not null,
-	date date not null,
-	google_event_id varchar(255) not null,
-	session_id int not null,
-	house_id int not null,
-	constraint fk_session foreign key (session_id) references sessions(id),
-	constraint fk_house foreign key (house_id) references houses(id),
-	primary key (id)
-);
-alter sequence adjournment_days_id_seq owned by adjournment_days.id;
-alter table adjournment_days alter column id set default nextval('adjournment_days_id_seq');
-
 create sequence prorogation_days_id_seq;
 create table prorogation_days (
 	id int not null,
@@ -174,3 +160,19 @@ create table recess_dates (
 );
 alter sequence recess_dates_id_seq owned by recess_dates.id;
 alter table recess_dates alter column id set default nextval('recess_dates_id_seq');
+
+create sequence adjournment_days_id_seq;
+create table adjournment_days (
+	id int not null,
+	date date not null,
+	google_event_id varchar(255) not null,
+	session_id int not null,
+	house_id int not null,
+	recess_date_id int,
+	constraint fk_session foreign key (session_id) references sessions(id),
+	constraint fk_house foreign key (house_id) references houses(id),
+	constraint fk_recess_date foreign key (recess_date_id) references recess_dates(id),
+	primary key (id)
+);
+alter sequence adjournment_days_id_seq owned by adjournment_days.id;
+alter table adjournment_days alter column id set default nextval('adjournment_days_id_seq');
