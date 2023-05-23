@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/comments' => 'meta#comment', as: :meta_comment
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
+  get 'egg-timer/meta/recess-checker' => 'meta#recess_checker', as: :meta_recess_checker
   
   get 'egg-timer/sync' => 'sync#sync', as: :sync
   get 'egg-timer/sync/test' => 'sync#test', as: :sync_test
