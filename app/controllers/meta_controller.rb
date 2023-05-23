@@ -50,7 +50,10 @@ class MetaController < ApplicationController
     # For each upcoming recess date ...
     upcoming_recess_dates.each do |upcoming_recess_date|
       
-      # ... for each day in the recess ...
+      # ... we find the house the recess is in.
+      house = House.find( upcoming_recess_date.house_id )
+      
+      # For each day in the recess ...
       (upcoming_recess_date.start_date..upcoming_recess_date.end_date).each do |recess_day|
         
         # ... we attempt to find an adjournment day in the same House on that date.
@@ -67,7 +70,7 @@ class MetaController < ApplicationController
         unless adjournment_day
           
           # ... we constuct an error message ...
-          error_message = "#{recess_day} is not an adjournment day in House #{upcoming_recess_date.house_id}"
+          error_message = "#{recess_day.strftime( '%e %B %Y') } is part of the #{upcoming_recess_date.description} in the #{house.name}, but that date is not an adjournment day in that House."
           
           # ... and append it to the log.
           @error_log << error_message
