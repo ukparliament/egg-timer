@@ -47,11 +47,11 @@ module SYNC
           recess_date.end_date = end_date
           recess_date.google_event_id = event.id
           recess_date.house_id = house_id
-          recess_date.save
-        end
+          recess_date.save!
         
-        # We group adjournment days in a House into the recess.
-        group_adjournment_days_in_house_into_recess( house_id, recess_date )
+          # We group adjournment days in a House into the recess.
+          group_adjournment_days_in_house_into_recess( house_id, recess_date )
+        end
       end
     
       # If the reponse has returned a next page token...
@@ -391,6 +391,7 @@ module SYNC
   def delete_recess_date( event_id )
   
     # Find the recess date with this event id.
+    # NOTE: this query works in console but not from here.
     recess_date = RecessDate.all.where( "google_event_id = ?", event_id ).first
     
     # If we find the recess date ...
