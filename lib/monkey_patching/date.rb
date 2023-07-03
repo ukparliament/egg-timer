@@ -535,7 +535,7 @@ class Date
     Session.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
   end
   
-  # Generate label for the day type in the Commons in a session.
+  ### Generate label for the day type in the Commons in a session.
   def commons_day_type
     if self.is_commons_parliamentary_sitting_day?
       day_type = 'Parliamentary sitting day'
@@ -546,7 +546,7 @@ class Date
     elsif self.is_commons_non_sitting_scrutiny_day?( 4 )
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_commons_adjournment_day?
-      day_type = 'Adjournment day'
+      day_type = self.commons_adjournment_day_label
     elsif self.is_prorogation_day?
       day_type = 'Prorogation'
     elsif self.is_dissolution_day?
@@ -555,7 +555,7 @@ class Date
     day_type
   end
   
-  # Generate label for the day type in the Lords in a session.
+  ### Generate label for the day type in the Lords in a session.
   def lords_day_type
     if self.is_lords_parliamentary_sitting_day?
       day_type = 'Parliamentary sitting day'
@@ -566,7 +566,7 @@ class Date
     elsif self.is_lords_non_sitting_scrutiny_day?( 4 )
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_lords_adjournment_day?
-      day_type = 'Adjournment day'
+      day_type = self.lords_adjournment_day_label
     elsif self.is_prorogation_day?
       day_type = 'Prorogation'
     elsif self.is_dissolution_day?
@@ -575,7 +575,7 @@ class Date
     day_type
   end
   
-  # Generate a label to say whether it's a scrutiny day in the Commons or not.
+  ### Generate a label to say whether it's a scrutiny day in the Commons or not.
   def is_commons_scrutiny_day_label
     if self.is_commons_scrutiny_day?
       label = 'True'
@@ -585,7 +585,7 @@ class Date
     label
   end
   
-  # Generate a label to say whether it's a scrutiny day in the Lords or not.
+  ### Generate a label to say whether it's a scrutiny day in the Lords or not.
   def is_lords_scrutiny_day_label
     if self.is_lords_scrutiny_day?
       label = 'True'
@@ -593,5 +593,47 @@ class Date
       label = 'False'
     end
     label
+  end
+  
+  ### A method to label a Commons adjournment day, with recess if applicable.
+  def commons_adjournment_day_label
+    commons_adjournment_day_label = 'Adjournment day'
+    
+    # We attempt to find a recess on this date, in this House.
+    recess_date = RecessDate
+      .all
+      .where( "start_date <= ?", self )
+      .where( "end_date >= ?", self )
+      .where( house_id: 1 )
+      .first
+    
+    # If we find a recess date on this day, in this House ...
+    if recess_date
+      
+      # ... we append the description of the recess date to the label
+      commons_adjournment_day_label += ' (' + recess_date.description + ')'
+    end
+    commons_adjournment_day_label
+  end
+  
+  ### A method to label a Lords adjournment day, with recess if applicable.
+  def lords_adjournment_day_label
+    lords_adjournment_day_label = 'Adjournment day'
+    
+    # We attempt to find a recess on this date, in this House.
+    recess_date = RecessDate
+      .all
+      .where( "start_date <= ?", self )
+      .where( "end_date >= ?", self )
+      .where( house_id: 2 )
+      .first
+    
+    # If we find a recess date on this day, in this House ...
+    if recess_date
+      
+      # ... we append the description of the recess date to the label
+      lords_adjournment_day_label += ' (' + recess_date.description + ')'
+    end
+    lords_adjournment_day_label
   end
 end
