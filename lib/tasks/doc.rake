@@ -12,8 +12,8 @@ def commentariat(with_path)
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, no_intra_emphasis: true, autolink: true, underline: true, hightlight: true, quote: true)
   html_out = ''
   markdown_out = ''
-  html_path = './public/' + with_path.split('/').last + '.html'
-  markdown_path = './public/' + with_path.split('/').last + '.md'
+  html_path = './public/egg-timer/' + with_path.split('/').last + '.html'
+  markdown_path = './public/egg-timer/' + with_path.split('/').last + '.md'
 
   html_out << %{<!DOCTYPE html>
 <html lang="en-GB">
