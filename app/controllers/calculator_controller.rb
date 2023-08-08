@@ -190,6 +190,11 @@ class CalculatorController < ApplicationController
           end
         end
       end
+      @alternate_title = 'anticipated end date of the scrutiny period'
+      @json_url = request.original_fullpath.sub '?', '.json?'
+      @calendar_links = []
+      calendar_link = ['Anticipated end date of the scrutiny period', request.original_fullpath.sub( '?', '.ics?' )]
+      @calendar_links << calendar_link
     end
   end
 end

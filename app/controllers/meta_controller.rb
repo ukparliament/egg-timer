@@ -26,6 +26,17 @@ class MetaController < ApplicationController
   
   def subscribe
   	@title = "Subscribe to calendars"
+    @calendar_links = []
+    calendar_link = ["Upcoming recess dates in the House of Commons", house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming recess dates in the House of Lords", house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in the House of Commons", house_days_upcoming_url( :house => 1, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in the House of Lords", house_days_upcoming_url( :house => 2, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
+    @calendar_links << calendar_link
   end
   
   def app

@@ -43,5 +43,8 @@ class HouseController < ApplicationController
     @upcoming.sort! { |a, b|  a.start_date <=> b.start_date }
 
     @title = 'Upcoming'
+    @calendar_links = []
+    calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
+    @calendar_links << calendar_link
   end
 end

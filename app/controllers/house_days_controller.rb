@@ -4,6 +4,9 @@ class HouseDaysController < ApplicationController
     house = params[:house]
     @house = House.find( house )
     @title = @house.name + ' - upcoming'
+    @calendar_links = []
+    calendar_link = ["Upcoming dates in the #{@house.name}", house_days_upcoming_url( :format => 'ics' )]
+    @calendar_links << calendar_link
   end
   
   def sitting_day_list
@@ -106,5 +109,8 @@ class HouseDaysController < ApplicationController
     house = params[:house]
     @house = House.find( house )
     @title = @house.name + ' - upcoming recess dates'
+    @calendar_links = []
+    calendar_link = ["Upcoming recess dates in the #{@house.name}", house_days_recess_dates_upcoming_url( :format => 'ics' )]
+    @calendar_links << calendar_link
   end
 end
