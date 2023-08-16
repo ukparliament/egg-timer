@@ -1,7 +1,7 @@
 <%= content_tag( 'p', @parliament.dates ) %>
 
 <%= content_tag( 'h2', 'Sessions and prorogations' ) %>
-<ol id="sessions-and-prorgations">
+<ol id="sessions-and-prorogations">
 	<%= render :partial => 'period', :collection => @time_periods %>
 </ol>
 
