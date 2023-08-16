@@ -11,13 +11,6 @@ class ProrogationPeriod < ActiveRecord::Base
     label
   end
   
-  def label_with_type
-    label = 'Prorogation: '
-    label = label + self.start_date.strftime( '%e %B %Y' ) + ' - '
-    label = label + self.end_date.strftime( '%e %B %Y' ) if self.end_date
-    label
-  end
-  
   def label_with_parliament
     label = 'Parliament '
     label = label + self.parliament_period.number.to_s
