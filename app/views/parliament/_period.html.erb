@@ -1,9 +1,0 @@
-<tr>
-	<% if period[0] == 'Session' %>
-		<%= content_tag( 'td', link_to( period[2].dates, session_show_url( :session => period[2] ) ) ) %>
-	<% elsif period[0] == 'Prorogation' %>
-		<%= content_tag( 'td', link_to( period[2].dates, prorogation_period_show_url( :prorogation_period => period[2] ) ) ) %>
-	<% end -%>
-	<%= content_tag( 'td', period[0] ) %>
-	</td>
-</tr>
