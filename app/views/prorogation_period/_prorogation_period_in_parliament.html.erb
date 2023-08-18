@@ -1,0 +1,9 @@
+<tr>
+	<%= content_tag( 'td', link_to( prorogation_period_in_parliament.label_in_parliament, prorogation_period_show_url( :prorogation_period => prorogation_period_in_parliament ) ) ) %>
+	<%= content_tag( 'td', prorogation_period_in_parliament.start_date.strftime( '%-d %B %Y' ) ) %>
+	<% if prorogation_period_in_parliament.end_date -%>
+		<%= content_tag( 'td', prorogation_period_in_parliament.end_date.strftime( '%-d %B %Y' ) ) %>
+	<% else -%>
+		<%= content_tag( 'td', '' ) %>
+	<% end %>
+</tr>

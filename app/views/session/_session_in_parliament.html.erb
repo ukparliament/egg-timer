@@ -1,0 +1,9 @@
+<tr>
+	<%= content_tag( 'td', link_to( session_in_parliament.label_in_parliament, session_show_url( :session => session_in_parliament ) ) ) %>
+	<%= content_tag( 'td', session_in_parliament.start_date.strftime( '%-d %B %Y' ) ) %>
+	<% if session_in_parliament.end_date -%>
+		<%= content_tag( 'td', session_in_parliament.end_date.strftime( '%-d %B %Y' ) ) %>
+	<% else -%>
+		<%= content_tag( 'td', '' ) %>
+	<% end %>
+</tr>
