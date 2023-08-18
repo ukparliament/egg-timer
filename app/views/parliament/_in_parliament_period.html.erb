@@ -1,4 +1,13 @@
 <tr>
-	<%= content_tag( 'td', in_parliament_period.dates ) %>
-	<%= content_tag( 'td', in_parliament_period.type ) %>
+	<% if in_parliament_period.type == 'session' -%>
+		<%= content_tag( 'td', link_to( in_parliament_period.display_label, session_show_url( :session => in_parliament_period.id ) ) ) %>
+	<% elsif in_parliament_period.type == 'prorogation' -%>
+		<%= content_tag( 'td', link_to( in_parliament_period.display_label, prorogation_period_show_url( :prorogation_period => in_parliament_period.id ) ) ) %>
+	<% end -%>
+	<%= content_tag( 'td', in_parliament_period.start_date.strftime( '%-d %B %Y' ) ) %>
+	<% if in_parliament_period.end_date -%>
+		<%= content_tag( 'td', in_parliament_period.end_date.strftime( '%-d %B %Y' ) ) %>
+	<% else -%>
+		<%= content_tag( 'td', '' ) %>
+	<% end -%>
 </tr>
