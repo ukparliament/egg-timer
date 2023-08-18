@@ -23,6 +23,10 @@ class Session < ActiveRecord::Base
     label
   end
   
+  def label_in_parliament
+    label = "#{self.number.ordinalize} session"
+  end
+  
   def dates
     dates = ''
     dates = dates + self.start_date.strftime( '%-d %B %Y' )
