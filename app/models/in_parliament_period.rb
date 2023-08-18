@@ -1,6 +1,7 @@
 class InParliamentPeriod
   
   attr_accessor :type
+  attr_accessor :id
   attr_accessor :number
   attr_accessor :start_date
   attr_accessor :end_date
@@ -12,5 +13,9 @@ class InParliamentPeriod
     dates = dates + ' - '
     dates = dates + self.end_date.strftime( '%-d %B %Y' ) if self.end_date
     dates
+  end
+  
+  def display_label
+    "#{self.number.ordinalize} #{self.type}"
   end
 end
