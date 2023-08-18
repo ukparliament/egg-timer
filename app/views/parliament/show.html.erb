@@ -1,20 +1,31 @@
 <%= content_tag( 'p', @parliament.dates ) %>
 
-<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
-<table>
-	<tbody>
-		<%= render :partial => 'in_parliament_period', :collection => @in_parliament_periods %>
-	</tbody>
-</table>
+<div id="sessions-and-prorogations">
+	<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'in_parliament_period', :collection => @in_parliament_periods %>
+		</tbody>
+	</table>
+</div>
 
+<div id="sessions">
+	<%= content_tag( 'h2', 'Sessions' ) %>
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'session/session_in_parliament', :collection => @parliament.sessions %>
+		</tbody>
+	</table>
+</div>
 
-
-<%= content_tag( 'h2', 'Sessions' ) %>
-<ol id="sessions">
-	<%= render :partial => 'session/session', :collection => @parliament.sessions %>
-</ol>
-
-<%= content_tag( 'h2', 'Prorogations' ) %>
-<ol id="prorogations">
-	<%= render :partial => 'prorogation_period/prorogation_period', :collection => @parliament.prorogation_periods %>
-</ol>
+<div id="prorogations">
+	<%= content_tag( 'h2', 'Prorogations' ) %>
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'prorogation_period/prorogation_period_in_parliament', :collection => @parliament.prorogation_periods %>
+		</tbody>
+	</table>
+</div>
