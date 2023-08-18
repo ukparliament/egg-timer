@@ -1,7 +1,7 @@
 class ParliamentPeriod < ActiveRecord::Base
   
-  has_many :sessions, -> { order( 'start_date desc' ) }
-  has_many :prorogation_periods, -> { order( 'start_date desc' ) }
+  has_many :sessions, -> { order( 'start_date' ) }
+  has_many :prorogation_periods, -> { order( 'start_date' ) }
   
   def label
     label = self.number.ordinalize + " Parliament"
@@ -31,7 +31,8 @@ class ParliamentPeriod < ActiveRecord::Base
       
       # ... we create an in Parliament period object ...
       time_period = InParliamentPeriod.new
-      time_period.type = 'Session'
+      time_period.type = 'session'
+      time_period.id = session.id
       time_period.number = session.number
       time_period.start_date = session.start_date
       time_period.end_date = session.end_date
@@ -46,7 +47,8 @@ class ParliamentPeriod < ActiveRecord::Base
       
       # ... we create an in Parliament period object ...
       time_period = InParliamentPeriod.new
-      time_period.type = 'Prorogation'
+      time_period.type = 'prorogation'
+      time_period.id = prorogation_period.id
       time_period.number = prorogation_period.number
       time_period.start_date = prorogation_period.start_date
       time_period.end_date = prorogation_period.end_date
