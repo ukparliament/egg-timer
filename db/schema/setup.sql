@@ -18,6 +18,7 @@ create table parliament_periods (
 	number int not null,
 	start_date date not null,
 	end_date date null,
+	wikidata_id varchar(20),
 	primary key (id)
 );
 alter sequence parliament_periods_id_seq owned by parliament_periods.id;
@@ -54,6 +55,7 @@ create table sessions (
 	start_date date not null,
 	end_date date null,
 	citation varchar(255) not null,
+	wikidata_id varchar(20),
 	parliament_period_id int not null,
 	constraint fk_parliament_period foreign key (parliament_period_id) references parliament_periods(id),
 	primary key (id)
