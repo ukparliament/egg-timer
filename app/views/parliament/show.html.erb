@@ -1,5 +1,9 @@
 <%= content_tag( 'p', @parliament.dates ) %>
 
+<%= content_tag( 'p', "Wikidata ID: #{link_to( @parliament.wikidata_id, "https://www.wikidata.org/wiki/#{@parliament.wikidata_id}" )}".html_safe ) if @parliament.wikidata_id %>
+
+
+
 <div id="sessions-and-prorogations">
 	<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
 	<table>
