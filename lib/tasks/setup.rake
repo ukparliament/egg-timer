@@ -18,6 +18,7 @@ task :import_parliaments => :environment do
     parliament_period.number = row[0]
     parliament_period.start_date = row[2].to_date
     parliament_period.end_date = row[4].to_date if row[4]
+    parliament_period.wikidata_id = row[5].strip if row[5]
     parliament_period.save
   end
 end
@@ -29,6 +30,7 @@ task :import_sessions => :environment do
     session.start_date = row[2].to_date
     session.end_date = row[3].to_date if row[3]
     session.citation = row[4].strip
+    session.wikidata_id = row[6].strip if row[6]
     parliament_period = ParliamentPeriod.find_by number: row[0]
     session.parliament_period = parliament_period
     session.save
