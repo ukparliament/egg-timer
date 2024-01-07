@@ -12,14 +12,14 @@ module CALCULATION_INTERVAL
     while date <= @end_date
       
       # If the date is a Commons sitting day ...
-      if date.is_commons_actual_sitting_day?
+      if date.is_commons_parliamentary_sitting_day?
         
         # ... we increment the Commons sitting day count.
         @commons_sitting_day_count += 1
       end
       
       # If the date is a Lords sitting day ...
-      if date.is_lords_actual_sitting_day?
+      if date.is_lords_parliamentary_sitting_day?
         
         # ... we increment the Lords sitting day count.
         @lords_sitting_day_count += 1
