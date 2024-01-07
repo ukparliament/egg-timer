@@ -6,6 +6,7 @@ require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
 require 'calculations/pnsi'
 require 'calculations/treaty'
+require 'calculations/interval'
 
 # ## The controller itself.
 class CalculatorController < ApplicationController
@@ -16,6 +17,7 @@ class CalculatorController < ApplicationController
   include CALCULATION_COMMONS_ONLY_SI
   include CALCULATION_PNSI
   include CALCULATION_TREATY
+  include CALCULATION_INTERVAL
   
   # ### This is the code to provide information for the form that users can fill in.
   def index
@@ -260,33 +262,6 @@ class CalculatorController < ApplicationController
         # ... and calculate the sitting days in the interval.
         calculate_sitting_days_in_interval( @start_date, @end_date )
       end
-    end
-  end
-  
-  def calculate_sitting_days_in_interval( start_date, end_date )
-    
-    # We set the date to start counting from to the start date.
-    date = @start_date
-    
-    # Whilst the date is not later than the end date ...
-    while date <= @end_date
-      
-      # If the date is a Commons sitting day ...
-      if date.is_commons_actual_sitting_day?
-        
-        # ... we increment the Commons sitting day count.
-        @commons_sitting_day_count += 1
-      end
-      
-      # If the date is a Lords sitting day ...
-      if date.is_lords_actual_sitting_day?
-        
-        # ... we increment the Lords sitting day count.
-        @lords_sitting_day_count += 1
-      end
-      
-      # We continue to the **next day**.
-      date = date.next_day
     end
   end
 end
