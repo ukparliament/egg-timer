@@ -197,6 +197,98 @@ class CalculatorController < ApplicationController
       @calendar_links << calendar_link
     end
   end
+  
+  # ### This is the code to build the interval calculation form.
+  def interval
+    
+
+    @title = "Calculate sitting days during an interval"
+    
+    # We get both Houses.
+    @houses = House.all
+  end
+  
+  # ### This is the code to calculate the number of sitting days during an interval of time.
+  def interval_calculate
+    
+    # In order to calculate the number of sitting days during an interval, we need:
+    
+    # * the **start date**, for example: "2020-05-06"
+    start_date = params['start-date']
+    
+    # * the **end date**, for example: "2021-04-11"
+    end_date = params['end-date']
+    
+    # If neither the **start date** nor the ** end date** has not been provided ...
+    if start_date.blank? or end_date.blank?
+      
+      # ... we set an error message ...
+	    @title = "Sorry, we need more information to complete the calculation"
+      
+      # ... and display the error.
+      render :template => 'calculator/interval_not_enough_information'
+      
+    # Otherwise, if both the start date and the end date have been provided ...
+    else
+        
+      # ... we set a title for the page.
+    	@title = "Number of sitting days within the interval"
+      
+      # We make the text of the start date and end date passed into date formats.
+      @start_date = Date.parse( start_date )
+      @end_date = Date.parse( end_date )
+      
+      # If the start date is the same as or after the end date ...
+      if @start_date >= @end_date
+        
+        # ... we set a title for the page ...
+    	  @title = "Unable to calculate sitting days"
+        
+        # ... construct an error mesage.
+        @error_message = "The start date must precede the end date."
+        
+        # ... and display the error.
+        render :template => 'calculator/interval_error'
+        
+      # Otherwise, if the end date is after the start date ...
+      else
+        
+        # ... we set the sitting day counts ...
+        @commons_sitting_day_count = 0
+        @lords_sitting_day_count = 0
+        
+        # ... and calculate the sitting days in the interval.
+        calculate_sitting_days_in_interval( @start_date, @end_date )
+      end
+    end
+  end
+  
+  def calculate_sitting_days_in_interval( start_date, end_date )
+    
+    # We set the date to start counting from to the start date.
+    date = @start_date
+    
+    # Whilst the date is not later than the end date ...
+    while date <= @end_date
+      
+      # If the date is a Commons sitting day ...
+      if date.is_commons_actual_sitting_day?
+        
+        # ... we increment the Commons sitting day count.
+        @commons_sitting_day_count += 1
+      end
+      
+      # If the date is a Lords sitting day ...
+      if date.is_lords_actual_sitting_day?
+        
+        # ... we increment the Lords sitting day count.
+        @lords_sitting_day_count += 1
+      end
+      
+      # We continue to the **next day**.
+      date = date.next_day
+    end
+  end
 end
     
     
