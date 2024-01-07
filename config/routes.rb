@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   get 'egg-timer/calculator' => 'calculator#index', as: :calculator_form
   get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
   get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
+  get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
+  get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
   
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
   get 'egg-timer/meta/using' => 'meta#using', as: :meta_using
