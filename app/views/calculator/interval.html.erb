@@ -1,3 +1,6 @@
+<%= content_tag( 'p', "This calculation depends on sitting day data. Sitting day data is complete for both Houses since the start of the #{link_to( '57th Parliament', session_show_url( :session => 6 ) )}.".html_safe ) %>
+
+
 <form action="/egg-timer/calculator/interval/calculate" method="GET" id="calculator">
 	
 	<fieldset>
