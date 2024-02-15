@@ -30,6 +30,7 @@ task :import_sessions => :environment do
     session.start_date = row[2].to_date
     session.end_date = row[3].to_date if row[3]
     session.citation = row[4].strip
+    session.regnal_year_citation = row[5]
     session.wikidata_id = row[6].strip if row[6]
     parliament_period = ParliamentPeriod.find_by number: row[0]
     session.parliament_period = parliament_period
