@@ -55,6 +55,7 @@ create table sessions (
 	start_date date not null,
 	end_date date null,
 	citation varchar(255) not null,
+	regnal_year_citation varchar(255) not null,
 	wikidata_id varchar(20),
 	parliament_period_id int not null,
 	constraint fk_parliament_period foreign key (parliament_period_id) references parliament_periods(id),
