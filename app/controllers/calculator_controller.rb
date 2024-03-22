@@ -4,6 +4,7 @@
 require 'calculations/bicameral_both_houses_sitting'
 require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
+require 'calculations/commons_only_sitting_days'
 require 'calculations/pnsi'
 require 'calculations/treaty'
 require 'calculations/interval'
@@ -15,6 +16,7 @@ class CalculatorController < ApplicationController
   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
   include CALCULATION_COMMONS_ONLY_SI
+  include CALCULATION_COMMONS_ONLY_SITTING_DAYS
   include CALCULATION_PNSI
   include CALCULATION_TREATY
   include CALCULATION_INTERVAL
@@ -189,6 +191,11 @@ class CalculatorController < ApplicationController
           when 5
             
             @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+          
+          # * Calculation style 6
+          when 6
+            
+            @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
           end
         end
       end
