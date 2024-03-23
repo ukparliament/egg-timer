@@ -471,6 +471,37 @@ If this is a day on which the calendar is populated ...
       end
     end
   end
+### We want to find the first actual sitting day in the House of Commons.
+
+This method is used by the House of Commons only sitting day calculation.
+
+Even if an instrument is laid on a House of Commons actual sitting day, the clock does not start until the next House of Commons actual sitting day.
+
+  def first_commons_actual_sitting_day
+If this is a day on which the calendar is not yet populated ...
+
+    if self.is_calendar_not_populated?
+... then we cannot find a first actual sitting day in the House of Commons so we stop looking.
+
+      return nil
+If this is a day on which the calendar is populated ...
+
+    else
+... then if this is not an actual sitting day in the House of Commons ...
+
+      unless self.is_commons_actual_sitting_day?
+... then go to the next day and check that.
+
+        self.next_day.first_commons_actual_sitting_day
+... then if this is an actual sitting day in the House of Commons ...
+
+      else
+... then return this day as the first actual sitting day in the House of Commons.
+
+        self
+      end
+    end
+  end
 (End of set of methods to find the first day of a given type.)
 
 ## A set of methods to return which higher level parliamentary time periods a calendar day sits in.

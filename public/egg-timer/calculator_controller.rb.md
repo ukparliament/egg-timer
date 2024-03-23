@@ -5,6 +5,7 @@ Individual calculations for different flavours of instrument are packaged into s
 require 'calculations/bicameral_both_houses_sitting'
 require 'calculations/bicameral_si_either_house_sitting'
 require 'calculations/commons_only_si'
+require 'calculations/commons_only_sitting_days'
 require 'calculations/pnsi'
 require 'calculations/treaty'
 require 'calculations/interval'
@@ -16,6 +17,7 @@ Include code from each of the modules for the different styles of calculation.
   include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
   include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
   include CALCULATION_COMMONS_ONLY_SI
+  include CALCULATION_COMMONS_ONLY_SITTING_DAYS
   include CALCULATION_PNSI
   include CALCULATION_TREATY
   include CALCULATION_INTERVAL
@@ -148,6 +150,11 @@ To calculate the **anticipated end date**, we select the calculation based on th
           when 12
             @start_date_type = "date of publication"
             @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+* National Policy Statements.
+
+          when 20
+            @start_date_type = "laying date"
+            @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
           end
 Otherwise, if the calculation style has been selected ...
 
@@ -175,6 +182,10 @@ Otherwise, if the calculation style has been selected ...
 
           when 5
             @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+* Calculation style 6
+
+          when 6
+            @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
           end
         end
       end
