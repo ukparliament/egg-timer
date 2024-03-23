@@ -159,6 +159,12 @@ class CalculatorController < ApplicationController
           
             @start_date_type = "date of publication"
             @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+            
+          # * National Policy Statements.
+          when 20
+            
+            @start_date_type = "laying date"
+            @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
           end
           
         # Otherwise, if the calculation style has been selected ...
