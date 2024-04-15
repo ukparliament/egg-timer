@@ -43,7 +43,7 @@ task :populate_dissolution_periods => :environment do
   parliament_periods.each do |parliament_period|
     dissolution_period = DissolutionPeriod.new
     dissolution_period.number = parliament_period.number
-    dissolution_period.start_date = parliament_period.end_date + 1.day
+    dissolution_period.start_date = parliament_period.end_date
     dissolution_period.end_date = parliament_period.following_parliament_period.start_date - 1.day
     dissolution_period.save
   end
@@ -56,7 +56,7 @@ task :populate_prorogation_periods => :environment do
     if session.following_session_in_parliament
       prorogation_period = ProrogationPeriod.new
       prorogation_period.number = session.number
-      prorogation_period.start_date = session.end_date + 1.day
+      prorogation_period.start_date = session.end_date
       prorogation_period.end_date = session.following_session_in_parliament.start_date - 1.day
       prorogation_period.parliament_period = session.parliament_period
       prorogation_period.save
@@ -64,7 +64,7 @@ task :populate_prorogation_periods => :environment do
     elsif session.end_date < session.parliament_period.end_date
       prorogation_period = ProrogationPeriod.new
       prorogation_period.number = session.number
-      prorogation_period.start_date = session.end_date + 1.day
+      prorogation_period.start_date = session.end_date
       prorogation_period.end_date = session.parliament_period.end_date
       prorogation_period.parliament_period = session.parliament_period
       prorogation_period.save
