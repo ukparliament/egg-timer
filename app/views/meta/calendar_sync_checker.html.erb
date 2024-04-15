@@ -1,0 +1,5 @@
+<% if @last_calendar_sync -%>
+	<%= content_tag( 'p', "Calendars last synced at #{@last_calendar_sync.synced_at.strftime( '%H:%M on %A, %-d %B %Y')}." ) %>
+<% else -%>
+	<%= content_tag( 'p', "Calendars have not yet been synced." ) %>
+<% end -%>
