@@ -89,4 +89,9 @@ class MetaController < ApplicationController
       end
     end
   end
+  
+  def calendar_sync_checker
+  	@title = "Calendar sync checker"
+    @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
+  end
 end
