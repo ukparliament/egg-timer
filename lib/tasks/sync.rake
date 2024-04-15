@@ -17,7 +17,8 @@ task :sync => [
   :sync_commons_adjournment_days,
   :sync_lords_adjournment_days,
   :sync_commons_recess_dates,
-  :sync_lords_recess_dates
+  :sync_lords_recess_dates,
+  :record_sync_time
 ]
 
 task :sync_commons_sitting_days => :environment do
@@ -47,4 +48,10 @@ end
 task :sync_lords_recess_dates => :environment do
   puts "Syncing lords recess dates"
   sync_recess_dates( '45591a2f31eb089019ba1b200e5ec635f8d25a9620f120e96e881b3165e714d4@group.calendar.google.com', 2 )
+end
+task :record_sync_time => :environment do
+  puts "Recording the sync time"
+  calendar_sync = CalendarSync.new
+  calendar_sync.synced_at = Time.now
+  calendar_sync.save!
 end
