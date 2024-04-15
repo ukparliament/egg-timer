@@ -63,9 +63,10 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
   get 'egg-timer/meta/recess-checker' => 'meta#recess_checker', as: :meta_recess_checker
+  get 'egg-timer/meta/calendar-sync-checker' => 'meta#calendar_sync_checker', as: :meta_calendar_sync_checker
   
-  get 'egg-timer/sync' => 'sync#sync', as: :sync
-  get 'egg-timer/sync/test' => 'sync#test', as: :sync_test
+  #get 'egg-timer/sync' => 'sync#sync', as: :sync
+  #get 'egg-timer/sync/test' => 'sync#test', as: :sync_test
   
 
   # Example of regular route:
