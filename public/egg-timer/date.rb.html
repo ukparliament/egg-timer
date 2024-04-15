@@ -379,7 +379,7 @@ a {text-decoration:underline;color:white;}
 </pre></code><p>(End of set of methods to find the first day of a given type.)</p>
 <h2>A set of methods to return which higher level parliamentary time periods a calendar day sits in.</h2>
 <p>A calendar day may sit in either a dissolution period or a Parliament period.</p>
-<p>If a calendar day sits inside a Parliament period, it may sit inside either a session or a dissolution period.</p>
+<p>If a calendar day sits inside a Parliament period, it may sit inside either a session or a prorogation period.</p>
 <h3>We want to find which dissolution period a calendar day sits in, if any.</h3>
 <code title='Line 556, lib/monkey_patching/date.rb'><pre><a name='556'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/lib/monkey_patching/date.rb#L556'> 556</a>   def dissolution_period
 </pre></code><code title='Line 557, lib/monkey_patching/date.rb'><pre><a name='557'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/lib/monkey_patching/date.rb#L557'> 557</a>     DissolutionPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first

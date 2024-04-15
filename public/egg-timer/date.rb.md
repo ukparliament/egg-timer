@@ -508,7 +508,7 @@ If this is a day on which the calendar is populated ...
 
 A calendar day may sit in either a dissolution period or a Parliament period.
 
-If a calendar day sits inside a Parliament period, it may sit inside either a session or a dissolution period.
+If a calendar day sits inside a Parliament period, it may sit inside either a session or a prorogation period.
 
 ### We want to find which dissolution period a calendar day sits in, if any.
 
