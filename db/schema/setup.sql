@@ -11,6 +11,16 @@ drop table if exists dissolution_periods;
 drop table if exists parliament_periods;
 drop table if exists sync_tokens;
 drop table if exists procedures;
+drop table if exists calendar_syncs;
+
+create sequence calendar_sync_id_seq as integer;
+create table calendar_syncs (
+	id int not null,
+	synced_at timestamp not null,
+	primary key (id)
+);
+alter sequence calendar_sync_id_seq owned by calendar_syncs.id;
+alter table calendar_syncs alter column id set default nextval('calendar_sync_id_seq');
 
 create sequence parliament_periods_id_seq as integer;
 create table parliament_periods (
