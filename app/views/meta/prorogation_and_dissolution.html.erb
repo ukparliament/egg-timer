@@ -47,6 +47,7 @@
 <ol>
 	<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the sessions sheet as a CSV." ) %>
 	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Remove the first - header - row of the sessions.csv." ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
 </ol>
 
@@ -59,6 +60,7 @@
 	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
 	<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the Parliament periods sheet as a CSV." ) %>
 	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Remove the first - header - row of the parliaments.csv." ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
 </ol>
 
@@ -68,7 +70,7 @@
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}. This removes and recreates all tables in the local database.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}. This imports Parliament and session data and infers dissolution and prorogation data.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-calendar' )} to reset the database: this removes information from the Heroku database.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-egg-timer' )} to reset the database: this removes information from the Heroku database.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku run rake sync' )} to sync data from the Google calendars to the application.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
