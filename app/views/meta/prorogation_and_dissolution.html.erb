@@ -8,68 +8,72 @@
 
 <%= content_tag( 'p', "In both cases, action must be taken:" ) %>
 
-<%= content_tag( 'h3', 'In Google calendar' ) %>
+<%= content_tag( 'h3', 'In the Google calendars' ) %>
 <ol>
 	<%= content_tag( 'li', "Remove any previously created sitting or adjournment days set to take place during the prorogation or the dissolution period from the Google calendars." ) %>
-	<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes." ) %>
+	<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes. The #{link_to( 'calendar sync checker', meta_calendar_sync_checker_url )} records when the calendar last synced.".html_safe ) %>
 </ol>
 
-<%= content_tag( 'h3', 'On the Heroku website' ) %>
-<ol>
-	<%= content_tag( 'li', 'Sign into Heroku.' ) %>
-	<%= content_tag( 'li', 'Navigate to the application (parliament-calendar).' ) %>
-	<%= content_tag( 'li', "Navigate to the 'Resources' tab." ) %>
-	<%= content_tag( 'li', "Click on 'Heroku Scheduler'." ) %>
-	<%= content_tag( 'li', "Click on the cross with tooltip 'Delete this job'. This will stop the application importing updates from the Google calendars until we've finished." ) %>
-</ol>
+<%= content_tag( 'h3', 'In the Google spreadsheet' ) %>
+<%= content_tag( 'p', "The #{link_to( 'Parliament periods', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing' )} spreadsheet has two sheets: one describing Parliament periods, one describing sessions.".html_safe ) %>
+
+<%= content_tag( 'p', "At prorogation, you need to update the sessions sheet by applying the end date to the session being prorogued. You also need to add details for the new session, being:" ) %>
+<ul>
+	<li>The Parliament number.</li>
+	<li>The number of the session in the Parliament.</li>
+	<li>The start date of the session.</li>
+	<li>The Journal Office style citation of the session, for example: 2024-25.</li>
+	<li>The regnal year citation of the session.</li>
+	<li>The Wikidata ID of the session, if that exists.</li>
+</ul>
+<p>The egg timer requires the Parliament number, session number and session start date. The Journal Office style citation, regnal year citation and Wikidata ID are optional.</p>
+<%= content_tag( 'p', "Prorogation is announced in a proclamation which gives a start date for the prorogation period. For prorogations between sessions in a Parliament period, the proclamation also names the start date of the next session." ) %>
+
+<%= content_tag( 'p', "At dissolution, you also need to update the Parliament periods sheet by applying an end date to the Parliament being dissolved. You also need to add details for the new Parliament, being:" ) %>
+<ul>
+	<li>The Parliament number.</li>
+	<li>The polling day of the general election forming the new Parliament.</li>
+	<li>The Wikidata ID of the general election forming the new Parliament.</li>
+	<li>The opening date, being the date of assembly of the new Parliament.</li>
+	<li>The date of State Opening.</li>
+	<li>The Wikidata ID of the Parliament</li>
+</ul>
+<p>The egg timer requires the Parliament number and its start date. It will load the Wikidata ID of the Parliament, but this isn't necessary.</p>
 
 <%= content_tag( 'h2', 'What to do upon the announcement of prorogation' ) %>
-
-<%= content_tag( 'p', 'Prorogation is announced in a proclamation which gives a start date for the prorogation period. For the purposes of this calendar, the prorogation period starts on the day after the date of prorogation.' ) %>
-
-<%= content_tag( 'p', "For prorogations between sessions in a Parliament period, the proclamation also names the start date of the next session. For the purposes of this calendar, the prorogation period ends on the day before the start of the next session." ) %>
-
 <%= content_tag( 'p', "In order for the application to continue to function, we need to upload a clean copy of the database with an end date for the current session and a start date for the subsequent session." ) %>
 
 <%= content_tag( 'p', "The steps are:" ) %>
 <ol>
-	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Add the end date of the current session to the first row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the current Parliament period, the number of the session in that Parliament and the start date of the session.".html_safe ) %>
-	<%= content_tag( 'li', "Ensure that the #{link_to( 'Sessions Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
+	<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the sessions sheet as a CSV." ) %>
+	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
 </ol>
 
 <%= content_tag( 'h2', 'What to do upon the announcement of dissolution' ) %>
+<%= content_tag( 'p', "In order for the application to continue to function, we need to upload a clean copy of the database with an end date for the current session, a start date for the subsequent session, an end date for the current Parliament and a start date for the subsequent Parliament." ) %>
+
+<%= content_tag( 'p', "The steps are:" ) %>
 <ol>
-	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Add the end date of the current session to the first row. If the dissolution is directly preceded by a prorogation period, this will be the date of prorogation. If dissolution is not directly preceded by a prorogation period, this will be the date of dissolution.".html_safe ) %>
-	<%= content_tag( 'li', "Add a new row before the first row of the CSV containing: the number of the next Parliament period, the number of the session in that Parliament - always 1 - and the start date of the session. This will be the same as the start date of the next Parliament period.".html_safe ) %>
-	<%= content_tag( 'li', "Ensure that the #{link_to( 'Sessions Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
-	<%= content_tag( 'li', "Open #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
-	<%= content_tag( 'li', "Add the dissolution date of the current Parliament period to the fifth column of the last row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a citation to the House of Commons Journal to the tenth column of the last row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a citation to the London Gazette to the eleventh column of the last row.".html_safe ) %>
-	<%= content_tag( 'li', "Add a new row at the bottom of the CSV.".html_safe ) %>
-	<%= content_tag( 'li', "Add the number of the new Parliament period to the first column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the polling date to the second column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the first date of the new Parliament period to the third column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the date of State Opening of the new Parliament period to the fourth column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the Wikidata ID for the new Parliament period to the sixth column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Add the Wikidata ID for the general election to the seventh column of the new row.".html_safe ) %>
-	<%= content_tag( 'li', "Ensure that the #{link_to( 'Parliament periods Google sheet', 'https://docs.google.com/spreadsheets/d/1e3AnQebAO5ug-Pc_0qDq9KkyZiy0dRhJMvm0lRRJOXk/edit?usp=sharing')} is updated.".html_safe ) %>
+	<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the sessions sheet as a CSV." ) %>
+	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
+	<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the Parliament periods sheet as a CSV." ) %>
+	<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
 	<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
 </ol>
 
 <%= content_tag( 'h2', 'Resetting the database', :id => 'resetting-the-database' ) %>
+<%= content_tag( 'p', "From the command line, at the root of the application:" ) %>
 <ol>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}. This removes and recreates all tables in the local database.".html_safe ) %>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}. This imports Parliament and session data and infers dissolution and prorogation data.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-calendar' )} to reset the database: this removes information from the Heroku database.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
-	<%= content_tag( 'li', "From 'Heroku Scheduler', click 'Create job'." ) %>
-	<%= content_tag( 'li', "Enter the command #{content_tag( 'code', 'rake sync' )} in the 'Run Command' box.".html_safe ) %>
-	<%= content_tag( 'li', "Wait until the scheduler job runs." ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku run rake sync' )} to sync data from the Google calendars to the application.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
 </ol>
+
+<%= content_tag( 'h2', 'Having reset the database', :id => 'having-reset-the-database' ) %>
+<%= content_tag( 'p', "You can create sitting and adjournment days in the subsequent Parliament and / or session." ) %>
+<%= content_tag( 'p', "Use the #{link_to( 'calendar sync checker', meta_calendar_sync_checker_url )} to confirm whether the application is being updated from the Google calendars.".html_safe ) %>
