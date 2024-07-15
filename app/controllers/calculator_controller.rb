@@ -100,8 +100,8 @@ class CalculatorController < ApplicationController
           # To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
           case @procedure.id
         
-          # * Legislative Reform Orders, Public Body Orders and Localism Orders
-          when 1, 17, 18, 19, 2, 4
+          # * Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016
+          when 1, 17, 18, 19, 2, 4, 21, 22, 23
         
             @start_date_type = "laying date"
             @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -118,8 +118,8 @@ class CalculatorController < ApplicationController
             @start_date_type = "laying date"
             @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
         
-          # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders and enhanced affirmatives under the Investigatory Powers Act 2016
-          when 6, 13, 14, 21, 22, 23
+          # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders
+          when 6, 13, 14
       
             @start_date_type = "laying date"
             @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
