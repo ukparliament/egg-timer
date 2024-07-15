@@ -118,8 +118,8 @@ class CalculatorController < ApplicationController
             @start_date_type = "laying date"
             @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
         
-          # * Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders
-          when 6, 13, 14
+          # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders and enhanced affirmatives under the Investigatory Powers Act 2016
+          when 6, 13, 14, 21, 22, 23
       
             @start_date_type = "laying date"
             @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
