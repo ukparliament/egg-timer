@@ -100,9 +100,9 @@ If the procedure has been selected ...
 To calculate the **anticipated end date**, we select the calculation based on the type of procedure:
 
           case @procedure.id
-* Legislative Reform Orders, Public Body Orders and Localism Orders
+* Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016
 
-          when 1, 17, 18, 19, 2, 4
+          when 1, 17, 18, 19, 2, 4, 21, 22, 23
             @start_date_type = "laying date"
             @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 * Proposed Statutory Instruments (PNSIs)
@@ -115,7 +115,7 @@ To calculate the **anticipated end date**, we select the calculation based on th
           when 5
             @start_date_type = "laying date"
             @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
-* Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders
+* Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders
 
           when 6, 13, 14
             @start_date_type = "laying date"

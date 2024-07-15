@@ -113,9 +113,9 @@ a {text-decoration:underline;color:white;}
 </pre></code><p>To calculate the <strong>anticipated end date</strong>, we select the calculation based on the type of procedure:</p>
 <code title='Line 101, app/controllers/calculator_controller.rb'><pre><a name='101'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L101'> 101</a>           case @procedure.id
 </pre></code><ul>
-<li>Legislative Reform Orders, Public Body Orders and Localism Orders</li>
+<li>Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016</li>
 </ul>
-<code title='Line 104, app/controllers/calculator_controller.rb'><pre><a name='104'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L104'> 104</a>           when 1, 17, 18, 19, 2, 4
+<code title='Line 104, app/controllers/calculator_controller.rb'><pre><a name='104'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L104'> 104</a>           when 1, 17, 18, 19, 2, 4, 21, 22, 23
 </pre></code><code title='Line 106, app/controllers/calculator_controller.rb'><pre><a name='106'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L106'> 106</a>             @start_date_type = "laying date"
 </pre></code><code title='Line 107, app/controllers/calculator_controller.rb'><pre><a name='107'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L107'> 107</a>             @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
 </pre></code><ul>
@@ -131,7 +131,7 @@ a {text-decoration:underline;color:white;}
 </pre></code><code title='Line 118, app/controllers/calculator_controller.rb'><pre><a name='118'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L118'> 118</a>             @start_date_type = "laying date"
 </pre></code><code title='Line 119, app/controllers/calculator_controller.rb'><pre><a name='119'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L119'> 119</a>             @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
 </pre></code><ul>
-<li>Commons and Lords negative Statutory Instruments and proposed and draft affirmative remedial orders</li>
+<li>Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders</li>
 </ul>
 <code title='Line 122, app/controllers/calculator_controller.rb'><pre><a name='122'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L122'> 122</a>           when 6, 13, 14
 </pre></code><code title='Line 124, app/controllers/calculator_controller.rb'><pre><a name='124'  class='githubline' href='https://github.com/ukparliament/egg-timer/tree/master/app/controllers/calculator_controller.rb#L124'> 124</a>             @start_date_type = "laying date"
