@@ -16,8 +16,8 @@
 15,Remedial order (urgent procedure) - made affirmative approval period,true,120,false
 2,Legislative reform order - negative procedure objection period,true,40,true
 3,Legislative reform order - period before affirmative may be approved,true,40,true
-4,Legislative reform order - period before super-affirmative may be approved,true,40,true
+4,Legislative reform order - period before super-affirmative may be approved,true,60,true
 21,National Policy Statement consideration period,true,21,false
-18,Enhanced affirmative: Investigatory Powers Act 2016 - Recommendation period,true,30,false
-19,Enhanced affirmative: Investigatory Powers Act 2016 - Pre-approval period,true,40,false
-20,Enhanced affirmative: Investigatory Powers Act 2016 - Extended pre-approval period,true,60,false
+18,Enhanced affirmative: Investigatory Powers Act 2016 - recommendation period,true,30,false
+19,Enhanced affirmative: Investigatory Powers Act 2016 - pre-approval period,true,40,false
+20,Enhanced affirmative: Investigatory Powers Act 2016 - extended pre-approval period,true,60,false
