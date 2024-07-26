@@ -9,6 +9,7 @@ namespace :doc do
 end
 
 def commentariat(with_path)
+  puts with_path
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, no_intra_emphasis: true, autolink: true, underline: true, hightlight: true, quote: true)
   html_out = ''
   markdown_out = ''
