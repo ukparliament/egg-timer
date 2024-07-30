@@ -30,4 +30,15 @@ class ProrogationPeriod < ActiveRecord::Base
     dates = dates + self.end_date.strftime( '%-d %B %Y' ) if self.end_date
     dates
   end
+  
+  ### We want to find the session immediately preceding this prorogation.
+  def preceding_session
+    Session.all.where( "start_date < ?", self.start_date ).order( "start_date DESC" ).first
+  end
+  
+  ### We want to find the session immediately following this date.
+  # This method is used to determine which session papers laid in prorogation are recorded in.
+  def following_session
+    Session.all.where( "start_date > ?", self.start_date ).order( "start_date" ).first
+  end
 end
