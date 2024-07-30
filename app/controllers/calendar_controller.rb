@@ -126,5 +126,7 @@ class CalendarController < ApplicationController
     @date = Date.new( year.to_i, month.to_i, day.to_i)
     @previous_date = @date - 1.day
     @next_date = @date + 1.day
+    @preceding_session = @date.preceding_session
+    @following_session = @date.following_session
   end
 end
