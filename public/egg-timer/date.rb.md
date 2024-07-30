@@ -530,6 +530,18 @@ If a calendar day sits inside a Parliament period, it may sit inside either a se
   def session
     Session.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
   end
+## We want to find the session immediately preceding this date.
+
+  def preceding_session
+    Session.all.where( "start_date < ?", self ).order( "start_date DESC" ).first
+  end
+## We want to find the session immediately following this date.
+
+This method is used to determine which session papers laid in prorogation are recorded in.
+
+  def following_session
+    Session.all.where( "start_date > ?", self ).order( "start_date" ).first
+  end
 ### Generate label for the day type in the Commons in a session.
 
   def commons_day_type
