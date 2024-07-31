@@ -9,10 +9,11 @@ ruby '3.2.1'
 
 gem 'redcarpet', '3.6.0'
 
-gem 'puma'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '7.0.2.4'
+gem 'puma'
 
 
 gem 'nokogiri', '>= 1.13.4'
