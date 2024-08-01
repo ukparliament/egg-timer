@@ -128,5 +128,6 @@ class CalendarController < ApplicationController
     @next_date = @date + 1.day
     @preceding_session = @date.preceding_session
     @following_session = @date.following_session
+    @is_final_day_of_session = @date.is_final_day_of_session?
   end
 end
