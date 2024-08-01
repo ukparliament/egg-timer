@@ -518,7 +518,18 @@ If a calendar day sits inside a Parliament period, it may sit inside either a se
 ### We want to find which Parliament period a calendar day sits in, if any.
 
   def parliament_period
-    ParliamentPeriod.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
+    ParliamentPeriod.find_by_sql(
+      "
+        SELECT *
+        FROM parliament_periods
+        WHERE start_date <= '#{self}'
+        AND (
+          end_date >= '#{self}'
+          OR
+          end_date IS NULL
+        )
+      "
+    ).first
   end
 ### We want to find which prorogoration period a calendar day sits in, if any.
 
@@ -528,7 +539,26 @@ If a calendar day sits inside a Parliament period, it may sit inside either a se
 ### We want to find which session a calendar day sits in, if any.
 
   def session
-    Session.all.where( "start_date <= ?", self ).order( "start_date desc" ).first
+    Session.find_by_sql(
+      "
+        SELECT *
+        FROM sessions
+        WHERE start_date <= '#{self}'
+        AND (
+          end_date >= '#{self}'
+          OR
+          end_date IS NULL
+        )
+      "
+    ).first
+  end
+## We want to find out if this is the final day of a session.
+
+  def is_final_day_of_session?
+    is_final_day_of_session = false
+    session = Session.all.where( "end_date = ?", self )
+    is_final_day_of_session = true unless session.empty?
+    is_final_day_of_session
   end
 ## We want to find the session immediately preceding this date.
 
