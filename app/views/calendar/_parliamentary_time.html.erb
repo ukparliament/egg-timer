@@ -16,14 +16,14 @@
 		<%# Otherwise, if the date is during a prorogation period ... %>
 		<% elsif parliamentary_time.prorogation_period -%>
 		
-			<%# ... if the preceding session and following session are not part of the same Parliament period ...%>
+			<%# ... if the preceding session and following session are not part of the same Parliament period ... %>
 			<% if @preceding_session.parliament_period_id != @following_session.parliament_period_id -%>
 			
 				<%# ... we know this is a prorogation immediately preceding dissolution. %>
 				<%= content_tag( 'p', "#{@title} forms part of the prorogation between the #{link_to( "#{@preceding_session.number.ordinalize} session", session_show_url( :session => @preceding_session.id ) )} and the dissolution of the #{link_to( "#{@preceding_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @preceding_session.parliament_period_id ) )}, being the #{link_to( "#{parliamentary_time.prorogation_period.number.ordinalize} prorogation", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of that Parliament.".html_safe ) %>
 				<%= content_tag( 'p', "Papers laid during this prorogation are reported by both Houses in the #{link_to( "#{@following_session.number.ordinalize} session", session_show_url( :session => @following_session.id ) )} of the #{link_to( "#{@following_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @following_session.parliament_period_id ) )}.".html_safe ) %>
 				
-			<%# Otherwise, if the preceding session and the following session are part of the same Parliament period ...%>
+			<%# Otherwise, if the preceding session and the following session are part of the same Parliament period ... %>
 			<% else -%>
 		
 				<%# ... we know this is a prorogation immediately preceding a new session. %>
@@ -43,4 +43,3 @@
 		<%= content_tag( 'p', "#{@title} is in the #{link_to( "#{parliamentary_time.dissolution_period.number.ordinalize} dissolution period", dissolution_period_show_url( :dissolution_period => parliamentary_time.dissolution_period ) )}.".html_safe ) %>
 	<% end -%>
 </div>
-
