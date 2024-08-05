@@ -1,6 +1,6 @@
 <%= content_tag( 'p', @prorogation_period.dates) %>
 
-<%# ... if the preceding session and following session are not part of the same Parliament period ...%>
+<%# ... if the preceding session and following session are not part of the same Parliament period ... %>
 <% if @preceding_session.parliament_period_id != @following_session.parliament_period_id -%>
 
 	<%# ... we know this is a prorogation immediately preceding dissolution. %>
@@ -8,7 +8,7 @@
 	
 	<%= content_tag( 'p', "Papers laid during this prorogation are reported by both Houses in the #{link_to( "#{@following_session.number.ordinalize} session", session_show_url( :session => @following_session.id ) )} of the #{link_to( "#{@following_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @following_session.parliament_period_id ) )}.".html_safe ) %>
 	
-<%# Otherwise, if the preceding session and the following session are part of the same Parliament period ...%>
+<%# Otherwise, if the preceding session and the following session are part of the same Parliament period ... %>
 <% else -%>
 
 	<%# ... we know this is a prorogation immediately preceding a new session. %>
