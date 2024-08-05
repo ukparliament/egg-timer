@@ -600,7 +600,6 @@ class Date
     session = Session.all.where( "end_date = ?", self )
     is_final_day_of_session = true unless session.empty?
     is_final_day_of_session
-    
   end
 
   
