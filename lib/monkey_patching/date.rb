@@ -626,6 +626,8 @@ class Date
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_commons_adjournment_day?
       day_type = self.commons_adjournment_day_label
+    elsif self.session
+      day_type = 'Session day of unknown type'
     elsif self.is_prorogation_day?
       day_type = 'Prorogation'
     elsif self.is_dissolution_day?
@@ -646,6 +648,8 @@ class Date
       day_type = 'Scrutiny non-sitting day'
     elsif self.is_lords_adjournment_day?
       day_type = self.lords_adjournment_day_label
+    elsif self.session
+      day_type = 'Session day of unknown type'
     elsif self.is_prorogation_day?
       day_type = 'Prorogation'
     elsif self.is_dissolution_day?
