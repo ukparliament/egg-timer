@@ -7,10 +7,10 @@
 		<% if parliamentary_time.session -%>
 			<%= content_tag( 'p', "#{@title} is in the #{link_to( "#{parliamentary_time.session.number.ordinalize} session", session_show_url( :session => parliamentary_time.session ) )} of the #{link_to( "#{parliamentary_time.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => parliamentary_time.parliament_period ) )}.".html_safe ) %>
 			
-			
 			<% # If this is the final date of the session ... %>
 			<% if @is_final_day_of_session -%>
-				<%= content_tag( 'p', "#{@title} is the final day of the session. Given this system records the end date, but not the time at which the session ends, it is not possible to determine whether papers laid on this date would be reported in this session or the next session." ) %>
+				<%= content_tag( 'p', "This is the final day of this session." ) %>
+				<%= content_tag( 'p', "Given that the egg timer application records the date - but not the time - on which a session ends, it is not possible to determine whether papers laid on this date would be reported in this session or the following session." ) %>
 			<% end -%>
 			
 		<%# Otherwise, if the date is during a prorogation period ... %>
@@ -20,14 +20,14 @@
 			<% if @preceding_session.parliament_period_id != @following_session.parliament_period_id -%>
 			
 				<%# ... we know this is a prorogation immediately preceding dissolution. %>
-				<%= content_tag( 'p', "#{@title} forms part of the prorogation between the #{link_to( "#{@preceding_session.number.ordinalize} session", session_show_url( :session => @preceding_session.id ) )} and the dissolution of the #{link_to( "#{@preceding_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @preceding_session.parliament_period_id ) )}, being the #{link_to( "#{parliamentary_time.prorogation_period.number.ordinalize} prorogation", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of that Parliament.".html_safe ) %>
+				<%= content_tag( 'p', "#{@title} is in the prorogation between the #{link_to( "#{@preceding_session.number.ordinalize} session", session_show_url( :session => @preceding_session.id ) )} and the dissolution of the #{link_to( "#{@preceding_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @preceding_session.parliament_period_id ) )}, being the #{link_to( "#{parliamentary_time.prorogation_period.number.ordinalize} prorogation", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of that Parliament.".html_safe ) %>
 				<%= content_tag( 'p', "Papers laid during this prorogation are reported by both Houses in the #{link_to( "#{@following_session.number.ordinalize} session", session_show_url( :session => @following_session.id ) )} of the #{link_to( "#{@following_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @following_session.parliament_period_id ) )}.".html_safe ) %>
 				
 			<%# Otherwise, if the preceding session and the following session are part of the same Parliament period ... %>
 			<% else -%>
 		
 				<%# ... we know this is a prorogation immediately preceding a new session. %>
-				<%= content_tag( 'p', "#{@title} forms part of the prorogation between the #{link_to( @preceding_session.number.ordinalize, session_show_url( :session => @preceding_session.id ) )} and #{link_to( @following_session.number.ordinalize, session_show_url( :session => @following_session.id ) )} sessions of the #{link_to( "#{@following_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @following_session.parliament_period_id ) )}, being the #{link_to( "#{parliamentary_time.prorogation_period.number.ordinalize} prorogation", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of that Parliament.".html_safe ) %>
+				<%= content_tag( 'p', "#{@title} is in the prorogation between the #{link_to( @preceding_session.number.ordinalize, session_show_url( :session => @preceding_session.id ) )} and #{link_to( @following_session.number.ordinalize, session_show_url( :session => @following_session.id ) )} sessions of the #{link_to( "#{@following_session.parliament_period.number.ordinalize} Parliament", parliament_show_url( :parliament => @following_session.parliament_period_id ) )}, being the #{link_to( "#{parliamentary_time.prorogation_period.number.ordinalize} prorogation", prorogation_period_show_url( :prorogation_period => parliamentary_time.prorogation_period ) )} of that Parliament.".html_safe ) %>
 				
 				<%= content_tag( 'p', "Papers laid during this prorogation are reported by both Houses in the #{@following_session.number.ordinalize} session of the #{@following_session.parliament_period.number.ordinalize} Parliament.".html_safe ) %>
 				
