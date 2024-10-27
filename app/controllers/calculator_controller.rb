@@ -33,6 +33,10 @@ class CalculatorController < ApplicationController
   
   # ### This is the code to provide information for the form that users wishing to run a specific calculation style can fill in.
   def style
+  
+    # We get the calculation style if it's been passed as a parameter.
+    calculation_style = params['calculation-style']
+    @calculation_style = calculation_style.to_i if calculation_style
     
     # Set a title for the page.
     @title = "Calculate scrutiny periods"
