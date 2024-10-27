@@ -3,27 +3,27 @@
 		<legend>Calculation style</legend>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-1" name="calculation-style" value="1" required> Bicameral instruments (clock stops if either Houses rises)</label>
+		<input type="radio" id="calculation-style-1" name="calculation-style" value="1" required <% if @calculation_style == 1 -%>checked<% end -%>> Bicameral instruments (clock stops if either Houses rises)</label>
 		</p>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-2" name="calculation-style" value="2"> Bicameral instruments (clock stops if both Houses rise)</label>
+		<input type="radio" id="calculation-style-2" name="calculation-style" value="2" <% if @calculation_style == 2 -%>checked<% end -%>> Bicameral instruments (clock stops if both Houses rise)</label>
 		</p>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-3" name="calculation-style" value="3"> Commons only instruments</label>
+		<input type="radio" id="calculation-style-3" name="calculation-style" value="3" <% if @calculation_style == 3 -%>checked<% end -%>> Commons only instruments</label>
 		</p>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-6" name="calculation-style" value="6"> Commons only sitting days</label>
+		<input type="radio" id="calculation-style-6" name="calculation-style" value="6" <% if @calculation_style == 6 -%>checked<% end -%>> Commons only sitting days</label>
 		</p>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-4" name="calculation-style" value="4"> Proposed negative statutory instruments</label>
+		<input type="radio" id="calculation-style-4" name="calculation-style" value="4" <% if @calculation_style == 4 -%>checked<% end -%>> Proposed negative statutory instruments</label>
 		</p>
 		<p>
 		<label class="radio">
-		<input type="radio" id="calculation-style-5" name="calculation-style" value="5"> Treaty periods A and B</label>
+		<input type="radio" id="calculation-style-5" name="calculation-style" value="5" <% if @calculation_style == 5 -%>checked<% end -%>> Treaty periods A and B</label>
 		</p>
 	</fieldset>
 	<p>
