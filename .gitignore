@@ -28,3 +28,6 @@ google-credentials.json
 .idea/
 
 *.icloud
+
+data
+latest.dump

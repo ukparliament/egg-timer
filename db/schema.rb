@@ -1,101 +1,125 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
-
+ActiveRecord::Schema[7.0].define(version: 0) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
-  create_table "adjournment_days", force: :cascade do |t|
-    t.integer "session_id", null: false
-    t.integer "house_id",   null: false
-    t.integer "date_id",    null: false
-  end
-
-  create_table "dates", force: :cascade do |t|
+  create_table "adjournment_days", id: :serial, force: :cascade do |t|
     t.date "date", null: false
+    t.string "google_event_id", limit: 255, null: false
+    t.integer "session_id", null: false
+    t.integer "house_id", null: false
+    t.integer "recess_date_id"
   end
 
-  create_table "dissolution_days", force: :cascade do |t|
-    t.integer "prorogation_period_id", null: false
-    t.integer "date_id",               null: false
+  create_table "calendar_syncs", id: :integer, default: -> { "nextval('calendar_sync_id_seq'::regclass)" }, force: :cascade do |t|
+    t.datetime "synced_at", precision: nil, null: false
   end
 
-  create_table "dissolution_periods", force: :cascade do |t|
-    t.integer "number",   null: false
-    t.date    "start_on", null: false
-    t.date    "end_on"
+  create_table "dissolution_days", id: :serial, force: :cascade do |t|
+    t.date "date", null: false
+    t.string "google_event_id", limit: 255
+    t.integer "dissolution_period_id", null: false
   end
 
-  create_table "houses", force: :cascade do |t|
+  create_table "dissolution_periods", id: :serial, force: :cascade do |t|
+    t.integer "number", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+  end
+
+  create_table "houses", id: :serial, force: :cascade do |t|
     t.string "name", limit: 50, null: false
   end
 
-  create_table "non_sitting_days", force: :cascade do |t|
-    t.integer "session_id", null: false
-    t.integer "house_id",   null: false
-    t.integer "date_id",    null: false
+  create_table "parliament_periods", id: :serial, force: :cascade do |t|
+    t.integer "number", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.string "wikidata_id", limit: 20
   end
 
-  create_table "parliament_periods", force: :cascade do |t|
-    t.integer "number",   null: false
-    t.date    "start_on", null: false
-    t.date    "end_on"
+  create_table "procedures", id: :serial, force: :cascade do |t|
+    t.integer "display_order", null: false
+    t.string "name", limit: 255, null: false
+    t.boolean "active", null: false
+    t.integer "typical_day_count"
+    t.boolean "has_day_count_caveats"
   end
 
-  create_table "prorogation_days", force: :cascade do |t|
-    t.integer "dissolution_period_id", null: false
-    t.integer "date_id",               null: false
+  create_table "prorogation_days", id: :serial, force: :cascade do |t|
+    t.date "date", null: false
+    t.string "google_event_id", limit: 255
+    t.integer "prorogation_period_id", null: false
   end
 
-  create_table "prorogation_periods", force: :cascade do |t|
-    t.integer "number",               null: false
-    t.date    "start_on",             null: false
-    t.date    "end_on"
+  create_table "prorogation_periods", id: :serial, force: :cascade do |t|
+    t.integer "number", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
     t.integer "parliament_period_id", null: false
   end
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer "number",               null: false
-    t.date    "start_on",             null: false
-    t.date    "end_on"
+  create_table "recess_dates", id: :serial, force: :cascade do |t|
+    t.string "description", limit: 255, null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "google_event_id", limit: 255, null: false
+    t.integer "house_id", null: false
+  end
+
+  create_table "sessions", id: :serial, force: :cascade do |t|
+    t.integer "number", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.string "citation", limit: 255
+    t.string "regnal_year_citation", limit: 255
+    t.string "wikidata_id", limit: 20
     t.integer "parliament_period_id", null: false
   end
 
-  create_table "sitting_dates", force: :cascade do |t|
-    t.integer "sitting_day_id", null: false
-    t.integer "date_id",        null: false
-  end
-
-  create_table "sitting_days", force: :cascade do |t|
+  create_table "sitting_days", id: :serial, force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "google_event_id", limit: 255, null: false
     t.integer "session_id", null: false
-    t.integer "house_id",   null: false
+    t.integer "house_id", null: false
   end
 
-  add_foreign_key "adjournment_days", "dates", name: "fk_date"
+  create_table "sync_tokens", id: :serial, force: :cascade do |t|
+    t.string "google_calendar_id", limit: 255, null: false
+    t.string "token", limit: 255, null: false
+  end
+
+  create_table "virtual_sitting_days", id: :serial, force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "google_event_id", limit: 255, null: false
+    t.integer "session_id", null: false
+    t.integer "house_id", null: false
+  end
+
   add_foreign_key "adjournment_days", "houses", name: "fk_house"
+  add_foreign_key "adjournment_days", "recess_dates", name: "fk_recess_date"
   add_foreign_key "adjournment_days", "sessions", name: "fk_session"
-  add_foreign_key "dissolution_days", "dates", name: "fk_date"
-  add_foreign_key "dissolution_days", "prorogation_periods", name: "fk_prorogation_period"
-  add_foreign_key "non_sitting_days", "dates", name: "fk_date"
-  add_foreign_key "non_sitting_days", "houses", name: "fk_house"
-  add_foreign_key "non_sitting_days", "sessions", name: "fk_session"
-  add_foreign_key "prorogation_days", "dates", name: "fk_date"
-  add_foreign_key "prorogation_days", "dissolution_periods", name: "fk_dissolution_period"
+  add_foreign_key "dissolution_days", "dissolution_periods", name: "fk_dissolution_period"
+  add_foreign_key "prorogation_days", "prorogation_periods", name: "fk_prorogation_period"
   add_foreign_key "prorogation_periods", "parliament_periods", name: "fk_parliament_period"
+  add_foreign_key "recess_dates", "houses", name: "fk_house"
   add_foreign_key "sessions", "parliament_periods", name: "fk_parliament_period"
-  add_foreign_key "sitting_dates", "dates", name: "fk_date"
-  add_foreign_key "sitting_dates", "sitting_days", name: "fk_sitting_day"
   add_foreign_key "sitting_days", "houses", name: "fk_house"
   add_foreign_key "sitting_days", "sessions", name: "fk_session"
+  add_foreign_key "virtual_sitting_days", "houses", name: "fk_house"
+  add_foreign_key "virtual_sitting_days", "sessions", name: "fk_session"
 end
