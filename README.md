@@ -82,7 +82,7 @@ These are imported from the CSV files in `db/data` using the [setup.rake](lib/ta
 
 ### Sync failures
 
-There is a guide to resetting the database in [Prorogration and Dissolution](app/views/meta/prorogation-and-dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
+There is a guide to resetting the database in [Prorogration and Dissolution](app/views/meta/prorogation_and_dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
 
 ## Pulling db from Heroku
 
