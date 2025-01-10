@@ -29,23 +29,17 @@ The egg timer synchronises data from a few different sources:
 
 * The following public google calendars:
 
-  * [Common's adjournment days calendar](https://calendar.google.com/calendar/embed?src=ikdqq0rcg07bbs64g7aeqqlkt4%40group.calendar.google.com&ctz=Europe%2FLondon
-Commons)
+  * [Common's adjournment days calendar](https://calendar.google.com/calendar/embed?src=ikdqq0rcg07bbs64g7aeqqlkt4%40group.calendar.google.com&ctz=Europe%2FLondon)
 
-  * [Common's sitting days calendar](https://calendar.google.com/calendar/embed?src=20n14bks46tvd2k5rse3jmsfb4%40group.calendar.google.com&ctz=Europe%2FLondon
-Lords)
+  * [Common's sitting days calendar](https://calendar.google.com/calendar/embed?src=20n14bks46tvd2k5rse3jmsfb4%40group.calendar.google.com&ctz=Europe%2FLondon)
 
-  * [Lord's adjournment days calendar](https://calendar.google.com/calendar/embed?src=ibbc1cen1mdm6rsf6kkno17i0c%40group.calendar.google.com&ctz=Europe%2FLondon
-Lords)
+  * [Lord's adjournment days calendar](https://calendar.google.com/calendar/embed?src=ibbc1cen1mdm6rsf6kkno17i0c%40group.calendar.google.com&ctz=Europe%2FLondon)
 
-  * [Lord's sitting days calendar](https://calendar.google.com/calendar/embed?src=o26tfi8b5o78cborja7utgpcb8%40group.calendar.google.com&ctz=Europe%2FLondon
-Lords)
+  * [Lord's sitting days calendar](https://calendar.google.com/calendar/embed?src=o26tfi8b5o78cborja7utgpcb8%40group.calendar.google.com&ctz=Europe%2FLondon)
 
-  * [Lord's virtual days calendar](https://calendar.google.com/calendar/embed?src=p1lfs3elv1fk0lqdigs3jngop8%40group.calendar.google.com&ctz=Europe%2FLondon
-Commons) - the Lords continue to have virtual days, the Commons do not.
+  * [Lord's virtual days calendar](https://calendar.google.com/calendar/embed?src=p1lfs3elv1fk0lqdigs3jngop8%40group.calendar.google.com&ctz=Europe%2FLondon) - the Lords continue to have virtual days, the Commons do not.
 
-  * [Common's recess calendar](https://calendar.google.com/calendar/embed?src=eefeb6980f4ee93bd3d486b318141524452c82b[…]443a549e3c3%40group.calendar.google.com&ctz=Europe%2FLondon
-Lords)
+  * [Common's recess calendar](https://calendar.google.com/calendar/embed?src=eefeb6980f4ee93bd3d486b318141524452c82b[…]443a549e3c3%40group.calendar.google.com&ctz=Europe%2FLondon)
 
   * [Lord's recess calendar](https://calendar.google.com/calendar/embed?src=45591a2f31eb089019ba1b200e5ec635f8d25a9[…]b3165e714d4%40group.calendar.google.com&ctz=Europe%2FLondon)
 
