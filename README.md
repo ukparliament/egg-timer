@@ -1,8 +1,6 @@
-# egg-timer
+# The Egg Timer — powered by House of Commons librarians
 
-Egg timer.
-
-## What does the egg timer do
+## What does the egg timer do?
 
 The [Egg timer](https://parliament-egg-timer.herokuapp.com/) application has a number of features:
 
@@ -16,7 +14,7 @@ The [Egg timer](https://parliament-egg-timer.herokuapp.com/) application has a n
 
  * A guide to events, what to do a prorogation and dissolution etc
 
- * Checks around whether the synchronisatin processes are working or not
+ * Checks around whether the synchronisation processes are working or not
 
 ## What are the data sources?
 
@@ -43,10 +41,9 @@ The egg timer synchronises data from a few different sources:
 
   * [Lord's recess calendar](https://calendar.google.com/calendar/embed?src=45591a2f31eb089019ba1b200e5ec635f8d25a9[…]b3165e714d4%40group.calendar.google.com&ctz=Europe%2FLondon)
 
-These calendars are currently owned by ... using their own google account.
+These calendars are currently owned by a couple of users using their own google account.
 
 ### Synchronisation
-
 #### Database
 
 A postgres database is used to store the calendar events for the website.
@@ -81,11 +78,11 @@ The latest synchronisation date is stored, so that only entries *after* that dat
 
 #### Sessions and Parliamentary periods
 
-These are imported from the CSV files in `db/data` using the [setup.rake](setup.rake) task
+These are imported from the CSV files in `db/data` using the [setup.rake](lib/tasks/setup.rake) task
 
 ### Sync failures
 
-There is a guide to resetting the database in [Prorogration and Dissolution](prorogation-and-dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
+There is a guide to resetting the database in [Prorogration and Dissolution](app/views/meta/prorogation-and-dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
 
 ## Pulling db from Heroku
 
