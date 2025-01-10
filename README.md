@@ -82,7 +82,35 @@ These are imported from the CSV files in `db/data` using the [setup.rake](lib/ta
 
 ### Sync failures
 
+The calendar uses the sync token functionality provided by the API so that the client can request any changes since the last sync, rather than having to do a full refresh.
+
+The app stores the sync token once one of the calendars has synchronised.
+
+Once all of the calendars have synchronised, a CalendarSync record is created which then provides a timestamp of when the last succesful run was complete.
+
+Sometimes a synchronisation will fail with this message from the API:
+
+```
+Google::Apis::ClientError: fullSyncRequired: Sync token is no longer valid, a full sync is required. (Google::Apis::ClientError)
+```
+
+When this occurs, a full reset of the database is then required.
+
 There is a guide to resetting the database in [Prorogration and Dissolution](app/views/meta/prorogation_and_dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
+
+### Proposed changes part 1
+
+If, when the synchronisation fails, a message is sent to the app maintainers, with details of the failed calendar, then further investigation can then be undertaken to work out what went wrong, plus it is possible that that single calendar can the be fixed by:
+
+ 1) Deleting the relevant database records
+ 2) Deleting the relevant sync token
+ 3) Manually running a sync which should
+     a) Do a full sync for that calendar
+     b) Create a new sync token
+
+### Proposed changes part 2
+
+Once we have a bit more of an insight into the sync failures, we might have a better plan, but else, the second part of the update would be to automate the steps above.
 
 ## Pulling db from Heroku
 
