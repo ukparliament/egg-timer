@@ -4,7 +4,7 @@
 
 The [Egg timer](https://parliament-egg-timer.herokuapp.com/) application has a number of features:
 
- *  Reference data - e.g. [Dissolution periods](https://parliament-egg-timer.herokuapp.com/egg-timer/dissolution-periods), [Parliamentary periods](https://parliament-egg-timer.herokuapp.com/egg-timer/parliament-periods), [Sessions(https://parliament-egg-timer.herokuapp.com/egg-timer/sessions), [Houses](https://parliament-egg-timer.herokuapp.com/egg-timer/houses)
+ *  Reference data - e.g. [Dissolution periods](https://parliament-egg-timer.herokuapp.com/egg-timer/dissolution-periods), [Parliamentary periods](https://parliament-egg-timer.herokuapp.com/egg-timer/parliament-periods), [Sessions](https://parliament-egg-timer.herokuapp.com/egg-timer/sessions), [Houses](https://parliament-egg-timer.herokuapp.com/egg-timer/houses)
 
  * A calendar view showing whether either house is sitting, or adjourned, scrutiny non-sitting days etc.. along with whether each house is praying or not.
 
