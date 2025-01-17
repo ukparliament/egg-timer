@@ -1,2 +1,2 @@
-heroku pg:backups:capture
-heroku pg:backups:download
+heroku pg:backups:capture --remote heroku
+heroku pg:backups:download --remote heroku

@@ -2,8 +2,8 @@ echo "Remove link latest.dump"
 rm latest.dump
 
 echo "Download latest"
-heroku pg:backups:capture
-heroku pg:backups:download
+heroku pg:backups:capture --remote heroku
+heroku pg:backups:download --remote heroku
 
 echo "Rename latest"
 now=`date +"%d-%m-%Y"`

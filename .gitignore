@@ -29,5 +29,5 @@ google-credentials.json
 
 *.icloud
 
-data
 latest.dump
+data/*
