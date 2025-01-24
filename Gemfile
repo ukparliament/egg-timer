@@ -19,6 +19,8 @@ gem 'puma'
 gem 'nokogiri', '>= 1.13.4'
 
 
+gem 'dotenv'
+
 
 #gem 'pg', '~> 0.18.4'
 gem 'pg', '~> 1.1'
