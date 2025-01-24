@@ -83,6 +83,7 @@ GEM
     crass (1.0.6)
     date (3.3.4)
     declarative (0.0.20)
+    dotenv (3.1.7)
     erubi (1.13.0)
     execjs (2.9.1)
     faraday (2.10.1)
@@ -292,6 +293,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails
+  dotenv
   google-api-client (~> 0.34)
   jquery-rails
   nokogiri (>= 1.13.4)
