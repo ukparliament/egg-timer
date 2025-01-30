@@ -9,6 +9,7 @@ ruby '3.2.1'
 
 gem 'redcarpet', '3.6.0'
 
+gem 'postmark-rails' # For email services
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

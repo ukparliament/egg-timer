@@ -6,7 +6,7 @@
 
 # Ignore env files
 .env*
-
+*.json
 
 # Ignore bundler config.
 /.bundle
