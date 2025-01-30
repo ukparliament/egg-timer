@@ -1,31 +1,18 @@
 source 'https://rubygems.org'
 
-#gem "addressable", ">= 2.8.0"
-
-gem 'google-api-client', '~> 0.34'
-
-# gem 'rails_12factor', '0.0.3'
-ruby '3.2.1'
-
-gem 'redcarpet', '3.6.0'
-
-gem 'postmark-rails' # For email services
-
+ruby '3.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '7.0.2.4'
 gem 'puma'
 
-
-gem 'nokogiri', '>= 1.13.4'
-
-
+gem 'google-api-client', '~> 0.34'
+gem 'redcarpet', '3.6.0'
+gem 'postmark-rails' # For email services
+gem 'nokogiri'
 gem 'dotenv'
 gem 'amazing_print'
-
-
-#gem 'pg', '~> 0.18.4'
-gem 'pg', '~> 1.1'
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
