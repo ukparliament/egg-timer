@@ -20,6 +20,7 @@ gem 'nokogiri', '>= 1.13.4'
 
 
 gem 'dotenv'
+gem 'amazing_print'
 
 
 #gem 'pg', '~> 0.18.4'

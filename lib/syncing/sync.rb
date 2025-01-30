@@ -2,7 +2,20 @@
 module SYNC
   
   # ## Sync methods for assorted types of events.
-  
+
+  # Authorise to grab events from Google calendar.
+  def authorise_calendar_access
+    scope = 'https://www.googleapis.com/auth/calendar'
+    authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+   #   json_key_io: File.open('google-credentials.json'),
+      scope: scope
+    )
+    authorizer.fetch_access_token!
+    service = Google::Apis::CalendarV3::CalendarService.new
+    service.authorization = authorizer
+    service
+  end
+
   # ### A method to sync sitting days.
   def sync_sitting_days( calendar_id, house_id )
   
@@ -500,18 +513,5 @@ module SYNC
   
     # Return the response.
     response
-  end
-
-  # Authorise to grab events from Google calendar.
-  def authorise_calendar_access
-    scope = 'https://www.googleapis.com/auth/calendar'
-    authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open('google-credentials.json'),
-      scope: scope
-    )
-    authorizer.fetch_access_token!
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = authorizer
-    service
   end
 end
