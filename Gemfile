@@ -12,6 +12,11 @@ gem 'bigdecimal'
 gem 'benchmark'
 gem 'csv'
 
+# Nonsense required
+gem 'net-protocol'
+gem 'net-smtp'
+gem 'net-pop'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
