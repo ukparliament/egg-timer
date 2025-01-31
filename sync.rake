@@ -3,14 +3,12 @@
 # If there are changes to the Google calendar data and you run this script before it’s run on Heroku, those changes may not not get picked up by the Heroku app.
 
 # Require the syncing code.
-#require 'syncing/sync'
+require 'syncing/sync'
 
 # Include syncing code from module.
-#include Syncing::GoogleCalendar
+include SYNC
 
 require 'google/apis/calendar_v3'
-require_relative '../../app/lib/syncing/google_calendar'
-include Syncing::GoogleCalendar
 
 ### PRoduction
 # COMMONS_SITTING_DAYS_CALENDAR='20n14bks46tvd2k5rse3jmsfb4@group.calendar.google.com'
@@ -21,7 +19,6 @@ include Syncing::GoogleCalendar
 # COMMONS_RECESS_DAYS_CALENDAR='eefeb6980f4ee93bd3d486b318141524452c82b8388066ef868e3443a549e3c3@group.calendar.google.com'
 # LORDS_RECESS_DAYS_CALENDAR='45591a2f31eb089019ba1b200e5ec635f8d25a9620f120e96e881b3165e714d4@group.calendar.google.com'
 
-# Test
 COMMONS_SITTING_DAYS_CALENDAR="08c47a45c4ad926a2ed5690d5de6664ec4ed5f25ee77e3cbab1bd2b3b54cd804@group.calendar.google.com"
 LORDS_SITTING_DAYS_CALENDAR="321431db1e84f9c1743f5b1c3291a1544fbda486f8ccc2d1a021b448598de92e@group.calendar.google.com"
 LORDS_VIRTUAL_SITTING_DAYS_CALENDAR="902c32b23639d887c56c9a2cef82c9d0dc352d3e5967bc4806062dbf917920d5@group.calendar.google.com"
