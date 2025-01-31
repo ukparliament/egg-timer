@@ -14,6 +14,11 @@ gem 'dotenv'
 gem 'amazing_print'
 gem 'pg'
 
+# Required for Ruby update until rails gets updated
+gem 'bigdecimal'
+gem 'benchmark'
+gem 'csv'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
