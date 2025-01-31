@@ -1,5 +1,6 @@
 # # A module to sync data from a set of Google calendars to the egg timer database.
-module SYNC
+module Syncing
+  module GoogleCalendar
   
   # ## Sync methods for assorted types of events.
   
@@ -514,4 +515,5 @@ module SYNC
     service.authorization = authorizer
     service
   end
+end
 end

@@ -3,10 +3,9 @@
 # If there are changes to the Google calendar data and you run this script before it’s run on Heroku, those changes may not not get picked up by the Heroku app.
 
 # Require the syncing code.
-require 'syncing/sync'
 
 # Include syncing code from module.
-include SYNC
+#include Syncing::GoogleCalendar
 
 require 'google/apis/calendar_v3'
 
