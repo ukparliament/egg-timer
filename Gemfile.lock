@@ -376,6 +376,9 @@ DEPENDENCIES
   csv
   google-apis-calendar_v3
   jquery-rails
+  net-pop
+  net-protocol
+  net-smtp
   nokogiri
   pg
   puma
