@@ -434,6 +434,41 @@ ALTER SEQUENCE public.sitting_days_id_seq OWNED BY public.sitting_days.id;
 
 
 --
+-- Name: sync_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sync_logs (
+    id integer NOT NULL,
+    google_calendar_id text,
+    calendar_name text,
+    successful boolean,
+    message text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sync_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sync_logs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sync_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sync_logs_id_seq OWNED BY public.sync_logs.id;
+
+
+--
 -- Name: sync_tokens; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -581,6 +616,13 @@ ALTER TABLE ONLY public.sitting_days ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: sync_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sync_logs ALTER COLUMN id SET DEFAULT nextval('public.sync_logs_id_seq'::regclass);
+
+
+--
 -- Name: sync_tokens id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -707,6 +749,14 @@ ALTER TABLE ONLY public.sitting_days
 
 
 --
+-- Name: sync_logs sync_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sync_logs
+    ADD CONSTRAINT sync_logs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: sync_tokens sync_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -824,5 +874,6 @@ ALTER TABLE ONLY public.adjournment_days
 
 SET search_path TO "$user", public;
 
-
+INSERT INTO "schema_migrations" (version) VALUES
+('20250206160551');
 

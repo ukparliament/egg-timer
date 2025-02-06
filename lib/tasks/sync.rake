@@ -9,8 +9,8 @@
 #include Syncing::GoogleCalendar
 
 require 'google/apis/calendar_v3'
-require_relative '../../app/lib/syncing/google_calendar'
-include Syncing::GoogleCalendar
+require_relative '../../app/lib/syncing/google/calendar'
+include Syncing::Google::Calendar
 
 ### PRoduction
 # COMMONS_SITTING_DAYS_CALENDAR='20n14bks46tvd2k5rse3jmsfb4@group.calendar.google.com'

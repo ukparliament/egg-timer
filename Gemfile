@@ -6,6 +6,7 @@ ruby '3.4.1'
 gem 'rails', '~> 7.2.2.1'
 gem 'puma'
 gem 'pg'
+gem 'annotaterb'
 
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
