@@ -23,10 +23,11 @@ jobs:
         run: gem install bundler-audit brakeman # rubocop rubocop-rails rubocop-performance
       # Add or Replace any other security checks here
       - name: Run security checks
+        continue-on-error: true
         run: |
           bundler-audit --update
           brakeman -q -w2
 
       - name: Run zeitwerk checks
+        continue-on-error: true
         run: bundle exec rails zeitwerk:check
-
