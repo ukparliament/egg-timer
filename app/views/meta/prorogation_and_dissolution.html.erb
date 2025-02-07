@@ -67,7 +67,7 @@
 <%= content_tag( 'h2', 'Resetting the database', :id => 'resetting-the-database' ) %>
 <%= content_tag( 'p', "From the command line, at the root of the application:" ) %>
 <ol>
-	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/schema/setup.sql' )}. This removes and recreates all tables in the local database.".html_safe ) %>
+	<%= content_tag( 'li', "Run #{content_tag( 'code', 'psql parliament_calendar < db/structure.sql' )}. This removes and recreates all tables in the local database.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}. This imports Parliament and session data and infers dissolution and prorogation data.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
 	<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-egg-timer' )} to reset the database: this removes information from the Heroku database.".html_safe ) %>

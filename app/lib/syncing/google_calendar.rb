@@ -15,6 +15,8 @@ module Syncing
     end
 
     def generic_sync(calendar_id, house_id, handler)
+      return if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
+
       # We authorise to grab events from the google calendar.
       service = authorise_calendar_access
 
@@ -116,11 +118,50 @@ module Syncing
         sync_token.save
       end
 
-      # Tell us how many events this call returned.
-      puts "#{response.items.size} events returned"
+    rescue Google::Apis::ClientError => exception
+      # Something went wrong with this sync
+      message = "An error occured for this calendar #{calendar_id} - #{exception.message}"
+      successful = false
 
-      # Return the response.
+    else
+      # All went ok
+      message = "Sync complete - #{response.items.size} events returned"
+      successful = true
       response
+    ensure
+      # Always run this bit
+      log = DetailedSyncLog.create(
+        google_calendar_id: calendar_id,
+        message: message,
+        successful: successful,
+        calendar_name: lookup_calendar_name(calendar_id),
+        events_count: response.items.size
+      )
+
+      unless successful
+        SyncFailureMailer.sync_fail_mail(log.id).deliver_now
+        log.update(emailed: true)
+      end
+    end
+
+    # This is VERY temporary!
+    def lookup_calendar_name(calendar_id)
+      case calendar_id
+      when COMMONS_SITTING_DAYS_CALENDAR
+        "Commons sitting day calendar"
+      when LORDS_SITTING_DAYS_CALENDAR
+        "Lords sitting day calendar"
+      when LORDS_VIRTUAL_SITTING_DAYS_CALENDAR
+        "Lords virtual sitting days calendar"
+      when COMMONS_ADJOURNMENT_DAYS_CALENDAR
+        "Commons adjournment day calendar"
+      when LORDS_ADJOURNMENT_DAYS_CALENDAR
+        "Lords adjournment day calendar"
+      when COMMONS_RECESS_DAYS_CALENDAR
+        "Commons recess days calendar"
+      when LORDS_RECESS_DAYS_CALENDAR
+        "Lords recess days calendar"
+      end
     end
   end
 end

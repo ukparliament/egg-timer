@@ -104,6 +104,42 @@ ALTER SEQUENCE public.calendar_sync_id_seq OWNED BY public.calendar_syncs.id;
 
 
 --
+-- Name: detailed_sync_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.detailed_sync_logs (
+    id bigint NOT NULL,
+    calendar_name text,
+    google_calendar_id text,
+    message text,
+    successful boolean,
+    emailed boolean,
+    events_count integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: detailed_sync_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.detailed_sync_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: detailed_sync_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.detailed_sync_logs_id_seq OWNED BY public.detailed_sync_logs.id;
+
+
+--
 -- Name: dissolution_days; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -511,6 +547,13 @@ ALTER TABLE ONLY public.calendar_syncs ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: detailed_sync_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.detailed_sync_logs ALTER COLUMN id SET DEFAULT nextval('public.detailed_sync_logs_id_seq'::regclass);
+
+
+--
 -- Name: dissolution_days id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -616,6 +659,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.calendar_syncs
     ADD CONSTRAINT calendar_syncs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: detailed_sync_logs detailed_sync_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.detailed_sync_logs
+    ADD CONSTRAINT detailed_sync_logs_pkey PRIMARY KEY (id);
 
 
 --
@@ -824,5 +875,6 @@ ALTER TABLE ONLY public.adjournment_days
 
 SET search_path TO "$user", public;
 
-
+INSERT INTO "schema_migrations" (version) VALUES
+('20250207155008');
 
