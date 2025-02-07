@@ -65,4 +65,5 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   routes.default_url_options[:host] ||= "localhost:5000"
+  config.log_level = :info
 end

@@ -28,8 +28,13 @@ gem 'nokogiri'
 
 # For emails
 gem 'postmark-rails'
+
+# For using .env
 gem 'dotenv'
+
+# For debug
 gem 'amazing_print'
+gem 'lograge'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
