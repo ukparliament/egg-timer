@@ -21,13 +21,21 @@
 
 *.iml
 
+# Ignore Mac files
 .DS_Store
-lib/tasks/credentials.json
-google-credentials.json
-
-.idea/
-
 *.icloud
 
-data
+# Ignore *any* json in home directory and explicit ones elsewhere
+lib/tasks/credentials.json
+google-credentials.json
+*.json
+
+# Using intelliJ? 
+.idea/
+
+# Ignore data directory and any dumps
+data/*
 latest.dump
+
+# Ignore any env files
+.env*
