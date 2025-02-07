@@ -11,6 +11,10 @@ class MetaController < ApplicationController
   def calendar_sync
   	@title = "How the calendar uses the information you create"
   end
+
+  def detailed_sync_logs
+    @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc)
+  end
   
   def prorogation_and_dissolution
   	@title = "What to do at prorogation and dissolution"

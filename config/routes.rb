@@ -64,57 +64,9 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
   get 'egg-timer/meta/recess-checker' => 'meta#recess_checker', as: :meta_recess_checker
   get 'egg-timer/meta/calendar-sync-checker' => 'meta#calendar_sync_checker', as: :meta_calendar_sync_checker
+  get 'egg-timer/meta/detailed-sync-logs' => 'meta#detailed_sync_logs', as: :meta_detailed_sync_logs
   
   #get 'egg-timer/sync' => 'sync#sync', as: :sync
   #get 'egg-timer/sync/test' => 'sync#test', as: :sync_test
   
-
-  # Example of regular route:
-  #   get 'egg-timer/products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'egg-timer/products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'egg-timer/short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'egg-timer/sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'egg-timer/recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
