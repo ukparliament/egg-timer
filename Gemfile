@@ -12,11 +12,17 @@ gem 'bigdecimal'
 gem 'benchmark'
 gem 'csv'
 
+# Nonsense required
+gem 'net-protocol'
+gem 'net-smtp'
+gem 'net-pop'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
 # For talking to the calendars
-gem 'google-api-client', '~> 0.34'
+# gem 'google-api-client', '~> 0.34'
+gem 'google-apis-calendar_v3'
 
 # For markdown rendering
 gem 'redcarpet', '3.6.0'
