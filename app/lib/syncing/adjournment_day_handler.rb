@@ -1,6 +1,6 @@
 module Syncing
 	class AdjournmentDayHandler
-	  def process_event(event, house_id)
+	  def self.process_event(event, house_id)
 	    # ... we attempt to find the event in the database.
 	    adjournment_day = AdjournmentDay.find_by_google_event_id( event.id )
 
@@ -65,7 +65,7 @@ module Syncing
 	  end
 
 	   # ### A method to delete adjournment days with a given event id.
-	  def delete_adjournment_days( event_id )
+	  def self.delete_adjournment_days( event_id )
 
 	    # Adjournment days can be created as multiday events which get split into individual days in the database. So we find all the adjournment days with this event id.
 	    adjournment_days = AdjournmentDay.all.where( "google_event_id = ?", event_id )

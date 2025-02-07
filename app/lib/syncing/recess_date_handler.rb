@@ -1,6 +1,6 @@
 module Syncing
 	class RecessDateHandler
-	  def process_event(event, house_id)
+	  def self.process_event(event, house_id)
 	    # ... we attempt to find the event in the database.
 	    recess_date = RecessDate.find_by_google_event_id( event.id )
 
@@ -39,7 +39,7 @@ module Syncing
 	  end
 
 	  ### A method to delete adjournment days with a given event id.
-	  def delete_recess_date( event_id )
+	  def self.delete_recess_date( event_id )
 
 	    # We find the recess date with this event id.
 	    recess_date = RecessDate.all.where( "google_event_id = ?", event_id ).first
@@ -63,7 +63,7 @@ module Syncing
 	  end
 
 	  # ## A method to group adjournment days in a House into a recess.
-	  def group_adjournment_days_in_house_into_recess( house_id, recess_date )
+	  def self.group_adjournment_days_in_house_into_recess( house_id, recess_date )
 
 	    # For each day in the recess ...
 	    ( recess_date.start_date .. recess_date.end_date ).each do |recess_day|

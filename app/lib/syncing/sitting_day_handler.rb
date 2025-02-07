@@ -1,6 +1,6 @@
 module Syncing
 	class SittingDayHandler
-	  def process_event(event, house_id)
+	  def self.process_event(event, house_id)
 	    # ... we attempt to find the event in the database.
 	    sitting_day = SittingDay.find_by_google_event_id( event.id )
 
