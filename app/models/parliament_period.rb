@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: parliament_periods
+#
+#  id          :integer          not null, primary key
+#  number      :integer          not null
+#  start_date  :date             not null
+#  end_date    :date
+#  wikidata_id :string(20)
+#
 class ParliamentPeriod < ActiveRecord::Base
   
   has_many :sessions, -> { order( 'start_date' ) }

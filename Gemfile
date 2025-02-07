@@ -31,6 +31,9 @@ gem 'postmark-rails'
 gem 'dotenv'
 gem 'amazing_print'
 
+# Annotate models
+gem 'annotaterb'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

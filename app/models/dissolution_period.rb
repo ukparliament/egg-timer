@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: dissolution_periods
+#
+#  id         :integer          not null, primary key
+#  number     :integer          not null
+#  start_date :date             not null
+#  end_date   :date
+#
 class DissolutionPeriod < ActiveRecord::Base
   
   def label

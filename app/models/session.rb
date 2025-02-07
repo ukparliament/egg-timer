@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: sessions
+#
+#  id                   :integer          not null, primary key
+#  number               :integer          not null
+#  start_date           :date             not null
+#  end_date             :date
+#  citation             :string(255)
+#  regnal_year_citation :string(255)
+#  wikidata_id          :string(20)
+#  parliament_period_id :integer          not null
+#
 class Session < ActiveRecord::Base
   
   belongs_to :parliament_period

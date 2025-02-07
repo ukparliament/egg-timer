@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: sitting_days
+#
+#  id              :integer          not null, primary key
+#  start_date      :date             not null
+#  end_date        :date             not null
+#  google_event_id :string(255)      not null
+#  session_id      :integer          not null
+#  house_id        :integer          not null
+#
 class SittingDay < ActiveRecord::Base
   
   belongs_to :session

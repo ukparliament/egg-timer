@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: prorogation_periods
+#
+#  id                   :integer          not null, primary key
+#  number               :integer          not null
+#  start_date           :date             not null
+#  end_date             :date
+#  parliament_period_id :integer          not null
+#
 class ProrogationPeriod < ActiveRecord::Base
   
   belongs_to :parliament_period

@@ -1,3 +1,10 @@
+# == Schema Information
+#
+# Table name: houses
+#
+#  id   :integer          not null, primary key
+#  name :string(50)       not null
+#
 class House < ActiveRecord::Base
   
   has_many :sitting_days, -> { order( 'start_date desc' ) }
