@@ -75,7 +75,7 @@ class MetaController < ApplicationController
             FROM adjournment_days ad
             WHERE ad.house_id = ?
             AND ad.date = ?
-          ", [upcoming_recess_date.house_id, recess_day]
+          ", upcoming_recess_date.house_id, recess_day
           ]
         ).first
         
