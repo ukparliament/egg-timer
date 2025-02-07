@@ -120,12 +120,15 @@ class House < ActiveRecord::Base
   
   def upcoming_recess_dates
     RecessDate.find_by_sql(
+      [
       "
         SELECT rd.*
         FROM recess_dates rd
-        WHERE rd.house_id =#{self.id}
-        AND rd.end_date >= '#{Date.today}'
-      "
+        WHERE rd.house_id = ?
+        AND rd.end_date >= ?
+        ORDER BY start_date ASC
+      ", id, Date.today
+      ]
     )
   end
 end

@@ -1,47 +1,48 @@
 source 'https://rubygems.org'
 
-#gem "addressable", ">= 2.8.0"
-
-gem 'google-api-client', '~> 0.34'
-
-# gem 'rails_12factor', '0.0.3'
-ruby '3.2.1'
-
-gem 'redcarpet', '3.6.0'
-
-
+ruby '3.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '7.0.2.4'
+gem 'rails', '~> 7.2.2.1'
 gem 'puma'
+gem 'pg'
 
+# Required for this version of Ruby and Rails combo
+gem 'bigdecimal'
+gem 'benchmark'
+gem 'csv'
 
-gem 'nokogiri', '>= 1.13.4'
+# Nonsense required
+gem 'net-protocol'
+gem 'net-smtp'
+gem 'net-pop'
 
+# For talking to the calendars
+# gem 'google-api-client', '~> 0.34'
+gem 'google-apis-calendar_v3'
 
+# For markdown rendering
+gem 'redcarpet', '3.6.0'
 
-#gem 'pg', '~> 0.18.4'
-gem 'pg', '~> 1.1'
+gem 'nokogiri'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# For emails
+gem 'postmark-rails'
+gem 'dotenv'
+gem 'amazing_print'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver'
 end

@@ -1,5 +1,6 @@
 # # A module to sync data from a set of Google calendars to the egg timer database.
-module SYNC
+module Syncing
+  module GoogleCalendar
   
   # ## Sync methods for assorted types of events.
   
@@ -506,7 +507,6 @@ module SYNC
   def authorise_calendar_access
     scope = 'https://www.googleapis.com/auth/calendar'
     authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open('google-credentials.json'),
       scope: scope
     )
     authorizer.fetch_access_token!
@@ -514,4 +514,5 @@ module SYNC
     service.authorization = authorizer
     service
   end
+end
 end

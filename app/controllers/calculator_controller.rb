@@ -1,25 +1,24 @@
 # # Calculator controller to build the form and run the calculations.
 
 # Individual calculations for different flavours of instrument are packaged into separate files. This code requires those files to be loaded.
-require 'calculations/bicameral_both_houses_sitting'
-require 'calculations/bicameral_si_either_house_sitting'
-require 'calculations/commons_only_si'
-require 'calculations/commons_only_sitting_days'
-require 'calculations/pnsi'
-require 'calculations/treaty'
-require 'calculations/interval'
+# require 'bicameral_si_either_house_sitting'
+# require 'commons_only_si'
+# require 'commons_only_sitting_days'
+# require 'pnsi'
+# require 'treaty'
+# require 'interval'
 
 # ## The controller itself.
 class CalculatorController < ApplicationController
   
   # Include code from each of the modules for the different styles of calculation.
-  include CALCULATION_BICAMERAL_BOTH_HOUSES_SITTING
-  include CALCULATION_BICAMERAL_SI_EITHER_HOUSE_SITTING
-  include CALCULATION_COMMONS_ONLY_SI
-  include CALCULATION_COMMONS_ONLY_SITTING_DAYS
-  include CALCULATION_PNSI
-  include CALCULATION_TREATY
-  include CALCULATION_INTERVAL
+  include Calculations::BicameralBothHousesSitting
+  include Calculations::BicameralSiEitherHouseSitting
+  include Calculations::CommonsOnlySi
+  include Calculations::CommonsOnlySittingDays
+  include Calculations::Pnsi
+  include Calculations::Treaty
+  include Calculations::Interval
   
   # ### This is the code to provide information for the form that users can fill in.
   def index

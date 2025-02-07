@@ -69,12 +69,14 @@ class MetaController < ApplicationController
         
         # ... we attempt to find an adjournment day in the same House on that date.
         adjournment_day = AdjournmentDay.find_by_sql(
+          [
           "
             SELECT ad.*
             FROM adjournment_days ad
-            WHERE ad.house_id = #{upcoming_recess_date.house_id}
-            AND ad.date = '#{recess_day}'
-          "
+            WHERE ad.house_id = ?
+            AND ad.date = ?
+          ", upcoming_recess_date.house_id, recess_day
+          ]
         ).first
         
         # If there is not an adjournment day in this House on this day ...
