@@ -17,9 +17,6 @@ gem 'net-protocol'
 gem 'net-smtp'
 gem 'net-pop'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-
 # For talking to the calendars
 # gem 'google-api-client', '~> 0.34'
 gem 'google-apis-calendar_v3'
@@ -28,17 +25,6 @@ gem 'google-apis-calendar_v3'
 gem 'redcarpet', '3.6.0'
 
 gem 'nokogiri'
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

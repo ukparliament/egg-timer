@@ -5,11 +5,8 @@
 # This workflow will download a prebuilt Ruby version, install dependencies, and  run linters
 name: Rails - Install dependencies and run linters
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
+
 jobs:
   run-lint:
     runs-on: ubuntu-latest
