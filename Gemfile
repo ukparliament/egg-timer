@@ -26,6 +26,11 @@ gem 'redcarpet', '3.6.0'
 
 gem 'nokogiri'
 
+# For emails
+gem 'postmark-rails'
+gem 'dotenv'
+gem 'amazing_print'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
