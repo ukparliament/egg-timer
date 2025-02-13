@@ -13,7 +13,7 @@ class MetaController < ApplicationController
   end
 
   def detailed_sync_logs
-    @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc)
+    @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc).limit(98)
   end
   
   def prorogation_and_dissolution
