@@ -129,13 +129,15 @@ module Syncing
       successful = true
       response
     ensure
+      events_count = response ? response.items.size : 0
+
       # Always run this bit
       log = DetailedSyncLog.create(
         google_calendar_id: calendar_id,
         message: message,
         successful: successful,
         calendar_name: lookup_calendar_name(calendar_id),
-        events_count: response.items.size
+        events_count: events_count
       )
 
       unless successful
