@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '3.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8'
 gem 'puma'
 gem 'pg'
 
@@ -18,18 +18,23 @@ gem 'net-smtp'
 gem 'net-pop'
 
 # For talking to the calendars
-# gem 'google-api-client', '~> 0.34'
 gem 'google-apis-calendar_v3'
 
 # For markdown rendering
-gem 'redcarpet', '3.6.0'
+gem 'redcarpet'
 
+# For nokogiri sort of stuff
 gem 'nokogiri'
 
 # For emails
 gem 'postmark-rails'
+
+# For using .env
 gem 'dotenv'
+
+# For debug
 gem 'amazing_print'
+gem 'lograge'
 
 # Annotate models
 gem 'annotaterb'
@@ -42,6 +47,7 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
+  gem 'letter_opener'
 end
 
 group :test do
