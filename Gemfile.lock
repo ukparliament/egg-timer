@@ -270,6 +270,7 @@ GEM
       rack (>= 1.4)
     retriable (3.1.2)
     rexml (3.4.0)
+    rollbar (3.6.1)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -361,6 +362,7 @@ DEPENDENCIES
   puma
   rails (~> 8)
   redcarpet
+  rollbar
   rspec-rails
   selenium-webdriver
   web-console
