@@ -3,10 +3,14 @@
 # Table name: prorogation_periods
 #
 #  id                   :integer          not null, primary key
+#  end_date             :date
 #  number               :integer          not null
 #  start_date           :date             not null
-#  end_date             :date
 #  parliament_period_id :integer          not null
+#
+# Foreign Keys
+#
+#  fk_parliament_period  (parliament_period_id => parliament_periods.id)
 #
 class ProrogationPeriod < ActiveRecord::Base
   
