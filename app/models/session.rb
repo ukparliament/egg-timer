@@ -3,13 +3,17 @@
 # Table name: sessions
 #
 #  id                   :integer          not null, primary key
-#  number               :integer          not null
-#  start_date           :date             not null
-#  end_date             :date
 #  citation             :string(255)
+#  end_date             :date
+#  number               :integer          not null
 #  regnal_year_citation :string(255)
-#  wikidata_id          :string(20)
+#  start_date           :date             not null
 #  parliament_period_id :integer          not null
+#  wikidata_id          :string(20)
+#
+# Foreign Keys
+#
+#  fk_parliament_period  (parliament_period_id => parliament_periods.id)
 #
 class Session < ActiveRecord::Base
   

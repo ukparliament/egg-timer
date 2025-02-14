@@ -15,7 +15,10 @@ module Syncing
     end
 
     def generic_sync(calendar_id, house_id, handler)
-      return if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
+      if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
+        ap "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
+        return
+      end
 
       # We authorise to grab events from the google calendar.
       service = authorise_calendar_access
@@ -29,6 +32,11 @@ module Syncing
         # We get any changed events from - this page of - the calendar.
         # We pass the calendar we're grabbing from and the page token (if any).
         response = get_changed_events_from_calendar( service, calendar_id, page_token )
+
+        unless response
+          ap "No response from get changed events for #{lookup_calendar_name(calendar_id)}"
+          return
+        end
 
         response.items.each do |event|
           # Here we process response

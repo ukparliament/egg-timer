@@ -4,10 +4,14 @@
 #
 #  id              :integer          not null, primary key
 #  description     :string(255)      not null
-#  start_date      :date             not null
 #  end_date        :date             not null
+#  start_date      :date             not null
 #  google_event_id :string(255)      not null
 #  house_id        :integer          not null
+#
+# Foreign Keys
+#
+#  fk_house  (house_id => houses.id)
 #
 class RecessDate < ActiveRecord::Base
   
