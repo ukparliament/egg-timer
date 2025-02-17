@@ -476,7 +476,10 @@ ALTER SEQUENCE public.sitting_days_id_seq OWNED BY public.sitting_days.id;
 CREATE TABLE public.sync_tokens (
     id integer NOT NULL,
     google_calendar_id character varying(255) NOT NULL,
-    token character varying(255) NOT NULL
+    token character varying(255) NOT NULL,
+    google_calendar_name text,
+    house_id integer,
+    successful boolean DEFAULT false
 );
 
 
@@ -838,6 +841,14 @@ ALTER TABLE ONLY public.prorogation_days
 
 
 --
+-- Name: sync_tokens fk_rails_b16a338843; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sync_tokens
+    ADD CONSTRAINT fk_rails_b16a338843 FOREIGN KEY (house_id) REFERENCES public.houses(id);
+
+
+--
 -- Name: adjournment_days fk_recess_date; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -876,6 +887,7 @@ ALTER TABLE ONLY public.adjournment_days
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250217170405'),
 ('20250207155008'),
 ('20250207155007');
 
