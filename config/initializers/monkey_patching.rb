@@ -558,18 +558,19 @@ module DateMonkeyPatch
 
   #### We want to find which Parliament period a calendar day sits in, if any.
   def parliament_period
-    ParliamentPeriod.find_by_sql(
+    ParliamentPeriod.find_by_sql([
       "
         SELECT *
         FROM parliament_periods
-        WHERE start_date <= '#{self}'
+        WHERE start_date <= :the_date
         AND (
-          end_date >= '#{self}'
+          end_date >= :the_date
           OR
           end_date IS NULL
         )
-      "
-    ).first
+      ",
+      the_date: self
+    ]).first
   end
 
   #### We want to find which prorogoration period a calendar day sits in, if any.
@@ -579,18 +580,19 @@ module DateMonkeyPatch
 
   #### We want to find which session a calendar day sits in, if any.
   def session
-    Session.find_by_sql(
+    Session.find_by_sql([
       "
         SELECT *
         FROM sessions
-        WHERE start_date <= '#{self}'
+        WHERE start_date <= :the_date
         AND (
-          end_date >= '#{self}'
+          end_date >= :the_date
           OR
           end_date IS NULL
         )
-      "
-    ).first
+      ",
+      the_date: self
+    ]).first
   end
 
   ### We want to find out if this is the final day of a session.
