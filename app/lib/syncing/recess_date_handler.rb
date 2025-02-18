@@ -69,14 +69,16 @@ module Syncing
 	    ( recess_date.start_date .. recess_date.end_date ).each do |recess_day|
 
 	      # ... we attempt to find an adjournment on that day, in that House.
-	      adjournment_day = AdjournmentDay.find_by_sql(
+	      adjournment_day = AdjournmentDay.find_by_sql([
 	        "
 	          SELECT ad.*
 	          FROM adjournment_days ad
-	          WHERE ad.house_id = #{house_id}
-	          AND ad.date = '#{recess_day}'
-	        "
-	      ).first
+	          WHERE ad.house_id = :house_id
+	          AND ad.date = :recess_day
+	        ",
+	        house_id: house_id,
+	        recess_day: recess_day
+	      ]).first
 
 	      # If we find an adjournment on that day, in that House ...
 	      if adjournment_day

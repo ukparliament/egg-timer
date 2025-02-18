@@ -38,15 +38,17 @@ module Syncing
 
 	        # We attempt to find any recess date in this House that the adjournment date is in.
 	        # In case the recess has been created before the adjournment.
-	        recess_date = RecessDate.find_by_sql(
+	        recess_date = RecessDate.find_by_sql([
 	          "
 	            SELECT rd.*
 	            FROM recess_dates rd
-	            WHERE rd.house_id = #{house_id}
-	            AND rd.start_date <= '#{date}'
-	            AND rd.end_date >= '#{date}'
-	          "
-	        ).first
+	            WHERE rd.house_id = :house_id
+	            AND rd.start_date <= :date
+	            AND rd.end_date >= :date
+	          ",
+	          house_id: house_id,
+	          date: date
+	        ]).first
 
 	        # If the adjournment day can be associated with a session ...
 	        if session
