@@ -17,7 +17,15 @@ module Syncing
     def generic_sync(calendar_id, house_id, handler)
       if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
         ap "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
+        broken_sync_log = DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).order(created_at: :desc).first
+
+        ap "We have the handler #{handler.name} and the class to delete #{handler.class_to_use_to_delete_all.name}"
+        handler.class_to_use_to_delete_all.where(house_id).delete_all
+
         return
+
+      else
+        ap "We are doing ok"
       end
 
       # We authorise to grab events from the google calendar.
