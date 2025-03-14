@@ -12,10 +12,8 @@ gem 'bigdecimal'
 gem 'benchmark'
 gem 'csv'
 
-# Nonsense required
-gem 'net-protocol'
-gem 'net-smtp'
-gem 'net-pop'
+# Best add explicitly
+gem 'irb'
 
 # For talking to the calendars
 gem 'google-apis-calendar_v3'
