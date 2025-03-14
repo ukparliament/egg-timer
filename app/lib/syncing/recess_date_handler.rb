@@ -97,5 +97,10 @@ module Syncing
 	      end
 	    end
 	  end
+
+		def self.class_to_use_to_delete_all
+	  	RecessDate
+	  end
+
 	end
 end
