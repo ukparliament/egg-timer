@@ -56,5 +56,9 @@ module Syncing
 	    # If we've found one, we delete it.
 	    sitting_day.destroy if sitting_day
 	  end
+
+	  def self.class_to_use_to_delete_all
+	  	SittingDay
+	  end
 	end
 end

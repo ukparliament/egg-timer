@@ -55,5 +55,9 @@ module Syncing
 	    # If we've found one, we delete it.
 	    virtual_sitting_day.destroy if virtual_sitting_day
 		end
+
+		def self.class_to_use_to_delete_all
+	  	VirtualSittingDay
+	  end
 	end
 end
