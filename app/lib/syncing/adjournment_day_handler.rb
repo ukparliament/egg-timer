@@ -79,5 +79,10 @@ module Syncing
 	      adjournment_day.destroy
 	    end
 	  end
+
+	  def self.delete_all(house_id, broken_sync_log)
+	  	AdjournmentDay.where(house_id: house_id).delete_all
+	  	broken_sync_log.update(successful: true)
+	  end
 	end
 end
