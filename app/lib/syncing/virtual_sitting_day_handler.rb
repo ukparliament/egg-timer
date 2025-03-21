@@ -56,8 +56,9 @@ module Syncing
 	    virtual_sitting_day.destroy if virtual_sitting_day
 		end
 
-		def self.class_to_use_to_delete_all
-	  	VirtualSittingDay
+	  def self.delete_all(house_id, broken_sync_log)
+	  	VirtualSittingDay.where(house_id: house_id).delete_all
+	  	broken_sync_log.update(successful: true)
 	  end
 	end
 end
