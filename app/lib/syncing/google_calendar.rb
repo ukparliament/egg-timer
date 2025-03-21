@@ -25,8 +25,6 @@ module Syncing
 
         existing_sync_token = SyncToken.find_by(google_calendar_id: calendar_id)
         existing_sync_token.delete if existing_sync_token.present?
-
-        return
       else
         Rails.logger.info "All ok, do a sync for calendar_id: #{calendar_id}  and house: #{house_id}"
       end

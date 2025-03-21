@@ -105,13 +105,15 @@ describe "test sync using dummy class" do
 
     DetailedSyncLog.first.update(successful: false, emailed: true)
 
-    expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(-2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(0)
+    virtual_sitting_day_ids = VirtualSittingDay.pluck(:id)
 
     expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(2)
+      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(0)
       .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+
+    new_virutal_sitting_day_ids = VirtualSittingDay.pluck(:id)
+
+    expect(virtual_sitting_day_ids).to_not match_array(new_virutal_sitting_day_ids)
   end
 
   it "deletes sitting days when there is a problem and resyncs" do
@@ -127,13 +129,15 @@ describe "test sync using dummy class" do
 
     DetailedSyncLog.first.update(successful: false, emailed: true)
 
-    expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(-2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(0)
+    sitting_day_ids = SittingDay.pluck(:id)
 
     expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(2)
+      .to change { SittingDay.where(house_id: house.id).count }.by(0)
       .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+
+    new_sitting_day_ids = SittingDay.pluck(:id)
+    expect(sitting_day_ids).to_not match_array(new_sitting_day_ids)
+
   end
 
   it "deletes adjournment days when there is a problem and resyncs" do
@@ -149,35 +153,14 @@ describe "test sync using dummy class" do
 
     DetailedSyncLog.first.update(successful: false, emailed: true)
 
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(-2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(0)
+    adjournment_day_ids = AdjournmentDay.pluck(:id)
 
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
-  end
-
-  it "deletes adjournment days when there is a problem and resyncs" do
-    # First we've got our VSDs set up
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
-
-    # Re-run
     expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
       .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
-
-    DetailedSyncLog.first.update(successful: false, emailed: true)
-
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(-2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(0)
-
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
       .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+
+    new_adjournment_day_ids = AdjournmentDay.pluck(:id)
+    expect(new_adjournment_day_ids).to_not match(adjournment_day_ids)
   end
 
 
@@ -201,17 +184,15 @@ describe "test sync using dummy class" do
 
     DetailedSyncLog.first.update(successful: false, emailed: true)
 
-    expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { RecessDate.where(house_id: house.id).count }.by(-2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(0)
-
-    expect(AdjournmentDay.where(recess_date_id: nil).count).to be 2
+    recess_date_ids = RecessDate.pluck(:id)
 
     expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
       .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { RecessDate.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(3).to(4)
+      .and change { RecessDate.where(house_id: house.id).count }.by(0)
+      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(1)
+
+    new_recess_date_ids = RecessDate.pluck(:id)
+    expect(recess_date_ids).to_not match_array(new_recess_date_ids)
 
     expect(AdjournmentDay.where.not(recess_date_id: nil).count).to be 2
   end
