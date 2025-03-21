@@ -98,9 +98,12 @@ module Syncing
 	    end
 	  end
 
-		def self.class_to_use_to_delete_all
-	  	RecessDate
+	  def self.delete_all(house_id, broken_sync_log)
+	  	# Instead of deleting all, remove the references, then we don't have to rejig
+	  	#AdjournmentDay.where(house_id: house_id).delete_all
+	  	AdjournmentDay.where(house_id: house_id).update_all(recess_date_id: nil)
+	  	RecessDate.where(house_id: house_id).delete_all
+	  	broken_sync_log.update(successful: true)
 	  end
-
 	end
 end

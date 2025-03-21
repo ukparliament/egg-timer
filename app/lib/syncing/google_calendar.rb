@@ -19,13 +19,15 @@ module Syncing
         ap "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
         broken_sync_log = DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).order(created_at: :desc).first
 
-        ap "We have the handler #{handler.name} and the class to delete #{handler.class_to_use_to_delete_all.name}"
-        handler.class_to_use_to_delete_all.where(house_id).delete_all
+        ap "We have the handler #{handler.name} so delete all"
+        handler.delete_all(house_id, broken_sync_log)
+
+        existing_sync_token = SyncToken.find_by(google_calendar_id: calendar_id)
+        existing_sync_token.delete if existing_sync_token.present?
 
         return
-
       else
-        ap "We are doing ok"
+        ap "Doing a sync"
       end
 
       # We authorise to grab events from the google calendar.
