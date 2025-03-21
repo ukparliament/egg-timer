@@ -16,10 +16,11 @@ module Syncing
 
     def generic_sync(calendar_id, house_id, handler)
       if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
-        ap "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
+        Rails.logger.info "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
         broken_sync_log = DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).order(created_at: :desc).first
 
-        ap "We have the handler #{handler.name} so delete all"
+        Rails.logger.info "We have the handler #{handler.name} so delete all"
+
         handler.delete_all(house_id, broken_sync_log)
 
         existing_sync_token = SyncToken.find_by(google_calendar_id: calendar_id)
@@ -27,7 +28,7 @@ module Syncing
 
         return
       else
-        ap "Doing a sync"
+        Rails.logger.info "All ok, do a sync for calendar_id: #{calendar_id}  and house: #{house_id}"
       end
 
       # We authorise to grab events from the google calendar.
@@ -44,7 +45,8 @@ module Syncing
         response = get_changed_events_from_calendar( service, calendar_id, page_token )
 
         unless response
-          ap "No response from get changed events for #{lookup_calendar_name(calendar_id)}"
+          Rails.logger.info "No response from get changed events for #{lookup_calendar_name(calendar_id)}"
+
           return
         end
 
