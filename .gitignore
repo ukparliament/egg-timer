@@ -39,3 +39,6 @@ latest.dump
 
 # Ignore any env files
 .env*
+
+# Ignore generated docs
+/docs/*
