@@ -56,5 +56,10 @@ module Syncing
 	    # If we've found one, we delete it.
 	    sitting_day.destroy if sitting_day
 	  end
+
+	  def self.delete_all(house_id, broken_sync_log)
+	  	SittingDay.where(house_id: house_id).delete_all
+	  	broken_sync_log.update(successful: true)
+	  end
 	end
 end

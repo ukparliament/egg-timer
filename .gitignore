@@ -42,3 +42,5 @@ latest.dump
 
 # Ignore generated docs
 /docs/*
+# Ignore any local fixtures
+fixtures
