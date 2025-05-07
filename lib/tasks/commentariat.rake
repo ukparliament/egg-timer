@@ -2,10 +2,11 @@ require 'fileutils'
 require 'redcarpet'
 require 'pathname'
 require 'time'
+require 'cgi' # Add this to ensure CGI is available
 
 class Commentariat
-  def initialize(source_dir, output_dir, github_repo = nil)
-    @source_dir = Pathname.new(source_dir).realpath
+  def initialize(output_dir = "/docs/", github_repo = "ukparliament/egg-timer")
+    @source_dir = Pathname.new("./app/lib/calculations/").realpath
     @output_dir = Pathname.new(output_dir).realpath
     @github_repo = github_repo
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, with_toc_data: true)
@@ -20,32 +21,41 @@ class Commentariat
     end
 
     FileUtils.mkdir_p(@output_dir)
+    collect_files
     process_files
     generate_index
   end
 
   private
-
-  def process_files
+  
+  def collect_files
+    # First collect all files as Pathname objects
     Dir.glob(File.join(@source_dir, '**', '*.rb')).each do |file|
       relative_path = Pathname.new(file).relative_path_from(@source_dir)
+      @files << relative_path
+    end
+    @files.sort! # Sort files alphabetically
+  end
+
+  def process_files
+    @files.each do |relative_path|
+      file = @source_dir.join(relative_path)
       output_file = @output_dir.join(relative_path.sub_ext('.html'))
       FileUtils.mkdir_p(output_file.dirname)
-      content = process_file(file)
+      content = process_file(file, relative_path)
       html_content = wrap_html(content, relative_path.to_s)
       File.write(output_file, html_content)
-      @files << relative_path.to_s
     end
   end
 
-  def process_file(file)
+  def process_file(file, relative_path)
     content = []
     File.readlines(file).each_with_index do |line, index|
       next if line.strip.empty? # Ignore blank lines
       if line.strip.start_with?('#')
         content << process_comment(line)
       else
-        content << process_code(line, index + 1, file)
+        content << process_code(line, index + 1, relative_path)
       end
     end
     content.join("\n")
@@ -56,18 +66,18 @@ class Commentariat
     @markdown.render(cleaned_line.strip)
   end
 
-  def process_code(line, line_number, file)
-    # Use HTML entities to escape special characters instead of Rouge
+  def process_code(line, line_number, relative_path)
+    # Use HTML entities to escape special characters
     code_html = CGI.escapeHTML(line.chomp)
-    line_link = generate_line_link(file, line_number)
-    "<pre><code>#{line_link}#{code_html}</code></pre>"
+    line_link = generate_line_link(relative_path, line_number)
+    "<pre><code><span class='line-number'>#{line_link}</span>#{code_html}</code></pre>"
   end
 
-  def generate_line_link(file, line_number)
+  def generate_line_link(relative_path, line_number)
     if @github_repo
-      relative_path = Pathname.new(file).relative_path_from(@source_dir)
-      href = "https://github.com/#{@github_repo}/blob/main/#{relative_path}#L#{line_number}"
-      "<a href='#{href}' target='_blank' class='text-secondary text-decoration-none pe-2'>#{line_number}</a>"
+      # Construct GitHub URL with appropriate path
+      href = "https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
+      "<a href='#{href}' target='_blank' class='text-secondary text-decoration-none pe-2' title='View on GitHub'>#{line_number}</a>"
     else
       "<span class='text-secondary pe-2'>#{line_number}</span>"
     end
@@ -75,36 +85,108 @@ class Commentariat
 
   def wrap_html(content, title)
     timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Generate sidebar with file list
+    sidebar_content = "<h3>Files</h3>\n<ul class='list-unstyled'>\n"
+    sidebar_content << "<li><a href='index.html'>Index</a></li>\n"
+    @files.each do |file|
+      html_file = file.to_s.sub(/\.rb$/, '.html')
+      active_class = (file.to_s == title) ? "fw-bold text-primary" : ""
+      sidebar_content << "<li><a href='#{html_file}' class='#{active_class}'>#{file}</a></li>\n"
+    end
+    sidebar_content << "</ul>"
+    
+    # Add custom CSS for line numbers
+    custom_css = <<~CSS
+      <style>
+        .line-number {
+          display: inline-block;
+          width: 40px;
+          text-align: right;
+          margin-right: 10px;
+        }
+        pre {
+          margin-bottom: 0;
+          padding: 3px;
+        }
+        code {
+          white-space: pre;
+        }
+      </style>
+    CSS
+    
     <<~HTML
       <!DOCTYPE html>
-      <html lang="en">
+      <html lang="en-GB">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>#{title}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-          body { font-size: 1.1rem; }
-          h1 { font-size: 1.75rem; padding-top: 1rem; }
-          h2 { font-size: 1.5rem; padding-top: 0.75rem; }
-          h3 { font-size: 1.25rem; padding-top: 0.5rem; }
-          h4 { font-size: 1.1rem; padding-top: 0.25rem; }
-          pre { margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word; background-color: #f8f9fa; }
-          pre code { display: block; padding: 0.5em; }
-          .text-secondary pre, .text-secondary code { color: inherit !important; }
-        </style>
+        <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
+        #{custom_css}
       </head>
       <body>
-        <div class="container mt-4" style="max-width: 800px;">
-          <h1>#{title}</h1>
-          <a href="index.html">Back to Index</a>
-          <hr>
-          <div class="text-secondary">
-            #{content}
-          </div>
-          <hr>
-          <p class="text-muted">Generated on: #{timestamp}</p>
+      <header class="doc-header">
+        <div class="container">
+            <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
+                <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                    <use href="#p-icon__uk-parliament"/>
+                </svg>
+            </a>
         </div>
+        <div class="product-header">
+            <div class="container">
+                <a class="title" href="/">
+                        #{title}
+                      </a>
+            </div>
+        </div>
+      </header>
+
+      <main id="main" class="main-content">
+        <div class="doc-wrapper">
+            <div class="container">
+                <div class="row">
+                  <div class="col-lg-3">
+                    #{sidebar_content}
+                  </div>
+                    <div class="col-lg-9">
+                      <h1>#{title}</h1>
+                      <p>
+                        <small class="text-muted">
+                          View full file: 
+                          <a href="https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{title}" target="_blank">
+                            on GitHub
+                          </a>
+                        </small>
+                      </p>
+                      <hr>
+                      <div class="text-secondary">
+                        #{content}
+                      </div>
+                      <hr>
+                      <p class="text-muted">Generated on: #{timestamp}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </main>
+          <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-no-spacing primary">
+                        &copy; UK Parliament 2025
+                      </div>
+                <div class="col-md-9 secondary">
+                    <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
+                    <a data-cookie-manager-open="" href="#">Cookie settings</a>
+                    <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
+                    <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
+                    <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
+                </div>
+            </div>
+        </div>
+      </footer>
       </body>
       </html>
     HTML
@@ -113,31 +195,80 @@ class Commentariat
   def generate_index
     content = "<h1>Index</h1><ul>"
     @files.each do |file|
-      html_file = file.sub(/\.rb$/, '.html')
+      html_file = file.to_s.sub(/\.rb$/, '.html')
       content << "<li><a href='#{html_file}'>#{file}</a></li>"
     end
     content << "</ul>"
     
+    # Generate sidebar with file list for index page
+    sidebar_content = "<h3>Files</h3>\n<ul class='list-unstyled'>\n"
+    sidebar_content << "<li><a href='index.html' class='fw-bold text-primary'>Index</a></li>\n"
+    @files.each do |file|
+      html_file = file.to_s.sub(/\.rb$/, '.html')
+      sidebar_content << "<li><a href='#{html_file}'>#{file}</a></li>\n"
+    end
+    sidebar_content << "</ul>"
+    
     timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     index_html = <<~HTML
       <!DOCTYPE html>
-      <html lang="en">
+      <html lang="en-GB">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Documentation Index</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-          body { font-size: 1.1rem; }
-          h1 { font-size: 1.75rem; padding-top: 1rem; }
-        </style>
+        <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
       </head>
       <body>
-        <div class="container mt-4" style="max-width: 800px;">
-          #{content}
-          <hr>
-          <p class="text-muted">Generated on: #{timestamp}</p>
+      <header class="doc-header">
+        <div class="container">
+            <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
+                <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                    <use href="#p-icon__uk-parliament"/>
+                </svg>
+            </a>
         </div>
+        <div class="product-header">
+            <div class="container">
+                <a class="title" href="/">
+                      Documentation Index
+                    </a>
+            </div>
+        </div>
+      </header>
+
+      <main id="main" class="main-content">
+        <div class="doc-wrapper">
+            <div class="container">
+                <div class="row">
+                  <div class="col-lg-3">
+                    #{sidebar_content}
+                  </div>
+                  <div class="col-lg-9">
+                    #{content}
+                    <hr>
+                    <p class="text-muted">Generated on: #{timestamp}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </main>
+        <footer>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 col-no-spacing primary">
+                      &copy; UK Parliament 2025
+                    </div>
+              <div class="col-md-9 secondary">
+                  <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
+                  <a data-cookie-manager-open="" href="#">Cookie settings</a>
+                  <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
+                  <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
+                  <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
+              </div>
+          </div>
+      </div>
+    </footer>
       </body>
       </html>
     HTML
@@ -148,20 +279,19 @@ end
 
 namespace :commentariat do
   desc "Generate documentation from Ruby source files"
-  task :generate, [:source, :output, :github_repo] do |t, args|
+  task :generate, [:github_repo, :output] do |t, args|
     args.with_defaults(
-      source: ENV['SOURCE_DIR'] || Dir.pwd,
       output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'docs'),
       github_repo: ENV['GITHUB_REPO']
     )
     
     puts "Generating documentation..."
-    puts "Source directory: #{args.source}"
+    puts "Source directory: /app/lib/calculations/ (fixed)"
     puts "Output directory: #{args.output}"
     puts "GitHub repository: #{args.github_repo}" if args.github_repo
     
     begin
-      documenter = Commentariat.new(args.source, args.output, args.github_repo)
+      documenter = Commentariat.new(args.output, args.github_repo)
       documenter.generate_documentation
       puts "Documentation successfully generated in #{args.output}"
     rescue Errno::ENOENT => e
@@ -170,35 +300,26 @@ namespace :commentariat do
     end
   end
   
-  desc "Clean generated documentation"
+  desc "Clean documentation files but preserve the directory"
   task :clean, [:output] do |t, args|
     args.with_defaults(output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'docs'))
     
     if File.directory?(args.output)
-      puts "Removing documentation directory: #{args.output}"
-      FileUtils.rm_rf(args.output)
+      puts "Removing files in documentation directory: #{args.output}"
+      
+      # Remove all files and subdirectories but keep the main directory
+      Dir.glob(File.join(args.output, '{*,.*}')).each do |entry|
+        next if ['.', '..'].include?(File.basename(entry))
+        if File.directory?(entry)
+          FileUtils.rm_rf(entry)
+        else
+          FileUtils.rm_f(entry)
+        end
+      end
+      
+      puts "Files removed. Directory structure preserved."
     else
       puts "Documentation directory does not exist: #{args.output}"
     end
-  end
-  
-  desc "Show usage information for Commentariat tasks"
-  task :help do
-    puts "Commentariat Documentation Generator"
-    puts "===================================="
-    puts
-    puts "Usage:"
-    puts "  rake commentariat:generate[source,output,github_repo]  # Generate documentation"
-    puts "  rake commentariat:clean[output]                        # Clean documentation directory"
-    puts "  rake commentariat:help                                 # Show this help"
-    puts
-    puts "Examples:"
-    puts "  rake commentariat:generate                             # Use current dir as source, ./docs as output"
-    puts "  rake commentariat:generate[lib,documentation]          # Use lib as source, documentation as output"
-    puts "  rake commentariat:generate[.,docs,username/repo]       # Link to GitHub repository"
-    puts "  rake commentariat:clean                                # Remove ./docs directory"
-    puts
-    puts "Environment variables can also be used:"
-    puts "  SOURCE_DIR=lib OUTPUT_DIR=docs GITHUB_REPO=username/repo rake commentariat:generate"
   end
 end
