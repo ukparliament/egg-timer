@@ -46,8 +46,8 @@ CREATE TABLE public.adjournment_days (
     session_id integer NOT NULL,
     house_id integer NOT NULL,
     recess_date_id integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -379,8 +379,8 @@ CREATE TABLE public.recess_dates (
     end_date date NOT NULL,
     google_event_id character varying(255) NOT NULL,
     house_id integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -458,8 +458,8 @@ CREATE TABLE public.sitting_days (
     google_event_id character varying(255) NOT NULL,
     session_id integer NOT NULL,
     house_id integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -526,8 +526,8 @@ CREATE TABLE public.virtual_sitting_days (
     google_event_id character varying(255) NOT NULL,
     session_id integer NOT NULL,
     house_id integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
