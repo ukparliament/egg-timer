@@ -1,4 +1,4 @@
-<%= render :partial => 'form'%>
-
-
-<!-- TODO: check text for zero days, valid date format, check for negative days -->
+<ul>
+	<%= content_tag( 'li', link_to( 'Scrutiny period calculator', calculator_form_url ) ) %>
+	<%= content_tag( 'li', link_to( 'Sitting days during an interval calculator', calculator_interval_url ) ) %>
+</ul>
