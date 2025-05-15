@@ -7,7 +7,7 @@
 <div id="sessions-and-prorogations">
 	<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
 	<table>
-		<%= render :partial => 'table_head' %>
+		<%= render :partial => 'in_parliament_period_table_head' %>
 		<tbody>
 			<%= render :partial => 'in_parliament_period', :collection => @in_parliament_periods %>
 		</tbody>
@@ -17,7 +17,7 @@
 <div id="sessions">
 	<%= content_tag( 'h2', 'Sessions' ) %>
 	<table>
-		<%= render :partial => 'table_head' %>
+		<%= render :partial => 'in_parliament_period_table_head' %>
 		<tbody>
 			<%= render :partial => 'session/session_in_parliament', :collection => @parliament.sessions %>
 		</tbody>
@@ -27,7 +27,7 @@
 <div id="prorogations">
 	<%= content_tag( 'h2', 'Prorogations' ) %>
 	<table>
-		<%= render :partial => 'table_head' %>
+		<%= render :partial => 'in_parliament_period_table_head' %>
 		<tbody>
 			<%= render :partial => 'prorogation_period/prorogation_period_in_parliament', :collection => @parliament.prorogation_periods %>
 		</tbody>
