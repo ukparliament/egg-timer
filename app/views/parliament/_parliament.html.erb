@@ -1,5 +1,5 @@
 <tr>
-	<%= content_tag( 'td', link_to( parliament.number, parliament_show_url( :parliament => parliament ) ) ) %>
+	<%= content_tag( 'td', link_to( "#{parliament.number.ordinalize} Parliament", parliament_show_url( :parliament => parliament ) ) ) %>
 	<%= content_tag( 'td', parliament.start_date.strftime( '%-d %B %Y' ) ) %>
 	<td>
 		<% if parliament.end_date -%>
