@@ -6,6 +6,8 @@
 #  description     :string(255)      not null
 #  end_date        :date             not null
 #  start_date      :date             not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #  google_event_id :string(255)      not null
 #  house_id        :integer          not null
 #
