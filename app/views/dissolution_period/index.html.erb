@@ -1,4 +1,8 @@
-
-<ol>
-	<%= render :partial => 'dissolution_period', :collection => @dissolution_periods %>
-</ol>
+<div class="table-wrapper">
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'dissolution_period', :collection => @dissolution_periods %>
+		</tbody>
+	</table>
+</div>
