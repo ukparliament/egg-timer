@@ -48,11 +48,18 @@ Rails.application.routes.draw do
   get 'egg-timer/houses/:house/recess-dates' => 'house_days#recess_dates', as: :house_days_recess_dates_list
   get 'egg-timer/houses/:house/recess-dates/upcoming' => 'house_days#recess_dates_upcoming', as: :house_days_recess_dates_upcoming
   
-  get 'egg-timer/calculator' => 'calculator#index', as: :calculator_form
-  get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
+  
+  
+  
+  
+  # Calculators
+  get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
+  
+  get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
   get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
   get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
   get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
+  get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
   
   
   
