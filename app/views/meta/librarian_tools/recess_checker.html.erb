@@ -5,6 +5,6 @@
 <% else -%>
 	<%= content_tag( 'p', "#{@error_log.size} errors found:" ) %>
 	<ul>
-		<%= render :partial => 'recess_date_error_log', :collection => @error_log %>
+		<%= render :partial => 'meta/librarian_tools/recess_date_error_log', :collection => @error_log %>
 	</ul>
 <% end -%>
