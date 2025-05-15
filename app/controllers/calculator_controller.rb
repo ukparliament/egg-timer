@@ -20,8 +20,15 @@ class CalculatorController < ApplicationController
   include Calculations::Treaty
   include Calculations::Interval
   
-  # ### This is the code to provide information for the form that users can fill in.
+  # ### This is the code to provide a list of calculators.
   def index
+    
+    # Set a title for the page.
+    @title = "Calculators"
+  end
+  
+  # ### This is the code to provide information for the form that users can fill in.
+  def scrutiny_period
     
     # Set a title for the page.
     @title = "Calculate scrutiny periods"
