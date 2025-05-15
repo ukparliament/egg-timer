@@ -1,1 +1,5 @@
-<%= content_tag( 'li', link_to( dissolution_period.label, dissolution_period_show_url( :dissolution_period => dissolution_period ) ) ) %>
+<tr>
+	<%= content_tag( 'td', link_to( "#{dissolution_period.number.ordinalize} dissolution", dissolution_period_show_url( :dissolution_period => dissolution_period ) ) ) %>
+	<%= content_tag( 'td', dissolution_period.start_date.strftime( '%-d %B %Y' ) ) %>
+	<%= content_tag( 'td', dissolution_period.end_date.strftime( '%-d %B %Y' ) ) %>
+</tr>
