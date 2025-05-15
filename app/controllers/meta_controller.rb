@@ -8,18 +8,6 @@ class MetaController < ApplicationController
   	@title = "Using the application"
   end
   
-  def calendar_sync
-  	@title = "How the calendar uses the information you create"
-  end
-
-  def detailed_sync_logs
-    @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc).limit(98)
-  end
-  
-  def prorogation_and_dissolution
-  	@title = "What to do at prorogation and dissolution"
-  end
-  
   def schema
   	@title = "Database schema"
   end
@@ -45,6 +33,29 @@ class MetaController < ApplicationController
   
   def app
   	@title = "MacOS application"
+  end
+  
+  def calendar_sync_checker
+  	@title = "Calendar sync checker"
+    @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
+  end
+  
+  
+  
+  # Librarian tools
+  def librarian_tools
+  	@title = "Librarian tools"
+    render :template => 'meta/librarian_tools/index'
+  end
+  
+  def calendar_sync
+  	@title = "How to populate the calendars"
+    render :template => 'meta/librarian_tools/calendar_sync'
+  end
+  
+  def prorogation_and_dissolution
+  	@title = "What to do at prorogation and dissolution"
+    render :template => 'meta/librarian_tools/prorogation_and_dissolution'
   end
   
   def recess_checker
@@ -94,10 +105,11 @@ class MetaController < ApplicationController
         end
       end
     end
+    render :template => 'meta/librarian_tools/recess_checker'
   end
-  
-  def calendar_sync_checker
-  	@title = "Calendar sync checker"
-    @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
+
+  def detailed_sync_logs
+    @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc).limit(98)
+    render :template => 'meta/librarian_tools/detailed_sync_logs'
   end
 end
