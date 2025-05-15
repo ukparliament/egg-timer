@@ -1,1 +1,12 @@
-<li><%= link_to( parliament.label, parliament_show_url( :parliament => parliament ) ) %></li>
+<tr>
+	<%= content_tag( 'td', link_to( parliament.number, parliament_show_url( :parliament => parliament ) ) ) %>
+	<%= content_tag( 'td', parliament.start_date.strftime( '%-d %B %Y' ) ) %>
+	<td>
+		<% if parliament.end_date -%>
+			<%= parliament.end_date.strftime( '%-d %B %Y' ) %>
+		<% else -%>
+			-
+		<% end -%>
+	</td>
+	<%= content_tag( 'td', link_to( parliament.wikidata_id, "https://www.wikidata.org/wiki/#{parliament.wikidata_id}" ) ) %>
+</tr>
