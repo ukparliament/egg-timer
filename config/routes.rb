@@ -54,19 +54,26 @@ Rails.application.routes.draw do
   get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
   get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
   
+  
+  
+  
+  
+  
+  # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
   get 'egg-timer/meta/using' => 'meta#using', as: :meta_using
-  get 'egg-timer/meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
-  get 'egg-timer/meta/prorogation-and-dissolution' => 'meta#prorogation_and_dissolution', as: :meta_prorogation_dissolution
   get 'egg-timer/meta/schema' => 'meta#schema', as: :meta_schema
   get 'egg-timer/meta/comments' => 'meta#comment', as: :meta_comment
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
+  
+  # Librarian tools
+  get 'egg-timer/meta/librarian-tools' => 'meta#librarian_tools', as: :meta_librarian_tools
+  get 'egg-timer/meta/calendar-sync' => 'meta#calendar_sync', as: :meta_calendar_sync
+  get 'egg-timer/meta/prorogation-and-dissolution' => 'meta#prorogation_and_dissolution', as: :meta_prorogation_dissolution
   get 'egg-timer/meta/recess-checker' => 'meta#recess_checker', as: :meta_recess_checker
-  get 'egg-timer/meta/calendar-sync-checker' => 'meta#calendar_sync_checker', as: :meta_calendar_sync_checker
   get 'egg-timer/meta/detailed-sync-logs' => 'meta#detailed_sync_logs', as: :meta_detailed_sync_logs
   
-  #get 'egg-timer/sync' => 'sync#sync', as: :sync
-  #get 'egg-timer/sync/test' => 'sync#test', as: :sync_test
-  
+  # Unlinked to
+  get 'egg-timer/meta/calendar-sync-checker' => 'meta#calendar_sync_checker', as: :meta_calendar_sync_checker
 end
