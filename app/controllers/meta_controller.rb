@@ -1,46 +1,17 @@
 class MetaController < ApplicationController
-  
+
+  # Main about page
   def index
   	@title = "About this application"
   end
   
-  def using
-  	@title = "Using the application"
+  def comment
+  	@title = "Calculation code comments"
   end
   
   def schema
   	@title = "Database schema"
   end
-  
-  def comment
-  	@title = "Comments"
-  end
-  
-  def subscribe
-  	@title = "Subscribe to calendars"
-    @calendar_links = []
-    calendar_link = ["Upcoming recess dates in the House of Commons", house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' )]
-    @calendar_links << calendar_link
-    calendar_link = ["Upcoming recess dates in the House of Lords", house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' )]
-    @calendar_links << calendar_link
-    calendar_link = ["Upcoming dates in the House of Commons", house_days_upcoming_url( :house => 1, :format => 'ics' )]
-    @calendar_links << calendar_link
-    calendar_link = ["Upcoming dates in the House of Lords", house_days_upcoming_url( :house => 2, :format => 'ics' )]
-    @calendar_links << calendar_link
-    calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
-    @calendar_links << calendar_link
-  end
-  
-  def app
-  	@title = "MacOS application"
-  end
-  
-  def calendar_sync_checker
-  	@title = "Calendar sync checker"
-    @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
-  end
-  
-  
   
   # Librarian tools
   def librarian_tools
@@ -111,5 +82,35 @@ class MetaController < ApplicationController
   def detailed_sync_logs
     @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc).limit(98)
     render :template => 'meta/librarian_tools/detailed_sync_logs'
+  end
+  
+  # Used elsewhere
+  def using
+  	@title = "Using the application"
+  end
+  
+  def subscribe
+  	@title = "Subscribe to calendars"
+    @calendar_links = []
+    calendar_link = ["Upcoming recess dates in the House of Commons", house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming recess dates in the House of Lords", house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in the House of Commons", house_days_upcoming_url( :house => 1, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in the House of Lords", house_days_upcoming_url( :house => 2, :format => 'ics' )]
+    @calendar_links << calendar_link
+    calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
+    @calendar_links << calendar_link
+  end
+  
+  def app
+  	@title = "MacOS application"
+  end
+  
+  # No longer linked to
+  def calendar_sync_checker
+  	@title = "Calendar sync checker"
+    @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
   end
 end
