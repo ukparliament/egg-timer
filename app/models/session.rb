@@ -32,11 +32,11 @@ class Session < ActiveRecord::Base
   end
   
   def label_with_parliament
-    label = 'Parliament '
-    label = label + self.parliament_period.number.to_s
-    label = label + ' Session '
-    label = label + self.number.to_s
-    label = label + ' (' + self.citation + ')'
+    label = self.number.ordinalize
+    label += ' session of the  '
+    label += self.parliament_period.number.ordinalize
+    label += ' Parliament '
+    label += ' (' + self.citation + ')'
     label
   end
   
