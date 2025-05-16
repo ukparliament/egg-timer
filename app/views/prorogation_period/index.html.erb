@@ -1,4 +1,8 @@
-
-<ol>
-	<%= render :partial => 'prorogation_period_with_parliament', :collection => @prorogation_periods %>
-</ol>
+<div class="table-wrapper">
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'prorogation_period_with_parliament', :collection => @prorogation_periods %>
+		</tbody>
+	</table>
+</div>
