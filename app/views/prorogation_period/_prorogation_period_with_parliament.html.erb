@@ -1,1 +1,12 @@
-<%= content_tag( 'li', link_to( prorogation_period_with_parliament.label_with_parliament, prorogation_period_show_url( :prorogation_period => prorogation_period_with_parliament ) ) ) %>
+<tr>
+	<%= content_tag( 'td', link_to( prorogation_period_with_parliament.parliament_period.number.ordinalize, parliament_show_url( :parliament => prorogation_period_with_parliament.parliament_period.id ) ) ) %>
+	<%= content_tag( 'td', link_to( prorogation_period_with_parliament.number.ordinalize, prorogation_period_show_url( :prorogation_period => prorogation_period_with_parliament ) ) ) %>
+	<%= content_tag( 'td', prorogation_period_with_parliament.start_date.strftime( '%-d %B %Y' ) ) %>
+	<td>
+		<% if prorogation_period_with_parliament.end_date -%>
+			<%= prorogation_period_with_parliament.end_date.strftime( '%-d %B %Y' ) %>
+		<% else -%>
+			-
+		<% end -%>
+	</td>
+</tr>
