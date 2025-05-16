@@ -26,10 +26,10 @@ class ProrogationPeriod < ActiveRecord::Base
   end
   
   def label_with_parliament
-    label = 'Parliament '
-    label = label + self.parliament_period.number.to_s
-    label = label + ' Prorogation '
-    label = label + self.number.to_s
+    label = self.number.ordinalize
+    label += ' prorogation of the  '
+    label += self.parliament_period.number.ordinalize
+    label += ' Parliament '
     label
   end
   
