@@ -1,4 +1,8 @@
-
-<ol>
-	<%= render :partial => 'session_with_parliament', :collection => @sessions %>
-</ol>
+<div class="table-wrapper">
+	<table>
+		<%= render :partial => 'table_head' %>
+		<tbody>
+			<%= render :partial => 'session_with_parliament', :collection => @sessions %>
+		</tbody>
+	</table>
+</div>
