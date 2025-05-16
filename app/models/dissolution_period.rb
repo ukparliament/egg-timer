@@ -10,8 +10,8 @@
 class DissolutionPeriod < ActiveRecord::Base
   
   def label
-    label = 'Dissolution '
-    label = label + self.number.to_s
+    label = self.number.ordinalize
+    label += ' dissolution '
     label
   end
   
