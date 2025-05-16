@@ -7,43 +7,6 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'egg-timer' => 'home#index', as: :home
   
-  
-  
-  
-  get 'egg-timer/calendar' => 'calendar#index', as: :calendar_list
-  get 'egg-timer/calendar/today' => 'calendar#today', as: :calendar_today
-  get 'egg-timer/calendar/:year' => 'calendar#year', as: :calendar_year
-  get 'egg-timer/calendar/:year/:month' => 'calendar#month', as: :calendar_month
-  get 'egg-timer/calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day
-  
-  get 'egg-timer/houses' => 'house#index', as: :house_list
-  get 'egg-timer/houses/upcoming' => 'house#upcoming_all', as: :house_upcoming_all
-  get 'egg-timer/houses/:house' => 'house#show', as: :house_show
-  get 'egg-timer/houses/:house/upcoming' => 'house_days#upcoming', as: :house_days_upcoming
-  get 'egg-timer/houses/:house/sitting-days' => 'house_days#sitting_day_list', as: :house_days_sitting_day_list
-  get 'egg-timer/houses/:house/sitting-days/upcoming' => 'house_days#sitting_day_upcoming', as: :house_days_sitting_day_upcoming
-  get 'egg-timer/houses/:house/sitting-days/upcoming/next' => 'house_days#sitting_day_next', as: :house_days_sitting_day_next
-  get 'egg-timer/houses/:house/sitting-days/preceding' => 'house_days#sitting_day_preceding', as: :house_days_sitting_day_preceding
-  get 'egg-timer/houses/:house/sitting-days/preceding/latest' => 'house_days#sitting_day_latest', as: :house_days_sitting_day_latest
-  get 'egg-timer/houses/:house/virtual-sitting-days' => 'house_days#virtual_sitting_day_list', as: :house_days_virtual_sitting_day_list
-  get 'egg-timer/houses/:house/virtual-sitting-days/upcoming' => 'house_days#virtual_sitting_day_upcoming', as: :house_days_virtual_sitting_day_upcoming
-  get 'egg-timer/houses/:house/virtual-sitting-days/upcoming/next' => 'house_days#virtual_sitting_day_next', as: :house_days_virtual_sitting_day_next
-  get 'egg-timer/houses/:house/virtual-sitting-days/preceding' => 'house_days#virtual_sitting_day_preceding', as: :house_days_virtual_sitting_day_preceding
-  get 'egg-timer/houses/:house/virtual-sitting-days/preceding/latest' => 'house_days#virtual_sitting_day_latest', as: :house_days_virtual_sitting_day_latest
-  get 'egg-timer/houses/:house/adjournment-days' => 'house_days#adjournment_day_list', as: :house_days_adjournment_day_list
-  get 'egg-timer/houses/:house/adjournment-days/upcoming' => 'house_days#adjournment_day_upcoming', as: :house_days_adjournment_day_upcoming
-  get 'egg-timer/houses/:house/adjournment-days/upcoming/next' => 'house_days#adjournment_day_next', as: :house_days_adjournment_day_next
-  get 'egg-timer/houses/:house/adjournment-days/preceding' => 'house_days#adjournment_day_preceding', as: :house_days_adjournment_day_preceding
-  get 'egg-timer/houses/:house/adjournment-days/preceding/latest' => 'house_days#adjournment_day_latest', as: :house_days_adjournment_day_latest
-  get 'egg-timer/houses/:house/recess-dates' => 'house_days#recess_dates', as: :house_days_recess_dates_list
-  get 'egg-timer/houses/:house/recess-dates/upcoming' => 'house_days#recess_dates_upcoming', as: :house_days_recess_dates_upcoming
-  
-  
-  
-  
-  
-  
-  
   # Calculators
   get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
   get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
@@ -66,6 +29,37 @@ Rails.application.routes.draw do
   
   get 'egg-timer/prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
   get 'egg-timer/prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
+  
+  # Houses
+  get 'egg-timer/houses' => 'house#index', as: :house_list
+  get 'egg-timer/houses/upcoming' => 'house#upcoming_all', as: :house_upcoming_all
+  get 'egg-timer/houses/:house' => 'house#show', as: :house_show
+  
+  get 'egg-timer/houses/:house/upcoming' => 'house_days#upcoming', as: :house_days_upcoming
+  get 'egg-timer/houses/:house/sitting-days' => 'house_days#sitting_day_list', as: :house_days_sitting_day_list
+  get 'egg-timer/houses/:house/sitting-days/upcoming' => 'house_days#sitting_day_upcoming', as: :house_days_sitting_day_upcoming
+  get 'egg-timer/houses/:house/sitting-days/upcoming/next' => 'house_days#sitting_day_next', as: :house_days_sitting_day_next
+  get 'egg-timer/houses/:house/sitting-days/preceding' => 'house_days#sitting_day_preceding', as: :house_days_sitting_day_preceding
+  get 'egg-timer/houses/:house/sitting-days/preceding/latest' => 'house_days#sitting_day_latest', as: :house_days_sitting_day_latest
+  get 'egg-timer/houses/:house/virtual-sitting-days' => 'house_days#virtual_sitting_day_list', as: :house_days_virtual_sitting_day_list
+  get 'egg-timer/houses/:house/virtual-sitting-days/upcoming' => 'house_days#virtual_sitting_day_upcoming', as: :house_days_virtual_sitting_day_upcoming
+  get 'egg-timer/houses/:house/virtual-sitting-days/upcoming/next' => 'house_days#virtual_sitting_day_next', as: :house_days_virtual_sitting_day_next
+  get 'egg-timer/houses/:house/virtual-sitting-days/preceding' => 'house_days#virtual_sitting_day_preceding', as: :house_days_virtual_sitting_day_preceding
+  get 'egg-timer/houses/:house/virtual-sitting-days/preceding/latest' => 'house_days#virtual_sitting_day_latest', as: :house_days_virtual_sitting_day_latest
+  get 'egg-timer/houses/:house/adjournment-days' => 'house_days#adjournment_day_list', as: :house_days_adjournment_day_list
+  get 'egg-timer/houses/:house/adjournment-days/upcoming' => 'house_days#adjournment_day_upcoming', as: :house_days_adjournment_day_upcoming
+  get 'egg-timer/houses/:house/adjournment-days/upcoming/next' => 'house_days#adjournment_day_next', as: :house_days_adjournment_day_next
+  get 'egg-timer/houses/:house/adjournment-days/preceding' => 'house_days#adjournment_day_preceding', as: :house_days_adjournment_day_preceding
+  get 'egg-timer/houses/:house/adjournment-days/preceding/latest' => 'house_days#adjournment_day_latest', as: :house_days_adjournment_day_latest
+  get 'egg-timer/houses/:house/recess-dates' => 'house_days#recess_dates', as: :house_days_recess_dates_list
+  get 'egg-timer/houses/:house/recess-dates/upcoming' => 'house_days#recess_dates_upcoming', as: :house_days_recess_dates_upcoming
+  
+  # Calendar
+  get 'egg-timer/calendar' => 'calendar#index', as: :calendar_list
+  get 'egg-timer/calendar/today' => 'calendar#today', as: :calendar_today
+  get 'egg-timer/calendar/:year' => 'calendar#year', as: :calendar_year
+  get 'egg-timer/calendar/:year/:month' => 'calendar#month', as: :calendar_month
+  get 'egg-timer/calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day
   
   # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
