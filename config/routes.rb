@@ -42,6 +42,16 @@ Rails.application.routes.draw do
   
   
   
+  
+  
+  # Calculators
+  get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
+  get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
+  get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
+  get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
+  get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
+  get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
+  
   # Parliamentary time
   get 'egg-timer/parliamentary-time' => 'parliamentary_time#index', as: :parliamentary_time_list
   
@@ -56,14 +66,6 @@ Rails.application.routes.draw do
   
   get 'egg-timer/prorogation-periods' => 'prorogation_period#index', as: :prorogation_period_list
   get 'egg-timer/prorogation-periods/:prorogation_period' => 'prorogation_period#show', as: :prorogation_period_show
-  
-  # Calculators
-  get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
-  get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
-  get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
-  get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
-  get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
-  get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
   
   # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
