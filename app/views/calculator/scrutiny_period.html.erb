@@ -1,4 +1,17 @@
 <%= render :partial => 'form'%>
 
+<%= content_tag( 'p', "The assumptions made in interpreting legislation which form the basis of our calculations are #{link_to( 'documented here', meta_comment_url )}.".html_safe, :class => 'assumptions' ) %>
+
+
+<div class="disclaimer">
+
+<h3>Disclaimer</h3>
+
+<p>You should not rely on this service as legal or professional advice, or as a substitute for it. 
+<p>We do not accept any liability whatsoever for any errors, omissions or misstatements contained herein. 
+<p>You should consult a suitably qualified professional if you require specific advice or information.
+
+</div>
+
 
 <!-- TODO: check text for zero days, valid date format, check for negative days -->
