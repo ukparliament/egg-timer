@@ -1,120 +1,38 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-<head>
-  <title>Parliament Calendar</title>
-  <link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
-   <meta name="viewport" content="width=device-width">     
-            <style>
-            *, *:before, *:after {box-sizing: border-box;}
-            body {font-family: system-ui,sans-serif;max-width:48rem;padding:1rem;font-size:1.2rem;line-height: 1.4;margin:auto;}
-            h1 {font-size:1.75rem;font-weight:normal;}
-            h2 {font-size:1.5rem;font-weight:normal;}
-            h3 {font-size:1.2rem;font-weight:normal;}
-            p.radio * {cursor:pointer;}
-            p.radio {padding:0.25rem;border-radius:0.5rem;width:100%;}
-            p.radio:hover {background-color: powderblue;}
-            input[type=radio] {transform: scale(1.5);}
-            input[type=date] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
-            input[type=number] {padding: 0.5rem;border-radius:0.25rem;font-size:larger;}
-            input:focus {border-color: blue;}
-            button {padding: 1rem;border-radius:0.25rem;font-size:1.2rem;color:blue;background-color: white;border:2pt solid blue;font-weight:bold;cursor:pointer;}
-            button:hover {border:2pt solid blue;}
-            p.box {padding: 0.75rem;border-radius:0.25rem;font-size:larger;color:black;background-color: white;border:2pt solid gray;}
-            fieldset {margin-bottom:1.5rem;}
-            td, th {
-  padding: 0.5rem;
-    text-align: left;
-  height: 4rem;
-  vertical-align: bottom;
-}
-em {font-style: normal; text-decoration:underline;}
-tr {border-bottom: thin dotted black;}
-th {
-  color: gray;
-  border-color: white;
-}
-table {
-font-size: 1rem;
-  border-collapse: collapse;
-  width:100%;
-}
-td.commons {font-weight:bold;background-color:lightgreen;}
-td.lords {font-weight:bold;background-color:pink;}
-ol#sessions {list-style: none;padding-left:0;}
-ol#prorogations {list-style: none;padding-left:0;}
-
-#logo {
-    overflow: hidden;
-    transition-duration: 0.8s;
-    transition-property: transform;
-}
-#logo:hover {
-    transform: rotate(-360deg);
-    -webkit-transform: rotate(-360deg);
-}
-footer {margin-top:4rem;}
-            </style>
-	
-	<%# Add rel alternate links to JSON and ICS where applicable %>
-	<% if @json_url -%>
-		<link rel="alternate" type="application/json" title="Egg timer - <%= @alternate_title %>" href="<%= @json_url %>" />
-	<% end -%>
-	<% if @calendar_links -%>
-		<% @calendar_links.each do |calendar_link| -%>
-			<link rel="alternate" type="text/calendar" title="Egg timer - <%= calendar_link[0] %>" href="<%= calendar_link[1] %>" />
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="viewport" content="width=device-width">
+		<title><%= @page_title || $SITE_TITLE %></title>
+		<link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
+		<meta name="viewport" content="width=device-width">
+		<%= stylesheet_link_tag "application" %>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= render :partial => 'layouts/head/json_ld/crumb', :object => @crumb %>
+		
+		<%# Add rel alternate links to JSON and ICS where applicable %>
+		<% if @json_url -%>
+			<link rel="alternate" type="application/json" title="Egg timer - <%= @alternate_title %>" href="<%= @json_url %>" />
 		<% end -%>
-	<% end -%>
-</head>
-<body>
-	
-<header>
-
-<img id="logo" src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer">
-
-<p>
-<%= link_to( 'The Egg Timer', home_url ) %> &mdash; powered by House of Commons librarians</p>
-
-<h1><%= @title || "Egg Timer" %></h1>
-
-</header>
-<main>
-<%= yield %>
-</main>
-
-
-
-
-
-
-<footer>
-<nav>
-<p>
-<%= link_to( 'Calculators', calculator_list_url )  %>
--
-<%= link_to( 'Parliamentary time', parliamentary_time_list_url )  %>
--
-<%= link_to( 'Houses', house_list_url )  %>
--
-<%= link_to( 'Calendar', calendar_list_url )  %>
--
-<%= link_to( 'Calendar subscriptions', meta_subscribe_url )  %>
-
-
-<br>
-<br>
-
-<%= link_to( 'About this application', meta_list_url )  %>
--
-<%= link_to( 'Contact us', "mailto:RIIDMSMailbox@parliament.uk" )  %>
-
-<br>
-<br>
-
-<%= link_to( 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/' ) %>
-</nav>
-
-</footer>
-
-
-</body>
+		<% if @calendar_links -%>
+			<% @calendar_links.each do |calendar_link| -%>
+				<link rel="alternate" type="text/calendar" title="Egg timer - <%= calendar_link[0] %>" href="<%= calendar_link[1] %>" />
+			<% end -%>
+		<% end -%>
+	</head>
+	<body class="section-<%= @section %> subsection-<%= @subsection %>">
+		<%= render :partial => 'layouts/header/header' %>
+		<main id="main-content" class="container">
+			<div class="inner-content container">
+				<div class="reading-width">
+					<%= render :partial => 'layouts/debug/debug' %>
+					<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
+					<%= yield %>
+				</div>
+			</div>
+		</main>
+		<%= render :partial => 'layouts/footer/footer' %>
+	</body>
 </html>
