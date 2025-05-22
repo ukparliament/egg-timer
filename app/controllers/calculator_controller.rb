@@ -23,8 +23,11 @@ class CalculatorController < ApplicationController
   # ### This is the code to provide a list of calculators.
   def index
     
-    # Set a title for the page.
-    @title = "Calculators"
+    # Set a meta information for the page.
+    @page_title = "Calculators"
+    @description = "Calculators made available by #{$SITE_TITLE}."
+    @crumb << { label: 'Calculators', url: nil }
+    @section = 'calculators'
   end
   
   # ### This is the code to provide information for the form that users can fill in.
