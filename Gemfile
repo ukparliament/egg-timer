@@ -7,6 +7,9 @@ gem 'rails', '~> 8'
 gem 'puma'
 gem 'pg'
 
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'sprockets-rails'
+
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
 gem 'benchmark'
