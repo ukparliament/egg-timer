@@ -1,0 +1,12 @@
+<header>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+	<%= render :partial => 'layouts/header/portcullis' %>
+    <%= render :partial => 'layouts/header/crumb' %>
+
+	<div class="page-header">
+		<div class="container">
+			<%= content_tag( 'span', link_to( $SITE_TITLE, home_url ), :id => 'site-title' ) %>
+			<%= render :partial => 'layouts/header/nav' %>
+		</div>
+	</div>
+</header>
