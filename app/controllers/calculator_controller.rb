@@ -33,11 +33,17 @@ class CalculatorController < ApplicationController
   # ### This is the code to provide information for the form that users can fill in.
   def scrutiny_period
     
-    # Set a title for the page.
-    @title = "Calculate scrutiny periods"
-    
     # Find all the active procedures in display order - to populate the procedure radio buttons on the form.
     @procedures = Procedure.all.where( 'active is true' ).order( 'display_order asc')
+    
+    # Set a meta information for the page.
+    @page_title = "Scrutiny end date calculator"
+    @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date</span>".html_safe
+    @description = "A calculator to determine the estimated end date of scrutiny for instruments before Parliament."
+    @crumb << { label: 'Calculators', url: calculator_list_url }
+    @crumb << { label: 'Scrutiny end date', url: nil }
+    @section = 'calculators'
+    @subsection = 'scrutiny-calculator'
   end
   
   # ### This is the code to provide information for the form that users wishing to run a specific calculation style can fill in.
@@ -47,8 +53,13 @@ class CalculatorController < ApplicationController
     calculation_style = params['calculation-style']
     @calculation_style = calculation_style.to_i if calculation_style
     
-    # Set a title for the page.
-    @title = "Calculate scrutiny periods"
+    # Set a meta information for the page.
+    @page_title = "Scrutiny end date calculator for a calculation style"
+    @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date for a calculation style</span>".html_safe
+    @description = "A calculator to determine the estimated end date of scrutiny for instruments before Parliament for a given calculation style."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'Scrutiny period calculator by calculation style', url: nil }
   end
   
   # ### This code runs the calculation.
@@ -70,9 +81,16 @@ class CalculatorController < ApplicationController
     
     # If neither the **procedure**  nor the **calculation style** have been provided, or the **start date** has not been provided ...
     if ( procedure.nil? and calculation_style.nil? ) or start_date.blank?
-      
-      # ... we set an error message ...
-	    @title = "Sorry, we need more information to complete the calculation"
+    
+      # Set a meta information for the page.
+      @page_title = "Scrutiny end date - more information required"
+      @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date - more information required</span>".html_safe
+      @description = "More information required for a calculation to determine the estimated end date of scrutiny for instruments before Parliament."
+      @crumb << { label: 'Calculators', url: calculator_list_url }
+      @crumb << { label: 'Scrutiny end date', url: calculator_form_url }
+      @crumb << { label: 'More information required', url: nil }
+      @section = 'calculators'
+      @subsection = 'scrutiny-calculator'
       
       # ... and display the error.
       render :template => 'calculator/not_enough_information'
@@ -92,8 +110,15 @@ class CalculatorController < ApplicationController
       # If the day count has not been provided by the day count form or the day count is 0 ...
       if day_count.blank? or day_count.to_i == 0
     
-        # ... we set a title for the page.
-    	  @title = "Calculate scrutiny period"
+        # Set a meta information for the page.
+        @page_title = "Scrutiny end date - number of days to count required"
+        @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date - number of days to count required</span>".html_safe
+        @description = "Number of days to count required for a calculation to determine the estimated end date of scrutiny for instruments before Parliament."
+        @crumb << { label: 'Calculators', url: calculator_list_url }
+        @crumb << { label: 'Scrutiny end date', url: calculator_form_url }
+        @crumb << { label: 'Number of days to count required', url: nil }
+        @section = 'calculators'
+        @subsection = 'scrutiny-calculator'
         
         # We render the day count form.
         render :template => 'calculator/day_count_form'
@@ -218,22 +243,34 @@ class CalculatorController < ApplicationController
           end
         end
       end
-      @alternate_title = 'anticipated end date of the scrutiny period'
+      
+      # Set a meta information for the page.
+      @page_title = "Scrutiny end date calculation"
+      @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date calculation</span>".html_safe
+      @description = "A calculation to determine the estimated end date of scrutiny for instruments before Parliament."
       @json_url = request.original_fullpath.sub '?', '.json?'
-      @calendar_links = []
-      calendar_link = ['Anticipated end date of the scrutiny period', request.original_fullpath.sub( '?', '.ics?' )]
-      @calendar_links << calendar_link
+      @calendar_links << ['Anticipated end date of the scrutiny period', request.original_fullpath.sub( '?', '.ics?' )]
+      @crumb << { label: 'Calculators', url: calculator_list_url }
+      @crumb << { label: 'Scrutiny end date', url: calculator_form_url }
+      @crumb << { label: 'Calculation', url: nil }
+      @section = 'calculators'
+      @subsection = 'scrutiny-calculator'
     end
   end
   
   # ### This is the code to build the interval calculation form.
   def interval
-    
-
-    @title = "Calculate sitting days during an interval"
-    
+  
     # We get both Houses.
     @houses = House.all
+    
+    @page_title = "Sitting days during an interval calculator"
+    @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval</span>".html_safe
+    @description = "A calculator to determine the number of sitting days for both Houses during an interval."
+    @crumb << { label: 'Calculators', url: calculator_list_url }
+    @crumb << { label: 'Sitting days during an interval', url: nil }
+    @section = 'calculators'
+    @subsection = 'interval-calculator'
   end
   
   # ### This is the code to calculate the number of sitting days during an interval of time.
@@ -253,14 +290,21 @@ class CalculatorController < ApplicationController
       # ... we set an error message ...
 	    @title = "Sorry, we need more information to complete the calculation"
       
+      # ... set a meta information for the page ...
+      @page_title = "Sitting days during an interval - more information required"
+      @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval - more information required</span>".html_safe
+      @description = "More information required for a calculation to determine the number of sitting days in both Houses during an interval."
+      @crumb << { label: 'Calculators', url: calculator_list_url }
+      @crumb << { label: 'Sitting days during an interval', url: calculator_interval_url }
+      @crumb << { label: 'More information required', url: nil }
+      @section = 'calculators'
+      @subsection = 'interval-calculator'
+      
       # ... and display the error.
       render :template => 'calculator/interval_not_enough_information'
       
     # Otherwise, if both the start date and the end date have been provided ...
     else
-        
-      # ... we set a title for the page.
-    	@title = "Number of sitting days within the interval"
       
       # We make the text of the start date and end date passed into date formats.
       @start_date = Date.parse( start_date )
@@ -270,10 +314,20 @@ class CalculatorController < ApplicationController
       if @start_date >= @end_date
         
         # ... we set a title for the page ...
-    	  @title = "Unable to calculate sitting days"
+    	  @title = ""
         
         # ... construct an error mesage.
         @error_message = "The start date must precede the end date."
+        
+        # ... set a meta information for the page ...
+        @page_title = "Sitting days during an interval - unable to calculate sitting days"
+        @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval - unable to calculate sitting days</span>".html_safe
+        @description = "Unable to calculate sitting days for a calculation during an interval."
+        @crumb << { label: 'Calculators', url: calculator_list_url }
+        @crumb << { label: 'Sitting days during an interval', url: calculator_interval_url }
+        @crumb << { label: 'Unable to calculate sitting days', url: nil }
+        @section = 'calculators'
+        @subsection = 'interval-calculator'
         
         # ... and display the error.
         render :template => 'calculator/interval_error'
@@ -285,18 +339,19 @@ class CalculatorController < ApplicationController
         @commons_sitting_day_count = 0
         @lords_sitting_day_count = 0
         
-        # ... and calculate the sitting days in the interval.
+        # ... calculate the sitting days in the interval ...
         calculate_sitting_days_in_interval( @start_date, @end_date )
+        
+        # ... and set a meta information for the page.
+        @page_title = "Sitting days during an interval calculation"
+        @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval calculation</span>".html_safe
+        @description = "A calculation to determine the number of sitting days in both Houses during an interval."
+        @crumb << { label: 'Calculators', url: calculator_list_url }
+        @crumb << { label: 'Sitting days during an interval', url: calculator_interval_url }
+        @crumb << { label: 'Calculation', url: nil }
+        @section = 'calculators'
+        @subsection = 'interval-calculator'
       end
     end
   end
 end
-    
-    
-    
-    
-    
-    
-    
-      
-      
