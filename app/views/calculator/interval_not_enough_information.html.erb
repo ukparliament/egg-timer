@@ -1,3 +1,5 @@
+<%= render :partial => 'nav' %>
+
 <%= content_tag( 'p', "In order to complete the calculation, we need:" ) %>
 <ul>
 	<%= content_tag( 'li', "A start date" ) if params['start-date'].nil? %>
