@@ -87,6 +87,17 @@ class MetaController < ApplicationController
   # Used elsewhere
   def using
   	@title = "Using the application"
+
+    
+    # Set a meta information for the page.
+    @page_title = "Scrutiny end date calculator - how to use"
+    @multiline_page_title = "Calculators <span class='subhead'>Scrutiny end date - how to use</span>".html_safe
+    @description = "How to use the calculator to determine the estimated end date of scrutiny for instruments before Parliament."
+    @crumb << { label: 'Calculators', url: calculator_list_url }
+    @crumb << { label: 'Scrutiny end date', url: calculator_form_url }
+    @crumb << { label: 'How to use', url: nil }
+    @section = 'calculators'
+    @subsection = 'scrutiny-calculator'
   end
   
   def subscribe
