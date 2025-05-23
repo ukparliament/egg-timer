@@ -1,3 +1,5 @@
+<%= render :partial => 'nav' %>
+
 <%= content_tag( 'p', "For the interval between #{@start_date.strftime( '%A, %-d %B %Y')} and #{@end_date.strftime( '%A, %-d %B %Y')} there were:" ) %>
 <ul>
 	<%= content_tag( 'li', "#{@commons_sitting_day_count} sitting days in the House of Commons" ) %>
