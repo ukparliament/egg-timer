@@ -14,7 +14,7 @@
 		
 		<%# Add rel alternate links to JSON and ICS where applicable %>
 		<% if @json_url -%>
-			<link rel="alternate" type="application/json" title="Egg timer - <%= @alternate_title %>" href="<%= @json_url %>" />
+			<link rel="alternate" type="application/json" title="<%= @page_title %>" href="<%= @json_url %>" />
 		<% end -%>
 		<% if @calendar_links -%>
 			<% @calendar_links.each do |calendar_link| -%>
