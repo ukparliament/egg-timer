@@ -7,9 +7,14 @@ class ApplicationController < ActionController::Base
 
   before_action do
     create_crumb_container
+    setup_calendar_link_array
   end
   
   def create_crumb_container
     @crumb = []
+  end
+  
+  def setup_calendar_link_array
+    @calendar_links = []
   end
 end
