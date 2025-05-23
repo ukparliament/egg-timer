@@ -259,7 +259,11 @@ h1 span[class="subhead"] {
 }
 
 /* subnav active */
-body.subsection-overview .subnav a.overview {
+body.subsection-scrutiny-calculator .subnav a.scrutiny-calculator {
+	border-bottom-color: #006e45;
+	color: #4d4d4d;
+}
+body.subsection-interval-calculator .subnav a.interval-calculator {
 	border-bottom-color: #006e45;
 	color: #4d4d4d;
 }
