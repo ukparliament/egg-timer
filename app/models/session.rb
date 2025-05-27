@@ -40,6 +40,10 @@ class Session < ActiveRecord::Base
     label
   end
   
+  def parliament_label
+    "#{self.parliament_period.number.ordinalize} Parliament"
+  end
+  
   def label_in_parliament
     label = "#{self.number.ordinalize} session"
   end
