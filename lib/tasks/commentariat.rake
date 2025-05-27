@@ -5,7 +5,7 @@ require 'time'
 require 'cgi' # Add this to ensure CGI is available
 
 class Commentariat
-  def initialize(output_dir = "/docs/", github_repo = "ukparliament/egg-timer")
+  def initialize(output_dir = "/public/egg-timer/docs/", github_repo = "ukparliament/egg-timer")
     @source_dir = Pathname.new("./app/lib/calculations/").realpath
     @output_dir = Pathname.new(output_dir).realpath
     @github_repo = github_repo
@@ -31,6 +31,7 @@ class Commentariat
   def collect_files
     # First collect all files as Pathname objects
     Dir.glob(File.join(@source_dir, '**', '*.rb')).each do |file|
+      puts file
       relative_path = Pathname.new(file).relative_path_from(@source_dir)
       @files << relative_path
     end
@@ -280,11 +281,12 @@ end
 namespace :commentariat do
   desc "Generate documentation from Ruby source files"
   task :generate, [:github_repo, :output] do |t, args|
-    args.with_defaults(
-      output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'docs'),
+
+    args.with_defaults(         
+      output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'),
       github_repo: ENV['GITHUB_REPO']
     )
-    
+
     puts "Generating documentation..."
     puts "Source directory: /app/lib/calculations/ (fixed)"
     puts "Output directory: #{args.output}"
@@ -302,7 +304,7 @@ namespace :commentariat do
   
   desc "Clean documentation files but preserve the directory"
   task :clean, [:output] do |t, args|
-    args.with_defaults(output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'docs'))
+    args.with_defaults(output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'))
     
     if File.directory?(args.output)
       puts "Removing files in documentation directory: #{args.output}"
