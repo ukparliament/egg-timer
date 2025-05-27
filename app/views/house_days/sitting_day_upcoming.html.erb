@@ -1,3 +1,7 @@
-<ol>
-	<%= render :partial => 'sitting_day/sitting_day', :collection => @house.upcoming_sitting_days %>
-</ol>
+<% unless @house.upcoming_sitting_days.empty? %>
+	<ol>
+		<%= render :partial => 'sitting_day/sitting_day', :collection => @house.upcoming_sitting_days %>
+	</ol>
+<% else -%>
+	<%= content_tag( 'p', "There are no upcoming sitting days in the #{@house.name}." ) %>
+<% end -%>
