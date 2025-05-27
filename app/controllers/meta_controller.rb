@@ -86,8 +86,6 @@ class MetaController < ApplicationController
   
   # Used elsewhere
   def using
-  	@title = "Using the application"
-
     
     # Set a meta information for the page.
     @page_title = "Scrutiny end date calculator - how to use"
