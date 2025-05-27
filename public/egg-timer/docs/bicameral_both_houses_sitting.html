@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bicameral_both_houses_sitting.rb</title>
+  <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
+  <style>
+  .line-number {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+    margin-right: 10px;
+  }
+  pre {
+    margin-bottom: 0;
+    padding: 3px;
+  }
+  code {
+    white-space: pre;
+  }
+</style>
+
+</head>
+<body>
+<header class="doc-header">
+  <div class="container">
+      <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
+          <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+              <use href="#p-icon__uk-parliament"/>
+          </svg>
+      </a>
+  </div>
+  <div class="product-header">
+      <div class="container">
+          <a class="title" href="/">
+                  bicameral_both_houses_sitting.rb
+                </a>
+      </div>
+  </div>
+</header>
+
+<main id="main" class="main-content">
+  <div class="doc-wrapper">
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-3">
+              <h3>Files</h3>
+<ul class='list-unstyled'>
+<li><a href='index.html'>Index</a></li>
+<li><a href='bicameral_both_houses_sitting.html' class='fw-bold text-primary'>bicameral_both_houses_sitting.rb</a></li>
+<li><a href='bicameral_si_either_house_sitting.html' class=''>bicameral_si_either_house_sitting.rb</a></li>
+<li><a href='commons_only_si.html' class=''>commons_only_si.rb</a></li>
+<li><a href='commons_only_sitting_days.html' class=''>commons_only_sitting_days.rb</a></li>
+<li><a href='interval.html' class=''>interval.rb</a></li>
+<li><a href='pnsi.html' class=''>pnsi.rb</a></li>
+<li><a href='treaty.html' class=''>treaty.rb</a></li>
+</ul>
+            </div>
+              <div class="col-lg-9">
+                <h1>bicameral_both_houses_sitting.rb</h1>
+                <p>
+                  <small class="text-muted">
+                    View full file: 
+                    <a href="https://github.com//blob/main/app/lib/calculations/bicameral_both_houses_sitting.rb" target="_blank">
+                      on GitHub
+                    </a>
+                  </small>
+                </p>
+                <hr>
+                <div class="text-secondary">
+                  <pre><code><span class='line-number'><span class='text-secondary pe-2'>1</span></span>module Calculations</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>2</span></span>  module BicameralBothHousesSitting</code></pre>
+<h1>A method for calculating the end date of scrutiny periods during which <strong>both</strong> Houses must be sitting or on a short adjournment, used for made affirmative Statutory Instruments as set out by their enabling Act. Also used for Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016.</h1>
+
+<p><a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1">Paragraph 1 of section 7 of the Statutory Instrument Act 1946</a> sets out that - in calculating the scrutiny period for an SI under that Act - “no account shall be taken of any time during which Parliament is dissolved or prorogued or during which <em>both</em> Houses are adjourned for more than four days.” This applies to the majority of made affirmative instruments.</p>
+
+<p>Made affirmatives laid under different Acts follow other rules, for example: <a href="https://www.legislation.gov.uk/ukpga/2014/7/section/5/enacted#section-5-9">paragraph 9 of section 5 of the National Insurance Contributions Act 2014</a>, sets out that “no account is to be taken of any time [..] during which either House is adjourned for more than 4 days.&quot;</p>
+
+<p>This calculation deals with the case where days are not counted if <em>either</em> House is adjourned for more than four days.</p>
+
+<p>The rules governing the time periods for Legislative Reform Orders are set out in sections <a href="https://www.legislation.gov.uk/ukpga/2006/51/section/18#section-18">18</a> and <a href="https://www.legislation.gov.uk/ukpga/2006/51/section/19#section-19">19</a> of the Legislative and Regulatory Reform Act 2006.</p>
+
+<p>The rules governing the time period for Public Body Orders are set out in <a href="https://www.legislation.gov.uk/ukpga/2011/24/section/11#section-11-12">paragraph 12 of section 11 of the Public Bodies Act 2011</a>.</p>
+
+<p>The rules governing the time period for Localism Orders are set out in <a href="https://www.legislation.gov.uk/ukpga/2011/20/enacted#section-19-14">paragraph 14 of section 19 of the Localism Act 2011</a>.</p>
+
+<p>The rules governing the time period for published drafts are set out in <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14">paragraph 14 of schedule 8 of the European Union (Withdrawal) Act 2018</a>.</p>
+
+<p>The rules governing the time period for enhanced affirmatives under the <a href="https://www.legislation.gov.uk/id/ukpga/2016/25/">Investigatory Powers Act 2016</a> are set out in <a href="https://www.legislation.gov.uk/ukpga/2016/25/section/268#section-268-11">paragraph 11 of section 268 of the Investigatory Powers Act 2016</a>.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>14</span></span>    def bicameral_calculation_both_houses_sitting( date, target_day_count )</code></pre>
+<h2>We start counting on the <strong>first day both Houses have a scrutiny day</strong>.</h2>
+
+<p>For Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016 this will be the day on which the instrument was laid, if that day was a scrutiny day.</p>
+
+<p>For published drafts under the European Union (Withdrawal) Act 2018, this will be the day on which the draft was published, if that day was a scrutiny day. This is set out in <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2">paragraph 14(2) of Schedule 8 of the European Union (Withdrawal) Act 2018 </a>.</p>
+
+<p>For made affimatives this will be the day on which the instrument was made, if that day was a scrutiny day.</p>
+
+<p>For instruments covered by this calculation, lacking explicit instructions in enabling Acts, we decide to take the definition from <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">paragraph 1 of section 5 of the Statutory Instruments Act 1946</a>.</p>
+
+<p>If the laying day - or making day for a made affirmative - is a joint scrutiny day, we don&#39;t have to cycle through the calendar to find a subsequent one ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>22</span></span>      if date.is_joint_scrutiny_day?</code></pre>
+<p>... and the laying or making day is the start of the scrutiny period.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>25</span></span>        @scrutiny_start_date = date</code></pre>
+<p>Otherwise, the laying or making day is not a joint scrutiny day, then ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>28</span></span>      else</code></pre>
+<p>... if there is a future joint scrutiny day ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>31</span></span>        if date.first_joint_scrutiny_day</code></pre>
+<p>... we set the date to that day.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>34</span></span>          date = date.first_joint_scrutiny_day</code></pre>
+<p>... we have found the start of the scrutiny period.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>37</span></span>          @scrutiny_start_date = date</code></pre>
+<p>If we didn&#39;t find a <strong>future joint scrutiny day</strong> in our calendar, we can&#39;t calculate the scrutiny period, ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>40</span></span>        else</code></pre>
+<p>... this error message is displayed ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>43</span></span>          @error_message = &quot;Unable to find a future joint scrutiny day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<p>... and we stop looking for a scrutiny period end date.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>46</span></span>          return</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>47</span></span>        end</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>48</span></span>      end</code></pre>
+<p>We&#39;ve found the first joint scrutiny day so we start counting from day 1.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>51</span></span>      day_count = 1</code></pre>
+<h2>Whilst the number of joint scrutiny days we’re counting is less than the target number of days to count ...</h2>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>54</span></span>      while ( day_count &lt; target_day_count ) do</code></pre>
+<p>... continue to the <strong>next day</strong>.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>57</span></span>        date = date.next_day</code></pre>
+<p>... and add 1 to the day count if this is a joint scrutiny day.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>60</span></span>        day_count +=1 if date.is_joint_scrutiny_day?</code></pre>
+<p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>63</span></span>        if date.is_calendar_not_populated?</code></pre>
+<p>... this error message is displayed to users ...</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>66</span></span>          @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<p>... and we stop looking through the calendar.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>69</span></span>          break</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>70</span></span>        end</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>71</span></span>      end</code></pre>
+<p>Return the anticipated end date of the scrutiny period for display.</p>
+
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>74</span></span>      date</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>75</span></span>    end</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>76</span></span>  end</code></pre>
+<pre><code><span class='line-number'><span class='text-secondary pe-2'>77</span></span>end</code></pre>
+                </div>
+                <hr>
+                <p class="text-muted">Generated on: 2025-05-27 16:16:05</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+    <footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-3 col-no-spacing primary">
+                  &copy; UK Parliament 2025
+                </div>
+          <div class="col-md-9 secondary">
+              <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
+              <a data-cookie-manager-open="" href="#">Cookie settings</a>
+              <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
+              <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
+              <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
+          </div>
+      </div>
+  </div>
+</footer>
+</body>
+</html>

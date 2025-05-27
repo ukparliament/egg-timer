@@ -4,9 +4,11 @@ require 'pathname'
 require 'time'
 require 'cgi' # Add this to ensure CGI is available
 
-class Commentariat
+class Documenter
   def initialize(output_dir = "/public/egg-timer/docs/", github_repo = "ukparliament/egg-timer")
     @source_dir = Pathname.new("./app/lib/calculations/").realpath
+    # /app/controllers/calculator_controller.rb
+    # /config/initializers/monkey_patching.rb
     @output_dir = Pathname.new(output_dir).realpath
     @github_repo = github_repo
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, with_toc_data: true)
@@ -23,7 +25,6 @@ class Commentariat
     FileUtils.mkdir_p(@output_dir)
     collect_files
     process_files
-    generate_index
   end
 
   private
@@ -193,94 +194,12 @@ class Commentariat
     HTML
   end
 
-  def generate_index
-    content = "<h1>Index</h1><ul>"
-    @files.each do |file|
-      html_file = file.to_s.sub(/\.rb$/, '.html')
-      content << "<li><a href='#{html_file}'>#{file}</a></li>"
-    end
-    content << "</ul>"
-    
-    # Generate sidebar with file list for index page
-    sidebar_content = "<h3>Files</h3>\n<ul class='list-unstyled'>\n"
-    sidebar_content << "<li><a href='index.html' class='fw-bold text-primary'>Index</a></li>\n"
-    @files.each do |file|
-      html_file = file.to_s.sub(/\.rb$/, '.html')
-      sidebar_content << "<li><a href='#{html_file}'>#{file}</a></li>\n"
-    end
-    sidebar_content << "</ul>"
-    
-    timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
-    index_html = <<~HTML
-      <!DOCTYPE html>
-      <html lang="en-GB">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Documentation Index</title>
-        <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
-      </head>
-      <body>
-      <header class="doc-header">
-        <div class="container">
-            <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
-                <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                    <use href="#p-icon__uk-parliament"/>
-                </svg>
-            </a>
-        </div>
-        <div class="product-header">
-            <div class="container">
-                <a class="title" href="/">
-                      Documentation Index
-                    </a>
-            </div>
-        </div>
-      </header>
-
-      <main id="main" class="main-content">
-        <div class="doc-wrapper">
-            <div class="container">
-                <div class="row">
-                  <div class="col-lg-3">
-                    #{sidebar_content}
-                  </div>
-                  <div class="col-lg-9">
-                    #{content}
-                    <hr>
-                    <p class="text-muted">Generated on: #{timestamp}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </main>
-        <footer>
-      <div class="container">
-          <div class="row">
-              <div class="col-md-3 col-no-spacing primary">
-                      &copy; UK Parliament 2025
-                    </div>
-              <div class="col-md-9 secondary">
-                  <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
-                  <a data-cookie-manager-open="" href="#">Cookie settings</a>
-                  <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
-                  <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
-                  <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
-              </div>
-          </div>
-      </div>
-    </footer>
-      </body>
-      </html>
-    HTML
-    
-    File.write(@output_dir.join('index.html'), index_html)
-  end
+  
 end
 
-namespace :commentariat do
+namespace :docs do
   desc "Generate documentation from Ruby source files"
-  task :generate, [:github_repo, :output] do |t, args|
+  task :new do |t, args|
 
     args.with_defaults(         
       output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'),
@@ -293,7 +212,7 @@ namespace :commentariat do
     puts "GitHub repository: #{args.github_repo}" if args.github_repo
     
     begin
-      documenter = Commentariat.new(args.output, args.github_repo)
+      documenter = Documenter.new(args.output, args.github_repo)
       documenter.generate_documentation
       puts "Documentation successfully generated in #{args.output}"
     rescue Errno::ENOENT => e
@@ -302,26 +221,4 @@ namespace :commentariat do
     end
   end
   
-  desc "Clean documentation files but preserve the directory"
-  task :clean, [:output] do |t, args|
-    args.with_defaults(output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'))
-    
-    if File.directory?(args.output)
-      puts "Removing files in documentation directory: #{args.output}"
-      
-      # Remove all files and subdirectories but keep the main directory
-      Dir.glob(File.join(args.output, '{*,.*}')).each do |entry|
-        next if ['.', '..'].include?(File.basename(entry))
-        if File.directory?(entry)
-          FileUtils.rm_rf(entry)
-        else
-          FileUtils.rm_f(entry)
-        end
-      end
-      
-      puts "Files removed. Directory structure preserved."
-    else
-      puts "Documentation directory does not exist: #{args.output}"
-    end
-  end
 end
