@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
   
   # Parliamentary time
-  get 'egg-timer/parliamentary-time' => 'parliamentary_time#index', as: :parliamentary_time_list
+  get 'egg-timer/time-periods' => 'parliamentary_time#index', as: :parliamentary_time_list
   
   get 'egg-timer/parliament-periods' => 'parliament#index', as: :parliament_list
   get 'egg-timer/parliament-periods/:parliament' => 'parliament#show', as: :parliament_show
