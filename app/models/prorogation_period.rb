@@ -37,6 +37,11 @@ class ProrogationPeriod < ActiveRecord::Base
     label = "#{self.number.ordinalize} prorogation"
   end
   
+  def parliament_label
+    label = self.parliament_period.number.ordinalize
+    label += ' Parliament'
+  end
+  
   def dates
     dates = ''
     dates = dates + self.start_date.strftime( '%-d %B %Y' )
