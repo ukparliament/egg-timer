@@ -1,6 +1,7 @@
 <tr>
 	<%= content_tag( 'td', link_to( session_with_parliament.parliament_period.number.ordinalize, parliament_show_url( :parliament => session_with_parliament.parliament_period.id ) ) ) %>
 	<%= content_tag( 'td', link_to( session_with_parliament.number.ordinalize, session_show_url( :session => session_with_parliament ) ) ) %>
+	<%= content_tag( 'td', session_with_parliament.citation ) %>
 	<%= content_tag( 'td', session_with_parliament.start_date.strftime( '%-d %B %Y' ) ) %>
 	<td>
 		<% if session_with_parliament.end_date -%>
@@ -9,7 +10,6 @@
 			-
 		<% end -%>
 	</td>
-	<%= content_tag( 'td', session_with_parliament.citation ) %>
 	<td>
 		<% if session_with_parliament.wikidata_id -%>
 			<%= link_to( session_with_parliament.wikidata_id, "https://www.wikidata.org/wiki/#{session_with_parliament.wikidata_id}" ) %>
