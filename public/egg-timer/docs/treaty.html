@@ -1,77 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en-GB">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>treaty.rb</title>
-  <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
-  <style>
-  .line-number {
-    display: inline-block;
-    width: 40px;
-    text-align: right;
-    margin-right: 10px;
-  }
-  pre {
-    margin-bottom: 0;
-    padding: 3px;
-  }
-  code {
-    white-space: pre;
-  }
-</style>
-
-</head>
-<body>
-<header class="doc-header">
-  <div class="container">
-      <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
-          <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-              <use href="#p-icon__uk-parliament"/>
-          </svg>
-      </a>
-  </div>
-  <div class="product-header">
-      <div class="container">
-          <a class="title" href="/">
-                  treaty.rb
-                </a>
-      </div>
-  </div>
-</header>
-
-<main id="main" class="main-content">
-  <div class="doc-wrapper">
-      <div class="container">
-          <div class="row">
-            <div class="col-lg-3">
-              <h3>Files</h3>
-<ul class='list-unstyled'>
-<li><a href='index.html'>Index</a></li>
-<li><a href='bicameral_both_houses_sitting.html' class=''>bicameral_both_houses_sitting.rb</a></li>
-<li><a href='bicameral_si_either_house_sitting.html' class=''>bicameral_si_either_house_sitting.rb</a></li>
-<li><a href='commons_only_si.html' class=''>commons_only_si.rb</a></li>
-<li><a href='commons_only_sitting_days.html' class=''>commons_only_sitting_days.rb</a></li>
-<li><a href='interval.html' class=''>interval.rb</a></li>
-<li><a href='pnsi.html' class=''>pnsi.rb</a></li>
-<li><a href='treaty.html' class='fw-bold text-primary'>treaty.rb</a></li>
-</ul>
-            </div>
-              <div class="col-lg-9">
-                <h1>treaty.rb</h1>
-                <p>
-                  <small class="text-muted">
-                    View full file: 
-                    <a href="https://github.com//blob/main/app/lib/calculations/treaty.rb" target="_blank">
-                      on GitHub
-                    </a>
-                  </small>
-                </p>
-                <hr>
-                <div class="text-secondary">
-                  <pre><code><span class='line-number'><span class='text-secondary pe-2'>1</span></span>module Calculations</code></pre>
-=======
 
   treaty.rb
 
@@ -84,9 +10,8 @@
 
 
 
-  <pre><code><span class='line-number'><span class='text-secondary pe-2'>1</span></span>module Calculations</code></pre>
->>>>>>> c6b98d1e44c105e2349d4ab111034efa17fc79ce
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>2</span></span>  module Treaty</code></pre>
+  <pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L1' title='View on GitHub'>1</a></span>module Calculations</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L2' title='View on GitHub'>2</a></span>  module Treaty</code></pre>
 <h1>A method for calculating the end date for treaty periods A and B.</h1>
 
 <p>The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.</p>
@@ -97,7 +22,7 @@
 
 <p>The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">2</a>, <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5">5</a> and <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9">9</a>.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>10</span></span>    def treaty_calculation( date, target_day_count )</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L10' title='View on GitHub'>10</a></span>    def treaty_calculation( date, target_day_count )</code></pre>
 <h2>We start counting on the <strong>first day when both Houses have an actual sitting</strong>.</h2>
 
 <p>For period A this <strong>does not</strong> include the laying day of the treaty.</p>
@@ -108,78 +33,49 @@
 
 <p>If that day is or is followed by a joint actual sitting day...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>18</span></span>      if date.next_day.first_joint_actual_sitting_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L18' title='View on GitHub'>18</a></span>      if date.next_day.first_joint_actual_sitting_day</code></pre>
 <p>... we set the date to the day of the first joint actual sitting day <strong>following</strong> the start date.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>21</span></span>        date = date.next_day.first_joint_actual_sitting_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L21' title='View on GitHub'>21</a></span>        date = date.next_day.first_joint_actual_sitting_day</code></pre>
 <p>... we have found the start of the scrutiny period.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>24</span></span>        @scrutiny_start_date = date</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L24' title='View on GitHub'>24</a></span>        @scrutiny_start_date = date</code></pre>
 <p>... we&#39;ve found the first joint actual sitting day so we start counting from day 1.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>27</span></span>        day_count = 1</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L27' title='View on GitHub'>27</a></span>        day_count = 1</code></pre>
 <p>... whilst the number of days we’re counting is less than the target number of days to count ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>30</span></span>        while ( day_count &lt; target_day_count ) do</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L30' title='View on GitHub'>30</a></span>        while ( day_count &lt; target_day_count ) do</code></pre>
 <p>... continue to the <strong>next day</strong>.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>33</span></span>          date = date.next_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L33' title='View on GitHub'>33</a></span>          date = date.next_day</code></pre>
 <p>... and add 1 to the day count if this is an joint actual sitting day.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>36</span></span>          day_count +=1 if date.is_joint_actual_sitting_day?</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L36' title='View on GitHub'>36</a></span>          day_count +=1 if date.is_joint_actual_sitting_day?</code></pre>
 <p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>39</span></span>          if date.is_calendar_not_populated?</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L39' title='View on GitHub'>39</a></span>          if date.is_calendar_not_populated?</code></pre>
 <p>... this error message is displayed to users ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>42</span></span>            @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L42' title='View on GitHub'>42</a></span>            @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
 <p>... and we stop looking through the calendar.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>45</span></span>            break</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>46</span></span>          end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>47</span></span>        end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L45' title='View on GitHub'>45</a></span>            break</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L46' title='View on GitHub'>46</a></span>          end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L47' title='View on GitHub'>47</a></span>        end</code></pre>
 <p>If <strong>day immediately following</strong> the laying day is not a joint actual sitting day <strong>and</strong> is not followed by a joint actual sitting day...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>50</span></span>      else</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L50' title='View on GitHub'>50</a></span>      else</code></pre>
 <p>.. this error message is displayed to users.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>53</span></span>        @error_message = &quot;Unable to find a future joint sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>54</span></span>      end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L53' title='View on GitHub'>53</a></span>        @error_message = &quot;Unable to find a future joint sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L54' title='View on GitHub'>54</a></span>      end</code></pre>
 <p>Return the anticipated end date of the scrutiny period for display.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>57</span></span>      date</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>58</span></span>    end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>59</span></span>  end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>60</span></span>end</code></pre>
-<<<<<<< HEAD
-                </div>
-                <hr>
-                <p class="text-muted">Generated on: 2025-05-27 15:46:50</p>
-              </div>
-            </div>
-          </div>
-        </div>
-    </main>
-    <footer>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-3 col-no-spacing primary">
-                  &copy; UK Parliament 2025
-                </div>
-          <div class="col-md-9 secondary">
-              <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
-              <a data-cookie-manager-open="" href="#">Cookie settings</a>
-              <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
-              <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
-              <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
-          </div>
-      </div>
-  </div>
-</footer>
-</body>
-</html>
-=======
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L57' title='View on GitHub'>57</a></span>      date</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L58' title='View on GitHub'>58</a></span>    end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L59' title='View on GitHub'>59</a></span>  end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty.rb#L60' title='View on GitHub'>60</a></span>end</code></pre>
 
 
-<p class="text-muted">Generated on: 2025-05-27 16:41:04</p>
->>>>>>> c6b98d1e44c105e2349d4ab111034efa17fc79ce
+<p class="text-muted">Generated on: 2025-05-27 16:59:36</p>
