@@ -10,64 +10,64 @@
 
 
 
-  <pre><code><span class='line-number'><span class='text-secondary pe-2'>1</span></span>module Calculations</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>2</span></span>  module CommonsOnlySittingDays</code></pre>
+  <pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L1' title='View on GitHub'>1</a></span>module Calculations</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L2' title='View on GitHub'>2</a></span>  module CommonsOnlySittingDays</code></pre>
 <h1>A method for calculating the end date for delegated legislation laid into the House of Commons only, taking account of sitting days.</h1>
 
 <p>The calculation counts a day whenever the House of Commons has an actual sitting day - and requires the start date and the number of days to count.</p>
 
 <p>The calculation is set out in <a href="https://www.legislation.gov.uk/ukpga/2008/29/section/5#section-5-4A">section 5 (4A) of the Planning Act 2008</a>.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>8</span></span>    def commons_only_sitting_days( date, target_day_count )</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L8' title='View on GitHub'>8</a></span>    def commons_only_sitting_days( date, target_day_count )</code></pre>
 <h2>We start counting on the <strong>first day when the House of Commons has an actual sitting</strong>.</h2>
 
 <p>We continue to the <strong>day immediately following</strong> the start day.</p>
 
 <p>If that day is or is followed by a House of Commons actual sitting day...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>14</span></span>      if date.next_day.first_commons_actual_sitting_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L14' title='View on GitHub'>14</a></span>      if date.next_day.first_commons_actual_sitting_day</code></pre>
 <p>... we set the date to the day of the first House of Commons actual sitting day <strong>following</strong> the start date.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>17</span></span>        date = date.next_day.first_commons_actual_sitting_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L17' title='View on GitHub'>17</a></span>        date = date.next_day.first_commons_actual_sitting_day</code></pre>
 <p>... we have found the start of the scrutiny period.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>20</span></span>        @scrutiny_start_date = date</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L20' title='View on GitHub'>20</a></span>        @scrutiny_start_date = date</code></pre>
 <p>... we&#39;ve found the first House of Commons actual sitting day so we start counting from day 1.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>23</span></span>        day_count = 1</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L23' title='View on GitHub'>23</a></span>        day_count = 1</code></pre>
 <p>... whilst the number of days we’re counting is less than the target number of days to count ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>26</span></span>        while ( day_count &lt; target_day_count ) do</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L26' title='View on GitHub'>26</a></span>        while ( day_count &lt; target_day_count ) do</code></pre>
 <p>... continue to the <strong>next day</strong>.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>29</span></span>          date = date.next_day</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L29' title='View on GitHub'>29</a></span>          date = date.next_day</code></pre>
 <p>... and add 1 to the day count if this is a House of Commons actual sitting day.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>32</span></span>          day_count +=1 if date.is_commons_actual_sitting_day?</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L32' title='View on GitHub'>32</a></span>          day_count +=1 if date.is_commons_actual_sitting_day?</code></pre>
 <p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>35</span></span>          if date.is_calendar_not_populated?</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L35' title='View on GitHub'>35</a></span>          if date.is_calendar_not_populated?</code></pre>
 <p>... this error message is displayed to users ...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>38</span></span>            @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L38' title='View on GitHub'>38</a></span>            @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
 <p>... and we stop looking through the calendar.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>41</span></span>            break</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>42</span></span>          end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>43</span></span>        end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L41' title='View on GitHub'>41</a></span>            break</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L42' title='View on GitHub'>42</a></span>          end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L43' title='View on GitHub'>43</a></span>        end</code></pre>
 <p>If <strong>day immediately following</strong> the laying day is not a House of Commons actual sitting day <strong>and</strong> is not followed by a House of Commons actual sitting day...</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>46</span></span>      else</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L46' title='View on GitHub'>46</a></span>      else</code></pre>
 <p>.. this error message is displayed to users.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>49</span></span>        @error_message = &quot;Unable to find a future House of Commons sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>50</span></span>      end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L49' title='View on GitHub'>49</a></span>        @error_message = &quot;Unable to find a future House of Commons sitting day. It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L50' title='View on GitHub'>50</a></span>      end</code></pre>
 <p>Return the anticipated end date of the scrutiny period for display.</p>
 
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>53</span></span>      date</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>54</span></span>    end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>55</span></span>  end</code></pre>
-<pre><code><span class='line-number'><span class='text-secondary pe-2'>56</span></span>end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L53' title='View on GitHub'>53</a></span>      date</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L54' title='View on GitHub'>54</a></span>    end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L55' title='View on GitHub'>55</a></span>  end</code></pre>
+<pre><code><span class='line-number'><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days.rb#L56' title='View on GitHub'>56</a></span>end</code></pre>
 
 
-<p class="text-muted">Generated on: 2025-05-27 16:41:04</p>
+<p class="text-muted">Generated on: 2025-05-27 16:57:11</p>

@@ -76,13 +76,13 @@ class Documenter
   end
 
   def generate_line_link(relative_path, line_number)
-    if @github_repo
-      # Construct GitHub URL with appropriate path
-      href = "https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
-      "<a href='#{href}' target='_blank' class='text-secondary text-decoration-none pe-2' title='View on GitHub'>#{line_number}</a>"
-    else
-      "<span class='text-secondary pe-2'>#{line_number}</span>"
-    end
+     
+#       html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'  class='githubline' href='https://github.com/ukparliament/egg-timer/blob/main/#{with_path}#L#{line_num + 1}'> #{line_num + 1}</a> " << line << '</pre></code>'
+      href = 
+
+      "https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
+      "<a href='#{href}' title='View on GitHub'>#{line_number}</a>"
+
   end
 
   def wrap_html(content, title)
