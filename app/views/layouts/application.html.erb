@@ -18,7 +18,7 @@
 		<% end -%>
 		<% if @calendar_links -%>
 			<% @calendar_links.each do |calendar_link| -%>
-				<link rel="alternate" type="text/calendar" title="Egg timer - <%= calendar_link[0] %>" href="<%= calendar_link[1] %>" />
+				<link rel="alternate" type="text/calendar" title="<%= $SITE_TITLE %> - <%= calendar_link[0] %>" href="<%= calendar_link[1] %>" />
 			<% end -%>
 		<% end -%>
 	</head>

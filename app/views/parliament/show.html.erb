@@ -3,33 +3,44 @@
 <%= content_tag( 'p', "Wikidata ID: #{link_to( @parliament.wikidata_id, "https://www.wikidata.org/wiki/#{@parliament.wikidata_id}" )}".html_safe ) if @parliament.wikidata_id %>
 
 
+<% unless @in_parliament_periods.empty? %>
+	<div id="sessions-and-prorogations">
+		<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
+		<div class="table-wrapper">
+			<table>
+				<%= render :partial => 'in_parliament_period_table_head' %>
+				<tbody>
+					<%= render :partial => 'in_parliament_period', :collection => @in_parliament_periods %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<% end -%>
 
-<div id="sessions-and-prorogations">
-	<%= content_tag( 'h2', 'Sessions and prorogations' ) %>
-	<table>
-		<%= render :partial => 'in_parliament_period_table_head' %>
-		<tbody>
-			<%= render :partial => 'in_parliament_period', :collection => @in_parliament_periods %>
-		</tbody>
-	</table>
-</div>
+<% unless @parliament.sessions.empty? %>
+	<div id="sessions">
+		<%= content_tag( 'h2', 'Sessions' ) %>
+		<div class="table-wrapper">
+			<table>
+				<%= render :partial => 'in_parliament_period_table_head' %>
+				<tbody>
+					<%= render :partial => 'session/session_in_parliament', :collection => @parliament.sessions %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<% end -%>
 
-<div id="sessions">
-	<%= content_tag( 'h2', 'Sessions' ) %>
-	<table>
-		<%= render :partial => 'in_parliament_period_table_head' %>
-		<tbody>
-			<%= render :partial => 'session/session_in_parliament', :collection => @parliament.sessions %>
-		</tbody>
-	</table>
-</div>
-
-<div id="prorogations">
-	<%= content_tag( 'h2', 'Prorogations' ) %>
-	<table>
-		<%= render :partial => 'in_parliament_period_table_head' %>
-		<tbody>
-			<%= render :partial => 'prorogation_period/prorogation_period_in_parliament', :collection => @parliament.prorogation_periods %>
-		</tbody>
-	</table>
-</div>
+<% unless @parliament.prorogation_periods.empty? %>
+	<div id="prorogations">
+		<%= content_tag( 'h2', 'Prorogations' ) %>
+		<div class="table-wrapper">
+			<table>
+				<%= render :partial => 'in_parliament_period_table_head' %>
+				<tbody>
+					<%= render :partial => 'prorogation_period/prorogation_period_in_parliament', :collection => @parliament.prorogation_periods %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<% end -%>

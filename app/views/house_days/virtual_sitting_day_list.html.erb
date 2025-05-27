@@ -1,3 +1,7 @@
-<ol>
-	<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.virtual_sitting_days %>
-</ol>
+<% unless @house.virtual_sitting_days.empty? %>
+	<ol>
+		<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.virtual_sitting_days %>
+	</ol>
+<% else -%>
+	<%= content_tag( 'p', "There are no virtual sitting days in the #{@house.name}." ) %>
+<% end -%>
