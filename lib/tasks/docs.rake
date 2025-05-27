@@ -88,15 +88,10 @@ class Documenter
   def wrap_html(content, title)
     timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     
-    # Generate sidebar with file list
-    sidebar_content = "<h3>Files</h3>\n<ul class='list-unstyled'>\n"
-    sidebar_content << "<li><a href='index.html'>Index</a></li>\n"
+
     @files.each do |file|
       html_file = file.to_s.sub(/\.rb$/, '.html')
-      active_class = (file.to_s == title) ? "fw-bold text-primary" : ""
-      sidebar_content << "<li><a href='#{html_file}' class='#{active_class}'>#{file}</a></li>\n"
     end
-    sidebar_content << "</ul>"
     
 
     
@@ -105,12 +100,12 @@ class Documenter
                         #{title}
                      
                      
-                        <small class="text-muted">
+                      
                           View full file: 
                           <a href="https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{title}" target="_blank">
                             on GitHub
                           </a>
-                        </small>
+              
                       
                       
                         #{content}
