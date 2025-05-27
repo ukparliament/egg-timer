@@ -2,7 +2,7 @@ require 'fileutils'
 require 'redcarpet'
 require 'pathname'
 require 'time'
-require 'cgi' # Add this to ensure CGI is available
+require 'cgi' 
 
 class Documenter
   def initialize(output_dir = "/public/egg-timer/docs/", github_repo = "ukparliament/egg-timer")
@@ -98,99 +98,25 @@ class Documenter
     end
     sidebar_content << "</ul>"
     
-    # Add custom CSS for line numbers
-    custom_css = <<~CSS
-      <style>
-        .line-number {
-          display: inline-block;
-          width: 40px;
-          text-align: right;
-          margin-right: 10px;
-        }
-        pre {
-          margin-bottom: 0;
-          padding: 3px;
-        }
-        code {
-          white-space: pre;
-        }
-      </style>
-    CSS
+
     
     <<~HTML
-      <!DOCTYPE html>
-      <html lang="en-GB">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>#{title}</title>
-        <link href="https://designsystem.parliament.uk/css/main.css" rel="stylesheet">
-        #{custom_css}
-      </head>
-      <body>
-      <header class="doc-header">
-        <div class="container">
-            <a href="https://www.parliament.uk" class="parliament-home" aria-label="UK Parliament home">
-                <svg aria-hidden="true" width="159" height="40" viewBox="0 0 159 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                    <use href="#p-icon__uk-parliament"/>
-                </svg>
-            </a>
-        </div>
-        <div class="product-header">
-            <div class="container">
-                <a class="title" href="/">
+      
                         #{title}
-                      </a>
-            </div>
-        </div>
-      </header>
-
-      <main id="main" class="main-content">
-        <div class="doc-wrapper">
-            <div class="container">
-                <div class="row">
-                  <div class="col-lg-3">
-                    #{sidebar_content}
-                  </div>
-                    <div class="col-lg-9">
-                      <h1>#{title}</h1>
-                      <p>
+                     
+                     
                         <small class="text-muted">
                           View full file: 
                           <a href="https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{title}" target="_blank">
                             on GitHub
                           </a>
                         </small>
-                      </p>
-                      <hr>
-                      <div class="text-secondary">
+                      
+                      
                         #{content}
-                      </div>
-                      <hr>
+                      
+                      
                       <p class="text-muted">Generated on: #{timestamp}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </main>
-          <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-no-spacing primary">
-                        &copy; UK Parliament 2025
-                      </div>
-                <div class="col-md-9 secondary">
-                    <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
-                    <a data-cookie-manager-open="" href="#">Cookie settings</a>
-                    <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
-                    <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
-                    <a href="https://www.parliament.uk/site-information/copyright-parliament/">Copyright policy</a>
-                </div>
-            </div>
-        </div>
-      </footer>
-      </body>
-      </html>
     HTML
   end
 
