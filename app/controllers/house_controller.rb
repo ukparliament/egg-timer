@@ -3,12 +3,26 @@ class HouseController < ApplicationController
   def index
     @houses = House.all
     @title = "Houses"
+
+    # Set meta information for the page.
+    @page_title = "House specific time periods"
+    @description = "House specific time periods."
+    @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
+    @crumb << { label: 'Houses', url: nil }
+    @section = 'time-periods'
   end
   
   def show
     house = params[:house]
     @house = House.find( house )
-    @title = @house.name
+
+    # Set meta information for the page.
+    @page_title = @house.name
+    @description = "#{@house.name}."
+    @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
+    @crumb << { label: 'Houses', url: house_list_url }
+    @crumb << { label: @house.name, url: nil }
+    @section = 'time-periods'
   end
   
   def upcoming_all
@@ -41,10 +55,14 @@ class HouseController < ApplicationController
     
     @upcoming = upcoming_sitting_days + upcoming_virtual_sitting_days + upcoming_adjournment_days
     @upcoming.sort! { |a, b|  a.start_date <=> b.start_date }
-
-    @title = 'Upcoming'
-    @calendar_links = []
-    calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
-    @calendar_links << calendar_link
+    
+    # Set meta information for the page.
+    @page_title = 'Upcoming dates in both Houses'
+    @description = "Upcoming dates in both Houses."
+    @calendar_links << ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
+    @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
+    @crumb << { label: 'Houses', url: house_list_url }
+    @crumb << { label: 'Upcoming', url: nil }
+    @section = 'time-periods'
   end
 end
