@@ -1,7 +1,6 @@
 class CalendarController < ApplicationController
   
   def index
-    @title = "Calendar"
     
     # Find the earliest sitting or adjournment date in the database.
     earliest_dates = []
@@ -72,62 +71,80 @@ class CalendarController < ApplicationController
     latest_year = latest_dates.max.year
     
     @years = [*earliest_year..latest_year].reverse
+
+    # Set meta information for the page.
+    @page_title = "Calendar"
+    @description = "Calendar."
+    @crumb << { label: 'Calendar', url: nil }
+    @section = 'calendar'
   end
   
   def today
     today = Date.today
-    puts "*****"
-    puts today
-    redirect_to calendar_day_url( :year => today.strftime('%Y'), :month => today.strftime('%-m'), :day => today.strftime('%e').strip )
+    redirect_to calendar_day_url( :year => today.strftime( '%Y' ), :month => today.strftime( '%m' ), :day => today.strftime( '%d' ) )
   end
   
   def year
     year = params[:year]
-    @title = year
-    start_date = Date.new( year.to_i, 1, 1)
-    end_date = Date.new( year.to_i, 12, 31)
+    @year = year.to_i
+    start_date = Date.new( @year, 1, 1 )
+    end_date = Date.new( @year, 12, 31 )
     date_range = ( ( start_date )..( end_date ) ).to_a
     @month_range = []
     date_range.each do |date|
-      @month_range << [date.strftime("%B"), date.month, date.year]
+      @month_range << [date.strftime( '%B' ), date.strftime( '%m' ), date.strftime( '%Y' )]
     end
     @month_range.uniq!
-  end
-  
-  def year
-    year = params[:year]
-    @title = year
-    start_date = Date.new( year.to_i, 1, 1)
-    end_date = Date.new( year.to_i, 12, 31)
-    date_range = ( ( start_date )..( end_date ) ).to_a
-    @month_range = []
-    date_range.each do |date|
-      @month_range << [date.strftime("%B"), date.month, date.year]
-    end
-    @month_range.uniq!
+
+    # Set meta information for the page.
+    @page_title = @year
+    @description = "#{@year}."
+    @crumb << { label: 'Calendar', url: calendar_list_url }
+    @crumb << { label: @year, url: nil }
+    @section = 'calendar'
   end
 
   def month
     year = params[:year]
     month = params[:month]
-    @title = "#{Date::MONTHNAMES[month.to_i]} #{year}"
-    start_date = Date.new( year.to_i, month.to_i, 1)
-    end_date = Date.new( year.to_i, month.to_i, -1)
+    @year = year.to_i
+    @month = month.to_i
+    start_date = Date.new( @year, @month, 1)
+    end_date = Date.new( @year, @month, -1)
     @date_range = ( ( start_date )..( end_date ) ).to_a
     @previous_date = start_date - 1.month
     @next_date = start_date + 1.month
+
+    # Set meta information for the page.
+    @page_title = "#{Date::MONTHNAMES[@month]} #{@year}"
+    @description = "Calendar days in #{Date::MONTHNAMES[@month]} #{@year}."
+    @crumb << { label: 'Calendar', url: calendar_list_url }
+    @crumb << { label: @year, url: calendar_year_url }
+    @crumb << { label: Date::MONTHNAMES[@month], url: nil }
+    @section = 'calendar'
   end
 
   def day
     year = params[:year]
     month = params[:month]
     day = params[:day]
-    @title = "#{day.to_i.ordinalize} #{Date::MONTHNAMES[month.to_i]} #{year}"
-    @date = Date.new( year.to_i, month.to_i, day.to_i)
+    @year = year.to_i
+    @month = month.to_i
+    @day = day.to_i
+    @date = Date.new( @year, @month, @day )
     @previous_date = @date - 1.day
     @next_date = @date + 1.day
     @preceding_session = @date.preceding_session
     @following_session = @date.following_session
     @is_final_day_of_session = @date.is_final_day_of_session?
+
+    # Set meta information for the page.
+    @page_title = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }"
+    @description = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }."
+    @crumb << { label: 'Calendar', url: calendar_list_url }
+    @crumb << { label: @year, url: calendar_year_url }
+    @crumb << { label: Date::MONTHNAMES[@month], url: calendar_month_url }
+    @crumb << { label: @date.strftime( '%-e').to_i.ordinalize, url: nil }
+    @section = 'calendar'
   end
 end
