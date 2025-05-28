@@ -4,22 +4,34 @@ require 'pathname'
 require 'time'
 require 'cgi' 
 
+# use app layout
+
 class Documenter
   def initialize(output_dir = "/public/egg-timer/docs/", github_repo = "ukparliament/egg-timer")
-    @source_dir = Pathname.new("./app/lib/calculations/").realpath
-    # /app/controllers/calculator_controller.rb
-    # /config/initializers/monkey_patching.rb
+    @source_dirs = [
+      Pathname.new("./app/lib/calculations/").realpath
+    ]
+    
+    # Additional specific files to include
+    @additional_files = [
+      "./app/controllers/calculator_controller.rb",
+      "./config/initializers/monkey_patching.rb"
+    ]
+    
     @output_dir = Pathname.new(output_dir).realpath
     @github_repo = github_repo
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, with_toc_data: true)
-    @files = []
+    @files = [] # Will store [file_path, relative_path, source_dir]
   end
 
   def generate_documentation
-    if @source_dir == @output_dir
-      puts "Error: Source directory and output directory are the same."
-      puts "This could overwrite your source files. Please specify a different output directory."
-      exit 1
+    # Check if any source directory is the same as output directory
+    @source_dirs.each do |src_dir|
+      if src_dir == @output_dir
+        puts "Error: Source directory and output directory are the same."
+        puts "This could overwrite your source files. Please specify a different output directory."
+        exit 1
+      end
     end
 
     FileUtils.mkdir_p(@output_dir)
@@ -30,21 +42,39 @@ class Documenter
   private
   
   def collect_files
-    # First collect all files as Pathname objects
-    Dir.glob(File.join(@source_dir, '**', '*.rb')).each do |file|
-      puts file
-      relative_path = Pathname.new(file).relative_path_from(@source_dir)
-      @files << relative_path
+    # First collect files from source directories
+    @source_dirs.each do |source_dir|
+      Dir.glob(File.join(source_dir, '**', '*.rb')).each do |file|
+        puts file
+        relative_path = Pathname.new(file).relative_path_from(source_dir)
+        @files << [file, relative_path, source_dir]
+      end
     end
-    @files.sort! # Sort files alphabetically
+    
+    # Then collect specific additional files
+    @additional_files.each do |file_path|
+      if File.exist?(file_path)
+        absolute_path = Pathname.new(file_path).realpath
+        # For additional files, use their full path as a base for relative pathing
+        # Strip the leading "./" if present
+        relative_path = Pathname.new(file_path.sub(/^\.\//, ''))
+        puts file_path
+        @files << [absolute_path, relative_path, nil]
+      else
+        puts "Warning: Additional file not found: #{file_path}"
+      end
+    end
+    
+    # Sort files by their relative paths
+    @files.sort_by! { |_, relative_path, _| relative_path.to_s }
   end
 
   def process_files
-    @files.each do |relative_path|
-      file = @source_dir.join(relative_path)
+    @files.each do |file_path, relative_path, source_dir|
+      # For additional files, we already have the absolute path
       output_file = @output_dir.join(relative_path.sub_ext('.html'))
       FileUtils.mkdir_p(output_file.dirname)
-      content = process_file(file, relative_path)
+      content = process_file(file_path, relative_path)
       html_content = wrap_html(content, relative_path.to_s)
       File.write(output_file, html_content)
     end
@@ -76,42 +106,31 @@ class Documenter
   end
 
   def generate_line_link(relative_path, line_number)
-      href = "https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
-      "<a href='#{href}' title='View on GitHub'>#{line_number}</a>"
-
+    # The relative path is now the path from the workspace root
+    href = "https://github.com/#{@github_repo}/blob/main/#{relative_path}#L#{line_number}"
+    "<a href='#{href}' title='View on GitHub'>#{line_number}</a>"
   end
 
   def wrap_html(content, title)
     timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     
-
-    @files.each do |file|
-      html_file = file.to_s.sub(/\.rb$/, '.html')
-    end
-    
-
-    
     <<~HTML
+      <h1>#{title}</h1>
       
-                        #{title}
-                     
-                     
-                      
-                          View full file: 
-                          <a href="https://github.com/#{@github_repo}/blob/main/app/lib/calculations/#{title}" target="_blank">
-                            on GitHub
-                          </a>
-              
-                      
-                      
-                        #{content}
-                      
-                      
-                      <p class="text-muted">Generated on: #{timestamp}</p>
+      <p>
+        View full file: 
+        <a href="https://github.com/#{@github_repo}/blob/main/#{title}" target="_blank">
+          on GitHub
+        </a>
+      </p>
+      
+      <div class="content">
+        #{content}
+      </div>
+      
+      <p class="text-muted">Generated on: #{timestamp}</p>
     HTML
   end
-
-  
 end
 
 namespace :docs do
@@ -124,7 +143,10 @@ namespace :docs do
     )
 
     puts "Generating documentation..."
-    puts "Source directory: /app/lib/calculations/ (fixed)"
+    puts "Source directories and files:"
+    puts "- app/lib/calculations/ (directory)"
+    puts "- app/controllers/calculator_controller.rb (file)"
+    puts "- config/initializers/monkey_patching.rb (file)" 
     puts "Output directory: #{args.output}"
     puts "GitHub repository: #{args.github_repo}" if args.github_repo
     
