@@ -2,35 +2,75 @@ class MetaController < ApplicationController
 
   # Main about page
   def index
-  	@title = "About this application"
+
+    # Set a meta information for the page.
+    @page_title = "About this application"
+    @description = "About this application."
+    @crumb << { label: 'About', url: nil }
+  end
+  
+  def app
+  	@title = "MacOS application"
+
+    # Set a meta information for the page.
+    @page_title = "MacOS application"
+    @description = "MacOS application."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'MacOS application', url: nil }
   end
   
   def comment
-  	@title = "Calculation code comments"
+
+    # Set a meta information for the page.
+    @page_title = "Calculation code comments"
+    @description = "Calculation code comments."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Calculation code comments', url: nil }
   end
   
   def schema
-  	@title = "Database schema"
+
+    # Set a meta information for the page.
+    @page_title = "Database schema"
+    @description = "Database schema."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Database schema', url: nil }
   end
   
   # Librarian tools
   def librarian_tools
-  	@title = "Librarian tools"
+
+    # Set a meta information for the page.
+    @page_title = "Librarian tools"
+    @description = "Librarian tools."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: nil }
     render :template => 'meta/librarian_tools/index'
   end
   
   def calendar_sync
-  	@title = "How to populate the calendars"
+
+    # Set a meta information for the page.
+    @page_title = "How to populate the calendars"
+    @description = "How to populate the calendars."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'How to populate the calendars', url: nil }
     render :template => 'meta/librarian_tools/calendar_sync'
   end
   
   def prorogation_and_dissolution
-  	@title = "What to do at prorogation and dissolution"
+
+    # Set a meta information for the page.
+    @page_title = "What to do at prorogation and dissolution"
+    @description = "What to do at prorogation and dissolution."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'What to do at prorogation and dissolution', url: nil }
     render :template => 'meta/librarian_tools/prorogation_and_dissolution'
   end
   
   def recess_checker
-  	@title = "Recess date checker"
     
     # We create an array to hold the error log.
     @error_log = []
@@ -76,11 +116,25 @@ class MetaController < ApplicationController
         end
       end
     end
+
+    # Set a meta information for the page.
+    @page_title = "Recess date checker"
+    @description = "Recess date checker."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'Recess date checker', url: nil }
     render :template => 'meta/librarian_tools/recess_checker'
   end
 
   def detailed_sync_logs
     @detailed_sync_logs = DetailedSyncLog.order(updated_at: :desc).limit(98)
+
+    # Set a meta information for the page.
+    @page_title = "Detailed sync logs"
+    @description = "Detailed sync logs."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'Detailed sync logs', url: nil }
     render :template => 'meta/librarian_tools/detailed_sync_logs'
   end
   
@@ -111,15 +165,23 @@ class MetaController < ApplicationController
     @calendar_links << calendar_link
     calendar_link = ["Upcoming dates in both Houses", house_upcoming_all_url( :format => 'ics' )]
     @calendar_links << calendar_link
-  end
-  
-  def app
-  	@title = "MacOS application"
+    
+    # Set a meta information for the page.
+    @page_title = "Calendar subscriptions"
+    @description = "Calendar subscriptions."
+    @crumb << { label: 'Calendar subscriptions', url: nil }
+    @section = 'calendar-subscriptions'
   end
   
   # No longer linked to
   def calendar_sync_checker
-  	@title = "Calendar sync checker"
     @last_calendar_sync = CalendarSync.all.order( 'synced_at DESC' ).first
+    
+    # Set a meta information for the page.
+    @page_title = "Calendar sync checker"
+    @description = "Calendar sync checker."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Librarian tools', url: meta_librarian_tools_url }
+    @crumb << { label: 'Calendar sync checker', url: nil }
   end
 end
