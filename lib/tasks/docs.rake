@@ -76,11 +76,7 @@ class Documenter
   end
 
   def generate_line_link(relative_path, line_number)
-     
-#       html_out << "<code title='Line #{line_num + 1}, #{with_path}'><pre><a name='#{line_num + 1}'  class='githubline' href='https://github.com/ukparliament/egg-timer/blob/main/#{with_path}#L#{line_num + 1}'> #{line_num + 1}</a> " << line << '</pre></code>'
-      href = 
-
-      "https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
+      href = "https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/#{relative_path}#L#{line_number}"
       "<a href='#{href}' title='View on GitHub'>#{line_number}</a>"
 
   end
