@@ -57,9 +57,9 @@ Rails.application.routes.draw do
   # Calendar
   get 'egg-timer/calendar' => 'calendar#index', as: :calendar_list
   get 'egg-timer/calendar/today' => 'calendar#today', as: :calendar_today
-  get 'egg-timer/calendar/:year' => 'calendar#year', as: :calendar_year
-  get 'egg-timer/calendar/:year/:month' => 'calendar#month', as: :calendar_month
-  get 'egg-timer/calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day
+  get 'egg-timer/calendar/:year' => 'calendar#year', as: :calendar_year, :constraints => { :year => /[0-9]{4}/ }
+  get 'egg-timer/calendar/:year/:month' => 'calendar#month', as: :calendar_month, :constraints => { :year => /[0-9]{4}/, :month => /[0-9]{2}/ }
+  get 'egg-timer/calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day, :constraints => { :year => /[0-9]{4}/, :month => /[0-9]{2}/, :day => /[0-9]{2}/ }
   
   # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
