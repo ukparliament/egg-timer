@@ -209,6 +209,9 @@ body.section-calculators nav#header-nav a.calculators {
 body.section-time-periods nav#header-nav a.time-periods {
 	border-bottom-color: #fff;
 }
+body.section-calendar nav#header-nav a.calendar {
+	border-bottom-color: #fff;
+}
 
 main {
   color: #4d4d4d;
