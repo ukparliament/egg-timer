@@ -488,6 +488,18 @@ p.box {
 	font-size:larger;
 }
 
+#egg-timer #logo, #egg-timer .formerly {
+	display: inline-block;
+}
+#logo {
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+#logo:hover {
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+}
 
 footer {
   background-color: #373151;
