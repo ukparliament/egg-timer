@@ -1,5 +1,5 @@
 <% if @house.latest_virtual_sitting_day -%>
-	<%= content_tag( 'p', link_to( @house.latest_virtual_sitting_day.label, calendar_day_url( :year => @house.latest_virtual_sitting_day.start_date.year, :month => @house.latest_virtual_sitting_day.start_date.month, :day => @house.latest_virtual_sitting_day.start_date.day ) ) ) %>
+	<%= content_tag( 'p', link_to( @house.latest_virtual_sitting_day.label, calendar_day_url( :year => @house.latest_virtual_sitting_day.start_date.strftime( '%Y' ), :month => @house.latest_virtual_sitting_day.start_date.strftime( '%m' ), :day => @house.latest_virtual_sitting_day.start_date.strftime( '%d' ) ) ) ) %>
 <% else -%>
 	<%= content_tag( 'p', "There are no preceding virtual sitting days in the #{@house.name}." ) %>
 <% end -%>
