@@ -74,7 +74,7 @@ class Session < ActiveRecord::Base
   def month_range
     month_range = []
     self.date_range. each do |date|
-      month_range << [date.strftime("%B"), date.month, date.year]
+      month_range << [date.strftime( '%B' ), date.strftime( '%m' ), date.strftime( '%Y' )]
     end
     month_range.uniq!
   end
