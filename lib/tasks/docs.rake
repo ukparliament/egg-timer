@@ -2,7 +2,8 @@ require 'fileutils'
 require 'redcarpet'
 require 'pathname'
 require 'time'
-require 'cgi' 
+require 'cgi'
+require 'erb'
 
 # use app layout
 
@@ -42,12 +43,16 @@ class Documenter
   private
   
   def collect_files
+    project_root = Pathname.new(Dir.pwd)
+
     # First collect files from source directories
     @source_dirs.each do |source_dir|
       Dir.glob(File.join(source_dir, '**', '*.rb')).each do |file|
-        puts file
-        relative_path = Pathname.new(file).relative_path_from(source_dir)
-        @files << [file, relative_path, source_dir]
+        absolute_path = Pathname.new(file).realpath
+        # Ensure the relative path is from the project root for correct GitHub links
+        relative_path = absolute_path.relative_path_from(project_root)
+        puts "Found file: #{relative_path}"
+        @files << [absolute_path, relative_path, source_dir]
       end
     end
     
@@ -55,10 +60,9 @@ class Documenter
     @additional_files.each do |file_path|
       if File.exist?(file_path)
         absolute_path = Pathname.new(file_path).realpath
-        # For additional files, use their full path as a base for relative pathing
-        # Strip the leading "./" if present
-        relative_path = Pathname.new(file_path.sub(/^\.\//, ''))
-        puts file_path
+        # Ensure the relative path is from the project root
+        relative_path = absolute_path.relative_path_from(project_root)
+        puts "Found file: #{relative_path}"
         @files << [absolute_path, relative_path, nil]
       else
         puts "Warning: Additional file not found: #{file_path}"
@@ -71,10 +75,14 @@ class Documenter
 
   def process_files
     @files.each do |file_path, relative_path, source_dir|
-      # For additional files, we already have the absolute path
-      output_file = @output_dir.join(relative_path.sub_ext('.html'))
-      FileUtils.mkdir_p(output_file.dirname)
+      # First, use Pathname#sub_ext to change the extension.
+      # Then, convert to a string and replace slashes.
+      flat_filename = relative_path.sub_ext('.html').to_s.gsub('/', '-')
+      
+      output_file = @output_dir.join(flat_filename)
+      
       content = process_file(file_path, relative_path)
+      # The title and links will use the full relative_path
       html_content = wrap_html(content, relative_path.to_s)
       File.write(output_file, html_content)
     end
@@ -102,34 +110,62 @@ class Documenter
     # Use HTML entities to escape special characters
     code_html = CGI.escapeHTML(line.chomp)
     line_link = generate_line_link(relative_path, line_number)
-    "<pre><code><span class='line-number'>#{line_link}</span>#{code_html}</code></pre>"
+    "<pre><code>#{line_link}#{code_html}</code></pre>"
   end
 
   def generate_line_link(relative_path, line_number)
-    # The relative path is now the path from the workspace root
+    # The relative path is now the full path from the project root
     href = "https://github.com/#{@github_repo}/blob/main/#{relative_path}#L#{line_number}"
-    "<a href='#{href}' title='View on GitHub'>#{line_number}</a>"
+    "<a href='#{href}' title='View on GitHub'>#{line_number}</a> "
   end
 
   def wrap_html(content, title)
+    # Create the timestamp within the method before using it in the ERB template
     timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     
-    <<~HTML
-      <h1>#{title}</h1>
-      
-      <p>
-        View full file: 
-        <a href="https://github.com/#{@github_repo}/blob/main/#{title}" target="_blank">
-          on GitHub
-        </a>
-      </p>
-      
-      <div class="content">
-        #{content}
-      </div>
-      
-      <p class="text-muted">Generated on: #{timestamp}</p>
-    HTML
+    # Create and render the ERB template inline
+    ERB.new(<<~ERB).result(binding)
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
+		<meta name="viewport" content="width=device-width">
+        <title>Documentation: <%= title %></title>
+        <style>
+        body {font-family:system-ui;
+        max-width:48rem;
+        font-size:1.2rem;
+        line-height:1.4;
+        margin:auto;}
+        main {
+        padding: 2rem 0;
+        }
+        pre {color:gray;}
+        pre a {color:gray;text-decoration:none;}
+        </style>
+      </head>
+      <body>
+        <header>
+          
+          <p>
+            On GitHub &rarr; 
+            <a href="https://github.com/<%= @github_repo %>/blob/main/<%= title %>">
+              <%= title %>
+            </a>
+          </p>
+        </header>
+        
+        <main>
+          <%= content %>
+        </main>
+        
+        <footer>
+          <p>This page was generated at <%= timestamp %>.</p>
+        </footer>
+      </body>
+      </html>
+    ERB
   end
 end
 
@@ -139,7 +175,7 @@ namespace :docs do
 
     args.with_defaults(         
       output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'),
-      github_repo: ENV['GITHUB_REPO']
+      github_repo: ENV['GITHUB_REPO'] || 'ukparliament/egg-timer'
     )
 
     puts "Generating documentation..."
