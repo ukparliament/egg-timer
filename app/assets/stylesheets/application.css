@@ -233,6 +233,10 @@ main .inner-content {
   padding-top: 2rem;
 }
 
+section {
+	margin-bottom: 1em;
+}
+
 div.debug {
 	border: 3px solid yellow;
 	margin: 10px;
@@ -275,6 +279,11 @@ body.subsection-scrutiny-calculator .subnav a.scrutiny-calculator {
 body.subsection-interval-calculator .subnav a.interval-calculator {
 	border-bottom-color: #006e45;
 	color: #4d4d4d;
+}
+
+em {
+	font-style: normal;
+	text-decoration:underline;
 }
 
 a {
@@ -323,6 +332,10 @@ a.rss {
   display: block;
   background-size: 20px;
   padding-left: 30px;
+}
+
+.url-copy {
+	width: 100%;
 }
 
 .table-wrapper  {
@@ -403,9 +416,9 @@ table.multibody tr:last-child {
   border-color: #bbb;
 }
 
-td,
-th {
+td, th {
   padding: 6px;
+  padding: 0.5rem;
   text-align: left;
   font-weight: normal;
 }
@@ -422,8 +435,21 @@ tbody td.number {
   padding-left:2rem;
 }
 
+tr {
+	border-bottom: thin dotted black;
+}
+
 th.number {
   text-align: right;
+}
+
+td.commons {
+	background-color:lightgreen;
+	font-weight:bold;
+}
+td.lords {
+	background-color:pink;
+	font-weight:bold;
 }
 
 /* Form stuff */
@@ -469,11 +495,14 @@ button {
 	padding: 1rem;
 	text-decoration: none;
 }
+button.next {
+	float: right;
+}
 button a {
 	color: #373151;
 	text-decoration: none;
 }
-button:hover {
+button:hover, button:hover * {
 	background-color: #373151;
 	color: #fff;
 }
@@ -507,10 +536,10 @@ footer {
   flex-shrink: 0;
   font-size: 1rem;
   line-height: 1.4;
+  margin-top:4rem;
   padding: 10px 0;
 }
 
-footer a,
-footer a:hover {
+footer a, footer a:hover {
   color: #fff;
 }

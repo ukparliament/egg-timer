@@ -1,7 +1,7 @@
 <p>
 <button><%= link_to( 'Previous day', calendar_day_url( :year => @previous_date.strftime( '%Y'), :month => @previous_date.strftime( '%m' ), :day =>  @previous_date.strftime( '%d' ) ) )  %></button>
 
-<button style="float:right;"><%= link_to( 'Next day', calendar_day_url( :year => @next_date.strftime( '%Y'), :month => @next_date.strftime( '%m' ), :day => @next_date.strftime( '%d' ) ) )  %></button>
+<button class="next"><%= link_to( 'Next day', calendar_day_url( :year => @next_date.strftime( '%Y'), :month => @next_date.strftime( '%m' ), :day => @next_date.strftime( '%d' ) ) )  %></button>
 
 <div class="table-wrapper">
 	<table>
