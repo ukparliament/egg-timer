@@ -1,1 +1,1 @@
-<%= content_tag( 'li', link_to( sitting_day.label, calendar_day_url( :year => sitting_day.start_date.year, :month => sitting_day.start_date.month, :day => sitting_day.start_date.day ) ) ) %>
+<%= content_tag( 'li', link_to( sitting_day.label, calendar_day_url( :year => sitting_day.start_date.strftime( '%Y' ), :month => sitting_day.start_date.strftime( '%m' ), :day => sitting_day.start_date.strftime( '%d' ) ) ) ) %>
