@@ -453,6 +453,9 @@ td.lords {
 }
 
 /* Form stuff */
+form {
+	margin-bottom: 1em;
+}
 fieldset {
 	margin-bottom: 1.5rem;
 }
