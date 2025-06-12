@@ -338,6 +338,12 @@ a.rss {
 	width: 100%;
 }
 
+
+.schema-wrapper  {
+  overflow-x: scroll;
+  scrollbar-width:none;
+}
+
 .table-wrapper  {
   overflow-x: scroll;
   scrollbar-width:none;
