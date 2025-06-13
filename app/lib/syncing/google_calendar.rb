@@ -147,7 +147,10 @@ module Syncing
       # Something went wrong with this sync
       message = "An error occured for this calendar #{calendar_id} - #{exception.message}"
       successful = false
-
+    rescue Google::Apis::ServerError => exception
+       # Something went wrong with this sync
+      message = "A Google side server error occured for this calendar #{calendar_id} - #{exception.message} not auto-fixing though, nothing deleted"
+      successful = true
     else
       # All went ok
       message = "Sync complete - #{response.items.size} events returned"

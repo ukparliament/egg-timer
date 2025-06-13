@@ -6,7 +6,7 @@ class SyncFailureMailer < ApplicationMailer
     @detailed_sync_log = DetailedSyncLog.find(detailed_sync_log_id)
     mail(
       to: 'james@shedcode.co.uk',
-      subject: "Sync log failure"
+      subject: "Sync log failure on #{ENV["ENVIRONMENT_NAME"]}"
     )
   end
 end
