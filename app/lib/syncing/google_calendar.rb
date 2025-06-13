@@ -15,6 +15,7 @@ module Syncing
     end
 
     def generic_sync(calendar_id, house_id, handler)
+      # Check for failure first
       if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
         Rails.logger.info "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
         broken_sync_log = DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).order(created_at: :desc).first
@@ -29,6 +30,10 @@ module Syncing
         Rails.logger.info "All ok, do a sync for calendar_id: #{calendar_id}  and house: #{house_id}"
       end
 
+      generic_sync_wrapper(calendar_id, house_id, handler)
+    end
+
+    def generic_sync_wrapper(calendar_id, house_id, handler)
       # We authorise to grab events from the google calendar.
       service = authorise_calendar_access
 
