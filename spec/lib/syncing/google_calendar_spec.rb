@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-describe "test sync using dummy class" do
+describe "Test sync using dummy class instead of calling out to Google calendar" do
+
+  # This does all the nitty gritty
   class DummyServiceClass
     def initialize(recess: false)
       @recess = recess
@@ -39,6 +41,7 @@ describe "test sync using dummy class" do
     end
   end
 
+  # This class is taking the place of the Google Calendar module methods so we can override some
   class DummyClass
     include Syncing::GoogleCalendar
 
@@ -46,6 +49,7 @@ describe "test sync using dummy class" do
       @recess = recess
     end
 
+    # Override this to return our dummy class
     def authorise_calendar_access
       DummyServiceClass.new(recess: @recess)
     end
@@ -54,6 +58,7 @@ describe "test sync using dummy class" do
   let(:house)       { House.create(name: "House of Mouse") }
   let(:calendar_id) { 1 }
 
+  # Create reference data we're going to need for these tests
   before (:each) do
     pp = ParliamentPeriod.create(
       start_date: (Date.today - 50),
@@ -69,147 +74,153 @@ describe "test sync using dummy class" do
     )
   end
 
-  it "sorts out adjournment days" do
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+  context "Authorising calendar access returns the dummy service" do
+    it "returns stuff" do
+      service = DummyClass.new.authorise_calendar_access
+      calendar_id = '123'
+      page_token = ''
+
+      events = service.list_events(
+              calendar_id,
+              max_results: 2500, # 2500 is the maximum Google will return per page.
+              single_events: true,
+              show_deleted: true,
+              page_token: page_token
+           #   sync_token: sync_token
+         )
+      expect(events.items.size).to be 2
+    end
   end
 
-  it "sorts out sitting days" do
-    expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(2)
+  context "The dummy creates: " do
+    it " adjournment days" do
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+    end
+
+    it "sitting days" do
+      expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
+        .to change { SittingDay.where(house_id: house.id).count }.by(2)
+    end
+
+     it "virtual days" do
+      expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
+        .to change { VirtualSittingDay.where(house_id: house.id).count }.by(2)
+    end
+
+    it "recess dates" do
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+
+      expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
+        .to change { RecessDate.where(house_id: house.id).count }.by(2)
+    end
   end
 
-   it "sorts out virtual days" do
-    expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(2)
-  end
+  context "Auto fix: " do
+    it "deletes virtual sitting days when there is a problem and resyncs" do
+      # First we've got our VSDs set up
+      expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
+        .to change { VirtualSittingDay.where(house_id: house.id).count }.by(2)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
 
-  it "sorts out recess dates" do
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+      # Re-run
+      expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
+        .to change { VirtualSittingDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
 
-    expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
-      .to change { RecessDate.where(house_id: house.id).count }.by(2)
-  end
+      DetailedSyncLog.first.update(successful: false, emailed: true)
 
-  it "deletes virtual sitting days when there is a problem and resyncs" do
-    # First we've got our VSDs set up
-    expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
+      virtual_sitting_day_ids = VirtualSittingDay.pluck(:id)
 
-    # Re-run
-    expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
+      expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
+        .to change { VirtualSittingDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
 
-    DetailedSyncLog.first.update(successful: false, emailed: true)
+      new_virutal_sitting_day_ids = VirtualSittingDay.pluck(:id)
 
-    virtual_sitting_day_ids = VirtualSittingDay.pluck(:id)
+      expect(virtual_sitting_day_ids).to_not match_array(new_virutal_sitting_day_ids)
+    end
 
-    expect { DummyClass.new(recess: false).sync_virtual_sitting_days(calendar_id, house.id) }
-      .to change { VirtualSittingDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+    it "deletes sitting days when there is a problem and resyncs" do
+      # First we've got our VSDs set up
+      expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
+        .to change { SittingDay.where(house_id: house.id).count }.by(2)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
 
-    new_virutal_sitting_day_ids = VirtualSittingDay.pluck(:id)
+      # Re-run
+      expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
+        .to change { SittingDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
 
-    expect(virtual_sitting_day_ids).to_not match_array(new_virutal_sitting_day_ids)
-  end
+      DetailedSyncLog.first.update(successful: false, emailed: true)
 
-  it "deletes sitting days when there is a problem and resyncs" do
-    # First we've got our VSDs set up
-    expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
+      sitting_day_ids = SittingDay.pluck(:id)
 
-    # Re-run
-    expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
+      expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
+        .to change { SittingDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
 
-    DetailedSyncLog.first.update(successful: false, emailed: true)
+      new_sitting_day_ids = SittingDay.pluck(:id)
+      expect(sitting_day_ids).to_not match_array(new_sitting_day_ids)
 
-    sitting_day_ids = SittingDay.pluck(:id)
+    end
 
-    expect { DummyClass.new(recess: false).sync_sitting_days(calendar_id, house.id) }
-      .to change { SittingDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+    it "deletes adjournment days when there is a problem and resyncs" do
+      # First we've got our VSDs set up
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
 
-    new_sitting_day_ids = SittingDay.pluck(:id)
-    expect(sitting_day_ids).to_not match_array(new_sitting_day_ids)
+      # Re-run
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
 
-  end
+      DetailedSyncLog.first.update(successful: false, emailed: true)
 
-  it "deletes adjournment days when there is a problem and resyncs" do
-    # First we've got our VSDs set up
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
+      adjournment_day_ids = AdjournmentDay.pluck(:id)
 
-    # Re-run
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
 
-    DetailedSyncLog.first.update(successful: false, emailed: true)
-
-    adjournment_day_ids = AdjournmentDay.pluck(:id)
-
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
-
-    new_adjournment_day_ids = AdjournmentDay.pluck(:id)
-    expect(new_adjournment_day_ids).to_not match(adjournment_day_ids)
-  end
+      new_adjournment_day_ids = AdjournmentDay.pluck(:id)
+      expect(new_adjournment_day_ids).to_not match(adjournment_day_ids)
+    end
 
 
-  it "deletes recess days when there is a problem and resyncs" do
-    # Set up adjournment days first
-    expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
+    it "deletes recess days when there is a problem and resyncs" do
+      # Set up adjournment days first
+      expect { DummyClass.new(recess: false).sync_adjournment_days(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(2)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(0).to(1)
 
-    # First we've got our VSDs set up
-    expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { RecessDate.where(house_id: house.id).count }.by(2)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
+      # First we've got our VSDs set up
+      expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
+        .and change { RecessDate.where(house_id: house.id).count }.by(2)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(1).to(2)
 
-    # Re-run
-    expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { RecessDate.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
+      # Re-run
+      expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
+        .and change { RecessDate.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.from(2).to(3)
 
-    DetailedSyncLog.first.update(successful: false, emailed: true)
+      DetailedSyncLog.first.update(successful: false, emailed: true)
 
-    recess_date_ids = RecessDate.pluck(:id)
+      recess_date_ids = RecessDate.pluck(:id)
 
-    expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
-      .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
-      .and change { RecessDate.where(house_id: house.id).count }.by(0)
-      .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(1)
+      expect { DummyClass.new(recess: true).sync_recess_dates(calendar_id, house.id) }
+        .to change { AdjournmentDay.where(house_id: house.id).count }.by(0)
+        .and change { RecessDate.where(house_id: house.id).count }.by(0)
+        .and change { DetailedSyncLog.where(google_calendar_id: calendar_id).count }.by(1)
 
-    new_recess_date_ids = RecessDate.pluck(:id)
-    expect(recess_date_ids).to_not match_array(new_recess_date_ids)
+      new_recess_date_ids = RecessDate.pluck(:id)
+      expect(recess_date_ids).to_not match_array(new_recess_date_ids)
 
-    expect(AdjournmentDay.where.not(recess_date_id: nil).count).to be 2
-  end
-
-  it "returns stuff" do
-    service = DummyClass.new.authorise_calendar_access
-    calendar_id = '123'
-    page_token = ''
-
-    events = service.list_events(
-            calendar_id,
-            max_results: 2500, # 2500 is the maximum Google will return per page.
-            single_events: true,
-            show_deleted: true,
-            page_token: page_token
-         #   sync_token: sync_token
-       )
-    expect(events.items.size).to be 2
+      expect(AdjournmentDay.where.not(recess_date_id: nil).count).to be 2
+    end
   end
 end
