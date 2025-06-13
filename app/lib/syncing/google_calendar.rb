@@ -45,7 +45,7 @@ module Syncing
 
         # We get any changed events from - this page of - the calendar.
         # We pass the calendar we're grabbing from and the page token (if any).
-        response = get_changed_events_from_calendar( service, calendar_id, page_token )
+        response = get_changed_events_from_calendar(service, calendar_id, house_id, page_token)
 
         unless response
           Rails.logger.info "No response from get changed events for #{lookup_calendar_name(calendar_id)}"
@@ -94,7 +94,7 @@ module Syncing
     end
 
     # Get a list of changed events from a - page of a - calendar (created, updated and deleted).
-    def get_changed_events_from_calendar( service, calendar_id, page_token )
+    def get_changed_events_from_calendar( service, calendar_id, house_id, page_token )
 
       # Check if there's already a sync token for this calendar in the database.
       sync_token = SyncToken.find_by_google_calendar_id( calendar_id )
@@ -134,6 +134,8 @@ module Syncing
           # ...create a new sync token in the database for this calendar
           sync_token = SyncToken.new
           sync_token.google_calendar_id = calendar_id
+          sync_token.house_id = house_id
+          sync_token.google_calendar_name = lookup_calendar_name(calendar_id)
         end
 
         # ...set (or reset) the sync token
@@ -169,7 +171,8 @@ module Syncing
       end
     end
 
-    # This is VERY temporary!
+    # These are set in config/initializers/google_calendar_ids.rb
+    # and are pulled in from environment variables
     def lookup_calendar_name(calendar_id)
       case calendar_id
       when COMMONS_SITTING_DAYS_CALENDAR
