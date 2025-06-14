@@ -1,0 +1,39 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "6b1feb3774e4ee48a00fde68c360f656f6439b267e0204ec6d73fd80ff1aa6b4",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/application.html.erb",
+      "line": 31,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "House.find(params[:house]).name",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "HouseDaysController",
+          "method": "adjournment_day_latest",
+          "line": 242,
+          "file": "app/controllers/house_days_controller.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/application"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.0.2"
+}
