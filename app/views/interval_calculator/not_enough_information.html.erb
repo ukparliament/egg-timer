@@ -1,0 +1,8 @@
+<%= render :partial => 'calculator/nav' %>
+
+<%= content_tag( 'p', "In order to complete the calculation, we need:" ) %>
+<ul>
+	<% @missing_information.each do |missing_information| -%>
+		<%= content_tag( 'li', missing_information ) %>
+	<% end -%>
+</ul>
