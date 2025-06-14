@@ -7,13 +7,15 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'egg-timer' => 'home#index', as: :home
   
-  # Calculators
+  # Scrutiny period calculators
   get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
   get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
-  get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
-  get 'egg-timer/calculator/interval' => 'calculator#interval', as: :calculator_interval
-  get 'egg-timer/calculator/interval/calculate' => 'calculator#interval_calculate', as: :calculator_interval_calculate
   get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
+  get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
+  
+  # Interval calculator
+  get 'egg-timer/calculator/interval' => 'interval_calculator#form', as: :calculator_interval
+  get 'egg-timer/calculator/interval/calculate' => 'interval_calculator#calculate', as: :calculator_interval_calculate
   
   # Parliamentary time
   get 'egg-timer/time-periods' => 'parliamentary_time#index', as: :parliamentary_time_list
