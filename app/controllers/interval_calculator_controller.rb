@@ -34,7 +34,7 @@ class IntervalCalculatorController < ApplicationController
     # Otherwise, if we have been passed all the parameters to enable the calculation to proceed ...
     else
       
-      # We pass the text of the start date and end date into date formats.
+      # We parse the text of the start date and end date into date formats.
       @start_date = Date.parse( start_date )
       @end_date = Date.parse( end_date )
       
@@ -57,7 +57,7 @@ class IntervalCalculatorController < ApplicationController
         # ... calculate the sitting days in the interval ...
         calculate_sitting_days_in_interval( @start_date, @end_date )
         
-        # ... and set a meta information for the page.
+        # ... and set the meta information for the page.
         @page_title = "Sitting days during an interval calculation"
         @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval calculation</span>".html_safe
         @description = "A calculation to determine the number of sitting days in both Houses during an interval."
@@ -103,7 +103,7 @@ class IntervalCalculatorController < ApplicationController
       calculation_can_proceed = false
      
       # ... and add a reason to the missing information array.
-      @missing_information << 'a start date' 
+      @missing_information << 'a start date'
     end
     
     # If the end date is present ...
