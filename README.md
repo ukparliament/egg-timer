@@ -78,23 +78,38 @@ Sometimes a synchronisation will fail with this message from the API:
 Google::Apis::ClientError: fullSyncRequired: Sync token is no longer valid, a full sync is required. (Google::Apis::ClientError)
 ```
 
-When this occurs, a full reset of the database is then required.
+
+## Autofix
+
+So, mapping the cycles of this:
+
+### Synchronisation 1 - succesful
+
+For that calendar, the api will be called and any updates will be pulled down from the Calendar and the database updated accordingly.
+
+### Synchronisation 2 - failure
+
+The google API call throws something like a `Google::Apis::ClientError` exception during the `get_changed_events_from_calendar` method. When this happens we create message, mark the sync as unsuccessful, created the `DetailedSyncLog` entry and send an email that there has been an issue
+
+### Synchronisation 3 - handle failure
+
+When a synchronisation has failed, the application will attempt to auto-fix it.
+
+`Syncing::GoogleCalendar` contains the generic synchronisation code and we store the details in the `DetailedSyncLog` (and corresponding table).
+
+When `generic_sync` is called for a calendar, with it's corresponding handler, we first check to see if there are any unsuccessful syncs. If there is one, we get the broken sync log (ready to update later).
+
+Then using the handler, we delete everything for that house, so all `SittingDay` for example, we find the `SyncToken` for the calendar id and delete it.
+
+We then update the broken sync log to say we were succcesful.
+
+### Synchronisation 4 - do a full sync for that calendar
+
+As the calendar has no `SyncToken`, a full download will be triggered
+
+## Manual fix
 
 There is a guide to resetting the database in [Prorogration and Dissolution](app/views/meta/prorogation_and_dissolution.html.erb) or [online](https://api.parliament.uk/egg-timer/meta/prorogation-and-dissolution#resetting-the-database)
-
-### Proposed changes part 1
-
-If, when the synchronisation fails, a message is sent to the app maintainers, with details of the failed calendar, then further investigation can then be undertaken to work out what went wrong, plus it is possible that that single calendar can the be fixed by:
-
- 1) Deleting the relevant database records
- 2) Deleting the relevant sync token
- 3) Manually running a sync which should
-     a) Do a full sync for that calendar
-     b) Create a new sync token
-
-### Proposed changes part 2
-
-Once we have a bit more of an insight into the sync failures, we might have a better plan, but else, the second part of the update would be to automate the steps above.
 
 ## Setting up for dev
 

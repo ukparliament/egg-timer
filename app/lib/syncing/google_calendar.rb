@@ -15,6 +15,7 @@ module Syncing
     end
 
     def generic_sync(calendar_id, house_id, handler)
+      # Check for failure first
       if DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).any?
         Rails.logger.info "We have had an error, so do not sync #{lookup_calendar_name(calendar_id)}"
         broken_sync_log = DetailedSyncLog.where(google_calendar_id: calendar_id, successful: false).order(created_at: :desc).first
@@ -29,6 +30,10 @@ module Syncing
         Rails.logger.info "All ok, do a sync for calendar_id: #{calendar_id}  and house: #{house_id}"
       end
 
+      generic_sync_wrapper(calendar_id, house_id, handler)
+    end
+
+    def generic_sync_wrapper(calendar_id, house_id, handler)
       # We authorise to grab events from the google calendar.
       service = authorise_calendar_access
 
@@ -40,7 +45,7 @@ module Syncing
 
         # We get any changed events from - this page of - the calendar.
         # We pass the calendar we're grabbing from and the page token (if any).
-        response = get_changed_events_from_calendar( service, calendar_id, page_token )
+        response = get_changed_events_from_calendar(service, calendar_id, house_id, page_token)
 
         unless response
           Rails.logger.info "No response from get changed events for #{lookup_calendar_name(calendar_id)}"
@@ -89,7 +94,7 @@ module Syncing
     end
 
     # Get a list of changed events from a - page of a - calendar (created, updated and deleted).
-    def get_changed_events_from_calendar( service, calendar_id, page_token )
+    def get_changed_events_from_calendar( service, calendar_id, house_id, page_token )
 
       # Check if there's already a sync token for this calendar in the database.
       sync_token = SyncToken.find_by_google_calendar_id( calendar_id )
@@ -129,6 +134,8 @@ module Syncing
           # ...create a new sync token in the database for this calendar
           sync_token = SyncToken.new
           sync_token.google_calendar_id = calendar_id
+          sync_token.house_id = house_id
+          sync_token.google_calendar_name = lookup_calendar_name(calendar_id)
         end
 
         # ...set (or reset) the sync token
@@ -140,7 +147,10 @@ module Syncing
       # Something went wrong with this sync
       message = "An error occured for this calendar #{calendar_id} - #{exception.message}"
       successful = false
-
+    rescue Google::Apis::ServerError => exception
+       # Something went wrong with this sync
+      message = "A Google side server error occured for this calendar #{calendar_id} - #{exception.message} not auto-fixing though, nothing deleted"
+      successful = true
     else
       # All went ok
       message = "Sync complete - #{response.items.size} events returned"
@@ -164,7 +174,8 @@ module Syncing
       end
     end
 
-    # This is VERY temporary!
+    # These are set in config/initializers/google_calendar_ids.rb
+    # and are pulled in from environment variables
     def lookup_calendar_name(calendar_id)
       case calendar_id
       when COMMONS_SITTING_DAYS_CALENDAR

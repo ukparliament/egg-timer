@@ -1,16 +1,18 @@
 Hi there,
 
-Looks like we have a failure for:
+Looks like we have a failure on <%= ENV["ENVIRONMENT_NAME"] %> for:
 
 <%= @detailed_sync_log.calendar_name %>
 
 with message:
 
-<%= @detailed_sync_log.message %>
+<%= @detailed_sync_log.message ? @detailed_sync_log.message : "Unknown message" %>
 
 at:
 
 <%= @detailed_sync_log.updated_at %>
+
+Will now attempt an auto-fix.
 
 Cheers,
 James

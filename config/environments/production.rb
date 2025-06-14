@@ -86,4 +86,5 @@ Rails.application.configure do
   ActionMailer::Base.delivery_method = :postmark
   config.action_mailer.postmark_settings = { api_token: ENV.fetch("POSTMARK_API_KEY") }
 
+  config.assets.compile = false
 end
