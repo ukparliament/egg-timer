@@ -34,7 +34,7 @@ class IntervalCalculatorController < ApplicationController
     # Otherwise, if we have been passed all the parameters to enable the calculation to proceed ...
     else
       
-      # We make the text of the start date and end date passed into date formats.
+      # We pass the text of the start date and end date into date formats.
       @start_date = Date.parse( start_date )
       @end_date = Date.parse( end_date )
       
