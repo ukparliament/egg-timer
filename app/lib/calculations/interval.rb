@@ -6,7 +6,7 @@ module Calculations
 
     def calculate_sitting_days_in_interval( start_date, end_date )
 
-      # We set the date to start counting from to the start date.
+      # We set the date to start counting from the start date to the end date.
       date = @start_date
 
       # Whilst the date is not later than the end date ...
