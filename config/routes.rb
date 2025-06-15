@@ -63,6 +63,10 @@ Rails.application.routes.draw do
   get 'egg-timer/calendar/:year/:month' => 'calendar#month', as: :calendar_month, :constraints => { :year => /[0-9]{4}/, :month => /[0-9]{2}/ }
   get 'egg-timer/calendar/:year/:month/:day' => 'calendar#day', as: :calendar_day, :constraints => { :year => /[0-9]{4}/, :month => /[0-9]{2}/, :day => /[0-9]{2}/ }
   
+  # Calendar redirects
+  get 'egg-timer/calendar/:year/:month' => 'calendar_redirect#month', as: :calendar_redirect_month, :constraints => { :year => /[0-9]{4}/, :month => /[0-9]{1}/ }
+  get 'egg-timer/calendar/:year/:month/:day' => 'calendar_redirect#day', as: :calendar_redirect_day, :constraints => { :year => /[0-9]{4}/ }
+  
   # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
   get 'egg-timer/meta/using' => 'meta#using', as: :meta_using
