@@ -2,7 +2,7 @@
 
 <%= content_tag( 'p', "In order to complete the calculation, we need:" ) %>
 <ul>
-	<%= content_tag( 'li', "A start date" ) if params['start-date'].nil? %>
-	<%= content_tag( 'li', "A day count" ) if params['day-count'].nil? %>
-	<%= content_tag( 'li', "A procedure, or a calculation style" )  if params['procedure'].nil? and params['calculation-style'].nil?%>
+	<% @missing_information.each do |missing_information| -%>
+		<%= content_tag( 'li', missing_information ) %>
+	<% end -%>
 </ul>
