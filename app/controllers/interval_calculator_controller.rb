@@ -1,3 +1,4 @@
+# # Interval calculator controller to build the interval form and run the calculation.
 class IntervalCalculatorController < ApplicationController
   
   # We include code from the interval calculation module.
@@ -5,6 +6,8 @@ class IntervalCalculatorController < ApplicationController
 
   # ### This is the code to build the interval calculation form.
   def form
+  
+    # We set the meta information for the page.
     @page_title = "Sitting days during an interval calculator"
     @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval</span>".html_safe
     @description = "A calculator to determine the number of sitting days for both Houses during an interval."
