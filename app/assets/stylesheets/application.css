@@ -13,6 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+/* Disable Bootstrap smooth scrolling to ensure radio button validations display correctly */
+/* https://github.com/twbs/bootstrap/issues/33757 */
+:root {
+  scroll-behavior: auto !important;
+}
  
 body {
    color: #000;
