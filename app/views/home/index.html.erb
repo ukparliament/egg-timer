@@ -1,4 +1,27 @@
-<p>TODO: Home page text to follow. Also need to write meta description.</p>
+<%= content_tag( 'p', "This is the #{link_to( 'Commons Library', 'https://commonslibrary.parliament.uk/' )} resource for parliamentary time.".html_safe ) %>
+
+<div id="calculators">
+	<%= content_tag( 'h2', 'Calculators' ) %>
+	<%= content_tag( 'h3', 'Scrutiny end date calculator' ) %>
+	<%= content_tag( 'p', 'A tool for calculating the end date for scrutiny of a paper subject to a particular procedure.' ) %>
+	<%= content_tag( 'h3', 'Sitting days during an interval calculator' ) %>
+	<%= content_tag( 'p', 'A tool for calculating the number of sitting days between two dates.' ) %>
+</div>
+
+<div id="time-periods">
+	<%= content_tag( 'h2', 'Time periods' ) %>
+	<%= content_tag( 'p', "#{link_to( 'Parliaments', parliament_list_url )}, #{link_to( 'dissolutions', dissolution_period_list_url )}, #{link_to( 'sessions', session_list_url )}, #{link_to( 'prorogations', prorogation_period_list_url )} and recesses in #{link_to( 'both Houses', house_list_url )}.".html_safe ) %>
+</div>
+
+<div id="calendar">
+	<%= content_tag( 'h2', 'Calendar' ) %>
+	<%= content_tag( 'p', 'A calendar of each day showing ...' ) %>
+</div>
+
+<div id="subscribe">
+	<%= content_tag( 'h2', 'Calendar subscriptions' ) %>
+	<%= content_tag( 'p', "#{link_to( 'Subscribe to calendars', meta_subscribe_url )} for recess periods and upcoming days for both Houses.".html_safe ) %>
+</div>
 
 <div id="egg-timer">                
     <img src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer" id="logo" />
