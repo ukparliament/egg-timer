@@ -2,6 +2,6 @@ class HomeController < ApplicationController
   
   def index
     @page_title = 'Parliamentary time'
-    @description = 'TODO'
+    @description = 'The Commons Library resource for parliamentary time.'
   end
 end
