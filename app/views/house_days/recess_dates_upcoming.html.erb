@@ -1,5 +1,7 @@
 <%= content_tag( 'p', 'Subscribe to calendar:' ) %>
-<input type="text" value="<%= house_days_recess_dates_upcoming_url( :format => 'ics' ) %>" size="70" />
+<p>
+	<input type="text" value="<%= house_days_recess_dates_upcoming_url( :format => 'ics' ) %>"  class="url-copy"  />
+</p>
 
 <table>
 	<thead>
