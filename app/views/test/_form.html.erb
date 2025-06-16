@@ -1,0 +1,8 @@
+<form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
+	<fieldset>
+		<legend>Choose a period to calculate</legend>
+		<%= render :partial => 'procedure', :collection => @procedures %>
+	</fieldset>
+	
+	<button type="submit" id="calculate">Continue with this period and starting date</button>
+</form>

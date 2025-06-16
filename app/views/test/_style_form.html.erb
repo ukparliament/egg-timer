@@ -1,0 +1,17 @@
+<form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
+	<fieldset>
+		<legend>Calculation style</legend>
+		<p>
+			<label class="radio">
+				<input type="radio" id="calculation-style-1" name="calculation-style" value="1" required <% if @calculation_style == 1 -%>checked<% end -%>> Bicameral instruments (clock stops if either House rises)
+			</label>
+		</p>
+		<p>
+			<label class="radio">
+				<input type="radio" id="calculation-style-2" name="calculation-style" value="2" <% if @calculation_style == 2 -%>checked<% end -%>> Bicameral instruments (clock stops if both Houses rise)
+			</label>
+		</p>
+	</fieldset>
+	
+	<button type="submit" id="calculate">Start</button>
+</form>
