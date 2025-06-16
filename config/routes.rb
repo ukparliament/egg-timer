@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'egg-timer' => 'home#index', as: :home
   
-  get 'egg-timer/test' => 'test#index', as: :test
-  
   # Scrutiny period calculators
   get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
   get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
