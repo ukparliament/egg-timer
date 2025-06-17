@@ -71,9 +71,19 @@ Rails.application.routes.draw do
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
   get 'egg-timer/meta/using' => 'meta#using', as: :meta_using
   get 'egg-timer/meta/schema' => 'meta#schema', as: :meta_schema
-  get 'egg-timer/meta/comments' => 'meta#comment', as: :meta_comment
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
+  
+  # Code comments
+  get 'egg-timer/meta/comments' => 'code_comment#index', as: :code_comment_list
+  get 'egg-timer/meta/comments/date' => 'code_comment#date', as: :code_comment_date
+  get 'egg-timer/meta/comments/calculation-controller' => 'code_comment#calculation_controller', as: :code_comment_calculation_controller
+  get 'egg-timer/meta/comments/bicameral-both-houses-sitting' => 'code_comment#bicameral_both_houses_sitting', as: :code_comment_bicameral_both_houses_sitting
+  get 'egg-timer/meta/comments/bicameral-either-house-sitting' => 'code_comment#bicameral_either_house_sitting', as: :code_comment_bicameral_either_house_sitting
+  get 'egg-timer/meta/comments/commons-only-sis' => 'code_comment#commons_only_sis', as: :code_comment_commons_only_sis
+  get 'egg-timer/meta/comments/pnsis' => 'code_comment#pnsis', as: :code_comment_pnsis
+  get 'egg-timer/meta/comments/treaties' => 'code_comment#treaties', as: :code_comment_treaties
+  get 'egg-timer/meta/comments/commons-only-sitting-days' => 'code_comment#commons_only_sitting_days', as: :code_comment_commons_only_sitting_days
   
   # Librarian tools
   get 'egg-timer/meta/librarian-tools' => 'meta#librarian_tools', as: :meta_librarian_tools
