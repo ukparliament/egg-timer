@@ -118,10 +118,7 @@ class Documenter
   end
 
   def wrap_html(content, title)
-    # Create the timestamp within the method before using it in the ERB template
-    timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     
-    # Create and render the ERB template inline
     ERB.new(<<~ERB).result(binding)
       
       <p>
@@ -135,7 +132,6 @@ class Documenter
           <%= content %>
         
 
-          <p>This page was generated at <%= timestamp %>.</p>
 
     ERB
   end
