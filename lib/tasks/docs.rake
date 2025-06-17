@@ -118,20 +118,16 @@ class Documenter
   end
 
   def wrap_html(content, title)
+  content_without_h1 = content.gsub(/<h1>.*?<\/h1>/, '')
     
     ERB.new(<<~ERB).result(binding)
-      
       <p>
-            On GitHub &rarr; 
+            On GitHub: 
             <a href="https://github.com/<%= @github_repo %>/blob/main/<%= title %>">
               <%= title %>
             </a>
           </p>
-        
-
-          <%= content %>
-        
-
+          <%= content_without_h1 %>
 
     ERB
   end
