@@ -19,15 +19,6 @@ class MetaController < ApplicationController
     @crumb << { label: 'MacOS application', url: nil }
   end
   
-  def comment
-
-    # Set a meta information for the page.
-    @page_title = "Calculation code comments"
-    @description = "Calculation code comments."
-    @crumb << { label: 'About', url: meta_list_url }
-    @crumb << { label: 'Calculation code comments', url: nil }
-  end
-  
   def schema
 
     # Set a meta information for the page.
