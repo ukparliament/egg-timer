@@ -545,6 +545,17 @@ p.box {
     -webkit-transform: rotate(-360deg);
 }
 
+a.csv {
+  background-image: url("/egg-timer/csv.png");
+  background-repeat: no-repeat;
+  display: block;
+  height: 32px;
+  width: 32px;
+}
+a.csv abbr {
+  visibility: hidden;
+}
+
 footer {
   background-color: #373151;
   color: #fff;
