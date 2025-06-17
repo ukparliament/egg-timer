@@ -142,6 +142,7 @@ class CalendarController < ApplicationController
     # Set meta information for the page.
     @page_title = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }"
     @description = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }."
+    @csv_url = calendar_day_url( :format => 'csv' )
     @crumb << { label: 'Calendar', url: calendar_list_url }
     @crumb << { label: @year, url: calendar_year_url }
     @crumb << { label: Date::MONTHNAMES[@month], url: calendar_month_url }
