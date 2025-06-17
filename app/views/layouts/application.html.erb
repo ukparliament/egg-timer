@@ -10,6 +10,9 @@
 		<%= stylesheet_link_tag "application" %>
 		<%= csrf_meta_tags %>
 		<%= csp_meta_tag %>
+		<% if @csv_url -%>
+			<link rel="alternate" href="<%= @csv_url %>" type="text/csv">
+		<% end -%>
 		<%= render :partial => 'layouts/head/json_ld/crumb', :object => @crumb %>
 		
 		<%# Add rel alternate links to JSON and ICS where applicable %>

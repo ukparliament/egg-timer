@@ -7,6 +7,7 @@ class ProrogationPeriodController < ApplicationController
     # Set a meta information for the page.
     @page_title = "Prorogation periods"
     @description = "Prorogation periods."
+    @csv_url = prorogation_period_list_url( :format => 'csv' )
     @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
     @crumb << { label: 'Prorogation periods', url: nil }
     @section = 'time-periods'

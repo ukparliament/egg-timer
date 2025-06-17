@@ -6,6 +6,7 @@ class DissolutionPeriodController < ApplicationController
     # Set a meta information for the page.
     @page_title = "Dissolution periods"
     @description = "Dissolution periods."
+    @csv_url = dissolution_period_list_url( :format => 'csv' )
     @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
     @crumb << { label: 'Dissolution periods', url: nil }
     @section = 'time-periods'

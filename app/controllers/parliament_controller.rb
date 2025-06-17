@@ -7,6 +7,7 @@ class ParliamentController < ApplicationController
     # Set a meta information for the page.
     @page_title = "Parliament periods"
     @description = "Parliament periods."
+    @csv_url = parliament_list_url( :format => 'csv' )
     @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
     @crumb << { label: 'Parliament periods', url: nil }
     @section = 'time-periods'
