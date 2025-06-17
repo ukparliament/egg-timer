@@ -33,6 +33,7 @@
 					<%= render :partial => 'layouts/debug/debug' %>
 					<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
 					<%= yield %>
+					<%= render :partial => 'layouts/downloads/downloads' %>
 				</div>
 			</div>
 		</main>
