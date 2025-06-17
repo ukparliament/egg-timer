@@ -463,6 +463,10 @@ td.lords {
 	font-weight:bold;
 }
 
+pre code {
+	color: #ccc;
+}
+
 /* Form stuff */
 form {
 	margin-bottom: 1em;
