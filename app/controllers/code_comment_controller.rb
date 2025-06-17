@@ -18,8 +18,8 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Monkey patched date class', url: nil }
-    @include_partial = 'date'
-    
+
+    @include_partial = 'config_initializers_monkey_patching'
     render :template => 'code_comment/comment_wrapper'
   end
 
@@ -32,7 +32,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Calculation controller', url: nil }
-    @include_partial = 'calculation_controller'
+    @include_partial = 'app_controllers_calculator_controller'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -46,7 +46,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Bicameral instruments with both Houses sitting', url: nil }
-    @include_partial = 'bicameral_both_houses_sitting'
+    @include_partial = 'app_lib_calculations_bicameral_both_houses_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -60,7 +60,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Bicameral instruments with either House sitting', url: nil }
-    @include_partial = 'bicameral_either_house_sitting'
+    @include_partial = 'app_lib_calculations_bicameral_si_either_house_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -74,7 +74,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Commons only statutory instruments', url: nil }
-    @include_partial = 'commons_only_sis'
+    @include_partial = 'app_lib_calculations_commons_only_si'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -88,7 +88,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Proposed negative statutory instruments', url: nil }
-    @include_partial = 'pnsis'
+    @include_partial = 'app_lib_calculations_pnsi'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -102,7 +102,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Treaties', url: nil }
-    @include_partial = 'treaties'
+    @include_partial = 'app_lib_calculations_treaty'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -116,7 +116,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Commons only sitting days', url: nil }
-    @include_partial = 'commons_only_sitting_days'
+    @include_partial = 'app_lib_calculations_commons_only_sitting_days'
     
     render :template => 'code_comment/comment_wrapper'
   end

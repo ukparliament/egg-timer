@@ -8,7 +8,7 @@ require 'erb'
 # use app layout
 
 class Documenter
-  def initialize(output_dir = "/public/egg-timer/docs/", github_repo = "ukparliament/egg-timer")
+  def initialize(output_dir = "/app/views/code_comment/comments/", github_repo = "ukparliament/egg-timer")
     @source_dirs = [
       Pathname.new("./app/lib/calculations/").realpath
     ]
@@ -75,9 +75,7 @@ class Documenter
 
   def process_files
     @files.each do |file_path, relative_path, source_dir|
-      # First, use Pathname#sub_ext to change the extension.
-      # Then, convert to a string and replace slashes.
-      flat_filename = relative_path.sub_ext('.html').to_s.gsub('/', '-')
+      flat_filename = '_' + relative_path.sub_ext('.html.erb').to_s.gsub('/', '_')
       
       output_file = @output_dir.join(flat_filename)
       
@@ -125,46 +123,20 @@ class Documenter
     
     # Create and render the ERB template inline
     ERB.new(<<~ERB).result(binding)
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
-		<meta name="viewport" content="width=device-width">
-        <title>Documentation: <%= title %></title>
-        <style>
-        body {font-family:system-ui;
-        max-width:48rem;
-        font-size:1.2rem;
-        line-height:1.4;
-        margin:auto;}
-        main {
-        padding: 2rem 0;
-        }
-        pre {color:gray;}
-        pre a {color:gray;text-decoration:none;}
-        </style>
-      </head>
-      <body>
-        <header>
-          
-          <p>
+      
+      <p>
             On GitHub &rarr; 
             <a href="https://github.com/<%= @github_repo %>/blob/main/<%= title %>">
               <%= title %>
             </a>
           </p>
-        </header>
         
-        <main>
+
           <%= content %>
-        </main>
         
-        <footer>
+
           <p>This page was generated at <%= timestamp %>.</p>
-        </footer>
-      </body>
-      </html>
+
     ERB
   end
 end
@@ -174,15 +146,10 @@ namespace :docs do
   task :new do |t, args|
 
     args.with_defaults(         
-      output: ENV['OUTPUT_DIR'] || File.join(Dir.pwd, 'public/egg-timer/docs'),
-      github_repo: ENV['GITHUB_REPO'] || 'ukparliament/egg-timer'
+      output: File.join(Dir.pwd, 'app/views/code_comment/comments'),
+      github_repo: 'ukparliament/egg-timer'
     )
 
-    puts "Generating documentation..."
-    puts "Source directories and files:"
-    puts "- app/lib/calculations/ (directory)"
-    puts "- app/controllers/calculator_controller.rb (file)"
-    puts "- config/initializers/monkey_patching.rb (file)" 
     puts "Output directory: #{args.output}"
     puts "GitHub repository: #{args.github_repo}" if args.github_repo
     
