@@ -3,14 +3,22 @@ class ProrogationPeriodController < ApplicationController
   def index
     @prorogation_periods = ProrogationPeriod.all.order( 'start_date desc' )
     @title = "Prorogation periods"
+    
+    respond_to do |format|
+       format.csv {
+         response.headers['Content-Disposition'] = "attachment; filename=\"uk-parliament-prorogation-periods.csv\""
+       }
+       format.html{
 
-    # Set a meta information for the page.
-    @page_title = "Prorogation periods"
-    @description = "Prorogation periods."
-    @csv_url = prorogation_period_list_url( :format => 'csv' )
-    @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
-    @crumb << { label: 'Prorogation periods', url: nil }
-    @section = 'time-periods'
+        # Set a meta information for the page.
+        @page_title = "Prorogation periods"
+        @description = "Prorogation periods."
+        @csv_url = prorogation_period_list_url( :format => 'csv' )
+        @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
+        @crumb << { label: 'Prorogation periods', url: nil }
+        @section = 'time-periods'
+      }
+    end
   end
   
   def show

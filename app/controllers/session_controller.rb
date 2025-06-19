@@ -3,14 +3,22 @@ class SessionController < ApplicationController
   def index
     @sessions = Session.all.order( 'start_date desc' )
     @title = "Sessions"
+    
+    respond_to do |format|
+       format.csv {
+         response.headers['Content-Disposition'] = "attachment; filename=\"uk-parliament-sessions.csv\""
+       }
+       format.html{
 
-    # Set a meta information for the page.
-    @page_title = "Sessions"
-    @description = "Sessions."
-    @csv_url = session_list_url( :format => 'csv' )
-    @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
-    @crumb << { label: 'Sessions', url: nil }
-    @section = 'time-periods'
+        # Set a meta information for the page.
+        @page_title = "Sessions"
+        @description = "Sessions."
+        @csv_url = session_list_url( :format => 'csv' )
+        @crumb << { label: 'Time periods', url: parliamentary_time_list_url }
+        @crumb << { label: 'Sessions', url: nil }
+        @section = 'time-periods'
+      }
+    end
   end
   
   def show
