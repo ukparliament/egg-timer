@@ -7,7 +7,9 @@
 		<title><%= @page_title || $SITE_TITLE %></title>
 		<link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
 		<meta name="viewport" content="width=device-width">
-		<%= stylesheet_link_tag "application" %>
+		<%#= stylesheet_link_tag "application" %>
+		<link rel="stylesheet" href="/egg-timer/styles.css" />
+		<%#= stylesheet_link_tag "application" %>
 		<%= csrf_meta_tags %>
 		<%= csp_meta_tag %>
 		<% if @csv_url -%>
