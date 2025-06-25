@@ -9,7 +9,11 @@
 		<input type="hidden" id="procedure-<%= @procedure.id %>" name="procedure" value="<%= @procedure.id %>">
 	<% elsif @calculation_style -%>
 		<input type="hidden" id="calculation-style-<%= @calculation_style %>" name="calculation-style" value="<%= @calculation_style %>">
+		<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
 	<% end -%>
+
+	<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
+	<input type="hidden" name="direction" value="<%= @direction %>" />
 	
 	<p>
 		<label>

@@ -281,6 +281,10 @@ body.subsection-scrutiny-calculator .subnav a.scrutiny-calculator {
 	border-bottom-color: #006e45;
 	color: #4d4d4d;
 }
+body.subsection-scrutiny-calculator-reverse .subnav a.scrutiny-calculator-reverse {
+	border-bottom-color: #006e45;
+	color: #4d4d4d;
+}
 body.subsection-interval-calculator .subnav a.interval-calculator {
 	border-bottom-color: #006e45;
 	color: #4d4d4d;

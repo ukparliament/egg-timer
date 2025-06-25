@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # Scrutiny period calculators
   get 'egg-timer/calculators' => 'calculator#index', as: :calculator_list
   get 'egg-timer/calculator' => 'calculator#scrutiny_period', as: :calculator_form
+  get 'egg-timer/reverse-calculator' => 'calculator#reverse_scrutiny_period', as: :reverse_calculator_form
   get 'egg-timer/calculator/styles' => 'calculator#style', as: :calculator_style_form
   get 'egg-timer/calculator/calculate' => 'calculator#calculate', as: :calculator_calculate
   
