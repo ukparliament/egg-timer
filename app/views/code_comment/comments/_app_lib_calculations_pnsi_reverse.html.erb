@@ -1,0 +1,79 @@
+<p>
+      On GitHub: 
+      <a href="https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb">
+        app/lib/calculations/pnsi_reverse.rb
+      </a>
+    </p>
+    <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L1' title='View on GitHub'>1</a> module Calculations</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L2' title='View on GitHub'>2</a>   module PnsiReverse</code></pre>
+
+
+<p>The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.</p>
+
+<p>The calculation is defined by the <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10">European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)</a> (number of days to count) and <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11">paragraph 17(11)</a> (definition of sitting day).</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L7' title='View on GitHub'>7</a>     def pnsi_calculation_reverse( date, target_day_count )</code></pre>
+<p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
+
+<p>The first joint sitting day counts as day 1 in both Houses, so we count from 1 rather than from 0.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L11' title='View on GitHub'>11</a>     	commons_day_count = 0</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L12' title='View on GitHub'>12</a>       lords_day_count = 0</code></pre>
+<p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L15' title='View on GitHub'>15</a>       @scrutiny_start_date = nil</code></pre>
+<p>We go back forward one day.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L18' title='View on GitHub'>18</a>       date = date.next</code></pre>
+<h2>We look at preceding days, ensuring that we&#39;ve counted at least nine parliamentary sitting days in each House.</h2>
+
+<p>The total day count in each House must be 10 days and the first day of scrutiny must be a <em>joint sitting day</em>.</p>
+
+<p>We&#39;ll handle the first day of scrutiny later.</p>
+
+<p>For now, we take the target count of 10 days and remove one day, that being the <em>joint sitting day</em>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L24' title='View on GitHub'>24</a>       until ( ( commons_day_count &gt;= target_day_count - 1 ) and ( lords_day_count &gt;= target_day_count - 1 ) ) do</code></pre>
+<p>... continue to the <strong>previous day</strong>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L27' title='View on GitHub'>27</a>         date = date.prev_day</code></pre>
+<p>PNSIs use parliamentary sitting days, rather than naive sitting days.</p>
+
+<p>If this is a parliamentary sitting day in either House...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L31' title='View on GitHub'>31</a>         if date.is_either_house_parliamentary_sitting_day?</code></pre>
+<p>... we set the scrutiny start date to this date if the scrutiny start date is nil ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L34' title='View on GitHub'>34</a>           @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
+<p>If the Lords sat on the date we&#39;ve found, we add a day to the Lords’ count.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L37' title='View on GitHub'>37</a>           lords_day_count +=1 if date.is_lords_parliamentary_sitting_day?</code></pre>
+<p>If the Commons sat on the date we&#39;ve found, we add a day to the Commons’ count.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L40' title='View on GitHub'>40</a>           commons_day_count+=1 if date.is_commons_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L41' title='View on GitHub'>41</a>         end</code></pre>
+<p>If the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L44' title='View on GitHub'>44</a>         if date.is_calendar_not_populated?</code></pre>
+<p>... this error message is displayed to users ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L47' title='View on GitHub'>47</a>           @error_message = &quot;It&#39;s not currently possible to calculate an anticipated start date, as the likely start date occurs during a period for which no sitting day information is available.&quot;</code></pre>
+<p>... and we stop looking through the calendar.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L50' title='View on GitHub'>50</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L51' title='View on GitHub'>51</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L52' title='View on GitHub'>52</a>       end</code></pre>
+<p>We&#39;ve now counted 10 sitting days in each House.</p>
+
+<p>According to <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10-a">paragraph 17 (10) (a) of the European Union (Withdrawal) Act 2018</a>, the first day of the scrutiny period must be a joint sitting day.</p>
+
+<p>We find the last joint sitting day preceding the date we&#39;ve counted to.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L57' title='View on GitHub'>57</a>       date.last_joint_parliamentary_sitting_day</code></pre>
+<p>We return the anticipated start date of the scrutiny period for display.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L60' title='View on GitHub'>60</a>       date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L61' title='View on GitHub'>61</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L62' title='View on GitHub'>62</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L63' title='View on GitHub'>63</a> end</code></pre>
+
