@@ -35,16 +35,16 @@
 
 <p>We use a more strict definition of a sitting day. We don’t include dates for which the Commons continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L34' title='View on GitHub'>34</a>   def is_commons_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L35' title='View on GitHub'>35</a>     SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L36' title='View on GitHub'>36</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L33' title='View on GitHub'>33</a>   def is_commons_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L34' title='View on GitHub'>34</a>     SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L35' title='View on GitHub'>35</a>   end</code></pre>
 <h3>We want to check if this is a parliamentary sitting day in the Lords.</h3>
 
 <p>We use a more strict definition of a sitting day. We don’t include dates for which the Lords continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L42' title='View on GitHub'>42</a>   def is_lords_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L43' title='View on GitHub'>43</a>     SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L44' title='View on GitHub'>44</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L41' title='View on GitHub'>41</a>   def is_lords_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L42' title='View on GitHub'>42</a>     SittingDay.all.where( &#39;start_date = ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L43' title='View on GitHub'>43</a>   end</code></pre>
 <h3>We want to check if this is a virtual sitting day in the Commons.</h3>
 
 <p>This is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
@@ -53,79 +53,79 @@
 
 <p>As of the end of June 2020, the Commons has had no virtual sitting days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L54' title='View on GitHub'>54</a>   def is_commons_virtual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L55' title='View on GitHub'>55</a>     VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L56' title='View on GitHub'>56</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L53' title='View on GitHub'>53</a>   def is_commons_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L54' title='View on GitHub'>54</a>     VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L55' title='View on GitHub'>55</a>   end</code></pre>
 <h3>We want to check if this is a virtual sitting day in the Lords.</h3>
 
 <p>This is a day where all Members of the House sit ‘digitally’, rather than physically.</p>
 
 <p>A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L64' title='View on GitHub'>64</a>   def is_lords_virtual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L65' title='View on GitHub'>65</a>     VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L66' title='View on GitHub'>66</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L62' title='View on GitHub'>62</a>   def is_lords_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L63' title='View on GitHub'>63</a>     VirtualSittingDay.all.where( &#39;start_date &lt;= ?&#39;,  self ).where( &#39;end_date &gt;= ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L64' title='View on GitHub'>64</a>   end</code></pre>
 <h3>We want to check if this is an actual sitting day in <em>either</em> House.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L70' title='View on GitHub'>70</a>   def is_either_house_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L71' title='View on GitHub'>71</a>     self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L72' title='View on GitHub'>72</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L68' title='View on GitHub'>68</a>   def is_either_house_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L69' title='View on GitHub'>69</a>     self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L70' title='View on GitHub'>70</a>   end</code></pre>
 <h3>We want to check if this is an actual sitting day in <em>both</em> Houses.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L76' title='View on GitHub'>76</a>   def is_joint_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L77' title='View on GitHub'>77</a>     self.is_commons_actual_sitting_day? and self.is_lords_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L78' title='View on GitHub'>78</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L74' title='View on GitHub'>74</a>   def is_joint_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L75' title='View on GitHub'>75</a>     self.is_commons_actual_sitting_day? and self.is_lords_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L76' title='View on GitHub'>76</a>   end</code></pre>
 <h3>We want to check if this is a parliamentary sitting day in <em>either</em> House.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L82' title='View on GitHub'>82</a>   def is_either_house_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L83' title='View on GitHub'>83</a>     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L84' title='View on GitHub'>84</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L80' title='View on GitHub'>80</a>   def is_either_house_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L81' title='View on GitHub'>81</a>     self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L82' title='View on GitHub'>82</a>   end</code></pre>
 <h3>We want to check if this is a parliamentary sitting day in <em>both</em> Houses.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L88' title='View on GitHub'>88</a>   def is_joint_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L89' title='View on GitHub'>89</a>     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L90' title='View on GitHub'>90</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L86' title='View on GitHub'>86</a>   def is_joint_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L87' title='View on GitHub'>87</a>     self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L88' title='View on GitHub'>88</a>   end</code></pre>
 <h3>We want to check if this is an adjournment day in either House.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L94' title='View on GitHub'>94</a>   def is_adjournment_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L95' title='View on GitHub'>95</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L96' title='View on GitHub'>96</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L92' title='View on GitHub'>92</a>   def is_adjournment_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L93' title='View on GitHub'>93</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L94' title='View on GitHub'>94</a>   end</code></pre>
 <h3>We want to check if this is an adjournment day in the Commons.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L100' title='View on GitHub'>100</a>   def is_commons_adjournment_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L101' title='View on GitHub'>101</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L102' title='View on GitHub'>102</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L98' title='View on GitHub'>98</a>   def is_commons_adjournment_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L99' title='View on GitHub'>99</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 1 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L100' title='View on GitHub'>100</a>   end</code></pre>
 <h3>We want to check if this is an adjournment day in the Lords.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L106' title='View on GitHub'>106</a>   def is_lords_adjournment_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L107' title='View on GitHub'>107</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L108' title='View on GitHub'>108</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L104' title='View on GitHub'>104</a>   def is_lords_adjournment_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L105' title='View on GitHub'>105</a>     AdjournmentDay.all.where( &#39;date = ?&#39;,  self ).where( house_id: 2 ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L106' title='View on GitHub'>106</a>   end</code></pre>
 <h3>We want to check if Parliament is prorogued on this day.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L112' title='View on GitHub'>112</a>   def is_prorogation_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L113' title='View on GitHub'>113</a>     ProrogationDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L114' title='View on GitHub'>114</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L110' title='View on GitHub'>110</a>   def is_prorogation_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L111' title='View on GitHub'>111</a>     ProrogationDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L112' title='View on GitHub'>112</a>   end</code></pre>
 <h3>We want to check if Parliament is dissolved on this day.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L118' title='View on GitHub'>118</a>   def is_dissolution_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L119' title='View on GitHub'>119</a>     DissolutionDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L120' title='View on GitHub'>120</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L116' title='View on GitHub'>116</a>   def is_dissolution_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L117' title='View on GitHub'>117</a>     DissolutionDay.all.where( &#39;date = ?&#39;,  self ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L118' title='View on GitHub'>118</a>   end</code></pre>
 <h3>We want to check if this is a day for which we have something in the calendar.</h3>
 
 <p>That may be an actual sitting day - including parliamentary sitting days, a virtual sitting day, an adjournment day, a day within prorogation or a day within dissolution.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L126' title='View on GitHub'>126</a>   def is_calendar_populated?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L127' title='View on GitHub'>127</a>     self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L128' title='View on GitHub'>128</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L124' title='View on GitHub'>124</a>   def is_calendar_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L125' title='View on GitHub'>125</a>     self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L126' title='View on GitHub'>126</a>   end</code></pre>
 <h3>We want to check if this is a day for which we do not have anything in the calendar.</h3>
 
 <p>We use this to check if we&#39;ve &quot;run out of calendar&quot; so we don&#39;t keep cycling into future days and loop infinitely.</p>
 
 <p>This is our event horizon.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L136' title='View on GitHub'>136</a>   def is_calendar_not_populated?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L137' title='View on GitHub'>137</a>     !self.is_calendar_populated?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L138' title='View on GitHub'>138</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L134' title='View on GitHub'>134</a>   def is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L135' title='View on GitHub'>135</a>     !self.is_calendar_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L136' title='View on GitHub'>136</a>   end</code></pre>
 <h3>Methods to calculate non-sitting scrutiny days in both Houses.</h3>
 
 <p>In <a href="https://committees.parliament.uk/publications/688/documents/33426/default/">guidance issued on 16-04-2020</a> the Lords Procedure Committee stated, &quot;A Virtual Proceeding is not a sitting of the House.&quot;</p>
@@ -144,73 +144,73 @@
 
 <p>For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L158' title='View on GitHub'>158</a>   def is_commons_non_sitting_scrutiny_day?( maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L156' title='View on GitHub'>156</a>   def is_commons_non_sitting_scrutiny_day?( maximum_day_count )</code></pre>
 <h4>We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.</h4>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L162' title='View on GitHub'>162</a>     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L160' title='View on GitHub'>160</a>     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?</code></pre>
 <p>Having found that this is a Commons adjournnment day or a Commons virtual sitting day, we start the adjournment day count at 1.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L166' title='View on GitHub'>166</a>       non_sitting_scrutiny_day_count = 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L164' title='View on GitHub'>164</a>       non_sitting_scrutiny_day_count = 1</code></pre>
 <p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L170' title='View on GitHub'>170</a>       date = self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L171' title='View on GitHub'>171</a>       for i in ( 1..maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L168' title='View on GitHub'>168</a>       date = self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L169' title='View on GitHub'>169</a>       for i in ( 1..maximum_day_count )</code></pre>
 <p>Go forward one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L175' title='View on GitHub'>175</a>         date = date.next_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L173' title='View on GitHub'>173</a>         date = date.next_day</code></pre>
 <p>If this is a Commons adjournnment day or a Commons virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L178' title='View on GitHub'>178</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L176' title='View on GitHub'>176</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?</code></pre>
 <p>... add one to the non-sitting scrutiny day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L181' title='View on GitHub'>181</a>           non_sitting_scrutiny_day_count +=1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L179' title='View on GitHub'>179</a>           non_sitting_scrutiny_day_count +=1</code></pre>
 <p>If this is not a Commons adjournnment day or a Commons virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L184' title='View on GitHub'>184</a>         else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L182' title='View on GitHub'>182</a>         else</code></pre>
 <p>... stop cycling through following days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L187' title='View on GitHub'>187</a>           break</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L188' title='View on GitHub'>188</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L189' title='View on GitHub'>189</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L185' title='View on GitHub'>185</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L186' title='View on GitHub'>186</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L187' title='View on GitHub'>187</a>       end</code></pre>
 <p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L192' title='View on GitHub'>192</a>       date = self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L193' title='View on GitHub'>193</a>       for i in ( 1..maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L190' title='View on GitHub'>190</a>       date = self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L191' title='View on GitHub'>191</a>       for i in ( 1..maximum_day_count )</code></pre>
 <p>Go back one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L196' title='View on GitHub'>196</a>         date = date.prev_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L194' title='View on GitHub'>194</a>         date = date.prev_day</code></pre>
 <p>If this is a Commons adjournnment day or a Commons virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L199' title='View on GitHub'>199</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L197' title='View on GitHub'>197</a>         if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?</code></pre>
 <p>... add one to the non-sitting scrutiny day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L202' title='View on GitHub'>202</a>           non_sitting_scrutiny_day_count +=1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L200' title='View on GitHub'>200</a>           non_sitting_scrutiny_day_count +=1</code></pre>
 <p>If this is not a Commons adjournnment day or a Commons virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L205' title='View on GitHub'>205</a>         else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L203' title='View on GitHub'>203</a>         else</code></pre>
 <p>... stop cycling through preceding days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L208' title='View on GitHub'>208</a>           break</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L209' title='View on GitHub'>209</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L210' title='View on GitHub'>210</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L206' title='View on GitHub'>206</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L207' title='View on GitHub'>207</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L208' title='View on GitHub'>208</a>       end</code></pre>
 <p>If the total number of continuous non-sitting scrutiny days is more than the maximum day count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L213' title='View on GitHub'>213</a>       if non_sitting_scrutiny_day_count &gt; maximum_day_count</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L211' title='View on GitHub'>211</a>       if non_sitting_scrutiny_day_count &gt; maximum_day_count</code></pre>
 <p>... then this day does not count as a non-sitting scrutiny day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L216' title='View on GitHub'>216</a>         is_commons_non_sitting_scrutiny_day = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L214' title='View on GitHub'>214</a>         is_commons_non_sitting_scrutiny_day = false</code></pre>
 <p>If the total number of continuous non-sitting scrutiny days is less than or the same as the maximum day count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L219' title='View on GitHub'>219</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L217' title='View on GitHub'>217</a>       else</code></pre>
 <p>... then this day does count as a non-sitting scrutiny day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L222' title='View on GitHub'>222</a>         is_commons_non_sitting_scrutiny_day = true</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L223' title='View on GitHub'>223</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L220' title='View on GitHub'>220</a>         is_commons_non_sitting_scrutiny_day = true</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L221' title='View on GitHub'>221</a>       end</code></pre>
 <p>Returns if this day is a Commons non-sitting scrutiny day</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L226' title='View on GitHub'>226</a>       is_commons_non_sitting_scrutiny_day</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L227' title='View on GitHub'>227</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L228' title='View on GitHub'>228</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L224' title='View on GitHub'>224</a>       is_commons_non_sitting_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L225' title='View on GitHub'>225</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L226' title='View on GitHub'>226</a>   end</code></pre>
 <h3>We want to check if this is a non-sitting scrutiny day in the Lords.</h3>
 
 <p>During a short adjournment, adjournment days count toward the scrutiny period.</p>
@@ -221,73 +221,73 @@
 
 <p>For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L240' title='View on GitHub'>240</a>   def is_lords_non_sitting_scrutiny_day?( maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L238' title='View on GitHub'>238</a>   def is_lords_non_sitting_scrutiny_day?( maximum_day_count )</code></pre>
 <h3>We want to check if this is a Lords adjournnment day or a Lords virtual sitting day.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L244' title='View on GitHub'>244</a>     if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L242' title='View on GitHub'>242</a>     if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?</code></pre>
 <p>Having found that this is a Lords adjournnment day or a Lords virtual sitting day, we start the adjournment day count at 1.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L248' title='View on GitHub'>248</a>       non_sitting_scrutiny_day_count = 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L246' title='View on GitHub'>246</a>       non_sitting_scrutiny_day_count = 1</code></pre>
 <p>We want to cycle through the following days until we reach the maximum day count passed into this function.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L252' title='View on GitHub'>252</a>       date = self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L253' title='View on GitHub'>253</a>       for i in ( 1..maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L250' title='View on GitHub'>250</a>       date = self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L251' title='View on GitHub'>251</a>       for i in ( 1..maximum_day_count )</code></pre>
 <p>Go forward one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L257' title='View on GitHub'>257</a>         date = date.next_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L255' title='View on GitHub'>255</a>         date = date.next_day</code></pre>
 <p>If this is a Lords adjournnment day or a Lords virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L260' title='View on GitHub'>260</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L258' title='View on GitHub'>258</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?</code></pre>
 <p>... add one to the non-sitting scrutiny day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L263' title='View on GitHub'>263</a>           non_sitting_scrutiny_day_count +=1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L261' title='View on GitHub'>261</a>           non_sitting_scrutiny_day_count +=1</code></pre>
 <p>If this is not a Lords adjournnment day or a Lords virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L266' title='View on GitHub'>266</a>         else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L264' title='View on GitHub'>264</a>         else</code></pre>
 <p>... stop cycling through following days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L269' title='View on GitHub'>269</a>           break</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L270' title='View on GitHub'>270</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L271' title='View on GitHub'>271</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L267' title='View on GitHub'>267</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L268' title='View on GitHub'>268</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L269' title='View on GitHub'>269</a>       end</code></pre>
 <p>We want to cycle through the preceding days until we reach the maximum day count passed into this function.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L274' title='View on GitHub'>274</a>       date = self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L275' title='View on GitHub'>275</a>       for i in ( 1..maximum_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L272' title='View on GitHub'>272</a>       date = self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L273' title='View on GitHub'>273</a>       for i in ( 1..maximum_day_count )</code></pre>
 <p>Go back one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L278' title='View on GitHub'>278</a>         date = date.prev_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L276' title='View on GitHub'>276</a>         date = date.prev_day</code></pre>
 <p>If this is a Lords adjournnment day or a Lords virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L281' title='View on GitHub'>281</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L279' title='View on GitHub'>279</a>         if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?</code></pre>
 <p>... add one to the non-sitting scrutiny day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L284' title='View on GitHub'>284</a>           non_sitting_scrutiny_day_count +=1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L282' title='View on GitHub'>282</a>           non_sitting_scrutiny_day_count +=1</code></pre>
 <p>If this is not a Lords adjournnment day or a Lords virtual sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L287' title='View on GitHub'>287</a>         else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L285' title='View on GitHub'>285</a>         else</code></pre>
 <p>... stop cycling through preceding days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L290' title='View on GitHub'>290</a>           break</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L291' title='View on GitHub'>291</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L292' title='View on GitHub'>292</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L288' title='View on GitHub'>288</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L289' title='View on GitHub'>289</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L290' title='View on GitHub'>290</a>       end</code></pre>
 <p>If the total number of continuous non-sitting scrutiny days is more than the maximum day count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L295' title='View on GitHub'>295</a>       if non_sitting_scrutiny_day_count &gt; maximum_day_count</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L293' title='View on GitHub'>293</a>       if non_sitting_scrutiny_day_count &gt; maximum_day_count</code></pre>
 <p>... then this day does not count as a non-sitting scrutiny day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L298' title='View on GitHub'>298</a>         is_lords_non_sitting_scrutiny_day = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L296' title='View on GitHub'>296</a>         is_lords_non_sitting_scrutiny_day = false</code></pre>
 <p>If the total number of continuous non-sitting scrutiny days is less than or the same as the maximum day count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L301' title='View on GitHub'>301</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L299' title='View on GitHub'>299</a>       else</code></pre>
 <p>... then this day does count as a non-sitting scrutiny day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L304' title='View on GitHub'>304</a>         is_lords_non_sitting_scrutiny_day = true</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L305' title='View on GitHub'>305</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L302' title='View on GitHub'>302</a>         is_lords_non_sitting_scrutiny_day = true</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L303' title='View on GitHub'>303</a>       end</code></pre>
 <p>Returns if this day is a Lords non-sitting scrutiny day</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L308' title='View on GitHub'>308</a>       is_lords_non_sitting_scrutiny_day</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L309' title='View on GitHub'>309</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L310' title='View on GitHub'>310</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L306' title='View on GitHub'>306</a>       is_lords_non_sitting_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L307' title='View on GitHub'>307</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L308' title='View on GitHub'>308</a>   end</code></pre>
 <p>(End of methods to calculate non-sitting scrutiny days in both Houses.)</p>
 
 <h3>We want to check if this is a scrutiny day in the Commons.</h3>
@@ -296,28 +296,28 @@
 
 <p>We pass &#39;4&#39; as the maximum day count to the non-sitting scrutiny day calculation, because non-sitting scrutiny days are days within a series of not more than four non-sitting days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L320' title='View on GitHub'>320</a>   def is_commons_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L321' title='View on GitHub'>321</a>     self.is_commons_actual_sitting_day? or self.is_commons_non_sitting_scrutiny_day?( 4 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L322' title='View on GitHub'>322</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L318' title='View on GitHub'>318</a>   def is_commons_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L319' title='View on GitHub'>319</a>     self.is_commons_actual_sitting_day? or self.is_commons_non_sitting_scrutiny_day?( 4 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L320' title='View on GitHub'>320</a>   end</code></pre>
 <h3>We want to check if this is a scrutiny day in the Lords.</h3>
 
 <p>A scrutiny day in the Lords is either an actual sitting day in the Lords, or a non-sitting scrutiny day in the Lords.</p>
 
 <p>We pass &#39;4&#39; as the maximum day count to the non-sitting scrutiny day calculation, because  non-sitting scrutiny days are days within a series of not more than four non-sitting days.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L330' title='View on GitHub'>330</a>   def is_lords_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L331' title='View on GitHub'>331</a>     self.is_lords_actual_sitting_day? or self.is_lords_non_sitting_scrutiny_day?( 4 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L332' title='View on GitHub'>332</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L328' title='View on GitHub'>328</a>   def is_lords_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L329' title='View on GitHub'>329</a>     self.is_lords_actual_sitting_day? or self.is_lords_non_sitting_scrutiny_day?( 4 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L330' title='View on GitHub'>330</a>   end</code></pre>
 <h3>We want to check if this is a scrutiny day in <em>either</em> House.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L336' title='View on GitHub'>336</a>   def is_either_house_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L337' title='View on GitHub'>337</a>     self.is_commons_scrutiny_day? or self.is_lords_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L338' title='View on GitHub'>338</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L334' title='View on GitHub'>334</a>   def is_either_house_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L335' title='View on GitHub'>335</a>     self.is_commons_scrutiny_day? or self.is_lords_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L336' title='View on GitHub'>336</a>   end</code></pre>
 <h3>We want to check if this is a scrutiny day in <em>both</em> Houses.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L342' title='View on GitHub'>342</a>   def is_joint_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L343' title='View on GitHub'>343</a>     self.is_commons_scrutiny_day? and self.is_lords_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L344' title='View on GitHub'>344</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L340' title='View on GitHub'>340</a>   def is_joint_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L341' title='View on GitHub'>341</a>     self.is_commons_scrutiny_day? and self.is_lords_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L342' title='View on GitHub'>342</a>   end</code></pre>
 <p>(End of set of methods to work out the type of a given day.)</p>
 
 <h2>A set of methods to find the first day of a given type.</h2>
@@ -328,186 +328,217 @@
 
 <p>This method is used for bicameral negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L357' title='View on GitHub'>357</a>   def first_scrutiny_day_in_either_house</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L355' title='View on GitHub'>355</a>   def first_scrutiny_day_in_either_house</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L360' title='View on GitHub'>360</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L358' title='View on GitHub'>358</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first scrutiny day so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L363' title='View on GitHub'>363</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L361' title='View on GitHub'>361</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L366' title='View on GitHub'>366</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L364' title='View on GitHub'>364</a>     else</code></pre>
 <p>... then if this is not a scrutiny day in <em>either</em> House ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L369' title='View on GitHub'>369</a>       unless self.is_either_house_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L367' title='View on GitHub'>367</a>       unless self.is_either_house_scrutiny_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L372' title='View on GitHub'>372</a>         self.next_day.first_scrutiny_day_in_either_house</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L370' title='View on GitHub'>370</a>         self.next_day.first_scrutiny_day_in_either_house</code></pre>
 <p>... then if this is a scrutiny day in either House ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L375' title='View on GitHub'>375</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L373' title='View on GitHub'>373</a>       else</code></pre>
 <p>... then return this day as the first scrutiny day in either House.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L378' title='View on GitHub'>378</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L379' title='View on GitHub'>379</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L380' title='View on GitHub'>380</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L381' title='View on GitHub'>381</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L376' title='View on GitHub'>376</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L377' title='View on GitHub'>377</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L378' title='View on GitHub'>378</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L379' title='View on GitHub'>379</a>   end</code></pre>
 <h3>We want to find the first scrutiny day in <em>both</em> Houses.</h3>
 
 <p>This method is used when a Statutory Instrument is laid outside of a scrutiny period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first actual sitting day in both Houses following the laying.</p>
 
 <p>This method is used for bicameral made affirmatives where the enabling legislation specifies that both Houses must be sitting.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L389' title='View on GitHub'>389</a>   def first_joint_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L387' title='View on GitHub'>387</a>   def first_joint_scrutiny_day</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L392' title='View on GitHub'>392</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L390' title='View on GitHub'>390</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first scrutiny day so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L395' title='View on GitHub'>395</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L393' title='View on GitHub'>393</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L398' title='View on GitHub'>398</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L396' title='View on GitHub'>396</a>     else</code></pre>
 <p>... then if this is not a scrutiny day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L401' title='View on GitHub'>401</a>       unless self.is_joint_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L399' title='View on GitHub'>399</a>       unless self.is_joint_scrutiny_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L404' title='View on GitHub'>404</a>         self.next_day.first_joint_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L402' title='View on GitHub'>402</a>         self.next_day.first_joint_scrutiny_day</code></pre>
 <p>... then if this is a scrutiny day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L407' title='View on GitHub'>407</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L405' title='View on GitHub'>405</a>       else</code></pre>
 <p>... then return this day as the first scrutiny day in both Houses.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L410' title='View on GitHub'>410</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L411' title='View on GitHub'>411</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L412' title='View on GitHub'>412</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L413' title='View on GitHub'>413</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L408' title='View on GitHub'>408</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L409' title='View on GitHub'>409</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L410' title='View on GitHub'>410</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L411' title='View on GitHub'>411</a>   end</code></pre>
 <h3>We want to find the first scrutiny day in the Commons.</h3>
 
 <p>This method is used when a Statutory Instrument is laid outside of a scrutiny period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first actual sitting day in the Commons following the laying.</p>
 
 <p>This method is used for negative or made affirmative SIs - laid in the Commons and not laid in the Lords.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L421' title='View on GitHub'>421</a>   def first_commons_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L419' title='View on GitHub'>419</a>   def first_commons_scrutiny_day</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L424' title='View on GitHub'>424</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L422' title='View on GitHub'>422</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first Commons scrutiny day so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L427' title='View on GitHub'>427</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L425' title='View on GitHub'>425</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L430' title='View on GitHub'>430</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L428' title='View on GitHub'>428</a>     else</code></pre>
 <p>... then if this is not a scrutiny day in the Commons ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L433' title='View on GitHub'>433</a>       unless self.is_commons_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L431' title='View on GitHub'>431</a>       unless self.is_commons_scrutiny_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L436' title='View on GitHub'>436</a>         self.next_day.first_commons_scrutiny_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L434' title='View on GitHub'>434</a>         self.next_day.first_commons_scrutiny_day</code></pre>
 <p>... then if this is a scrutiny day in the Commons ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L439' title='View on GitHub'>439</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L437' title='View on GitHub'>437</a>       else</code></pre>
 <p>... then return this day as the first scrutiny day in the Commons.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L442' title='View on GitHub'>442</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L443' title='View on GitHub'>443</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L444' title='View on GitHub'>444</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L445' title='View on GitHub'>445</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L440' title='View on GitHub'>440</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L441' title='View on GitHub'>441</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L442' title='View on GitHub'>442</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L443' title='View on GitHub'>443</a>   end</code></pre>
 <h3>We want to find the first parliamentary sitting day in both Houses.</h3>
 
 <p>This method is used when a Proposed Negative Statutory Instrument is laid.</p>
 
 <p>Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L453' title='View on GitHub'>453</a>   def first_joint_parliamentary_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L451' title='View on GitHub'>451</a>   def first_joint_parliamentary_sitting_day</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L456' title='View on GitHub'>456</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L454' title='View on GitHub'>454</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L459' title='View on GitHub'>459</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L457' title='View on GitHub'>457</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L462' title='View on GitHub'>462</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L460' title='View on GitHub'>460</a>     else</code></pre>
 <p>... then if this is not a parliamentary sitting day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L465' title='View on GitHub'>465</a>       unless self.is_joint_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L463' title='View on GitHub'>463</a>       unless self.is_joint_parliamentary_sitting_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L468' title='View on GitHub'>468</a>         self.next_day.first_joint_parliamentary_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L466' title='View on GitHub'>466</a>         self.next_day.first_joint_parliamentary_sitting_day</code></pre>
 <p>... then if this is a parliamentary sitting day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L471' title='View on GitHub'>471</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L469' title='View on GitHub'>469</a>       else</code></pre>
 <p>... then return this day as the first parliamentary sitting day in both Houses.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L474' title='View on GitHub'>474</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L475' title='View on GitHub'>475</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L476' title='View on GitHub'>476</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L477' title='View on GitHub'>477</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L472' title='View on GitHub'>472</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L473' title='View on GitHub'>473</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L474' title='View on GitHub'>474</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L475' title='View on GitHub'>475</a>   end</code></pre>
+<h3>We want to find the last preceding parliamentary sitting day in both Houses.</h3>
+
+<p>This method is used when a Proposed Negative Statutory Instrument is laid.</p>
+
+<p>Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L483' title='View on GitHub'>483</a>   def last_joint_parliamentary_sitting_day</code></pre>
+<p>If this is a day on which the calendar is not yet populated ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L486' title='View on GitHub'>486</a>     if self.is_calendar_not_populated?</code></pre>
+<p>... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L489' title='View on GitHub'>489</a>       return nil</code></pre>
+<p>If this is a day on which the calendar is populated ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L492' title='View on GitHub'>492</a>     else</code></pre>
+<p>... then if this is not a parliamentary sitting day in both Houses ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L495' title='View on GitHub'>495</a>       unless self.is_joint_parliamentary_sitting_day?</code></pre>
+<p>... then go to the previous day and check that.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L498' title='View on GitHub'>498</a>         self.prev_day.last_joint_parliamentary_sitting_day</code></pre>
+<p>... then if this is a parliamentary sitting day in both Houses ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L501' title='View on GitHub'>501</a>       else</code></pre>
+<p>... then return this day as the first parliamentary sitting day in both Houses.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L504' title='View on GitHub'>504</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L505' title='View on GitHub'>505</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L506' title='View on GitHub'>506</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L507' title='View on GitHub'>507</a>   end</code></pre>
 <h3>We want to find the first actual sitting day in both Houses.</h3>
 
 <p>This method is used to calculate periods A and B for treaties.</p>
 
 <p>Even if a treaty is laid or a ministerial statement is made on a joint actual sitting day, the clock does not start until the next joint actual sitting day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L485' title='View on GitHub'>485</a>   def first_joint_actual_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L515' title='View on GitHub'>515</a>   def first_joint_actual_sitting_day</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L488' title='View on GitHub'>488</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L518' title='View on GitHub'>518</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first actual sitting day in both Houses so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L491' title='View on GitHub'>491</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L521' title='View on GitHub'>521</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L494' title='View on GitHub'>494</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L524' title='View on GitHub'>524</a>     else</code></pre>
 <p>... then if this is not an actual sitting day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L497' title='View on GitHub'>497</a>       unless self.is_joint_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L527' title='View on GitHub'>527</a>       unless self.is_joint_actual_sitting_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L500' title='View on GitHub'>500</a>         self.next_day.first_joint_actual_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L530' title='View on GitHub'>530</a>         self.next_day.first_joint_actual_sitting_day</code></pre>
 <p>... then if this is an actual sitting day in both Houses ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L503' title='View on GitHub'>503</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L533' title='View on GitHub'>533</a>       else</code></pre>
 <p>... then return this day as the first actual sitting day in both Houses.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L506' title='View on GitHub'>506</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L507' title='View on GitHub'>507</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L508' title='View on GitHub'>508</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L509' title='View on GitHub'>509</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L536' title='View on GitHub'>536</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L537' title='View on GitHub'>537</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L538' title='View on GitHub'>538</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L539' title='View on GitHub'>539</a>   end</code></pre>
 <h3>We want to find the first actual sitting day in the House of Commons.</h3>
 
 <p>This method is used by the House of Commons only sitting day calculation.</p>
 
 <p>Even if an instrument is laid on a House of Commons actual sitting day, the clock does not start until the next House of Commons actual sitting day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L517' title='View on GitHub'>517</a>   def first_commons_actual_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L547' title='View on GitHub'>547</a>   def first_commons_actual_sitting_day</code></pre>
 <p>If this is a day on which the calendar is not yet populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L520' title='View on GitHub'>520</a>     if self.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L550' title='View on GitHub'>550</a>     if self.is_calendar_not_populated?</code></pre>
 <p>... then we cannot find a first actual sitting day in the House of Commons so we stop looking.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L523' title='View on GitHub'>523</a>       return nil</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L553' title='View on GitHub'>553</a>       return nil</code></pre>
 <p>If this is a day on which the calendar is populated ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L526' title='View on GitHub'>526</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L556' title='View on GitHub'>556</a>     else</code></pre>
 <p>... then if this is not an actual sitting day in the House of Commons ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L529' title='View on GitHub'>529</a>       unless self.is_commons_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L559' title='View on GitHub'>559</a>       unless self.is_commons_actual_sitting_day?</code></pre>
 <p>... then go to the next day and check that.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L532' title='View on GitHub'>532</a>         self.next_day.first_commons_actual_sitting_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L562' title='View on GitHub'>562</a>         self.next_day.first_commons_actual_sitting_day</code></pre>
 <p>... then if this is an actual sitting day in the House of Commons ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L535' title='View on GitHub'>535</a>       else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L565' title='View on GitHub'>565</a>       else</code></pre>
 <p>... then return this day as the first actual sitting day in the House of Commons.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L538' title='View on GitHub'>538</a>         self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L539' title='View on GitHub'>539</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L540' title='View on GitHub'>540</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L541' title='View on GitHub'>541</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L568' title='View on GitHub'>568</a>         self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L569' title='View on GitHub'>569</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L570' title='View on GitHub'>570</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L571' title='View on GitHub'>571</a>   end</code></pre>
 <p>(End of set of methods to find the first day of a given type.)</p>
 
 <h2>A set of methods to return which higher level parliamentary time periods a calendar day sits in.</h2>
@@ -518,174 +549,174 @@
 
 <h3>We want to find which dissolution period a calendar day sits in, if any.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L555' title='View on GitHub'>555</a>   def dissolution_period</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L556' title='View on GitHub'>556</a>     DissolutionPeriod.all.where( &quot;start_date &lt;= ?&quot;, self ).where( &quot;end_date &gt;= ?&quot;, self).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L557' title='View on GitHub'>557</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L585' title='View on GitHub'>585</a>   def dissolution_period</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L586' title='View on GitHub'>586</a>     DissolutionPeriod.all.where( &quot;start_date &lt;= ?&quot;, self ).where( &quot;end_date &gt;= ?&quot;, self).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L587' title='View on GitHub'>587</a>   end</code></pre>
 <h3>We want to find which Parliament period a calendar day sits in, if any.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L560' title='View on GitHub'>560</a>   def parliament_period</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L561' title='View on GitHub'>561</a>     ParliamentPeriod.find_by_sql([</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L562' title='View on GitHub'>562</a>       &quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L563' title='View on GitHub'>563</a>         SELECT *</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L564' title='View on GitHub'>564</a>         FROM parliament_periods</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L565' title='View on GitHub'>565</a>         WHERE start_date &lt;= :the_date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L566' title='View on GitHub'>566</a>         AND (</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L567' title='View on GitHub'>567</a>           end_date &gt;= :the_date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L568' title='View on GitHub'>568</a>           OR</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L569' title='View on GitHub'>569</a>           end_date IS NULL</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L570' title='View on GitHub'>570</a>         )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L571' title='View on GitHub'>571</a>       &quot;,</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L572' title='View on GitHub'>572</a>       the_date: self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L573' title='View on GitHub'>573</a>     ]).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L574' title='View on GitHub'>574</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L590' title='View on GitHub'>590</a>   def parliament_period</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L591' title='View on GitHub'>591</a>     ParliamentPeriod.find_by_sql([</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L592' title='View on GitHub'>592</a>       &quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L593' title='View on GitHub'>593</a>         SELECT *</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L594' title='View on GitHub'>594</a>         FROM parliament_periods</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L595' title='View on GitHub'>595</a>         WHERE start_date &lt;= :the_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L596' title='View on GitHub'>596</a>         AND (</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L597' title='View on GitHub'>597</a>           end_date &gt;= :the_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L598' title='View on GitHub'>598</a>           OR</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L599' title='View on GitHub'>599</a>           end_date IS NULL</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L600' title='View on GitHub'>600</a>         )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L601' title='View on GitHub'>601</a>       &quot;,</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L602' title='View on GitHub'>602</a>       the_date: self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L603' title='View on GitHub'>603</a>     ]).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L604' title='View on GitHub'>604</a>   end</code></pre>
 <h3>We want to find which prorogoration period a calendar day sits in, if any.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L577' title='View on GitHub'>577</a>   def prorogation_period</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L578' title='View on GitHub'>578</a>     ProrogationPeriod.all.where( &quot;start_date &lt;= ?&quot;, self ).where( &quot;end_date &gt;= ?&quot;, self).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L579' title='View on GitHub'>579</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L607' title='View on GitHub'>607</a>   def prorogation_period</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L608' title='View on GitHub'>608</a>     ProrogationPeriod.all.where( &quot;start_date &lt;= ?&quot;, self ).where( &quot;end_date &gt;= ?&quot;, self).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L609' title='View on GitHub'>609</a>   end</code></pre>
 <h3>We want to find which session a calendar day sits in, if any.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L582' title='View on GitHub'>582</a>   def session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L583' title='View on GitHub'>583</a>     Session.find_by_sql([</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L584' title='View on GitHub'>584</a>       &quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L585' title='View on GitHub'>585</a>         SELECT *</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L586' title='View on GitHub'>586</a>         FROM sessions</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L587' title='View on GitHub'>587</a>         WHERE start_date &lt;= :the_date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L588' title='View on GitHub'>588</a>         AND (</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L589' title='View on GitHub'>589</a>           end_date &gt;= :the_date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L590' title='View on GitHub'>590</a>           OR</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L591' title='View on GitHub'>591</a>           end_date IS NULL</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L592' title='View on GitHub'>592</a>         )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L593' title='View on GitHub'>593</a>       &quot;,</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L594' title='View on GitHub'>594</a>       the_date: self</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L595' title='View on GitHub'>595</a>     ]).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L596' title='View on GitHub'>596</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L612' title='View on GitHub'>612</a>   def session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L613' title='View on GitHub'>613</a>     Session.find_by_sql([</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L614' title='View on GitHub'>614</a>       &quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L615' title='View on GitHub'>615</a>         SELECT *</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L616' title='View on GitHub'>616</a>         FROM sessions</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L617' title='View on GitHub'>617</a>         WHERE start_date &lt;= :the_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L618' title='View on GitHub'>618</a>         AND (</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L619' title='View on GitHub'>619</a>           end_date &gt;= :the_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L620' title='View on GitHub'>620</a>           OR</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L621' title='View on GitHub'>621</a>           end_date IS NULL</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L622' title='View on GitHub'>622</a>         )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L623' title='View on GitHub'>623</a>       &quot;,</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L624' title='View on GitHub'>624</a>       the_date: self</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L625' title='View on GitHub'>625</a>     ]).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L626' title='View on GitHub'>626</a>   end</code></pre>
 <h2>We want to find out if this is the final day of a session.</h2>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L599' title='View on GitHub'>599</a>   def is_final_day_of_session?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L600' title='View on GitHub'>600</a>     is_final_day_of_session = false</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L601' title='View on GitHub'>601</a>     session = Session.all.where( &quot;end_date = ?&quot;, self )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L602' title='View on GitHub'>602</a>     is_final_day_of_session = true unless session.empty?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L603' title='View on GitHub'>603</a>     is_final_day_of_session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L604' title='View on GitHub'>604</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L629' title='View on GitHub'>629</a>   def is_final_day_of_session?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L630' title='View on GitHub'>630</a>     is_final_day_of_session = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L631' title='View on GitHub'>631</a>     session = Session.all.where( &quot;end_date = ?&quot;, self )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L632' title='View on GitHub'>632</a>     is_final_day_of_session = true unless session.empty?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L633' title='View on GitHub'>633</a>     is_final_day_of_session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L634' title='View on GitHub'>634</a>   end</code></pre>
 <h2>We want to find the session immediately preceding this date.</h2>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L608' title='View on GitHub'>608</a>   def preceding_session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L609' title='View on GitHub'>609</a>     Session.all.where( &quot;start_date &lt; ?&quot;, self ).order( &quot;start_date DESC&quot; ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L610' title='View on GitHub'>610</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L638' title='View on GitHub'>638</a>   def preceding_session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L639' title='View on GitHub'>639</a>     Session.all.where( &quot;start_date &lt; ?&quot;, self ).order( &quot;start_date DESC&quot; ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L640' title='View on GitHub'>640</a>   end</code></pre>
 <h2>We want to find the session immediately following this date.</h2>
 
 <p>This method is used to determine which session papers laid in prorogation are recorded in.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L614' title='View on GitHub'>614</a>   def following_session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L615' title='View on GitHub'>615</a>     Session.all.where( &quot;start_date &gt; ?&quot;, self ).order( &quot;start_date&quot; ).first</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L616' title='View on GitHub'>616</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L644' title='View on GitHub'>644</a>   def following_session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L645' title='View on GitHub'>645</a>     Session.all.where( &quot;start_date &gt; ?&quot;, self ).order( &quot;start_date&quot; ).first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L646' title='View on GitHub'>646</a>   end</code></pre>
 <h3>Generate label for the day type in the Commons in a session.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L619' title='View on GitHub'>619</a>   def commons_day_type</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L620' title='View on GitHub'>620</a>     if self.is_commons_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L621' title='View on GitHub'>621</a>       day_type = &#39;Parliamentary sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L622' title='View on GitHub'>622</a>     elsif self.is_commons_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L623' title='View on GitHub'>623</a>       day_type = &quot;Continuation sitting day&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L624' title='View on GitHub'>624</a>     elsif self.is_commons_virtual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L625' title='View on GitHub'>625</a>       day_type = &#39;Virtual sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L626' title='View on GitHub'>626</a>     elsif self.is_commons_non_sitting_scrutiny_day?( 4 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L627' title='View on GitHub'>627</a>       day_type = &#39;Scrutiny non-sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L628' title='View on GitHub'>628</a>     elsif self.is_commons_adjournment_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L629' title='View on GitHub'>629</a>       day_type = self.commons_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L630' title='View on GitHub'>630</a>     elsif self.session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L631' title='View on GitHub'>631</a>       day_type = &#39;Session day of unknown type&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L632' title='View on GitHub'>632</a>     elsif self.is_prorogation_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L633' title='View on GitHub'>633</a>       day_type = &#39;Prorogation&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L634' title='View on GitHub'>634</a>     elsif self.is_dissolution_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L635' title='View on GitHub'>635</a>       day_type = &#39;Dissolution&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L636' title='View on GitHub'>636</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L637' title='View on GitHub'>637</a>     day_type</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L638' title='View on GitHub'>638</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L649' title='View on GitHub'>649</a>   def commons_day_type</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L650' title='View on GitHub'>650</a>     if self.is_commons_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L651' title='View on GitHub'>651</a>       day_type = &#39;Parliamentary sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L652' title='View on GitHub'>652</a>     elsif self.is_commons_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L653' title='View on GitHub'>653</a>       day_type = &quot;Continuation sitting day&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L654' title='View on GitHub'>654</a>     elsif self.is_commons_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L655' title='View on GitHub'>655</a>       day_type = &#39;Virtual sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L656' title='View on GitHub'>656</a>     elsif self.is_commons_non_sitting_scrutiny_day?( 4 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L657' title='View on GitHub'>657</a>       day_type = &#39;Scrutiny non-sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L658' title='View on GitHub'>658</a>     elsif self.is_commons_adjournment_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L659' title='View on GitHub'>659</a>       day_type = self.commons_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L660' title='View on GitHub'>660</a>     elsif self.session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L661' title='View on GitHub'>661</a>       day_type = &#39;Session day of unknown type&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L662' title='View on GitHub'>662</a>     elsif self.is_prorogation_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L663' title='View on GitHub'>663</a>       day_type = &#39;Prorogation&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L664' title='View on GitHub'>664</a>     elsif self.is_dissolution_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L665' title='View on GitHub'>665</a>       day_type = &#39;Dissolution&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L666' title='View on GitHub'>666</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L667' title='View on GitHub'>667</a>     day_type</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L668' title='View on GitHub'>668</a>   end</code></pre>
 <h3>Generate label for the day type in the Lords in a session.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L641' title='View on GitHub'>641</a>   def lords_day_type</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L642' title='View on GitHub'>642</a>     if self.is_lords_parliamentary_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L643' title='View on GitHub'>643</a>       day_type = &#39;Parliamentary sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L644' title='View on GitHub'>644</a>     elsif self.is_lords_actual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L645' title='View on GitHub'>645</a>       day_type = &quot;Continuation sitting day&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L646' title='View on GitHub'>646</a>     elsif self.is_lords_virtual_sitting_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L647' title='View on GitHub'>647</a>       day_type = &#39;Virtual sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L648' title='View on GitHub'>648</a>     elsif self.is_lords_non_sitting_scrutiny_day?( 4 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L649' title='View on GitHub'>649</a>       day_type = &#39;Scrutiny non-sitting day&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L650' title='View on GitHub'>650</a>     elsif self.is_lords_adjournment_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L651' title='View on GitHub'>651</a>       day_type = self.lords_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L652' title='View on GitHub'>652</a>     elsif self.session</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L653' title='View on GitHub'>653</a>       day_type = &#39;Session day of unknown type&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L654' title='View on GitHub'>654</a>     elsif self.is_prorogation_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L655' title='View on GitHub'>655</a>       day_type = &#39;Prorogation&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L656' title='View on GitHub'>656</a>     elsif self.is_dissolution_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L657' title='View on GitHub'>657</a>       day_type = &#39;Dissolution&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L658' title='View on GitHub'>658</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L659' title='View on GitHub'>659</a>     day_type</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L660' title='View on GitHub'>660</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L671' title='View on GitHub'>671</a>   def lords_day_type</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L672' title='View on GitHub'>672</a>     if self.is_lords_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L673' title='View on GitHub'>673</a>       day_type = &#39;Parliamentary sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L674' title='View on GitHub'>674</a>     elsif self.is_lords_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L675' title='View on GitHub'>675</a>       day_type = &quot;Continuation sitting day&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L676' title='View on GitHub'>676</a>     elsif self.is_lords_virtual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L677' title='View on GitHub'>677</a>       day_type = &#39;Virtual sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L678' title='View on GitHub'>678</a>     elsif self.is_lords_non_sitting_scrutiny_day?( 4 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L679' title='View on GitHub'>679</a>       day_type = &#39;Scrutiny non-sitting day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L680' title='View on GitHub'>680</a>     elsif self.is_lords_adjournment_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L681' title='View on GitHub'>681</a>       day_type = self.lords_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L682' title='View on GitHub'>682</a>     elsif self.session</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L683' title='View on GitHub'>683</a>       day_type = &#39;Session day of unknown type&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L684' title='View on GitHub'>684</a>     elsif self.is_prorogation_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L685' title='View on GitHub'>685</a>       day_type = &#39;Prorogation&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L686' title='View on GitHub'>686</a>     elsif self.is_dissolution_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L687' title='View on GitHub'>687</a>       day_type = &#39;Dissolution&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L688' title='View on GitHub'>688</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L689' title='View on GitHub'>689</a>     day_type</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L690' title='View on GitHub'>690</a>   end</code></pre>
 <h3>Generate a label to say whether it&#39;s a scrutiny day in the Commons or not.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L663' title='View on GitHub'>663</a>   def is_commons_scrutiny_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L664' title='View on GitHub'>664</a>     if self.is_commons_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L665' title='View on GitHub'>665</a>       label = &#39;True&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L666' title='View on GitHub'>666</a>     else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L667' title='View on GitHub'>667</a>       label = &#39;False&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L668' title='View on GitHub'>668</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L669' title='View on GitHub'>669</a>     label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L670' title='View on GitHub'>670</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L693' title='View on GitHub'>693</a>   def is_commons_scrutiny_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L694' title='View on GitHub'>694</a>     if self.is_commons_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L695' title='View on GitHub'>695</a>       label = &#39;True&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L696' title='View on GitHub'>696</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L697' title='View on GitHub'>697</a>       label = &#39;False&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L698' title='View on GitHub'>698</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L699' title='View on GitHub'>699</a>     label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L700' title='View on GitHub'>700</a>   end</code></pre>
 <h3>Generate a label to say whether it&#39;s a scrutiny day in the Lords or not.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L673' title='View on GitHub'>673</a>   def is_lords_scrutiny_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L674' title='View on GitHub'>674</a>     if self.is_lords_scrutiny_day?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L675' title='View on GitHub'>675</a>       label = &#39;True&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L676' title='View on GitHub'>676</a>     else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L677' title='View on GitHub'>677</a>       label = &#39;False&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L678' title='View on GitHub'>678</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L679' title='View on GitHub'>679</a>     label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L680' title='View on GitHub'>680</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L703' title='View on GitHub'>703</a>   def is_lords_scrutiny_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L704' title='View on GitHub'>704</a>     if self.is_lords_scrutiny_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L705' title='View on GitHub'>705</a>       label = &#39;True&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L706' title='View on GitHub'>706</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L707' title='View on GitHub'>707</a>       label = &#39;False&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L708' title='View on GitHub'>708</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L709' title='View on GitHub'>709</a>     label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L710' title='View on GitHub'>710</a>   end</code></pre>
 <h3>A method to label a Commons adjournment day, with recess if applicable.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L683' title='View on GitHub'>683</a>   def commons_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L684' title='View on GitHub'>684</a>     commons_adjournment_day_label = &#39;Adjournment day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L713' title='View on GitHub'>713</a>   def commons_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L714' title='View on GitHub'>714</a>     commons_adjournment_day_label = &#39;Adjournment day&#39;</code></pre>
 <p>We attempt to find a recess on this date, in this House.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L687' title='View on GitHub'>687</a>     recess_date = RecessDate</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L688' title='View on GitHub'>688</a>       .all</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L689' title='View on GitHub'>689</a>       .where( &quot;start_date &lt;= ?&quot;, self )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L690' title='View on GitHub'>690</a>       .where( &quot;end_date &gt;= ?&quot;, self )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L691' title='View on GitHub'>691</a>       .where( house_id: 1 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L692' title='View on GitHub'>692</a>       .first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L717' title='View on GitHub'>717</a>     recess_date = RecessDate</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L718' title='View on GitHub'>718</a>       .all</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L719' title='View on GitHub'>719</a>       .where( &quot;start_date &lt;= ?&quot;, self )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L720' title='View on GitHub'>720</a>       .where( &quot;end_date &gt;= ?&quot;, self )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L721' title='View on GitHub'>721</a>       .where( house_id: 1 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L722' title='View on GitHub'>722</a>       .first</code></pre>
 <p>If we find a recess date on this day, in this House ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L695' title='View on GitHub'>695</a>     if recess_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L725' title='View on GitHub'>725</a>     if recess_date</code></pre>
 <p>... we append the description of the recess date to the label</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L698' title='View on GitHub'>698</a>       commons_adjournment_day_label += &#39; (&#39; + recess_date.description + &#39;)&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L699' title='View on GitHub'>699</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L700' title='View on GitHub'>700</a>     commons_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L701' title='View on GitHub'>701</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L728' title='View on GitHub'>728</a>       commons_adjournment_day_label += &#39; (&#39; + recess_date.description + &#39;)&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L729' title='View on GitHub'>729</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L730' title='View on GitHub'>730</a>     commons_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L731' title='View on GitHub'>731</a>   end</code></pre>
 <h3>A method to label a Lords adjournment day, with recess if applicable.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L704' title='View on GitHub'>704</a>   def lords_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L705' title='View on GitHub'>705</a>     lords_adjournment_day_label = &#39;Adjournment day&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L734' title='View on GitHub'>734</a>   def lords_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L735' title='View on GitHub'>735</a>     lords_adjournment_day_label = &#39;Adjournment day&#39;</code></pre>
 <p>We attempt to find a recess on this date, in this House.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L708' title='View on GitHub'>708</a>     recess_date = RecessDate</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L709' title='View on GitHub'>709</a>       .all</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L710' title='View on GitHub'>710</a>       .where( &quot;start_date &lt;= ?&quot;, self )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L711' title='View on GitHub'>711</a>       .where( &quot;end_date &gt;= ?&quot;, self )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L712' title='View on GitHub'>712</a>       .where( house_id: 2 )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L713' title='View on GitHub'>713</a>       .first</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L738' title='View on GitHub'>738</a>     recess_date = RecessDate</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L739' title='View on GitHub'>739</a>       .all</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L740' title='View on GitHub'>740</a>       .where( &quot;start_date &lt;= ?&quot;, self )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L741' title='View on GitHub'>741</a>       .where( &quot;end_date &gt;= ?&quot;, self )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L742' title='View on GitHub'>742</a>       .where( house_id: 2 )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L743' title='View on GitHub'>743</a>       .first</code></pre>
 <p>If we find a recess date on this day, in this House ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L716' title='View on GitHub'>716</a>     if recess_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L746' title='View on GitHub'>746</a>     if recess_date</code></pre>
 <p>... we append the description of the recess date to the label</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L719' title='View on GitHub'>719</a>       lords_adjournment_day_label += &#39; (&#39; + recess_date.description + &#39;)&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L720' title='View on GitHub'>720</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L721' title='View on GitHub'>721</a>     lords_adjournment_day_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L722' title='View on GitHub'>722</a>   end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L723' title='View on GitHub'>723</a> end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L725' title='View on GitHub'>725</a> Date.include(DateMonkeyPatch)</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L749' title='View on GitHub'>749</a>       lords_adjournment_day_label += &#39; (&#39; + recess_date.description + &#39;)&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L750' title='View on GitHub'>750</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L751' title='View on GitHub'>751</a>     lords_adjournment_day_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L752' title='View on GitHub'>752</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L753' title='View on GitHub'>753</a> end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/config/initializers/monkey_patching.rb#L755' title='View on GitHub'>755</a> Date.include(DateMonkeyPatch)</code></pre>
 
