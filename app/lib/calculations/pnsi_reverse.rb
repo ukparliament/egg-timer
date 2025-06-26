@@ -26,13 +26,9 @@ module Calculations
         # ... continue to the **previous day**.
         date = date.prev_day
         
-        puts date
-        
         # PNSIs use parliamentary sitting days, rather than naive sitting days.
         # If this is a parliamentary sitting day in either House...
         if date.is_either_house_parliamentary_sitting_day?
-        
-        puts "sitting"
           
           # ... we set the scrutiny start date to this date if the scrutiny start date is nil ...
           @scrutiny_start_date = date if @scrutiny_start_date.nil?
