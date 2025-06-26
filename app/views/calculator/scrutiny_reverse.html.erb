@@ -5,42 +5,54 @@
 <% else -%>
 
 <% if @message -%>
-	<%= content_tag( 'p', @message ) %>
-<% end -%>
-
-<p class="box">The <em>anticipated start date</em> of the scrutiny period is
-<br>
-	<strong><big><time><%= @scrutiny_end_date.strftime( '%A, %-d %B %Y') %></time></big></strong>
+	<p class="box">
+		<%= @message.html_safe %>
+		<br>
+		<strong>
+			<big>
+				<time>
+					<%= @scrutiny_end_date.strftime( '%A, %-d %B %Y') %>
+				</time>
+			</big>
+		</strong>
 	</p>
+<% end -%>
+<!-- 
+<p class="box">
+	The <em>anticipated start date</em> of the scrutiny period is
+	<br>
+	<strong>
+		<big>
+			<time>
+				<%= @scrutiny_end_date.strftime( '%A, %-d %B %Y') %>
+			</time>
+		</big>
+	</strong>
+</p>
+-->
 	
 	
-<p class="box">The <em>anticipated end date</em> of the scrutiny period is
-<br>
-
-	<strong><big><time><%= @scrutiny_start_date.strftime( '%A, %-d %B %Y') %></time></big></strong>
+<p class="box">
+	The <em>anticipated end date</em> of the scrutiny period is
+	<br>
+	<strong>
+		<big>
+			<time>
+				<%= @scrutiny_start_date.strftime( '%A, %-d %B %Y') %>
+			</time>
+		</big>
+	</strong>
 </p>
 
-
-
-
-
 <p>This was calculated using this information:</p>
-	
 <ul>
+	<%= content_tag( 'li', "A procedure type #{content_tag( 'strong', @procedure.name )}".html_safe ) if @procedure %>
+	<%= content_tag( 'li', "A scrutiny period of #{content_tag( 'strong', "#{@day_count} days" )}".html_safe ) %>
+	<%= content_tag( 'li', "A target end date of #{content_tag( 'strong', @start_date.strftime( '%-d %B %Y') )}".html_safe ) %>
+</ul>
 
-	<% if @procedure -%>
-		<li>A procedure type <strong><%= @procedure.name %></strong></li>
-	<% end -%>
-	
-	<li>A scrutiny period of <strong><%= @day_count %> days</strong></li>
-	
-	<li>A target end date of <strong><%= @start_date.strftime( '%-d %B %Y') %></strong></li>
-	
+<%= content_tag( 'p', 'If sitting days change within this period, the dates of the scrutiny period will need to be recalculated.' ) %>
 
-	</ul>
-
-
-<p>If sitting days change within this period, the dates of the scrutiny period will need to be recalculated.</p>
 
 <a href="<%= request.original_fullpath.sub '?', '.ics?' %>">
 <svg width="209" height="80" viewBox="0 0 209 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(0 0)">
