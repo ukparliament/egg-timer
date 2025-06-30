@@ -28,6 +28,15 @@ class MetaController < ApplicationController
     @crumb << { label: 'Database schema', url: nil }
   end
   
+  def cookies
+
+    # Set a meta information for the page.
+    @page_title = "Cookies"
+    @description = "Cookies."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Cookies', url: nil }
+  end
+  
   # Librarian tools
   def librarian_tools
 
