@@ -155,7 +155,7 @@ class CalculatorController < ApplicationController
               @start_date_type = "laying date"
               if @direction == 'reverse'
                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target date, the instrument must be <em>laid earlier than</em>"
+                @message = "In order to meet the target end date, the instrument must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
               else
                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
               end
