@@ -74,6 +74,7 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/schema' => 'meta#schema', as: :meta_schema
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app
+  get 'egg-timer/meta/cookies' => 'meta#cookies', as: :meta_cookies
   
   # Code comments
   get 'egg-timer/meta/comments' => 'code_comment#index', as: :code_comment_list
