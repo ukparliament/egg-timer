@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   # About pages
   get 'egg-timer/meta' => 'meta#index', as: :meta_list
   get 'egg-timer/meta/using' => 'meta#using', as: :meta_using
+  get 'egg-timer/meta/using-start-date-calculator' => 'meta#using_start_date_calculator', as: :meta_using_reverse
   get 'egg-timer/meta/schema' => 'meta#schema', as: :meta_schema
   get 'egg-timer/meta/subscribe' => 'meta#subscribe', as: :meta_subscribe
   get 'egg-timer/meta/app' => 'meta#app', as: :meta_app

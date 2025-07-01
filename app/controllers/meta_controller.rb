@@ -152,6 +152,19 @@ class MetaController < ApplicationController
     @subsection = 'scrutiny-calculator'
   end
   
+  def using_start_date_calculator
+    
+    # Set a meta information for the page.
+    @page_title = "Scrutiny start date calculator - how to use"
+    @multiline_page_title = "Calculators <span class='subhead'>Scrutiny start date - how to use</span>".html_safe
+    @description = "How to use the calculator to determine the estimated start date of scrutiny for instruments before Parliament."
+    @crumb << { label: 'Calculators', url: calculator_list_url }
+    @crumb << { label: 'Scrutiny start date', url: reverse_calculator_form_url }
+    @crumb << { label: 'How to use', url: nil }
+    @section = 'calculators'
+    @subsection = 'scrutiny-calculator-reverse'
+  end
+  
   def subscribe
   	@title = "Subscribe to calendars"
     @calendar_links << ["Upcoming recess dates in the House of Commons", house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' )]
