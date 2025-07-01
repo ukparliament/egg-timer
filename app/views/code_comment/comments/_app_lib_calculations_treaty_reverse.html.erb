@@ -40,7 +40,7 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L31' title='View on GitHub'>31</a>           @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
 <p>... and add 1 to the day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L34' title='View on GitHub'>34</a>           day_count +=1 if date.is_joint_actual_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L34' title='View on GitHub'>34</a>           day_count +=1</code></pre>
 <p>Otherwise, if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L37' title='View on GitHub'>37</a>         elsif date.is_calendar_not_populated?</code></pre>
@@ -52,8 +52,10 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L43' title='View on GitHub'>43</a>           break</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L44' title='View on GitHub'>44</a>         end</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L45' title='View on GitHub'>45</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L47' title='View on GitHub'>47</a>       date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L48' title='View on GitHub'>48</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L49' title='View on GitHub'>49</a>   end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L50' title='View on GitHub'>50</a> end</code></pre>
+<p>We return the calculated date.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L48' title='View on GitHub'>48</a>       date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L49' title='View on GitHub'>49</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L50' title='View on GitHub'>50</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/treaty_reverse.rb#L51' title='View on GitHub'>51</a> end</code></pre>
 
