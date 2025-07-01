@@ -8,9 +8,10 @@ class CalculatorController < ApplicationController
   include Calculations::CommonsOnlySittingDays
   include Calculations::Pnsi
   include Calculations::Treaty
+  include Calculations::CommonsOnlySiReverse
+  include Calculations::CommonsOnlySittingDaysReverse
   include Calculations::PnsiReverse
   include Calculations::TreatyReverse
-  include Calculations::CommonsOnlySittingDaysReverse
   
   # ### This is the code to provide a list of calculators.
   def index
@@ -164,9 +165,14 @@ class CalculatorController < ApplicationController
 
             # * Commons only negative Statutory Instruments
             when 5
-
-              @start_date_type = "laying date"
-              @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>laid earlier or before</em> the anticipated start date of the scrutiny period."
+              else
+                @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+                @start_date_type = "laying date"
+              end
 
             # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders
             when 6, 13, 14
@@ -176,9 +182,14 @@ class CalculatorController < ApplicationController
 
             # * Some Commons only made affirmative Statutory Instruments
             when 7
-
-              @start_date_type = "making date"
-              @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>made earlier or before</em> the anticipated start date of the scrutiny period."
+              else
+                @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
+                @start_date_type = "making date"
+              end
 
             # * Commons and Lords made affirmative Statutory Instruments where both Houses are sitting
             when 8

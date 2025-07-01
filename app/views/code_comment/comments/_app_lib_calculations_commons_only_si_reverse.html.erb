@@ -1,0 +1,63 @@
+<p>
+      On GitHub: 
+      <a href="https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb">
+        app/lib/calculations/commons_only_si_reverse.rb
+      </a>
+    </p>
+    <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L1' title='View on GitHub'>1</a> module Calculations</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L2' title='View on GitHub'>2</a>   module CommonsOnlySiReverse</code></pre>
+
+
+<p>The calculation counts in actual sitting days, requiring the start date and the number of days to count.</p>
+
+<p>The calculation is defined by paragraphs 1 and 2 of <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7">Section 7 of the Statutory Instruments Act 1946</a>, though a different calculation may be required if the instrument is laid under another Act - as per <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3">paragraph 3</a>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L7' title='View on GitHub'>7</a>     def commons_only_si_calculation_reverse(date, target_day_count)</code></pre>
+<h2>We start counting on the <strong>first day the House of Commons has a scrutiny day</strong>.</h2>
+
+<p>For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is defined by the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>. For draft negative Statutory Instruments, this is defined by the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1">Statutory Instruments Act 1946 Section 6 paragraph 1</a>.</p>
+
+<p>For made affirmatives this will be the day on which the instrument was made, if that day was a scrutiny day.</p>
+
+<p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L13' title='View on GitHub'>13</a>       @scrutiny_start_date = nil</code></pre>
+<p>We go forward one day.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L16' title='View on GitHub'>16</a>       date = date.next</code></pre>
+<p>We set the day count to zero.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L19' title='View on GitHub'>19</a>       day_count = 0</code></pre>
+<h2>Whilst the number of days we’re counting is less than the target number of days to count ...</h2>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L22' title='View on GitHub'>22</a>       while day_count &lt; target_day_count</code></pre>
+<p>... continue to the <strong>previous day</strong>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L25' title='View on GitHub'>25</a>         date = date.prev_day</code></pre>
+<p>If the day is a Commons scrutiny day ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L28' title='View on GitHub'>28</a>         if date.is_commons_scrutiny_day?</code></pre>
+<p>... we set the scrutiny start date to this date if the scrutiny start date is nil ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L31' title='View on GitHub'>31</a>           @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
+<p>... and add 1 to the day count.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L34' title='View on GitHub'>34</a>           day_count += 1</code></pre>
+<p>Otherwise, if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L37' title='View on GitHub'>37</a>         elsif date.is_calendar_not_populated?</code></pre>
+<p>... this error message is displayed to users ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L40' title='View on GitHub'>40</a>           @error_message = &quot;It&#39;s not currently possible to calculate an anticipated start date, as that date occurs during a period for which no sitting day information is available.&quot;</code></pre>
+<p>... and we stop looking through the calendar.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L43' title='View on GitHub'>43</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L44' title='View on GitHub'>44</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L45' title='View on GitHub'>45</a>       end</code></pre>
+<p>Return the anticipated end date of the scrutiny period for display.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L48' title='View on GitHub'>48</a>       date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L49' title='View on GitHub'>49</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L50' title='View on GitHub'>50</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_si_reverse.rb#L51' title='View on GitHub'>51</a> end</code></pre>
+
