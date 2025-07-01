@@ -31,7 +31,7 @@ module Calculations
           @scrutiny_start_date = date if @scrutiny_start_date.nil?
 
           # ... and add 1 to the day count.
-          day_count +=1 if date.is_joint_actual_sitting_day?
+          day_count +=1
         
         # Otherwise, if the calendar has no record of what type of day this is, we can't calculate the end date, ...
         elsif date.is_calendar_not_populated?
@@ -44,6 +44,7 @@ module Calculations
         end
       end
       
+      # We return the calculated date.
       date
     end
   end
