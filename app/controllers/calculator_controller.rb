@@ -168,7 +168,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>laid earlier or before</em> the anticipated start date of the scrutiny period."
+                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -185,7 +185,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>made earlier or before</em> the anticipated start date of the scrutiny period."
+                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "making date"
