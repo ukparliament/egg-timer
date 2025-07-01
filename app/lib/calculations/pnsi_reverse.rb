@@ -14,7 +14,7 @@ module Calculations
       # We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.
       @scrutiny_start_date = nil
       
-      # We go back forward one day.
+      # We go forward one day.
       date = date.next
       
       # ## We look at preceding days, ensuring that we've counted at least nine parliamentary sitting days in each House.
