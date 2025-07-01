@@ -42,7 +42,7 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L35' title='View on GitHub'>35</a>         elsif date.is_calendar_not_populated?</code></pre>
 <p>... this error message is displayed to users ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L38' title='View on GitHub'>38</a>           @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L38' title='View on GitHub'>38</a>           @error_message = &quot;It&#39;s not currently possible to calculate an anticipated start date, as that date occurs during a period for which no sitting day information is available.&quot;</code></pre>
 <p>... and we stop looking through the calendar.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L41' title='View on GitHub'>41</a>           break</code></pre>
