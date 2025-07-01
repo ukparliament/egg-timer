@@ -87,6 +87,7 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/comments/pnsis' => 'code_comment#pnsis', as: :code_comment_pnsis
   get 'egg-timer/meta/comments/treaties' => 'code_comment#treaties', as: :code_comment_treaties
   get 'egg-timer/meta/comments/commons-only-sitting-days' => 'code_comment#commons_only_sitting_days', as: :code_comment_commons_only_sitting_days
+  get 'egg-timer/meta/comments/commons-only-sis-reverse' => 'code_comment#commons_only_sis_reverse', as: :code_comment_commons_only_sis_reverse
   get 'egg-timer/meta/comments/pnsis-reverse' => 'code_comment#pnsis_reverse', as: :code_comment_pnsis_reverse
   get 'egg-timer/meta/comments/treaties-reverse' => 'code_comment#treaties_reverse', as: :code_comment_treaties_reverse
     get 'egg-timer/meta/comments/commons-only-sitting-days-reverse' => 'code_comment#commons_only_sitting_days_reverse', as: :code_comment_commons_only_sitting_days_reverse

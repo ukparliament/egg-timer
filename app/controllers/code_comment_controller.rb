@@ -129,6 +129,21 @@ class CodeCommentController < ApplicationController
     
     render :template => 'code_comment/comment_wrapper'
   end
+
+  def commons_only_sis_reverse
+
+    # Set meta information for the page.
+    @page_title = "Calculation code comments - scrutiny start date for Commons only statutory instruments"
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny start date for Commons only statutory instruments</span>".html_safe
+    @description = "Calculation code comments for the the scrutiny start date of Commons only statutory instruments."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
+    @crumb << { label: 'Scrutiny start date for Commons only statutory instruments', url: nil }
+    @section = 'calculators'
+    @include_partial = 'app_lib_calculations_commons_only_si_reverse'
+    
+    render :template => 'code_comment/comment_wrapper'
+  end
   
   def pnsis_reverse
 
