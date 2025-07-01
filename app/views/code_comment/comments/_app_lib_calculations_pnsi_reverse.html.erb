@@ -22,7 +22,7 @@
 <p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L15' title='View on GitHub'>15</a>       @scrutiny_start_date = nil</code></pre>
-<p>We go back forward one day.</p>
+<p>We go forward one day.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/pnsi_reverse.rb#L18' title='View on GitHub'>18</a>       date = date.next</code></pre>
 <h2>We look at preceding days, ensuring that we&#39;ve counted at least nine parliamentary sitting days in each House.</h2>

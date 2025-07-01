@@ -75,7 +75,7 @@ class CodeCommentController < ApplicationController
     # Set meta information for the page.
     @page_title = "Calculation code comments - scrutiny end date for Commons only statutory instruments"
     @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny end date for Commons only statutory instruments</span>".html_safe
-    @description = "Calculation code comments the scrutiny end date of Commons only statutory instruments."
+    @description = "Calculation code comments for the the scrutiny end date of Commons only statutory instruments."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for Commons only statutory instruments', url: nil }
@@ -108,7 +108,7 @@ class CodeCommentController < ApplicationController
     @description = "Calculation code comments for the scrutiny end date of treaty periods A and B."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
-    @crumb << { label: 'Scrutiny end date for treaties', url: nil }
+    @crumb << { label: 'Scrutiny end date for treaty periods A and B', url: nil }
     @section = 'calculators'
     @include_partial = 'app_lib_calculations_treaty'
     
@@ -123,7 +123,7 @@ class CodeCommentController < ApplicationController
     @description = "Calculation code comments for the scrutiny end date of Commons only sitting days."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
-    @crumb << { label: 'Commons only sitting days', url: nil }
+    @crumb << { label: 'Scrutiny end date for Commons only sitting days', url: nil }
     @section = 'calculators'
     @include_partial = 'app_lib_calculations_commons_only_sitting_days'
     
@@ -134,13 +134,28 @@ class CodeCommentController < ApplicationController
 
     # Set meta information for the page.
     @page_title = "Calculation code comments - scrutiny start date for proposed negative statutory instruments"
-    @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny end date for proposed negative statutory instruments</span>".html_safe
-    @description = "Calculation code comments for proposed negative statutory instruments."
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny start date for proposed negative statutory instruments</span>".html_safe
+    @description = "Calculation code comments for the scrutiny start date of proposed negative statutory instruments."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
-    @crumb << { label: 'Proposed negative statutory instruments', url: nil }
+    @crumb << { label: 'Scrutiny start date for proposed negative statutory instruments', url: nil }
     @section = 'calculators'
     @include_partial = 'app_lib_calculations_pnsi'
+    
+    render :template => 'code_comment/comment_wrapper'
+  end
+  
+  def treaties_reverse
+
+    # Set meta information for the page.
+    @page_title = "Calculation code comments - scrutiny start date for treaty periods A and B"
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny start date for treaty periods A and B</span>".html_safe
+    @description = "Calculation code comments for the scrutiny start date of treaty periods A and B."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
+    @crumb << { label: 'Scrutiny start date for treaty periods A and B', url: nil }
+    @section = 'calculators'
+    @include_partial = 'app_lib_calculations_treaty'
     
     render :template => 'code_comment/comment_wrapper'
   end
