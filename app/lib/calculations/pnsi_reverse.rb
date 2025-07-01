@@ -44,8 +44,8 @@ module Calculations
         if date.is_calendar_not_populated?
 
           # ... this error message is displayed to users ...
-          @error_message = "It's not currently possible to calculate an anticipated start date, as the likely start date occurs during a period for which no sitting day information is available."
-
+          @error_message = "It's not currently possible to calculate an anticipated start date, as that date occurs during a period for which no sitting day information is available."
+          
           # ... and we stop looking through the calendar.
           break
         end
