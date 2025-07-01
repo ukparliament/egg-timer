@@ -9,6 +9,7 @@ class CalculatorController < ApplicationController
   include Calculations::Pnsi
   include Calculations::Treaty
   include Calculations::PnsiReverse
+  include Calculations::TreatyReverse
   
   # ### This is the code to provide a list of calculators.
   def index
@@ -151,13 +152,13 @@ class CalculatorController < ApplicationController
 
             # * Proposed Statutory Instruments (PNSIs)
             when 3
-
-              @start_date_type = "laying date"
+            
               if @direction == 'reverse'
                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )
                 @message = "In order to meet the target end date, the instrument must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
               else
                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
+                @start_date_type = "laying date"
               end
 
             # * Commons only negative Statutory Instruments
@@ -192,15 +193,25 @@ class CalculatorController < ApplicationController
 
             # * Treaty period A
             when 10
-
-              @start_date_type = "laying date"
-              @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
-
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the treaty must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
+              else
+                @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+                @start_date_type = "laying date"
+              end
+              
             # * Treaty period B
             when 11
-
-              @start_date_type = "date of Ministerial statement"
-              @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the ministerial statement must be <em>made earlier than</em> the anticipated start date of the scrutiny period."
+              else
+                @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
+                @start_date_type = "date of Ministerial statement"
+              end
 
             # * Published drafts under the European Union (Withdrawal) Act 2018
             when 12
