@@ -10,6 +10,7 @@ class CalculatorController < ApplicationController
   include Calculations::Treaty
   include Calculations::PnsiReverse
   include Calculations::TreatyReverse
+  include Calculations::CommonsOnlySittingDaysReverse
   
   # ### This is the code to provide a list of calculators.
   def index
@@ -221,9 +222,14 @@ class CalculatorController < ApplicationController
     
             # * National Policy Statements.
             when 20
-    
-              @start_date_type = "laying date"
-              @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = commons_only_sitting_days_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the national policy statement must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
+             else
+                @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
+                @start_date_type = "laying date"
+              end
           end
   
         # Otherwise, if the calculation style has been selected ...

@@ -1,0 +1,57 @@
+<p>
+      On GitHub: 
+      <a href="https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb">
+        app/lib/calculations/commons_only_sitting_days_reverse.rb
+      </a>
+    </p>
+    <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L1' title='View on GitHub'>1</a> module Calculations</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L2' title='View on GitHub'>2</a>   module CommonsOnlySittingDaysReverse</code></pre>
+
+
+<p>The calculation counts a day whenever the House of Commons has an actual sitting day - and requires the start date and the number of days to count.</p>
+
+<p>The calculation is set out in <a href="https://www.legislation.gov.uk/ukpga/2008/29/section/5#section-5-4A">section 5 (4A) of the Planning Act 2008</a>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L8' title='View on GitHub'>8</a>     def commons_only_sitting_days_reverse( date, target_day_count )</code></pre>
+<p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L11' title='View on GitHub'>11</a>       @scrutiny_start_date = nil</code></pre>
+<p>We go forward one day.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L14' title='View on GitHub'>14</a>       date = date.next</code></pre>
+<p>We set the day count to zero.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L17' title='View on GitHub'>17</a>       day_count = 0</code></pre>
+<p>Whilst the number of days we’re counting is less than the target number of days to count ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L20' title='View on GitHub'>20</a>       while ( day_count &lt; target_day_count ) do</code></pre>
+<p>... continue to the <strong>previous day</strong>.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L23' title='View on GitHub'>23</a>         date = date.prev_day</code></pre>
+<p>If the date is actual sitting day in the House of Commons ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L26' title='View on GitHub'>26</a>         if date.is_commons_actual_sitting_day?</code></pre>
+<p>... we set the scrutiny start date to this date if the scrutiny start date is nil ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L29' title='View on GitHub'>29</a>           @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
+<p>... and add 1 to the day count.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L32' title='View on GitHub'>32</a>           day_count +=1</code></pre>
+<p>Otherwise, if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L35' title='View on GitHub'>35</a>         elsif date.is_calendar_not_populated?</code></pre>
+<p>... this error message is displayed to users ...</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L38' title='View on GitHub'>38</a>           @error_message = &quot;It&#39;s not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.&quot;</code></pre>
+<p>... and we stop looking through the calendar.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L41' title='View on GitHub'>41</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L42' title='View on GitHub'>42</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L43' title='View on GitHub'>43</a>       end</code></pre>
+<p>We return the calculated date.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L46' title='View on GitHub'>46</a>       date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L47' title='View on GitHub'>47</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L48' title='View on GitHub'>48</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/commons_only_sitting_days_reverse.rb#L49' title='View on GitHub'>49</a> end</code></pre>
+
