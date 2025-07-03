@@ -250,6 +250,7 @@ div.debug {
 
 div.stale-warning {
   border: 3px solid red;
+  margin-bottom: 20px;
   padding: 10px;
 }
 
