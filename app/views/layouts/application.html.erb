@@ -13,7 +13,7 @@
 		<% if @csv_url -%>
 			<link rel="alternate" href="<%= @csv_url %>" type="text/csv">
 		<% end -%>
-		<%= render :partial => 'layouts/head/json_ld/crumb', :object => @crumb %>
+		<%= render 'layouts/head/json_ld/crumb', crumb: @crumb %>
 		
 		<%# Add rel alternate links to JSON and ICS where applicable %>
 		<% if @json_url -%>
@@ -26,17 +26,18 @@
 		<% end -%>
 	</head>
 	<body class="section-<%= @section %> subsection-<%= @subsection %>">
-		<%= render :partial => 'layouts/header/header' %>
+		<%= render 'layouts/header/header' %>
 		<main id="main-content" class="container">
 			<div class="inner-content container">
 				<div class="reading-width">
-					<%= render :partial => 'layouts/debug/debug' %>
+					<%= render 'layouts/debug/debug' if Rails.env.development? -%>
+					<%= render 'layouts/stale_warning' if @stale_data -%>
 					<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
 					<%= yield %>
-					<%= render :partial => 'layouts/downloads/downloads' %>
+					<%= render 'layouts/downloads/downloads' %>
 				</div>
 			</div>
 		</main>
-		<%= render :partial => 'layouts/footer/footer' %>
+		<%= render 'layouts/footer/footer' %>
 	</body>
 </html>
