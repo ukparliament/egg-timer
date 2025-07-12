@@ -8,6 +8,7 @@ class CalculatorController < ApplicationController
   include Calculations::CommonsOnlySittingDays
   include Calculations::Pnsi
   include Calculations::Treaty
+  include Calculations::BicameralSiEitherHouseSittingReverse
   include Calculations::CommonsOnlySiReverse
   include Calculations::CommonsOnlySittingDaysReverse
   include Calculations::PnsiReverse
@@ -151,7 +152,7 @@ class CalculatorController < ApplicationController
 
               @start_date_type = "laying date"
               @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
-
+              
             # * Proposed Statutory Instruments (PNSIs)
             when 3
             
@@ -176,10 +177,15 @@ class CalculatorController < ApplicationController
 
             # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders
             when 6, 13, 14
-
-              @start_date_type = "laying date"
-              @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
-
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
+              else
+                @start_date_type = "laying date"
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+              end
+              
             # * Some Commons only made affirmative Statutory Instruments
             when 7
             
@@ -199,9 +205,14 @@ class CalculatorController < ApplicationController
 
             # * Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders
             when 9, 15, 16
-
-              @start_date_type = "making date"
-              @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
+              else
+                @start_date_type = "making date"
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+              end
 
             # * Treaty period A
             when 10

@@ -130,6 +130,21 @@ class CodeCommentController < ApplicationController
     render :template => 'code_comment/comment_wrapper'
   end
 
+  def bicameral_either_house_sitting_reverse
+
+    # Set meta information for the page.
+    @page_title = "Calculation code comments - scrutiny start date for bicameral instruments with either House sitting"
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Scrutiny start date for bicameral instruments with either House sitting</span>".html_safe
+    @description = "Calculation code comments for the scrutiny start date of bicameral instruments with either House sitting."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
+    @crumb << { label: 'Scrutiny start date for bicameral instruments with either House sitting', url: nil }
+    @section = 'calculators'
+    @include_partial = 'app_lib_calculations_bicameral_si_either_house_sitting_reverse'
+    
+    render :template => 'code_comment/comment_wrapper'
+  end
+
   def commons_only_sis_reverse
 
     # Set meta information for the page.
