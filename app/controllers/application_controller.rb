@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action do
     create_crumb_container
     setup_calendar_link_array
+    check_whether_data_is_stale
   end
   
   def create_crumb_container
@@ -16,5 +17,9 @@ class ApplicationController < ActionController::Base
   
   def setup_calendar_link_array
     @calendar_links = []
+  end
+
+  def check_whether_data_is_stale
+    @stale_data = DetailedSyncLog.where(successful: false).any?
   end
 end
