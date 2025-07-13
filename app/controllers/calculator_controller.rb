@@ -8,6 +8,7 @@ class CalculatorController < ApplicationController
   include Calculations::CommonsOnlySittingDays
   include Calculations::Pnsi
   include Calculations::Treaty
+  include Calculations::BicameralBothHousesSittingReverse
   include Calculations::BicameralSiEitherHouseSittingReverse
   include Calculations::CommonsOnlySiReverse
   include Calculations::CommonsOnlySittingDaysReverse
@@ -149,9 +150,14 @@ class CalculatorController < ApplicationController
 
             # * Legislative Reform Orders, Public Body Orders, Localism Orders and enhanced affirmatives under the Investigatory Powers Act 2016
             when 1, 17, 18, 19, 2, 4, 21, 22, 23
-
-              @start_date_type = "laying date"
-              @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
+              else
+                @start_date_type = "laying date"
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+              end
               
             # * Proposed Statutory Instruments (PNSIs)
             when 3
@@ -199,9 +205,14 @@ class CalculatorController < ApplicationController
 
             # * Commons and Lords made affirmative Statutory Instruments where both Houses are sitting
             when 8
-
-              @start_date_type = "making date"
-              @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
+              else
+                @start_date_type = "making date"
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+              end
 
             # * Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders
             when 9, 15, 16
@@ -238,9 +249,14 @@ class CalculatorController < ApplicationController
 
             # * Published drafts under the European Union (Withdrawal) Act 2018
             when 12
-  
-              @start_date_type = "date of publication"
-              @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
+                @message = "In order to meet the target end date, the draft must be <em>published on or before</em> the anticipated start date of the scrutiny period."
+              else
+                @start_date_type = "date of publication"
+                @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
+              end
     
             # * National Policy Statements.
             when 20
