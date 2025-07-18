@@ -40,6 +40,9 @@ gem 'lograge'
 # Annotate models
 gem 'annotaterb'
 
+# To make CORS configuration easier and handle it in Rack middleware
+gem "rack-cors"
+
 # For exception handling
 gem 'rollbar'
 
