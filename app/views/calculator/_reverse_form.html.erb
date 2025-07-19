@@ -2,16 +2,17 @@
 
 <form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
 	<input type="hidden" name="direction" value="reverse" />
-	<fieldset>
-		<legend>Choose a period to calculate</legend>
-		<%= render :partial => 'calculator/procedure', :collection => @procedures %>
-	</fieldset>
 	
 	<fieldset>
 		<legend>Choose a target end date</legend>
 			
 			<p><input type="date" name="start-date" id="start-date" required>
 		
+	</fieldset>
+	
+	<fieldset>
+		<legend>Choose a period to calculate</legend>
+		<%= render :partial => 'calculator/procedure', :collection => @procedures %>
 	</fieldset>
 	
 	<button type="submit" id="calculate">Continue with this period and end date</button>
