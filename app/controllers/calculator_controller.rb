@@ -153,18 +153,18 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be laid <em>on or before</em>'
               else
                 @start_date_type = "laying date"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
               end
               
-            # * Proposed Statutory Instruments (PNSIs)
+            # * Proposed Negative Statutory Instruments (PNSIs)
             when 3
             
               if @direction == 'reverse'
                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be laid <em>before</em>'
               else
                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -175,7 +175,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be laid <em>on or before</em>'
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -186,7 +186,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>laid on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be laid <em>on or before</em>'
               else
                 @start_date_type = "laying date"
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
@@ -197,7 +197,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be made <em>on or before</em>'
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "making date"
@@ -208,7 +208,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be made <em>on or before</em>'
               else
                 @start_date_type = "making date"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -219,18 +219,18 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the instrument must be <em>made on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The instrument must be made <em>on or before</em>'
               else
                 @start_date_type = "making date"
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
               end
-
+              
             # * Treaty period A
             when 10
             
               if @direction == 'reverse'
                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the treaty must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The treaty must be laid <em>before</em>'
               else
                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -241,7 +241,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the ministerial statement must be <em>made earlier than</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The Minister must make a statement <em>before</em>'
               else
                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
                 @start_date_type = "date of Ministerial statement"
@@ -252,7 +252,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the draft must be <em>published on or before</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The draft must be published <em>on or before</em>'
               else
                 @start_date_type = "date of publication"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -263,7 +263,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_sitting_days_reverse( @start_date, @day_count )
-                @message = "In order to meet the target end date, the national policy statement must be <em>laid earlier than</em> the anticipated start date of the scrutiny period."
+                @action_required = 'The statement must be laid <em>before</em>'
              else
                 @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
                 @start_date_type = "laying date"
