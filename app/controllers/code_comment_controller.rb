@@ -185,7 +185,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for proposed negative statutory instruments', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_pnsi'
+    @include_partial = 'app_lib_calculations_pnsi_reverse'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -200,7 +200,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for treaty periods A and B', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_treaty'
+    @include_partial = 'app_lib_calculations_treaty_reverse'
     
     render :template => 'code_comment/comment_wrapper'
   end
