@@ -533,13 +533,14 @@ button:hover, a.previous:hover, a.next:hover {
 }
 
 /* Result page */
-p.box {
+.box {
 	background-color: white;
 	border:2pt solid gray;
 	border-radius:0.25rem;
 	color:black;
 	padding: 0.75rem;
 	font-size:larger;
+	margin-bottom: 1em;
 }
 
 #egg-timer #logo, #egg-timer .formerly {
