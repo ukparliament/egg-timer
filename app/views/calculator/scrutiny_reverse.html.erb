@@ -4,32 +4,10 @@
 	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
 
-	<p class="box">
-		The <em>anticipated start date</em> of the scrutiny period is
-		<br>
-		<strong>
-			<big>
-				<time>
-					<%= @scrutiny_end_date.strftime( '%A, %-d %B %Y') %>
-				</time>
-			</big>
-		</strong>
-		<br />
-		<%= @message.html_safe if @message %>
-	</p>
-	
-	
-	<p class="box">
-		The <em>anticipated end date</em> of the scrutiny period is
-		<br>
-		<strong>
-			<big>
-				<time>
-					<%= @scrutiny_start_date.strftime( '%A, %-d %B %Y') %>
-				</time>
-			</big>
-		</strong>
-	</p>
+	<div class="box">
+		<%= content_tag( 'p', "To produce a target end date of <em>#{@start_date.strftime( '%A, %-d %B %Y')}</em>, the scrutiny period is currently expected to begin on <em>#{@scrutiny_end_date.strftime( '%A, %-d %B %Y')}</em> and end on <em>#{@scrutiny_start_date.strftime( '%A, %-d %B %Y')}</em>.".html_safe ) %>
+	<%= content_tag( 'p', "#{@action_required} #{content_tag( 'strong', @scrutiny_end_date.strftime( '%A, %-d %B %Y') ) } for the scrutiny period to begin on that date.".html_safe ) %>
+	</div>
 
 	<p>These dates were calculated using this information:</p>
 	<ul>
