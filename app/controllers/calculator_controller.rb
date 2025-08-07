@@ -176,13 +176,26 @@ class CalculatorController < ApplicationController
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
                 @action_required = 'The instrument must be laid <em>on or before</em>'
+                @twenty_one_day_rule_date = @scrutiny_end_date + 21.days
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
               end
 
-            # * Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders
-            when 6, 13, 14
+            # * Commons and Lords negative Statutory Instruments
+            when 6
+            
+              if @direction == 'reverse'
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
+                @action_required = 'The instrument must be laid <em>on or before</em>'
+                @twenty_one_day_rule_date = @scrutiny_end_date + 21.days
+              else
+                @start_date_type = "laying date"
+                @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
+              end
+
+            # * Proposed and draft affirmative remedial orders
+            when 13, 14
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
