@@ -11,7 +11,8 @@
 	
 	<% if @twenty_one_day_rule_date -%>
 		<div class="box">
-			<%= content_tag( 'p', "According to the convention described by the '#{link_to( '21 day rule', 'https://erskinemay.parliament.uk/section/5628/time-limits' )}', were the instrument to be laid on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y' )}, it <em>should not come into force earlier than</em> #{content_tag( 'strong', @twenty_one_day_rule_date.strftime( '%A, %-d %B %Y') )}.".html_safe ) %>
+			<%= content_tag( 'p', "
+			According to the convention described by the '#{link_to( '21 day rule', 'https://erskinemay.parliament.uk/section/5628/time-limits' )}', were a made instrument to be laid on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y' )}, it <em>should not come into force earlier than</em> #{content_tag( 'strong', @twenty_one_day_rule_date.strftime( '%A, %-d %B %Y') )}.".html_safe ) %>
 		</div>
 	<% end -%>
 	
@@ -24,3 +25,5 @@
 
 	<%= content_tag( 'p', 'If sitting days change within this period, the dates of the scrutiny period will need to be recalculated.' ) %>
 <% end -%>
+
+<%= render :partial => 'disclaimer/disclaimer' %>
