@@ -6,13 +6,13 @@
 
 	<div class="box">
 		<%= content_tag( 'p', "To produce a target end date of #{@start_date.strftime( '%A, %-d %B %Y')}, the scrutiny period is currently expected to begin on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y')} and end on #{@scrutiny_start_date.strftime( '%A, %-d %B %Y')}.".html_safe ) %>
-	<%= content_tag( 'p', "#{@action_required} #{content_tag( 'strong', @scrutiny_end_date.strftime( '%A, %-d %B %Y') )} for the scrutiny period to begin on that date.".html_safe ) %>
+	<%= content_tag( 'p', "In order for the scrutiny period to start on #{content_tag( 'strong', @scrutiny_end_date.strftime( '%A, %-d %B %Y') )}, #{@action_required} that date.".html_safe ) %>
 	</div>
 	
 	<% if @twenty_one_day_rule_date -%>
 		<div class="box">
 			<%= content_tag( 'p', "
-			According to the convention described by the '#{link_to( '21 day rule', 'https://erskinemay.parliament.uk/section/5628/time-limits' )}', were a made instrument to be laid on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y' )}, it <em>should not come into force earlier than</em> #{content_tag( 'strong', @twenty_one_day_rule_date.strftime( '%A, %-d %B %Y') )}.".html_safe ) %>
+			According to the convention described by the '#{link_to( '21-day rule', 'https://erskinemay.parliament.uk/section/5628/time-limits' )}', were a made instrument to be laid on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y' )}, it <em>should not come into force earlier than</em> #{content_tag( 'strong', @twenty_one_day_rule_date.strftime( '%A, %-d %B %Y') )}.".html_safe ) %>
 		</div>
 	<% end -%>
 	

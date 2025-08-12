@@ -153,7 +153,12 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be laid <em>on or before</em>'
+                
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been laid on or before</em>'
+                else
+                  @action_required = 'the instrument must be laid <em>on or before</em>'
+                end
               else
                 @start_date_type = "laying date"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -164,7 +169,12 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be laid <em>before</em>'
+                @action_required = 'the instrument must be laid <em>before</em>'
+                if Date.today >= @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been laid before</em>'
+                else
+                  @action_required = 'the instrument must be laid <em>before</em>'
+                end
               else
                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -175,8 +185,13 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be laid <em>on or before</em>'
                 @twenty_one_day_rule_date = @scrutiny_end_date + 21.days
+                
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been laid on or before</em>'
+                else
+                  @action_required = 'the instrument must be laid <em>on or before</em>'
+                end
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -187,7 +202,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be laid <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been laid on or before</em>'
+                else
+                  @action_required = 'the instrument must be laid <em>on or before</em>'
+                end
                 @twenty_one_day_rule_date = @scrutiny_end_date + 21.days
               else
                 @start_date_type = "laying date"
@@ -199,7 +218,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be laid <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been laid on or before</em>'
+                else
+                  @action_required = 'the instrument must be laid <em>on or before</em>'
+                end
               else
                 @start_date_type = "laying date"
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
@@ -210,7 +233,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be made <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been made on or before</em>'
+                else
+                  @action_required = 'the instrument must be made <em>on or before</em>'
+                end
               else
                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )
                 @start_date_type = "making date"
@@ -221,7 +248,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be made <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been made on or before</em>'
+                else
+                  @action_required = 'the instrument must be made <em>on or before</em>'
+                end
               else
                 @start_date_type = "making date"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -232,7 +263,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The instrument must be made <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the instrument <em>would have been required to have been made on or before</em>'
+                else
+                  @action_required = 'the instrument must be made <em>on or before</em>'
+                end
               else
                 @start_date_type = "making date"
                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )
@@ -243,7 +278,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The treaty must be laid <em>before</em>'
+                if Date.today >= @scrutiny_end_date
+                  @action_required = 'the treaty <em>would have been required to have been laid before</em>'
+                else
+                  @action_required = 'the treaty must be laid <em>before</em>'
+                end
               else
                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
                 @start_date_type = "laying date"
@@ -254,7 +293,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )
-                @action_required = 'The Minister must make a statement <em>before</em>'
+                if Date.today >= @scrutiny_end_date
+                  @action_required = 'the Minister <em>would have been required to have made a statement before</em>'
+                else
+                  @action_required = 'the Minister must make a statement <em>before</em>'
+                end
               else
                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )
                 @start_date_type = "date of Ministerial statement"
@@ -265,7 +308,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )
-                @action_required = 'The draft must be published <em>on or before</em>'
+                if Date.today > @scrutiny_end_date
+                  @action_required = 'the draft <em>would have been required to have been published on or before</em>'
+                else
+                  @action_required = 'the draft must be published <em>on or before</em>'
+                end
               else
                 @start_date_type = "date of publication"
                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )
@@ -276,7 +323,11 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_end_date = commons_only_sitting_days_reverse( @start_date, @day_count )
-                @action_required = 'The statement must be laid <em>before</em>'
+                if Date.today >= @scrutiny_end_date
+                  @action_required = 'the statement <em>would have been required to have been laid before</em>'
+                else
+                  @action_required = 'the statement must be laid <em>before</em>'
+                end
              else
                 @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )
                 @start_date_type = "laying date"
