@@ -20,25 +20,32 @@
 	<%= content_tag( 'li', "#{link_to( 'Contact the SLSC', 'mailto:hlseclegscrutiny@parliament.uk' )} team if in doubt.".html_safe ) %>
 </ul>
 
+
+
+
 <%= content_tag( 'h2', 'Negative statutory instrument praying period (laid before Commons only)' ) %>
+<%= content_tag( 'p', "Under a negative procedure an instrument laid before the House of Commons only must sit before that House for 40 days, during which time, the House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should the House of Commons not resolve against it. An instrument laid as made may only remain law should the House of Commons not resolve against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which the House is adjourned for more than four days." ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
 </ul>
 
 <%= content_tag( 'h2', 'Negative statutory instrument praying period (laid before both Houses)' ) %>
+<%= content_tag( 'p', "Under a negative procedure an instrument laid before both Houses must sit before both Houses for 40 days, during which time either House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should neither House resolve against it  during the 40 day period. An instrument laid as made may only remain law if neither House resolves against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which both Houses are adjourned for more than four days." ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
 </ul>
 
 <%= content_tag( 'h2', 'Made affirmative approval period (laid before Commons only)' ) %>
+<%= content_tag( 'p', "Under an affirmative procedure an instrument laid as made before the House of Commons must be approved by that House within the approval period for it to remain law. The nature of the approval period is set out in the text of the enabling Act. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which the House of Commons is adjourned for more than four days." ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
 </ul>
 
 <%= content_tag( 'h2', 'Made affirmative approval period (laid before both Houses, clock stops if either House rises)' ) %>
+<%= content_tag( 'p', "Under an affirmative procedure an instrument laid as made before both Houses must be approved by both Houses within the approval period for it to remain law. The nature of the approval period is set out in the text of the enabling Act. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which either House is adjourned for more than four days." ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
@@ -47,6 +54,7 @@
 </ul>
 
 <%= content_tag( 'h2', 'Made affirmative approval period (laid before both Houses, clock stops if both Houses rise)' ) %>
+<%= content_tag( 'p', "Under an affirmative procedure an instrument laid as made before both Houses must be approved by both Houses within the approval period for it to remain law. The nature of the approval period is set out in the text of the enabling Act. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which both Houses are adjourned for more than four days." ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of making." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as specified in italics at the top of the instrument on #{link_to( 'legislation.gov.uk', 'https://www.legislation.gov.uk/' )}.".html_safe ) %>
@@ -54,13 +62,11 @@
 </ul>
 
 <%= content_tag( 'h2', 'Proposed negative statutory instrument - committee sifting period' ) %>
+<%= content_tag( 'p', "Under #{link_to( 'schedule 7 of the European Union (Withdrawal) Act 2018', 'https://www.legislation.gov.uk/ukpga/2018/16/schedule/7' )}, #{link_to( 'schedule 5 of the Retained EU Law (Revocation and Reform) Act 2023', 'https://www.legislation.gov.uk/ukpga/2023/28/schedule/5' )} or #{link_to( 'Schedule 5 of the European Union (Future Relationship) Act 2020', 'https://www.legislation.gov.uk/ukpga/2020/29/schedule/5' )}, a Minister wishing to exercise certain powers delegated by these Acts - by means of an instrument following the negative procedure - must first lay a draft copy of the proposed instrument. This draft copy is sifted by committees of both Houses, who may agree that the instrument should follow the negative procedure or may recommend the instrument should follow the affirmative procedure.".html_safe ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as 10." ) %>
 </ul>
-
-
-
 
 <%= content_tag( 'h2', 'Published draft under the European Union (Withdrawal) Act 2018' ) %>
 <%= content_tag( 'p', "Under the #{link_to( 'European Union (Withdrawal) Act 2018', 'https://www.legislation.gov.uk/ukpga/2018/16/contents/enacted' )}, should a Minister wish to make a statutory instrument amending or revoking subordinate legislation made under #{link_to( 'section 2(2) of the European Communities Act 1972', 'https://www.legislation.gov.uk/ukpga/1972/68/section/2/2009-12-01#section-2-2' )}, they must first publish a draft of the instrument 28 days before laying the instrument. The calculation is set out in #{link_to( 'paragraph 14(2) of schedule 8 of the European Union (Withdrawal) Act 2018', 'https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14-2' )}. This procedure is now repealed.".html_safe ) %>
