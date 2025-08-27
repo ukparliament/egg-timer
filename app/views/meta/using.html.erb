@@ -1,14 +1,14 @@
 <%= render :partial => 'calculator/nav' %>
 
 <%= content_tag( 'h2', 'Negative statutory instrument praying period (laid before both Houses)' ) %>
-<%= content_tag( 'p', "Under a negative procedure an instrument laid before both Houses must sit before both Houses for 40 days, during which time either House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should neither House resolve against it  during the 40 day period. An instrument laid as made may only remain law if neither House resolves against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which both Houses are adjourned for more than four days." ) %>
+<%= content_tag( 'p', "Under a negative procedure an instrument laid before both Houses must sit before both Houses for 40 days, during which time either House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should neither House resolve against it  during the 40 day period. An instrument laid as made may only remain law if neither House resolves against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which both Houses are adjourned for more than four days. The calculation is set out in #{link_to( 'section 7 of the Statutory Instruments Act 1946', 'https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7' )}.".html_safe ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
 </ul>
 
 <%= content_tag( 'h2', 'Negative statutory instrument praying period (laid before Commons only)' ) %>
-<%= content_tag( 'p', "Under a negative procedure an instrument laid before the House of Commons only must sit before that House for 40 days, during which time, the House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should the House of Commons not resolve against it. An instrument laid as made may only remain law should the House of Commons not resolve against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which the House is adjourned for more than four days." ) %>
+<%= content_tag( 'p', "Under a negative procedure an instrument laid before the House of Commons only must sit before that House for 40 days, during which time, the House may resolve against it. An instrument laid in draft may only be made at the end of the 40 day period should the House of Commons not resolve against it. An instrument laid as made may only remain law should the House of Commons not resolve against it during the 40 day period. For this calculation, no account is taken of any time during which Parliament is dissolved or prorogued or during which the House is adjourned for more than four days. The calculation is set out in #{link_to( 'section 7 of the Statutory Instruments Act 1946', 'https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7' )}.".html_safe ) %>
 <ul>
 	<%= content_tag( 'li', "Set the start date to the date of laying." ) %>
 	<%= content_tag( 'li', "Set the number of days to count as 40." ) %>
