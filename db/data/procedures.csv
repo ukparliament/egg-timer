@@ -1,4 +1,4 @@
-13,Legislative reform order - procedure determination period,TRUE,30,TRUE
+13,Legislative reform order and Localism order - procedure determination period,TRUE,30,TRUE
 22,Localism order scrutiny period,FALSE,40,TRUE
 6,Proposed negative statutory instrument - committee sifting period,TRUE,10,FALSE
 23,Public bodies order scrutiny period,FALSE,40,TRUE
@@ -14,9 +14,9 @@
 10,Remedial order (non-urgent procedure) - draft affirmative scrutiny period,TRUE,60,FALSE
 11,Remedial order (urgent procedure) - made affirmative representations period,TRUE,60,FALSE
 12,Remedial order (urgent procedure) - made affirmative approval period,TRUE,120,FALSE
-14,Legislative reform order - negative procedure objection period,TRUE,40,TRUE
-15,Legislative reform order - period before affirmative may be approved,TRUE,40,TRUE
-16,Legislative reform order - period before super-affirmative may be approved,TRUE,60,TRUE
+14,Legislative reform order and Localism order - negative procedure objection period,TRUE,40,TRUE
+15,Legislative reform order and Localism order - period before affirmative may be approved,TRUE,40,TRUE
+16,Legislative reform order and Localism order - period before super-affirmative may be approved,TRUE,60,TRUE
 20,National Policy Statement consideration period,TRUE,21,FALSE
 17,Enhanced affirmative: Investigatory Powers Act 2016 - recommendation period,TRUE,30,FALSE
 18,Enhanced affirmative: Investigatory Powers Act 2016 - pre-approval period,TRUE,40,FALSE
