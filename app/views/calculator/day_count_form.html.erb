@@ -1,5 +1,9 @@
 <%= render :partial => 'nav' %>
-<%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
+<% if @direction == 'reverse' %>
+    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_reverse_url ) ) %>
+<% else -%>
+    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
+<% end -%>
 
 <form action="" method="GET" id="calculator">
 	
