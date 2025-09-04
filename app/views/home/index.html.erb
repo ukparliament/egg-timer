@@ -3,7 +3,8 @@
 <div id="calculators">
 	<%= content_tag( 'h2', 'Calculators' ) %>
 	<%= content_tag( 'p', 'Time periods can be calculated for dates after June 2017.' ) %>
-	<%= content_tag( 'p', "#{link_to( 'Scrutiny end date calculator', calculator_form_url )} - a tool for calculating the end date for scrutiny of a paper subject to a particular procedure.".html_safe ) %>
+	<%= content_tag( 'p', "#{link_to( 'Scrutiny end date calculator', calculator_form_url )} - a tool for calculating the end date for scrutiny of an instrument subject to a particular procedure.".html_safe ) %>
+	<%= content_tag( 'p', "#{link_to( 'Scrutiny start date calculator', reverse_calculator_form_url )} - a tool for calculating the latest possible start date for scrutiny of an instrument subject to a particular procedure based on a target end date.".html_safe ) %>
 	<%= content_tag( 'p', "#{link_to( 'Sitting days during an interval calculator', calculator_interval_url )} - a tool for calculating the number of sitting days between two dates.".html_safe ) %>
 </div>
 
