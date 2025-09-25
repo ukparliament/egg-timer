@@ -1,43 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-gb">
 	<head>
-		<meta charset="UTF-8">
-	    <meta name="format-detection" content="telephone=no">
-	    <meta name="viewport" content="width=device-width">
-		<title><%= @page_title || $SITE_TITLE %></title>
-		<link rel="icon" href="https://api.parliament.uk/egg-timer/favicon.ico">
-		<meta name="viewport" content="width=device-width">
-		<%= stylesheet_link_tag "application" %>
-		<%= csrf_meta_tags %>
-		<%= csp_meta_tag %>
-		<% if @csv_url -%>
-			<link rel="alternate" href="<%= @csv_url %>" type="text/csv">
-		<% end -%>
-		<%= render 'layouts/head/json_ld/crumb', crumb: @crumb %>
-		
-		<%# Add rel alternate links to JSON and ICS where applicable %>
-		<% if @json_url -%>
-			<link rel="alternate" type="application/json" title="<%= @page_title %>" href="<%= @json_url %>" />
-		<% end -%>
-		<% if @calendar_links -%>
-			<% @calendar_links.each do |calendar_link| -%>
-				<link rel="alternate" type="text/calendar" title="<%= $SITE_TITLE %> - <%= calendar_link[0] %>" href="<%= calendar_link[1] %>" />
-			<% end -%>
-		<% end -%>
+		<%= render :partial => 'library_design/head/head' %>
+		<%= tag( 'base', :href => 'https://api.parliament.uk/egg-timer' )if Rails.env.production? %>
 	</head>
-	<body class="section-<%= @section %> subsection-<%= @subsection %>">
+	<body class="section-<%= @section %> subsection-<%= @subsection %> brand-bicameral">
 		<%= render 'layouts/header/header' %>
-		<main id="main-content" class="container">
+		<main class="container block block-page" id="main-content">
 			<div class="inner-content container">
 				<div class="reading-width">
-					<%= render 'layouts/debug/debug' if Rails.env.development? -%>
+					<%= render 'library_design/debug/debug' -%>
 					<%= render 'layouts/stale_warning' if @stale_data -%>
 					<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
 					<%= yield %>
-					<%= render 'layouts/downloads/downloads' %>
 				</div>
 			</div>
 		</main>
-		<%= render 'layouts/footer/footer' %>
+		<%= render 'library_design/footer' %>
 	</body>
 </html>

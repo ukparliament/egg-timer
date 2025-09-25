@@ -1,17 +1,21 @@
-<%= content_tag( 'p', 'Subscribe to calendar:' ) %>
-<p>
-	<input type="text" value="<%= house_days_recess_dates_upcoming_url( :format => 'ics' ) %>"  class="url-copy"  />
-</p>
+<section>
+	<div class="p-form__form-group">
+	  	<label class="p-form__label" for="calendar-url">Subscribe to calendar</label>
+	  	<input type="text" id="calendar-url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :format => 'ics' ) %>"/>
+	</div>
+</section>
 
-<table>
-	<thead>
-		<tr>
-			<%= content_tag( 'td', 'Description' ) %>
-			<%= content_tag( 'td', 'Start date' ) %>
-			<%= content_tag( 'td', 'End date' ) %>
-		</tr>
-	</thead>
-	<tbody>
-		<%= render :partial => 'recess_date', :collection => @house.upcoming_recess_dates %>
-	</tbody>
-</table>
+<div class="overflow-auto">
+	<table class="table">
+		<thead>
+			<tr>
+				<%= content_tag( 'td', 'Description' ) %>
+				<%= content_tag( 'td', 'Start date' ) %>
+				<%= content_tag( 'td', 'End date' ) %>
+			</tr>
+		</thead>
+		<tbody>
+			<%= render :partial => 'recess_date', :collection => @house.upcoming_recess_dates %>
+		</tbody>
+	</table>
+</div>

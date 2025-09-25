@@ -4,7 +4,7 @@
 	<%= content_tag( 'p', @error_message ) %>
 <% else -%>
 
-	<div class="box">
+	<div class="result-box">
 		<%= content_tag( 'p', "To produce a target end date of #{@start_date.strftime( '%A, %-d %B %Y')}, the scrutiny period is currently expected to begin on #{@scrutiny_end_date.strftime( '%A, %-d %B %Y')} and end on #{@scrutiny_start_date.strftime( '%A, %-d %B %Y')}.".html_safe ) %>
 	<%= content_tag( 'p', "In order for the scrutiny period to start on #{content_tag( 'strong', @scrutiny_end_date.strftime( '%A, %-d %B %Y') )}, #{@action_required} that date.".html_safe ) %>
 	</div>

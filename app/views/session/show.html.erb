@@ -5,6 +5,6 @@
 <%= content_tag( 'p', "Wikidata ID: #{link_to( @session.wikidata_id, "https://www.wikidata.org/wiki/#{@session.wikidata_id}" )}".html_safe ) if @session.wikidata_id %>
 
 <%= content_tag( 'h2', 'Months' ) %>
-<ol>
+<ol class="unnumbered">
 	<%= render :partial => 'month', :collection => @session.month_range %>
 </ol>

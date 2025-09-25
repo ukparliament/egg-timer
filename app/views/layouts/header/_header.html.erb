@@ -1,12 +1,6 @@
-<header>
-    <a href="#main-content" class="skip-to-content">Skip to main content</a>
-	<%= render :partial => 'layouts/header/portcullis' %>
-    <%= render :partial => 'layouts/header/crumb' %>
-
-	<div class="page-header">
-		<div class="container">
-			<%= content_tag( 'span', link_to( $SITE_TITLE, home_url ), :id => 'site-title' ) %>
-			<%= render :partial => 'layouts/header/nav' %>
-		</div>
-	</div>
-</header>
+<%= render 'library_design/header/header' do %>
+	<%= link_to( 'Calculators', calculator_form_url, :class => 'calculators' )  %>
+	<%= link_to( 'Time periods', parliamentary_time_list_url, :class => 'time-periods' )  %>
+	<%= link_to( 'Calendar', calendar_list_url, :class => 'calendar' )  %>
+	<%= link_to( 'Calendar subscriptions', meta_subscribe_url, :class => 'calendar-subscriptions' )  %>
+<% end %>

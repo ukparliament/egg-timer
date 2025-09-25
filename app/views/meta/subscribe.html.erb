@@ -9,12 +9,16 @@
 
 	<section>
 		<%= content_tag( 'h3', 'House of Commons' ) %>
-		<input value="<%= house_days_recess_dates_upcoming_url( :house => 1 ) %>.ics" class="url-copy" />
+		<div class="p-form__form-group">
+		  	<label class="p-form__label" for="commons_recess_calendar_url">Subscribe to calendar</label>
+		  	<input type="text" id="commons_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
+		</div>
 	</section>
 
 	<section>
 		<%= content_tag( 'h3', 'House of Lords' ) %>
-		<input value="<%= house_days_recess_dates_upcoming_url( :house => 2 ) %>.ics" class="url-copy" />
+		  	<label class="p-form__label" for="lords_recess_calendar_url">Subscribe to calendar</label>
+		<input type="text" id="lords_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
 	</section>
 </section>
 
@@ -24,16 +28,19 @@
 	
 	<section>
 		<%= content_tag( 'h3', 'House of Commons' ) %>
-		<input value="<%= house_days_upcoming_url( :house => 1 ) %>.ics" class="url-copy" />
+		 <label class="p-form__label" for="commons_upcoming_calendar_url">Subscribe to calendar</label>
+		 <input type="text" id="commons_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
 	</section>
 
 	<section>
 		<%= content_tag( 'h3', 'House of Lords' ) %>
-		<input value="<%= house_days_upcoming_url( :house => 2 ) %>.ics" class="url-copy" />
+		 <label class="p-form__label" for="lords_upcoming_calendar_url">Subscribe to calendar</label>
+		 <input type="text" id="lords_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
 	</section>
 
 	<section>
 		<%= content_tag( 'h3', 'Both Houses' ) %>
-		<input value="<%= house_upcoming_all_url %>.ics" class="url-copy" />
+		 <label class="p-form__label" for="bicameral_upcoming_calendar_url">Subscribe to calendar</label>
+		 <input type="text" id="bicameral_upcoming_calendar_url" class="p-form__input" value="<%= house_upcoming_all_url( :format => 'ics' ) %>" %>
 	</section>
 </section>
