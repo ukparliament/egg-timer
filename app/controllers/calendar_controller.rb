@@ -97,10 +97,10 @@ class CalendarController < ApplicationController
     @month_range.uniq!
 
     # Set meta information for the page.
-    @page_title = @year
-    @description = "#{@year}."
+    @page_title = @year.to_s
+    @description = "#{@year.to_s}."
     @crumb << { label: 'Calendar', url: calendar_list_url }
-    @crumb << { label: @year, url: nil }
+    @crumb << { label: @year.to_s, url: nil }
     @section = 'calendar'
   end
 
@@ -112,27 +112,31 @@ class CalendarController < ApplicationController
     start_date = Date.new( @year, @month, 1)
     end_date = Date.new( @year, @month, -1)
     @date_range = ( ( start_date )..( end_date ) ).to_a
-    @previous_date = start_date - 1.month
-    @next_date = start_date + 1.month
     
     respond_to do |format|
        format.csv {
          response.headers['Content-Disposition'] = "attachment; filename=\"uk-parliament-#{Date::MONTHNAMES[@month].downcase}-#{start_date.strftime( '%Y' )}.csv\""
        }
        format.html{
+       
+        # Set previous and next URLs.
+        @previous_date = start_date - 1.month
+        @next_date = start_date + 1.month
+        @previous_url = calendar_month_url( :year => @previous_date.strftime( '%Y' ), :month => @previous_date.strftime( '%m' ) )
+        @next_url = calendar_month_url( :year => @next_date.strftime( '%Y' ), :month => @next_date.strftime( '%m' ) )
 
         # Set meta information for the page.
         @page_title = "#{Date::MONTHNAMES[@month]} #{@year}"
         @description = "Calendar days in #{Date::MONTHNAMES[@month]} #{@year}."
         @csv_url = calendar_month_url( :format => 'csv' )
         @crumb << { label: 'Calendar', url: calendar_list_url }
-        @crumb << { label: @year, url: calendar_year_url }
+        @crumb << { label: @year.to_s, url: calendar_year_url }
         @crumb << { label: Date::MONTHNAMES[@month], url: nil }
         @section = 'calendar'
       }
     end
   end
-
+  
   def day
     year = params[:year]
     month = params[:month]
@@ -141,8 +145,6 @@ class CalendarController < ApplicationController
     @month = month.to_i
     @day = day.to_i
     @date = Date.new( @year, @month, @day )
-    @previous_date = @date - 1.day
-    @next_date = @date + 1.day
     @preceding_session = @date.preceding_session
     @following_session = @date.following_session
     @is_final_day_of_session = @date.is_final_day_of_session?
@@ -152,13 +154,19 @@ class CalendarController < ApplicationController
          response.headers['Content-Disposition'] = "attachment; filename=\"uk-parliament-#{@date.strftime( '%-e')}-#{Date::MONTHNAMES[@month].downcase}-#{@date.strftime( '%Y' )}.csv\""
        }
        format.html{
+       
+        # Set previous and next URLs.
+        @previous_date = @date - 1.day
+        @next_date = @date + 1.day
+        @previous_url = calendar_day_url( :year => @previous_date.strftime( '%Y'), :month => @previous_date.strftime( '%m' ), :day =>  @previous_date.strftime( '%d' ) )
+        @next_url = calendar_day_url( :year => @next_date.strftime( '%Y'), :month => @next_date.strftime( '%m' ), :day => @next_date.strftime( '%d' ) )
 
         # Set meta information for the page.
         @page_title = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }"
         @description = "#{@date.strftime( '%-e').to_i.ordinalize} #{@date.strftime( '%B %Y' ) }."
         @csv_url = calendar_day_url( :format => 'csv' )
         @crumb << { label: 'Calendar', url: calendar_list_url }
-        @crumb << { label: @year, url: calendar_year_url }
+        @crumb << { label: @year.to_s, url: calendar_year_url }
         @crumb << { label: Date::MONTHNAMES[@month], url: calendar_month_url }
         @crumb << { label: @date.strftime( '%-e').to_i.ordinalize, url: nil }
         @section = 'calendar'

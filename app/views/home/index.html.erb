@@ -1,33 +1,33 @@
 <%= content_tag( 'p', "A resource for parliamentary time, provided by the #{link_to( 'Commons Library', 'https://commonslibrary.parliament.uk/' )}.".html_safe ) %>
 
-<div id="calculators">
+<section id="calculators">
 	<%= content_tag( 'h2', 'Calculators' ) %>
 	<%= content_tag( 'p', 'Time periods can be calculated for dates after June 2017.' ) %>
 	<%= content_tag( 'p', "#{link_to( 'Scrutiny end date calculator', calculator_form_url )} - a tool for calculating the end date for scrutiny of an instrument subject to a particular procedure.".html_safe ) %>
 	<%= content_tag( 'p', "#{link_to( 'Scrutiny start date calculator', reverse_calculator_form_url )} - a tool for calculating the latest possible start date for scrutiny of an instrument subject to a particular procedure based on a target end date.".html_safe ) %>
 	<%= content_tag( 'p', "#{link_to( 'Sitting days during an interval calculator', calculator_interval_url )} - a tool for calculating the number of sitting days between two dates.".html_safe ) %>
-</div>
+</section>
 
-<div id="time-periods">
+<section id="time-periods">
 	<%= content_tag( 'h2', 'Time periods' ) %>
 	<%= content_tag( 'p', "#{link_to( 'Parliaments', parliament_list_url )}, #{link_to( 'dissolutions', dissolution_period_list_url )}, #{link_to( 'sessions', session_list_url )}, #{link_to( 'prorogations', prorogation_period_list_url )} and recesses in #{link_to( 'both Houses', house_list_url )}.".html_safe ) %>
 	<%= content_tag( 'p', 'Data for Parliaments, dissolutions, sessions and prorogations is populated from the first Parliament of the United Kingdom, in 1801.' ) %>
 	<%= content_tag( 'p', 'Recess data is populated from June 2017.' ) %>
-</div>
+</section>
 
-<div id="calendar">
+<section id="calendar">
 	<%= content_tag( 'h2', 'Calendar' ) %>
 	<%= content_tag( 'p', 'A calendar showing House of Commons and House of Lords sitting, virtual sitting and adjournment days. The data is populated from June 2017.' ) %>
-</div>
+</section>
 
-<div id="subscribe">
+<section id="subscribe">
 	<%= content_tag( 'h2', 'Calendar subscriptions' ) %>
 	<%= content_tag( 'p', "#{link_to( 'Subscribe to calendars', meta_subscribe_url )}  for future recess periods, sitting, virtual sitting and adjournment days for the House of Commons or the House of Lords.".html_safe ) %>
-</div>
+</section>
 
-<div id="egg-timer">
+<section id="egg-timer">
 	<%= content_tag( 'h2', 'Formerly known as' ) %>
     <img src="https://api.parliament.uk/egg-timer/favicon.ico" alt="The Egg Timer" id="logo" />
     <p class="formerly">The egg timer.</p>
    </div>
-</div>
+</section>

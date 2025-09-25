@@ -1,10 +1,9 @@
-<p>
-<%= link_to( 'Previous day', calendar_day_url( :year => @previous_date.strftime( '%Y'), :month => @previous_date.strftime( '%m' ), :day =>  @previous_date.strftime( '%d' ) ), :class => 'previous' )  %>
+<%= previous_next( 'day', @previous_url, @next_url ) %>
 
-<%= link_to( 'Next day', calendar_day_url( :year => @next_date.strftime( '%Y'), :month => @next_date.strftime( '%m' ), :day => @next_date.strftime( '%d' ) ), :class => 'next' )  %>
+<%= render :partial => 'library_design/feeds/feeds' %>
 
-<div class="table-wrapper">
-	<table>
+<div class="overflow-auto margin-top-10">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>Date</th>

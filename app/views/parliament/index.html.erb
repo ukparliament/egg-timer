@@ -1,5 +1,7 @@
-<div class="table-wrapper">
-	<table>
+<%= render :partial => 'library_design/feeds/feeds' %>
+
+<div class="overflow-auto margin-top-10">
+	<table class="table">
 		<%= render :partial => 'table_head' %>
 		<tbody>
 			<%= render :partial => 'parliament', :collection => @parliaments %>

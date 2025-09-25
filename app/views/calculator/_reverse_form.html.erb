@@ -1,19 +1,21 @@
 <%= content_tag( 'p', link_to( "How to calculate an anticipated start date for a scrutiny period", meta_using_reverse_url ) ) %>
 
-<form action="/egg-timer/calculator/calculate" method="GET" id="calculator">
-	<input type="hidden" name="direction" value="reverse" />
+<section>
+	<form action="/egg-timer/calculator/calculate" method="GET" id="calculator" class="p-form">
+		<input type="hidden" name="direction" value="reverse" />
 	
-	<fieldset>
-		<legend>Choose a target end date</legend>
-			
-			<p><input type="date" name="start-date" id="start-date" required>
-		
-	</fieldset>
-	
-	<fieldset>
-		<legend>Choose a period to calculate</legend>
-		<%= render :partial => 'calculator/procedure', :collection => @procedures %>
-	</fieldset>
-	
-	<button type="submit" id="calculate">Continue with this period and end date</button>
-</form>
+		<fieldset class="p-form__fieldset p-3 my-3 border rounded">
+		 	<legend class="p-form__fieldset-legend">Choose a target end date</legend>
+		    <input class="form-control" type="date" id="start-date" name="start-date" required />
+		 </fieldset>
+	 
+		 <fieldset class="p-form__fieldset p-3 my-3 border rounded">
+			<legend class="p-form__fieldset-legend">Choose a period to calculate</legend>
+			<div class="p-form__radio-group">
+				<%= render :partial => 'calculator/procedure', :collection => @procedures %>
+			</div>
+		</fieldset>
+	 
+		<button type="submit" class="btn btn-primary" id="calculate">Continue with this period and end date</button>
+	</form>
+</div>

@@ -1,26 +1,28 @@
 <p>The last 98 syncs</p>
 
-<table>
-	<thead>
-		<tr>
-			<th>Created at</th>
-			<th>Calendar name</th>
-			<th>Message</th>
-			<th>Successful</th>
-			<th>Events count</th>
-			<th>Emailed</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @detailed_sync_logs.each do |log| %>
+<div class="overflow-auto">
+	<table class="table">
+		<thead>
 			<tr>
-				<td><%= "#{log.created_at.strftime('%a')} #{log.created_at.day.ordinalize} #{log.created_at.strftime('%b %Y %H:%M')} " %></td>
-				<td><%= log.calendar_name %></td>
-				<td><%= log.message %></td>
-				<td><%= log.successful ? 'Yes' : 'NO!' %></td>
-				<td><%= log.events_count %></td>
-				<td><%= log.emailed ? 'Yes' : 'No' %></td>
+				<th>Created at</th>
+				<th>Calendar name</th>
+				<th>Message</th>
+				<th>Successful</th>
+				<th>Events count</th>
+				<th>Emailed</th>
 			</tr>
-		<% end %>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<% @detailed_sync_logs.each do |log| %>
+				<tr>
+					<td><%= "#{log.created_at.strftime('%a')} #{log.created_at.day.ordinalize} #{log.created_at.strftime('%b %Y %H:%M')} " %></td>
+					<td><%= log.calendar_name %></td>
+					<td><%= log.message %></td>
+					<td><%= log.successful ? 'Yes' : 'NO!' %></td>
+					<td><%= log.events_count %></td>
+					<td><%= log.emailed ? 'Yes' : 'No' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

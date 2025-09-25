@@ -1,12 +1,14 @@
-<table>
-	<thead>
-		<tr>
-			<%= content_tag( 'td', 'Description' ) %>
-			<%= content_tag( 'td', 'Start date' ) %>
-			<%= content_tag( 'td', 'End date' ) %>
-		</tr>
-	</thead>
-	<tbody>
-		<%= render :partial => 'recess_date', :collection => @house.recess_dates %>
-	</tbody>
-</table>
+<div class="overflow-auto">
+	<table class="table">
+		<thead>
+			<tr>
+				<%= content_tag( 'td', 'Description' ) %>
+				<%= content_tag( 'td', 'Start date' ) %>
+				<%= content_tag( 'td', 'End date' ) %>
+			</tr>
+		</thead>
+		<tbody>
+			<%= render :partial => 'recess_date', :collection => @house.recess_dates %>
+		</tbody>
+	</table>
+</div>

@@ -2,23 +2,17 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  include LibraryDesign::Crumbs
+  include LibraryDesign::CalendarLinks
   
   $SITE_TITLE = 'Parliamentary Time'
+  
+  $TOGGLE_PORTCULLIS = ENV.fetch( "TOGGLE_PORTCULLIS", 'off' )
 
   before_action do
-    create_crumb_container
     setup_calendar_link_array
     check_whether_data_is_stale
-    show_start_date_calculator?
-  end
-  
-  def create_crumb_container
-    @crumb = []
-  end
-  
-  def show_start_date_calculator?
-    @show_start_date_calculator = true
-    @show_start_date_calculator = false if ENV['SHOW_START_DATE_CALCULATOR'] and ENV['SHOW_START_DATE_CALCULATOR'] == 'FALSE'
   end
   
   def setup_calendar_link_array

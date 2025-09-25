@@ -5,7 +5,7 @@
     <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
 <% end -%>
 
-<form action="" method="GET" id="calculator">
+<form action="" method="GET" id="calculator" class="p-form">
 	
 	<!-- Include start date, procedure ID and calculation style parameters - passed from main form - as hidden fields -->
 	<input type="hidden" value="<%= @start_date %>" name="start-date" id="start-date" />
@@ -19,18 +19,17 @@
 	<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
 	<input type="hidden" name="direction" value="<%= @direction %>" />
 	
-	<p>
-		<label>
-			Number of days to count
-			<br>
-			
-			<% if @procedure and @procedure.typical_day_count -%>
-				<input type="number" name="day-count" id="day-count" value="<%= @procedure.typical_day_count %>" required>
+	<fieldset class="p-form__fieldset p-3 my-3 border rounded">
+		<legend class="p-form__fieldset-legend">Number of days to count</legend>
+		<div class="p-form__form-group">
+		  	<% if @procedure and @procedure.typical_day_count -%>
+				<input type="number" name="day-count" id="day-count" value="<%= @procedure.typical_day_count %>" class="p-form__input" required>
 			<% else -%>
-				<input type="number" name="day-count" id="day-count" required>
-			<% end -%>	
-		</label>
-	</p>
+				<input type="number" name="day-count" id="day-count" class="p-form__input" required>
+			<% end -%>
+		</div>
+	</fieldset>
+	
 	<% if @procedure -%>
 	
 		<% if @procedure.typical_day_count && @procedure.has_day_count_caveats == true  -%>
@@ -48,5 +47,5 @@
 		<% end -%>
 	<% end -%>
 	
-	<button type="submit" id="calculate">Calculate</button>
+	<button type="submit" id="calculate" class="btn btn-primary">Calculate</button>
 </form>

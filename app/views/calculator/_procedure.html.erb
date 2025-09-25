@@ -1,5 +1,4 @@
-<p class="radio">
-	<label class="radio">
-		<input type="radio" id="procedure-<%= procedure.id %>" name="procedure" value="<%= procedure.id %>" required> &nbsp;<%= procedure.name %>
-	</label>
-</p>
+<div class="p-form__radio-item">
+	<input type="radio" name="procedure" id="procedure-<%= procedure.id %>" value="<%= procedure.id %>" required />
+	<label for="procedure-<%= procedure.id %>" class="p-form__radio-item-label"><%= procedure.name %></label>
+</div>
