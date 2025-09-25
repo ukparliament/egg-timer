@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/ukparliament/design-assets.git
+  revision: cce9cf0fedf4002bf0fe9b38cf3cce2eea73c352
+  tag: 0.3.10
+  glob: library_design/*.gemspec
+  specs:
+    library_design (0.2.17)
+      rack-cors (~> 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -225,6 +234,10 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
+    propshaft (1.3.1)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
     psych (5.2.6)
       date
       stringio
@@ -319,14 +332,6 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 4.0)
       multi_json (~> 1.10)
-    sprockets (4.2.2)
-      concurrent-ruby (~> 1.0)
-      logger
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     stringio (3.1.7)
     thor (1.4.0)
     timeout (0.4.3)
@@ -382,10 +387,12 @@ DEPENDENCIES
   google-apis-calendar_v3
   irb
   letter_opener
+  library_design!
   lograge
   nokogiri
   pg
   postmark-rails
+  propshaft
   puma
   rack-cors
   rails (~> 8)
@@ -393,7 +400,6 @@ DEPENDENCIES
   rollbar
   rspec-rails
   selenium-webdriver
-  sprockets-rails
   web-console
   webmock
 

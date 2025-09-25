@@ -7,9 +7,11 @@ gem 'rails', '~> 8'
 gem 'puma'
 gem 'pg'
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
 
+# Design system gem
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.3.10"
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
 gem 'benchmark'
