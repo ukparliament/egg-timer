@@ -1,3 +1,5 @@
-<% @years.each do |year| -%>
-	<%= content_tag( 'p', link_to( year, calendar_year_url( :year => year ) ) ) %>
-<% end -%>
+<ol class="unnumbered link-list">
+	<% @years.each do |year| -%>
+		<%= content_tag( 'li', link_to( year, calendar_year_url( :year => year ) ) ) %>
+	<% end -%>
+</ol>
