@@ -6,7 +6,7 @@
 	</head>
 	<body class="section-<%= @section %> subsection-<%= @subsection %> brand-bicameral">
 		<%= render 'layouts/header/header' %>
-		<main class="container block block-page" id="main-content">
+		<main class="block block-page" id="main-content">
 			<div class="inner-content container">
 				<%= render 'library_design/debug/debug' -%>
 				<%= render 'layouts/stale_warning' if @stale_data -%>
