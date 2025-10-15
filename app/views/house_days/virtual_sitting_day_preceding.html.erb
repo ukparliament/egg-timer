@@ -1,5 +1,5 @@
 <% unless @house.preceding_virtual_sitting_days.empty? %>
-	<ol class="unnumbered">
+	<ol class="unnumbered link-list">
 		<%= render :partial => 'virtual_sitting_day/virtual_sitting_day', :collection => @house.preceding_virtual_sitting_days %>
 	</ol>
 <% else -%>

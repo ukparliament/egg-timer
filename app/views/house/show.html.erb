@@ -1,6 +1,6 @@
 <div id="sitting-days">
 	<%= content_tag( 'h2', 'Sitting days' ) %>
-	<ul>
+	<ul class="link-list">
 		<%= content_tag( 'li', link_to( 'Next sitting day', house_days_sitting_day_next_url ) ) %>
 		<%= content_tag( 'li', link_to( 'Upcoming sitting days', house_days_sitting_day_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'All sitting days', house_days_sitting_day_list_url ) ) %>
@@ -11,7 +11,7 @@
 
 <div id="virtual-sitting-days">
 	<%= content_tag( 'h2', 'Virtual sitting days' ) %>
-	<ul>
+	<ul class="link-list">
 		<%= content_tag( 'li', link_to( 'Next virtual sitting day', house_days_virtual_sitting_day_next_url ) ) %>
 		<%= content_tag( 'li', link_to( 'Upcoming virtual sitting days', house_days_virtual_sitting_day_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'All virtual sitting days', house_days_virtual_sitting_day_list_url ) ) %>
@@ -22,7 +22,7 @@
 
 <div id="adjournment-days">
 	<%= content_tag( 'h2', 'Adjournment days' ) %>
-	<ul>
+	<ul class="link-list">
 		<%= content_tag( 'li', link_to( 'Next adjournment day', house_days_adjournment_day_next_url ) ) %>
 		<%= content_tag( 'li', link_to( 'Upcoming adjournment days', house_days_adjournment_day_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'All adjournment days', house_days_adjournment_day_list_url ) ) %>
@@ -33,7 +33,7 @@
 
 <div id="recess-dates">
 	<%= content_tag( 'h2', 'Recess dates' ) %>
-	<ul>
+	<ul class="link-list">
 		<%= content_tag( 'li', link_to( 'Upcoming recess dates', house_days_recess_dates_upcoming_url ) ) %>
 		<%= content_tag( 'li', link_to( 'All recess dates', house_days_recess_dates_list_url ) ) %>
 	</ul>

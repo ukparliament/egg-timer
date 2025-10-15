@@ -1,5 +1,5 @@
 <% unless @house.upcoming_adjournment_days.empty? %>
-	<ol class="unnumbered">
+	<ol class="unnumbered link-list">
 		<%= render :partial => 'adjournment_day/adjournment_day', :collection => @house.upcoming_adjournment_days %>
 	</ol>
 <% else -%>
