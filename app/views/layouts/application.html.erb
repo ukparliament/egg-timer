@@ -8,12 +8,10 @@
 		<%= render 'layouts/header/header' %>
 		<main class="container block block-page" id="main-content">
 			<div class="inner-content container">
-				<div class="reading-width">
-					<%= render 'library_design/debug/debug' -%>
-					<%= render 'layouts/stale_warning' if @stale_data -%>
-					<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
-					<%= yield %>
-				</div>
+				<%= render 'library_design/debug/debug' -%>
+				<%= render 'layouts/stale_warning' if @stale_data -%>
+				<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
+				<%= yield %>
 			</div>
 		</main>
 		<%= render 'library_design/footer/fat_footer' %>

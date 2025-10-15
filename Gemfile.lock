@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/ukparliament/design-assets.git
-  revision: 3ccf204baea47c2db8c74fc54087824af6710493
-  tag: 0.3.15
+  revision: b54f34abdcaf5d3aa975e211e8f7aa0628d7cbf6
+  tag: 0.3.16
   glob: library_design/*.gemspec
   specs:
-    library_design (0.3.15)
+    library_design (0.3.16)
       rack-cors (~> 3.0.0)
 
 GEM
@@ -142,7 +142,7 @@ GEM
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
     google-logging-utils (0.2.0)
-    googleauth (1.15.0)
+    googleauth (1.15.1)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
       google-logging-utils (~> 0.1)
@@ -309,7 +309,7 @@ GEM
     rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.5)
+    rspec-mocks (3.13.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-rails (8.0.2)
@@ -321,7 +321,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
-    rubyzip (3.1.1)
+    rubyzip (3.2.0)
     securerandom (0.4.1)
     selenium-webdriver (4.35.0)
       base64 (~> 0.2)

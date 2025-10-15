@@ -1,46 +1,49 @@
-<p>You can subscribe to calendars for recess periods and upcoming days for both Houses in any application that reads .ics files, including Google Calendar, Apple Calendar and Outlook.</p>
+<div class="reading-width">
 
-<p>The calendars are based on expected business, which is subject to change. Sittings for dates further in the future are more likely to change.</p> 
+	<p>You can subscribe to calendars for recess periods and upcoming days for both Houses in any application that reads .ics files, including Google Calendar, Apple Calendar and Outlook.</p>
 
-<p>Once you've subscribed to a calendar, any new information will be made available when the calendar is updated.</p>
+	<p>The calendars are based on expected business, which is subject to change. Sittings for dates further in the future are more likely to change.</p> 
 
-<section id="recess-dates">
-	<%= content_tag( 'h2', 'Recess dates' ) %>
+	<p>Once you've subscribed to a calendar, any new information will be made available when the calendar is updated.</p>
 
-	<section>
-		<%= content_tag( 'h3', 'House of Commons' ) %>
-		<div class="p-form__form-group">
-		  	<label class="p-form__label" for="commons_recess_calendar_url">Subscribe to calendar</label>
-		  	<input type="text" id="commons_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
-		</div>
+	<section id="recess-dates">
+		<%= content_tag( 'h2', 'Recess dates' ) %>
+
+		<section>
+			<%= content_tag( 'h3', 'House of Commons' ) %>
+			<div class="p-form__form-group">
+			  	<label class="p-form__label" for="commons_recess_calendar_url">Subscribe to calendar</label>
+			  	<input type="text" id="commons_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
+			</div>
+		</section>
+
+		<section>
+			<%= content_tag( 'h3', 'House of Lords' ) %>
+			  	<label class="p-form__label" for="lords_recess_calendar_url">Subscribe to calendar</label>
+			<input type="text" id="lords_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
+		</section>
 	</section>
 
-	<section>
-		<%= content_tag( 'h3', 'House of Lords' ) %>
-		  	<label class="p-form__label" for="lords_recess_calendar_url">Subscribe to calendar</label>
-		<input type="text" id="lords_recess_calendar_url" class="p-form__input" value="<%= house_days_recess_dates_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
-	</section>
-</section>
+	<section id="upcoming-days">
 
-<section id="upcoming-days">
-
-	<%= content_tag( 'h2', 'Upcoming days' ) %>
+		<%= content_tag( 'h2', 'Upcoming days' ) %>
 	
-	<section>
-		<%= content_tag( 'h3', 'House of Commons' ) %>
-		 <label class="p-form__label" for="commons_upcoming_calendar_url">Subscribe to calendar</label>
-		 <input type="text" id="commons_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
-	</section>
+		<section>
+			<%= content_tag( 'h3', 'House of Commons' ) %>
+			 <label class="p-form__label" for="commons_upcoming_calendar_url">Subscribe to calendar</label>
+			 <input type="text" id="commons_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 1, :format => 'ics' ) %>" %>
+		</section>
 
-	<section>
-		<%= content_tag( 'h3', 'House of Lords' ) %>
-		 <label class="p-form__label" for="lords_upcoming_calendar_url">Subscribe to calendar</label>
-		 <input type="text" id="lords_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
-	</section>
+		<section>
+			<%= content_tag( 'h3', 'House of Lords' ) %>
+			 <label class="p-form__label" for="lords_upcoming_calendar_url">Subscribe to calendar</label>
+			 <input type="text" id="lords_upcoming_calendar_url" class="p-form__input" value="<%= house_days_upcoming_url( :house => 2, :format => 'ics' ) %>" %>
+		</section>
 
-	<section>
-		<%= content_tag( 'h3', 'Both Houses' ) %>
-		 <label class="p-form__label" for="bicameral_upcoming_calendar_url">Subscribe to calendar</label>
-		 <input type="text" id="bicameral_upcoming_calendar_url" class="p-form__input" value="<%= house_upcoming_all_url( :format => 'ics' ) %>" %>
+		<section>
+			<%= content_tag( 'h3', 'Both Houses' ) %>
+			 <label class="p-form__label" for="bicameral_upcoming_calendar_url">Subscribe to calendar</label>
+			 <input type="text" id="bicameral_upcoming_calendar_url" class="p-form__input" value="<%= house_upcoming_all_url( :format => 'ics' ) %>" %>
+		</section>
 	</section>
-</section>
+</div>

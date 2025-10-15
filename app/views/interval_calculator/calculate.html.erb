@@ -1,9 +1,12 @@
 <%= render :partial => 'calculator/nav' %>
 
-<%= content_tag( 'p', "For the interval between #{@start_date.strftime( '%A, %-d %B %Y')} and #{@end_date.strftime( '%A, %-d %B %Y')} there were:" ) %>
-<ul>
-	<%= content_tag( 'li', "#{@commons_sitting_day_count} sitting days in the House of Commons" ) %>
-	<%= content_tag( 'li', "#{@lords_sitting_day_count} sitting days in the House of Lords" ) %>
-</ul>
+<div class="reading-width">
 
-<p>Show the <a href="<%= request.original_fullpath.sub '?', '.json?' %>" title="<%= request.original_fullpath.sub '?', '.json?' %>">JSON result</a> for this calculation.</p>
+	<%= content_tag( 'p', "For the interval between #{@start_date.strftime( '%A, %-d %B %Y')} and #{@end_date.strftime( '%A, %-d %B %Y')} there were:" ) %>
+	<ul>
+		<%= content_tag( 'li', "#{@commons_sitting_day_count} sitting days in the House of Commons" ) %>
+		<%= content_tag( 'li', "#{@lords_sitting_day_count} sitting days in the House of Lords" ) %>
+	</ul>
+
+	<p>Show the <a href="<%= request.original_fullpath.sub '?', '.json?' %>" title="<%= request.original_fullpath.sub '?', '.json?' %>">JSON result</a> for this calculation.</p>
+</div>
