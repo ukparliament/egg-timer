@@ -1,16 +1,18 @@
-<%= content_tag( 'p', "Definitions of #{link_to( 'Parliament periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e190' )}, #{link_to( 'dissolution periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e203')}, #{link_to( 'sessions', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e243' )}, #{link_to( 'prorogation periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e256' )}, #{link_to( 'sitting days', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e309' )}, #{link_to( 'adjournment days', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e269' )} and #{link_to( 'recess periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e282' )} are set out in the #{link_to( 'time period ontology', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology' )}.".html_safe ) %>
+<div class="reading-width">
+	<%= content_tag( 'p', "Definitions of #{link_to( 'Parliament periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e190' )}, #{link_to( 'dissolution periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e203')}, #{link_to( 'sessions', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e243' )}, #{link_to( 'prorogation periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e256' )}, #{link_to( 'sitting days', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e309' )}, #{link_to( 'adjournment days', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e269' )} and #{link_to( 'recess periods', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology#d4e282' )} are set out in the #{link_to( 'time period ontology', 'https://ukparliament.github.io/ontologies/time-period/time-period-ontology' )}.".html_safe ) %>
 
 
 
-<%= content_tag( 'h2', 'Bicameral time periods' ) %>
-<ul>
-	<%= content_tag( 'li', link_to( 'Parliament periods', parliament_list_url ) ) %>
-	<%= content_tag( 'li', link_to( 'Dissolution periods', dissolution_period_list_url ) ) %>
-	<%= content_tag( 'li', link_to( 'Sessions', session_list_url ) ) %>
-	<%= content_tag( 'li', link_to( 'Prorogation periods', prorogation_period_list_url ) ) %>
-</ul>
+	<%= content_tag( 'h2', 'Bicameral time periods' ) %>
+	<ul>
+		<%= content_tag( 'li', link_to( 'Parliament periods', parliament_list_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Dissolution periods', dissolution_period_list_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Sessions', session_list_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Prorogation periods', prorogation_period_list_url ) ) %>
+	</ul>
 
-<%= content_tag( 'h2', 'House specific time periods' ) %>
-<ul>
-	<%= render :partial => 'house/house', :collection => @houses %>
-</ul>
+	<%= content_tag( 'h2', 'House specific time periods' ) %>
+	<ul>
+		<%= render :partial => 'house/house', :collection => @houses %>
+	</ul>
+</div>

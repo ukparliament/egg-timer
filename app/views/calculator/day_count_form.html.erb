@@ -1,51 +1,54 @@
 <%= render :partial => 'nav' %>
-<% if @direction == 'reverse' %>
-    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_reverse_url ) ) %>
-<% else -%>
-    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
-<% end -%>
 
-<form action="" method="GET" id="calculator" class="p-form">
-	
-	<!-- Include start date, procedure ID and calculation style parameters - passed from main form - as hidden fields -->
-	<input type="hidden" value="<%= @start_date %>" name="start-date" id="start-date" />
-	<% if @procedure -%>
-		<input type="hidden" id="procedure-<%= @procedure.id %>" name="procedure" value="<%= @procedure.id %>">
-	<% elsif @calculation_style -%>
-		<input type="hidden" id="calculation-style-<%= @calculation_style %>" name="calculation-style" value="<%= @calculation_style %>">
-		<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
+<div class="reading-width">
+	<% if @direction == 'reverse' %>
+	    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_reverse_url ) ) %>
+	<% else -%>
+	    <%= content_tag( 'p', link_to( 'Using the calculator', meta_using_url ) ) %>
 	<% end -%>
 
-	<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
-	<input type="hidden" name="direction" value="<%= @direction %>" />
+	<form action="" method="GET" id="calculator" class="p-form">
 	
-	<fieldset class="p-form__fieldset p-3 my-3 border rounded">
-		<legend class="p-form__fieldset-legend">Number of days to count</legend>
-		<div class="p-form__form-group">
-		  	<% if @procedure and @procedure.typical_day_count -%>
-				<input type="number" name="day-count" id="day-count" value="<%= @procedure.typical_day_count %>" class="p-form__input" required>
-			<% else -%>
-				<input type="number" name="day-count" id="day-count" class="p-form__input" required>
-			<% end -%>
-		</div>
-	</fieldset>
+		<!-- Include start date, procedure ID and calculation style parameters - passed from main form - as hidden fields -->
+		<input type="hidden" value="<%= @start_date %>" name="start-date" id="start-date" />
+		<% if @procedure -%>
+			<input type="hidden" id="procedure-<%= @procedure.id %>" name="procedure" value="<%= @procedure.id %>">
+		<% elsif @calculation_style -%>
+			<input type="hidden" id="calculation-style-<%= @calculation_style %>" name="calculation-style" value="<%= @calculation_style %>">
+			<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
+		<% end -%>
+
+		<!-- Include direction parameter - optionally passed from main form - as a hidden field -->
+		<input type="hidden" name="direction" value="<%= @direction %>" />
 	
-	<% if @procedure -%>
+		<fieldset class="p-form__fieldset p-3 my-3 border rounded">
+			<legend class="p-form__fieldset-legend">Number of days to count</legend>
+			<div class="p-form__form-group">
+			  	<% if @procedure and @procedure.typical_day_count -%>
+					<input type="number" name="day-count" id="day-count" value="<%= @procedure.typical_day_count %>" class="p-form__input" required>
+				<% else -%>
+					<input type="number" name="day-count" id="day-count" class="p-form__input" required>
+				<% end -%>
+			</div>
+		</fieldset>
 	
-		<% if @procedure.typical_day_count && @procedure.has_day_count_caveats == true  -%>
-			<% if @direction == 'reverse' %>
-				<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_reverse_url )}.".html_safe ) %>
-			<% else -%>
-				<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
-			<% end -%>
-		<% elsif @procedure.has_day_count_caveats == true -%>
-			<% if @direction == 'reverse' %>
-				<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_reverse_url )}.".html_safe ) %>
-			<% else -%>
-				<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+		<% if @procedure -%>
+	
+			<% if @procedure.typical_day_count && @procedure.has_day_count_caveats == true  -%>
+				<% if @direction == 'reverse' %>
+					<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_reverse_url )}.".html_safe ) %>
+				<% else -%>
+					<%= content_tag( 'p', "The pre-populated value is a typical value for this type of instrument. It may not be the correct value. Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+				<% end -%>
+			<% elsif @procedure.has_day_count_caveats == true -%>
+				<% if @direction == 'reverse' %>
+					<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_reverse_url )}.".html_safe ) %>
+				<% else -%>
+					<%= content_tag( 'p', "Please refer to #{link_to( 'our guidance on using the calculator', meta_using_url )}.".html_safe ) %>
+				<% end -%>
 			<% end -%>
 		<% end -%>
-	<% end -%>
 	
-	<button type="submit" id="calculate" class="btn btn-primary">Calculate</button>
-</form>
+		<button type="submit" id="calculate" class="btn btn-primary">Calculate</button>
+	</form>
+</div>

@@ -1,10 +1,12 @@
-<%= content_tag( 'p', 'Checking that all days in upcoming recesses are marked as adjournment days.' ) %>
+<div class="reading-width">
+	<%= content_tag( 'p', 'Checking that all days in upcoming recesses are marked as adjournment days.' ) %>
 
-<% if @error_log.empty? -%>
-	<%= content_tag( 'p', "No errors found." ) %>
-<% else -%>
-	<%= content_tag( 'p', "#{@error_log.size} errors found:" ) %>
-	<ul>
-		<%= render :partial => 'meta/librarian_tools/recess_date_error_log', :collection => @error_log %>
-	</ul>
-<% end -%>
+	<% if @error_log.empty? -%>
+		<%= content_tag( 'p', "No errors found." ) %>
+	<% else -%>
+		<%= content_tag( 'p', "#{@error_log.size} errors found:" ) %>
+		<ul>
+			<%= render :partial => 'meta/librarian_tools/recess_date_error_log', :collection => @error_log %>
+		</ul>
+	<% end -%>
+</div>
