@@ -141,6 +141,13 @@ class CalculatorController < ApplicationController
         
       # Otherwise, if the day count has been provided and the day count is not invalid ...
       else
+      
+        # TODO: new table called calculation_styles.
+        # CalculationStyle belongs to procedure.
+        # Get procedure
+        # use_calc_style = procedure.calculation_style_name
+        # append _reverse where application
+        # ClassName.send( use_calc_style.to_sym, param1, param2 )
 
         # If the procedure has been passed as a parameter ...
         if @procedure
