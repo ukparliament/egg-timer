@@ -4,8 +4,8 @@ class MetaController < ApplicationController
   def index
 
     # Set a meta information for the page.
-    @page_title = "About this application"
-    @description = "About this application."
+    @page_title = "About this website"
+    @description = "About this website."
     @crumb << { label: 'About', url: nil }
   end
   
