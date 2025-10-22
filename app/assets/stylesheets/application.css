@@ -1,29 +1,17 @@
 /* This is just for app specific overrides and extras */
 
 /* Main navigation active states */
-body.section-calculators nav#header-nav a.calculators {
-	border-bottom-color: #fff;
-}
-body.section-time-periods nav#header-nav a.time-periods {
-	border-bottom-color: #fff;
-}
-body.section-calendar nav#header-nav a.calendar {
-	border-bottom-color: #fff;
-}
+body.section-calculators nav#header-nav a.calculators,
+body.section-time-periods nav#header-nav a.time-periods,
+body.section-calendar nav#header-nav a.calendar,
 body.section-calendar-subscriptions nav#header-nav a.calendar-subscriptions {
 	border-bottom-color: #fff;
 }
 
 
 /* Sub navigation active states */
-body.subsection-scrutiny-calculator .subnav a.scrutiny-calculator {
-	border-bottom-color: #006e45;
-	color: #4d4d4d;
-}
-body.subsection-scrutiny-calculator-reverse .subnav a.scrutiny-calculator-reverse {
-	border-bottom-color: #006e45;
-	color: #4d4d4d;
-}
+body.subsection-scrutiny-calculator .subnav a.scrutiny-calculator,
+body.subsection-scrutiny-calculator-reverse .subnav a.scrutiny-calculator-reverse,
 body.subsection-interval-calculator .subnav a.interval-calculator {
 	border-bottom-color: #006e45;
 	color: #4d4d4d;
