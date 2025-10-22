@@ -11,7 +11,8 @@ gem 'pg'
 gem "propshaft"
 
 # Design system gem
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.3.18"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.4.0"
+
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
 gem 'benchmark'
