@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby file: '.tool-versions'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8'
+gem 'rails', '~> 8.1'
 gem 'puma'
 gem 'pg'
 
