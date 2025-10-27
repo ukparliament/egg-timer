@@ -401,7 +401,7 @@ DEPENDENCIES
   propshaft
   puma
   rack-cors
-  rails (~> 8)
+  rails (~> 8.1)
   redcarpet
   rollbar
   rspec-rails
