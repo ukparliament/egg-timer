@@ -59,10 +59,12 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
   gem 'letter_opener'
+  gem 'seed_dump', github: "rroblak/seed_dump"
 end
 
 group :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'activerecord-import'
 end
