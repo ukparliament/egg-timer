@@ -1,19 +1,13 @@
 require 'rails_helper'
 
-describe "Calculation test 1", :seeded_data, type: :system do
+describe "Calculation test 1", type: :system do
   context "With the seed data loaded" do
     before(:context) do
-      Rails.application.load_seed
+      CalculationsTestData::Manager.load
     end
 
     after(:context) do
-      # Get all table names except schema migrations
-      tables = ActiveRecord::Base.connection.tables - ['schema_migrations', 'ar_internal_metadata']
-
-      # Truncate all tables and reset sequences
-      ActiveRecord::Base.connection.execute(<<-SQL)
-        TRUNCATE TABLE #{tables.join(', ')} RESTART IDENTITY CASCADE;
-      SQL
+      CalculationsTestData::Manager.delete
     end
 
     context "Recess date checker" do
