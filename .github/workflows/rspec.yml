@@ -38,9 +38,11 @@ jobs:
       run: |
         bundle install --no-deployment --jobs 4 --retry 3
         cp config/database.github.yml config/database.yml
-        bundle exec rails db:setup
+        bundle exec rails db:create db:migrate
     - name: Run main tests which stand up their own data
       run: bundle exec rspec --tag ~@seeded_data
     - name: Run main tests which use the seeded data set
       run: bundle exec rspec --tag seeded_data
+    - name: Run all tests
+      run: bundle exec rspec
 
