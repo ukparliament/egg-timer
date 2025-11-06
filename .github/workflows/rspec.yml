@@ -31,7 +31,6 @@ jobs:
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Setup the Rails application
       env:
@@ -40,5 +39,8 @@ jobs:
         bundle install --no-deployment --jobs 4 --retry 3
         cp config/database.github.yml config/database.yml
         bundle exec rails db:setup
-    - name: Run tests
-      run: bundle exec rspec
+    - name: Run main tests which stand up their own data
+      run: bundle exec rspec --tag ~@seeded_data
+    - name: Run main tests which use the seeded data set
+      run: bundle exec rspec --tag seeded_data
+

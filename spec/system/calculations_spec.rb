@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Calculation test 1", type: :system do
+describe "Calculation test 1", :seeded_data, type: :system do
   context "With the seed data loaded" do
     before(:context) do
       Rails.application.load_seed
