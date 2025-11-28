@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Calculation test 1", type: :system do
+describe "Forward calculation tests", type: :system do
   context "With the seed data loaded" do
     before(:context) do
       CalculationsTestData::Manager.load
@@ -64,7 +64,7 @@ describe "Calculation test 1", type: :system do
         expect(page).to have_content("egg timer")
         click_on "Scrutiny end date calculator"
 
-        choose "Negative statutory instrument praying period (laid before Commons only)"
+        choose "Legislative reform order and Localism order - negative procedure objection period"
 
         fill_in 'start-date', with: "01/02/2024"
         click_on "Continue with this period and starting date"
