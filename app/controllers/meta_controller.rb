@@ -32,7 +32,7 @@ class MetaController < ApplicationController
 
     # Set a meta information for the page.
     @page_title = "Cookies"
-    @description = "Cookies."
+    @description = "Cookie policy."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Cookies', url: nil }
     
