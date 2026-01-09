@@ -3,11 +3,13 @@ require 'rails_helper'
 describe "Forward calculation tests", type: :system do
   context "With the seed data loaded" do
     before(:context) do
-      CalculationsTestData::Manager.load
+      load_sql_dump
+      travel_to Time.zone.local(2025, 1, 9, 12, 00, 00)
     end
 
     after(:context) do
-      CalculationsTestData::Manager.delete
+      truncate_all_data_tables
+      travel_back
     end
 
     context "Recess date checker" do

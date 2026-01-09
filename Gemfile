@@ -60,6 +60,7 @@ group :development do
   gem 'web-console'
   gem 'letter_opener'
   gem 'seed_dump'
+  gem 'guard-rspec', require: false
 end
 
 group :test do
