@@ -397,7 +397,6 @@ GEM
       jwt (>= 1.5, < 4.0)
       multi_json (~> 1.10)
     stringio (3.2.0)
-    terminal-notifier-guard (1.6.4)
     thor (1.5.0)
     timeout (0.6.0)
     trailblazer-option (0.1.2)
@@ -469,7 +468,6 @@ DEPENDENCIES
   rspec-rails
   seed_dump
   selenium-webdriver
-  terminal-notifier-guard (~> 1.6.1)
   web-console
   webmock
 
