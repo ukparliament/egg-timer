@@ -1,18 +1,10 @@
 GIT
-  remote: https://github.com/rroblak/seed_dump.git
-  revision: b79848d77b9f330b3b053ff5183a987fd2c35737
-  specs:
-    seed_dump (3.4.1)
-      activerecord (>= 4)
-      activesupport (>= 4)
-
-GIT
   remote: https://github.com/ukparliament/design-assets.git
-  revision: 72d1a57a032e0fc9047efe6f62337b4698aad5ae
-  tag: 0.6.5
+  revision: 8204acf7e6525a7681e554fecce663e83242c94d
+  tag: 0.6.10
   glob: library_design/*.gemspec
   specs:
-    library_design (0.6.5)
+    library_design (0.6.10)
       rack-cors (~> 3.0.0)
 
 GEM
@@ -339,6 +331,9 @@ GEM
     rspec-support (3.13.6)
     rubyzip (3.2.2)
     securerandom (0.4.1)
+    seed_dump (3.4.1)
+      activerecord (>= 4)
+      activesupport (>= 4)
     selenium-webdriver (4.39.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -419,7 +414,7 @@ DEPENDENCIES
   redcarpet
   rollbar
   rspec-rails
-  seed_dump!
+  seed_dump
   selenium-webdriver
   web-console
   webmock

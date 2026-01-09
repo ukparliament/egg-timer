@@ -11,7 +11,7 @@ gem 'pg'
 gem "propshaft"
 
 # Design system gem
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.5"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.10"
 
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
@@ -59,7 +59,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
   gem 'letter_opener'
-  gem 'seed_dump', github: "rroblak/seed_dump"
+  gem 'seed_dump'
 end
 
 group :test do
