@@ -1,139 +1,261 @@
-## A monkey patched Ruby date class to handle UK Parliament specific day types.
+# # A monkey patched Ruby date class to handle UK Parliament specific day types.
 module DateMonkeyPatch
 
-  ### A set of methods to work out the type of a given day.
+  # See also: [Parliamentary Time Period ontology](https://ukparliament.github.io/ontologies/time-period/time-period-ontology)
 
-  #### We want to check if this is an actual sitting day in the Commons.
-
-  # We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
-
-  # For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
-
-  # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
-
-  def is_commons_actual_sitting_day?
-    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+  # ## A set of methods to determine the type of a given day across both Houses.
+  
+  # ### We want to determine if Parliament is dissolved on this day.
+  def is_dissolution_day?
+    DissolutionDay.all.where( 'date = ?',  self ).first
+  end
+  
+  # ### We want to determine if Parliament is prorogued on this day.
+  def is_prorogation_day?
+    ProrogationDay.all.where( 'date = ?',  self ).first
+  end
+  
+  # ## A set of methods to return the parliamentary time periods a calendar day forms part of.
+  # A calendar day forms part of a dissolution period or a Parliament period.
+  # Where a calendar day forms part of a Parliament period, it forms part of a session or a prorogation period.
+  
+  # ### We want to find which Parliament period a calendar day forms part of, if any.
+  def parliament_period
+    ParliamentPeriod.find_by_sql([
+      "
+        SELECT *
+        FROM parliament_periods
+        WHERE start_date <= :the_date
+        AND (
+          end_date >= :the_date
+          OR
+          end_date IS NULL
+        )
+      ",
+      the_date: self
+    ]).first
   end
 
-  #### We want to check if this is an actual sitting day in the Lords.
-
-  # We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
-
-  # For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
-
-  # If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
-
-  def is_lords_actual_sitting_day?
-    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+  # ### We want to find which dissolution period a calendar day forms part of, if any.
+  def dissolution_period
+    DissolutionPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
+  end
+  
+  #### We want to find which session a calendar day forms part of, if any.
+  def session
+    Session.find_by_sql([
+      "
+        SELECT *
+        FROM sessions
+        WHERE start_date <= :the_date
+        AND (
+          end_date >= :the_date
+          OR
+          end_date IS NULL
+        )
+      ",
+      the_date: self
+    ]).first
   end
 
-  #### We want to check if this is a parliamentary sitting day in the Commons.
-
-  # We use a more strict definition of a sitting day. We don’t include dates for which the Commons continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.
+  # ### We want to find which prorogation period a calendar day forms part of, if any.
+  def prorogation_period
+    ProrogationPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
+  end
+  
+  
+  # ## A set of methods to determine the type of a given day in a House.
+  
+  # ### Sitting days
+  
+  # Parliamentary clerks define a sitting day in a House as a day when the House started sitting. Should a House start sitting on a Monday, continue sitting through the night, rise on the Tuesday and not start sitting again on that Tuesday, that would count as one sitting day.
+  # As far as we are aware, this definition made its first appearance in legislation as part of [schedule 5, paragraph 44 (2) of the European Union (Withdrawal Agreement) Act 2020](https://www.legislation.gov.uk/ukpga/2020/1#schedule-5-paragraph-44-2).
+  # Clerks have suggested that this definition would apply across all calculations of scrutiny periods. Lawyers have suggested otherwise.
+  # The Parliamentary Time application defines two types of sitting day:
+  # * a parliamentary sitting day, being a calendar day on which a House started sitting according to the definition given above.
+  # * a calendar sitting day, being any calendar day on which a House sat, regardless of whether it started sitting on that date.
+  # The first definition is used wherever the enabling Act sets out that definition explicitly. Otherwise, the second definition is used.
+  # At the time this code was written - February 2026 - there have been no instances of either House sitting overnight, rising and then sitting again on the following day since 2017.
+  
+  # #### We want to determine if this is a parliamentary sitting day in the Commons.
   def is_commons_parliamentary_sitting_day?
     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 1 ).first
   end
-
-  #### We want to check if this is a parliamentary sitting day in the Lords.
-
-  # We use a more strict definition of a sitting day. We don’t include dates for which the Lords continued sitting from a previous day, where the preceding day’s sitting overlapped with the next day’s programmed sitting.
-
+  
+  # #### We want to determine if this is a parliamentary sitting day in the Lords.
   def is_lords_parliamentary_sitting_day?
     SittingDay.all.where( 'start_date = ?',  self ).where( house_id: 2 ).first
   end
-
-  #### We want to check if this is a virtual sitting day in the Commons.
-
-  # This is a day where all Members of the House sit ‘digitally’, rather than physically.
-
-  # A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.
-
-  # As of the end of June 2020, the Commons has had no virtual sitting days.
-
+  
+  # #### We want to determine if this is a calendar sitting day in the Commons.
+  def is_commons_calendar_sitting_day?
+    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+  end
+  
+  # #### We want to determine if this is a calendar sitting day in the Lords.
+  def is_lords_calendar_sitting_day?
+    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+  end
+  
+  ## TODO: add continuation sitting days???????
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # ### Virtual sitting days
+  
+  # During the COVID pandemic, the House of Lords sat virtually for 11 days.
+  # As of February 2026, the House of Commons has never sat virtually.
+  # In [guidance issued on 16 April 2020](https://committees.parliament.uk/publications/688/documents/33426/default/) the Lords Procedure Committee stated:
+  # "A Virtual Proceeding is not a sitting of the House. There is no Mace present and the Virtual Proceeding will not be empowered to make decisions. Virtual Proceedings can debate and sc[r]utinise an issue but when a decision is needed that must be taken by the House."
+  # Whilst clerks state that a virtual sitting day does not count as a sitting day for the purposes of calculating scrutiny periods, lawyers imply this would need to be tested in court.
+  # Unless and until this is resolved, these methods use the clerks' definition of non-sitting scrutiny day.
+  
+  # #### We want to determine if this is a virtual sitting day in the Commons.
   def is_commons_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
 
-  #### We want to check if this is a virtual sitting day in the Lords.
-  # This is a day where all Members of the House sit ‘digitally’, rather than physically.
-
-  # A virtual sitting may continue over more than one calendar day. We count any continuation, where the preceding day’s sitting overlapped with the next day’s programmed sitting, as also being a virtual sitting day.
-
+  # #### We want to determine if this is a virtual sitting day in the Lords.
   def is_lords_virtual_sitting_day?
     VirtualSittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
-
-  #### We want to check if this is an actual sitting day in *either* House.
-
-  def is_either_house_actual_sitting_day?
-    self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day?
-  end
-
-  #### We want to check if this is an actual sitting day in *both* Houses.
-
-  def is_joint_actual_sitting_day?
-    self.is_commons_actual_sitting_day? and self.is_lords_actual_sitting_day?
-  end
-
-  #### We want to check if this is a parliamentary sitting day in *either* House.
-
-  def is_either_house_parliamentary_sitting_day?
-    self.is_commons_parliamentary_sitting_day? or self.is_lords_parliamentary_sitting_day?
-  end
-
-  #### We want to check if this is a parliamentary sitting day in *both* Houses.
-
-  def is_joint_parliamentary_sitting_day?
-    self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
-  end
-
-  #### We want to check if this is an adjournment day in either House.
-
-  def is_adjournment_day?
-    AdjournmentDay.all.where( 'date = ?',  self ).first
-  end
-
-  #### We want to check if this is an adjournment day in the Commons.
-
+  
+  
+  # ### Adjournment days
+  
+  # #### We want to determine if this is an adjournment day in the Commons.
   def is_commons_adjournment_day?
     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 1 ).first
   end
 
-  #### We want to check if this is an adjournment day in the Lords.
-
+  # #### We want to determine if this is an adjournment day in the Lords.
   def is_lords_adjournment_day?
     AdjournmentDay.all.where( 'date = ?',  self ).where( house_id: 2 ).first
   end
-
-  #### We want to check if Parliament is prorogued on this day.
-
-  def is_prorogation_day?
-    ProrogationDay.all.where( 'date = ?',  self ).first
+  
+  
+  # ## A set of methods to determine the type of a given day in *either* House.
+  
+  # ### We want to determine if this is an adjournment day in either House.
+  def is_either_house_adjournment_day?
+    AdjournmentDay.all.where( 'date = ?',  self ).first
   end
-
-  #### We want to check if Parliament is dissolved on this day.
-
-  def is_dissolution_day?
-    DissolutionDay.all.where( 'date = ?',  self ).first
+  
+  # ### We want to determine if this is a parliamentary sitting day in *either* House.
+  def is_either_house_parliamentary_sitting_day?
+    SittingDay.all.where( 'start_date = ?',  self ).first
   end
-
-  #### We want to check if this is a day for which we have something in the calendar.
-
-  # That may be an actual sitting day - including parliamentary sitting days, a virtual sitting day, an adjournment day, a day within prorogation or a day within dissolution.
-
+  
+  # ### We want to determine if this is a calendar sitting day in *either* House.
+  def is_either_house_calendar_sitting_day?
+    SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?', self).first
+  end
+  
+  
+  # ## A set of methods to determine if this is a joint sitting day.
+  
+  # ### We want to check if this is a parliamentary sitting day in *both* Houses.
+  def is_joint_parliamentary_sitting_day?
+    self.is_commons_parliamentary_sitting_day? and self.is_lords_parliamentary_sitting_day?
+  end
+  
+  # ### We want to determine if this is a calendar sitting day in *both* Houses.
+  def is_joint_calendar_sitting_day?
+    self.is_commons_calendar_sitting_day? and self.is_lords_calendar_sitting_day?
+  end
+  
+  
+  # ## A set of methods to determine if the calendar is populated.
+  
+  # ### A method to determine if this is a day for which we have something in the calendar.
+  # That may be:
+  # * a day within dissolution
+  # * a day within prorogation
+  # * a parliamentary sitting day
+  # * a calendar sitting day
+  # * a virtual sitting day
+  # * an adjournment day
   def is_calendar_populated?
-    self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day? or self.is_commons_virtual_sitting_day? or self.is_lords_virtual_sitting_day? or self.is_adjournment_day? or self.is_prorogation_day? or self.is_dissolution_day?
+    self.is_dissolution_day?
+    or self.is_prorogation_day?
+    or self.is_commons_calendar_sitting_day?
+    or self.is_lords_calendar_sitting_day?
+    or self.is_commons_virtual_sitting_day?
+    or self.is_lords_virtual_sitting_day?
+    or self.is_adjournment_day?
   end
-
-  #### We want to check if this is a day for which we do not have anything in the calendar.
-
-  # We use this to check if we've "run out of calendar" so we don't keep cycling into future days and loop infinitely.
-
-  # This is our event horizon.
-
+  
+  # ### We want to determine if this is a day for which we do not have anything in the calendar.
+  # This method is used to determine whether a calculation has enough calendar data to proceed.
+  # If the calendar is not populated for a date, calculations cannot proceed past that date.
   def is_calendar_not_populated?
     !self.is_calendar_populated?
   end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # ================== Done to here. =========
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  # ## A set of methods to determine whether a date forms part of a short break in sitting days.
+  
+  #### DO CONTINUATION SITTING DAYS COUNT IN SOME CALCULATIONS?
+  
+  #### BUT NOT IN OTHERS?
+  
+  #### DO WE NEED FOUR METHODS HERE?
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
 
   #### Methods to calculate non-sitting scrutiny days in both Houses.
 
@@ -152,14 +274,28 @@ module DateMonkeyPatch
   # In all known cases “short” is defined as not more than four days.
 
   # For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.
+  
+  
 
   def is_commons_non_sitting_scrutiny_day?( maximum_day_count )
 
-    ##### We want to check if this is a Commons adjournnment day or a Commons virtual sitting day.
+    ##### We want to check if this is a Commons adjournment day or a Commons virtual sitting day.
+    
+   # if it's not a parl sitting day
+  #  nor a dissolution day
+  #  nor a prorogation day
 
+   # if self.continuation_sitting_day? or self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
+   
+   # these two should do the same! how many database queries? which is faster.
+    
+    
+    
+    
+    
     if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
 
-      # Having found that this is a Commons adjournnment day or a Commons virtual sitting day, we start the adjournment day count at 1.
+      # Having found that this is a Commons adjournment day or a Commons virtual sitting day, we start the adjournment day count at 1.
 
       non_sitting_scrutiny_day_count = 1
 
@@ -308,6 +444,32 @@ module DateMonkeyPatch
   end
 
   # (End of methods to calculate non-sitting scrutiny days in both Houses.)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   #### We want to check if this is a scrutiny day in the Commons.
 
@@ -342,6 +504,35 @@ module DateMonkeyPatch
   end
 
   # (End of set of methods to work out the type of a given day.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   ### A set of methods to find the first day of a given type.
@@ -577,53 +768,7 @@ module DateMonkeyPatch
 
   # (End of set of methods to find the first day of a given type.)
 
-  ### A set of methods to return which higher level parliamentary time periods a calendar day sits in.
-  # A calendar day may sit in either a dissolution period or a Parliament period.
-  # If a calendar day sits inside a Parliament period, it may sit inside either a session or a prorogation period.
-
-  #### We want to find which dissolution period a calendar day sits in, if any.
-  def dissolution_period
-    DissolutionPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
-  end
-
-  #### We want to find which Parliament period a calendar day sits in, if any.
-  def parliament_period
-    ParliamentPeriod.find_by_sql([
-      "
-        SELECT *
-        FROM parliament_periods
-        WHERE start_date <= :the_date
-        AND (
-          end_date >= :the_date
-          OR
-          end_date IS NULL
-        )
-      ",
-      the_date: self
-    ]).first
-  end
-
-  #### We want to find which prorogoration period a calendar day sits in, if any.
-  def prorogation_period
-    ProrogationPeriod.all.where( "start_date <= ?", self ).where( "end_date >= ?", self).first
-  end
-
-  #### We want to find which session a calendar day sits in, if any.
-  def session
-    Session.find_by_sql([
-      "
-        SELECT *
-        FROM sessions
-        WHERE start_date <= :the_date
-        AND (
-          end_date >= :the_date
-          OR
-          end_date IS NULL
-        )
-      ",
-      the_date: self
-    ]).first
-  end
+  
 
   ### We want to find out if this is the final day of a session.
   def is_final_day_of_session?
@@ -747,5 +892,55 @@ module DateMonkeyPatch
     lords_adjournment_day_label
   end
 end
+
+# ######### DEPRECATED METHODS ###############
+
+# we've changed actual sitting day to calendar
+# parliamentary sitting day remains parliamentary sitting day.
+
+#### We want to check if this is an actual sitting day in the Commons.
+
+# We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
+
+# For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
+
+# If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
+
+def is_commons_actual_sitting_day?
+  SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+end
+
+
+
+# #### We want to check if this is an actual sitting day in the Lords.
+
+# We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
+
+# For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
+
+# If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
+
+def is_lords_actual_sitting_day?
+  SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+end
+
+
+# ### We want to check if this is an adjournment day in either House.
+def is_adjournment_day?
+  AdjournmentDay.all.where( 'date = ?',  self ).first
+end
+
+# ### We want to check if this is an actual sitting day in *either* House.
+def is_either_house_actual_sitting_day?
+  self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day?
+end
+
+#### We want to determine if this is an actual sitting day in *both* Houses.
+
+def is_joint_actual_sitting_day?
+  self.is_commons_actual_sitting_day? and self.is_lords_actual_sitting_day?
+end
+
+
 
 Date.include(DateMonkeyPatch)
