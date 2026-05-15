@@ -2,6 +2,52 @@ require 'rails_helper'
 require 'support/database_support'
 
 describe "Backward calculation tests", type: :system do
+
+  context "These tests require explicit time travel for some reason" do
+    before(:each) do
+      load_sql_dump
+      travel_to Time.zone.local(2025, 1, 9, 12, 00, 00)
+    end
+
+    after(:each) do
+      truncate_all_data_tables
+      travel_back
+    end
+
+    it "Present instrument with a future end date has the calendar set up" do
+      visit root_path
+      click_on "Calendar"
+      click_on "2026"
+      click_on "July"
+
+      # Expect 1st row to have
+      # Date Day       Commons Day type           Commons scrutiny day  Lords day type            Lords scrutiny day
+      # 1st  Wednesday Parliamentary Sitting Day  True                  Parliamentary Sitting Day True
+      first_data_row = all('table tbody tr').first
+      expected_first_calendar_row = ["1st", "Wednesday", "Parliamentary sitting day", "True", "Parliamentary sitting day", "True"]
+
+      cells = first_data_row.all('td, th').map(&:text)
+      expect(cells).to match_array(expected_first_calendar_row)
+    end
+
+    it "resent instrument with a future end date shows the correct message" do
+      visit root_path
+      click_on "Calculators"
+      click_on "Scrutiny start date calculator"
+      fill_in 'start-date', with: "01/07/2026"
+      choose "Negative statutory instrument praying period (laid before both Houses)"
+      click_on "Continue with this period and end date"
+      expect(find_field('day-count').value).to eq "40"
+      click_on "Calculate"
+
+      expect(page).to have_content("To produce a target end date of Wednesday, 1 July 2026, the scrutiny period is currently expected to begin on Wednesday, 13 May 2026 and end on Wednesday, 1 July 2026.")
+      expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 13 May 2026, the instrument must be laid on or before that date.")
+    end
+
+  end
+
+
+
   context "With the data loaded from a database export" do
     before(:context) do
       load_sql_dump
@@ -11,38 +57,6 @@ describe "Backward calculation tests", type: :system do
     after(:context) do
       truncate_all_data_tables
       travel_back
-    end
-
-    context "Present instrument with a future end date" do
-      it "has the calendar set up" do
-        visit root_path
-        click_on "Calendar"
-        click_on "2026"
-        click_on "July"
-
-        # Expect 1st row to have
-        # Date Day       Commons Day type           Commons scrutiny day  Lords day type            Lords scrutiny day
-        # 1st  Wednesday Parliamentary Sitting Day  True                  Parliamentary Sitting Day True
-        first_data_row = all('table tbody tr').first
-        expected_first_calendar_row = ["1st", "Wednesday", "Parliamentary sitting day", "True", "Parliamentary sitting day", "True"]
-
-        cells = first_data_row.all('td, th').map(&:text)
-        expect(cells).to match_array(expected_first_calendar_row)
-      end
-
-      it "shows the correct message" do
-        visit root_path
-        click_on "Calculators"
-        click_on "Scrutiny start date calculator"
-        fill_in 'start-date', with: "01/07/2026"
-        choose "Negative statutory instrument praying period (laid before both Houses)"
-        click_on "Continue with this period and end date"
-        expect(find_field('day-count').value).to eq "40"
-        click_on "Calculate"
-
-        expect(page).to have_content("To produce a target end date of Wednesday, 1 July 2026, the scrutiny period is currently expected to begin on Wednesday, 13 May 2026 and end on Wednesday, 1 July 2026.")
-        expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 13 May 2026, the instrument must be laid on or before that date.")
-      end
     end
 
     context "Present instrument with a future end date" do
@@ -78,7 +92,7 @@ describe "Backward calculation tests", type: :system do
       end
     end
 
-     context "Treaty period objective A - IN THE PAST" do
+    context "Treaty period objective A - IN THE PAST" do
       it "shows the correct message with past tense" do
         visit root_path
 
