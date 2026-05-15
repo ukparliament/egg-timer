@@ -3,11 +3,11 @@
 # Table name: procedures
 #
 #  id                    :integer          not null, primary key
-#  display_order         :integer          not null
-#  name                  :string(255)      not null
 #  active                :boolean          not null
-#  typical_day_count     :integer
+#  display_order         :integer          not null
 #  has_day_count_caveats :boolean
+#  name                  :string(255)      not null
+#  typical_day_count     :integer
 #
 class Procedure < ActiveRecord::Base
   
