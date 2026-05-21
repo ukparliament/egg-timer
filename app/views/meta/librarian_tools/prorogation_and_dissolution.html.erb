@@ -12,7 +12,7 @@
 	<%= content_tag( 'h3', 'In the Google calendars' ) %>
 	<ol>
 		<%= content_tag( 'li', "Remove any previously created sitting or adjournment days set to take place during the prorogation or the dissolution period from the Google calendars." ) %>
-		<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes. The #{link_to( 'calendar sync checker', meta_calendar_sync_checker_url )} records when the calendar last synced.".html_safe ) %>
+		<%= content_tag( 'li', "Check that these changes have propagated to the application. This should take no longer than 15 minutes. The #{link_to( 'calendar sync checker', meta_detailed_sync_logs_url )} records when the calendar last synced.".html_safe ) %>
 	</ol>
 
 	<%= content_tag( 'h3', 'In the Google spreadsheet' ) %>
@@ -27,7 +27,7 @@
 		<li>The regnal year citation of the session.</li>
 		<li>The Wikidata ID of the session, if that exists.</li>
 	</ul>
-	<p>The egg timer requires the Parliament number, session number and session start date. The Journal Office style citation, regnal year citation and Wikidata ID are optional.</p>
+	<p>Parliamentary Time requires the Parliament number, session number and session start date. The Journal Office style citation, regnal year citation and Wikidata ID are optional.</p>
 	<%= content_tag( 'p', "Prorogation is announced in a proclamation which gives a start date for the prorogation period. For prorogations between sessions in a Parliament period, the proclamation also names the start date of the next session." ) %>
 
 	<%= content_tag( 'p', "At dissolution, you also need to update the Parliament periods sheet by applying an end date to the Parliament being dissolved. You also need to add details for the new Parliament, being:" ) %>
@@ -35,11 +35,11 @@
 		<li>The Parliament number.</li>
 		<li>The polling day of the general election forming the new Parliament.</li>
 		<li>The Wikidata ID of the general election forming the new Parliament.</li>
-		<li>The opening date, being the date of assembly of the new Parliament.</li>
+		<li>The opening date, being the date on which the new Parliament is summoned.</li>
 		<li>The date of State Opening.</li>
 		<li>The Wikidata ID of the Parliament</li>
 	</ul>
-	<p>The egg timer requires the Parliament number and its start date. It will load the Wikidata ID of the Parliament, but this isn't necessary.</p>
+	<p>Parliamentary Time requires the Parliament number and its start date. It will load the Wikidata ID of the Parliament, but this isn't necessary.</p>
 
 	<%= content_tag( 'h2', 'What to do upon the announcement of prorogation' ) %>
 	<%= content_tag( 'p', "In order for the application to continue to function, we need to upload a clean copy of the database with an end date for the current session and a start date for the subsequent session." ) %>
@@ -59,6 +59,7 @@
 	<ol>
 		<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the sessions sheet as a CSV." ) %>
 		<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
+		<%= content_tag( 'li', "Remove the first - header - row of the sessions.csv." ) %>
 		<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the Parliament periods sheet as a CSV." ) %>
 		<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
 		<%= content_tag( 'li', "Remove the first - header - row of the parliaments.csv." ) %>
@@ -70,14 +71,26 @@
 	<ol>
 		<%= content_tag( 'li', "Run #{content_tag( 'code', 'rails db:drop db:setup' )}. This removes and recreates all tables in the local database.".html_safe ) %>
 		<%= content_tag( 'li', "Run #{content_tag( 'code', 'rake setup' )}. This imports Parliament and session data and infers dissolution and prorogation data.".html_safe ) %>
-		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on' )} to switch the application to maintenance mode.".html_safe ) %>
-		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-egg-timer' )} to reset the database: this removes information from the Heroku database.".html_safe ) %>
-		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL' )} to push the new data to the database on Heroku.".html_safe ) %>
-		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku run rake sync' )} to sync data from the Google calendars to the application.".html_safe ) %>
-		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off' )} to switch the application out of maintenance mode.".html_safe ) %>
 	</ol>
-
-	<%= content_tag( 'h2', 'Having reset the database', :id => 'having-reset-the-database' ) %>
-	<%= content_tag( 'p', "You can create sitting and adjournment days in the subsequent Parliament and / or session." ) %>
-	<%= content_tag( 'p', "Use the #{link_to( 'calendar sync checker', meta_calendar_sync_checker_url )} to confirm whether the application is being updated from the Google calendars.".html_safe ) %>
+	
+	<%= content_tag( 'h2', 'Testing the changes', :id => 'testing-the-changes' ) %>
+	<ol>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm egg-timer-test --remote egg-timer-test' )} to reset the test database: this removes information from the Heroku test database.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL --remote egg-timer-test' )} to push the new data to the test database on Heroku.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku run rake sync --remote egg-timer-test' )} to sync data from the Google calendars to the test application.".html_safe ) %>
+		<%= content_tag( 'li', "When you see 'Recording the sync time' it's done.".html_safe ) %>
+		<%= content_tag( 'li', "Ask IDMS to test the test application.".html_safe ) %>
+		<%= content_tag( 'li', "Once IDMS are happy ....".html_safe ) %>
+	</ol>
+	
+	<%= content_tag( 'h2', 'Pushing the changes live', :id => 'pushing-the-changes-live' ) %>
+	<ol>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:on --remote egg-timer-production' )} to switch the production application to maintenance mode.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:reset --confirm parliament-egg-timer --remote egg-timer-production' )} to reset the production database: this removes information from the Heroku production database.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku pg:push parliament_calendar DATABASE_URL --remote egg-timer-production' )} to push the new data to the production database on Heroku.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku run rake sync --remote egg-timer-production' )} to sync data from the Google calendars to the production application.".html_safe ) %>
+		<%= content_tag( 'li', "When you see 'Recording the sync time' it's done.".html_safe ) %>
+		<%= content_tag( 'li', "Run #{content_tag( 'code', 'heroku maintenance:off --remote egg-timer-production' )} to switch the production application out of maintenance mode.".html_safe ) %>
+		<%= content_tag( 'li', "Ask IDMS to test on live.".html_safe ) %>
+	</ol>
 </div>
