@@ -71,11 +71,10 @@ module DateMonkeyPatch
   # Parliamentary clerks define a sitting day in a House as a day when the House started sitting. Should a House start sitting on a Monday, continue sitting through the night, rise on the Tuesday and not start sitting again on that Tuesday, that would count as one sitting day.
   # As far as we are aware, this definition made its first appearance in legislation as part of [schedule 5, paragraph 44 (2) of the European Union (Withdrawal Agreement) Act 2020](https://www.legislation.gov.uk/ukpga/2020/1#schedule-5-paragraph-44-2).
   # Clerks have suggested that this definition would apply across all calculations of scrutiny periods. Lawyers have suggested otherwise.
-  # The Parliamentary Time application defines two types of sitting day:
-  # * a parliamentary sitting day, being a calendar day on which a House started sitting according to the definition given above.
-  # * a calendar sitting day, being any calendar day on which a House sat, regardless of whether it started sitting on that date.
-  # The first definition is used wherever the enabling Act sets out that definition explicitly. Otherwise, the second definition is used.
-  # At the time this code was written - February 2026 - there have been no instances of either House sitting overnight, rising and then sitting again on the following day since 2017.
+  # The Parliamentary Time application defines three types of sitting day:
+  # * a parliamentary sitting day, being a day on which a House started sitting according to the definition given above.
+  # * a calendar sitting day, being a day on which a House sat, regardless of whether it started sitting on that date.
+  # * a continuation sitting day, being a day on which a House sat when it did not start sitting on that date.
   
   # #### We want to determine if this is a parliamentary sitting day in the Commons.
   def is_commons_parliamentary_sitting_day?
@@ -97,25 +96,15 @@ module DateMonkeyPatch
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
   
-  ## TODO: add continuation sitting days???????
+  # #### We want to determine if this is a continuation sitting day in the Commons.
+  def is_commons_continuation_sitting_day?
+    SittingDay.all.where( 'start_date < ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
+  end
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  # #### We want to determine if this is a continuation sitting day in the Lords.
+  def is_lords_continuation_sitting_day?
+    SittingDay.all.where( 'start_date < ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
+  end
   
   
   # ### Virtual sitting days
@@ -151,12 +140,27 @@ module DateMonkeyPatch
   end
   
   
-  # ## A set of methods to determine the type of a given day in *either* House.
+  # ### Adjourned days
+  # Days on which a House is adjourned encompass more day types than those declared as adjournment days in the calendar.
+  # According to the guidance set out by the Lords Procedure Committee - given above - days on which a House sat virtually also count as adjourned days.
+  # According to the definition of a parliamentary sitting day - also given above - as understood by clerks and as set out in *some* legislation, continuation sitting days also count as adjourned days.
   
-  # ### We want to determine if this is an adjournment day in either House.
-  def is_either_house_adjournment_day?
-    AdjournmentDay.all.where( 'date = ?',  self ).first
+  # #### We want to determine if the day counts as the Commons being adjourned.
+  def counts_as_commons_adjourned_day?
+    self.is_commons_adjournment_day? \
+    or self.is_commons_virtual_sitting_day? \
+    or self.is_commons_continuation_sitting_day?
   end
+  
+  # #### We want to determine if the day counts as the Lords being adjourned.
+  def counts_as_lords_adjourned_day?
+    self.is_lords_adjournment_day? \
+    or self.is_lords_virtual_sitting_day? \
+    or self.is_lords_continuation_sitting_day?
+  end
+  
+  
+  # ## A set of methods to determine the type of a given day in *either* House.
   
   # ### We want to determine if this is a parliamentary sitting day in *either* House.
   def is_either_house_parliamentary_sitting_day?
@@ -166,6 +170,11 @@ module DateMonkeyPatch
   # ### We want to determine if this is a calendar sitting day in *either* House.
   def is_either_house_calendar_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?', self).first
+  end
+  
+  # ### We want to determine if this is an adjournment day in either House.
+  def is_either_house_adjournment_day?
+    AdjournmentDay.all.where( 'date = ?',  self ).first
   end
   
   
@@ -193,12 +202,12 @@ module DateMonkeyPatch
   # * a virtual sitting day
   # * an adjournment day
   def is_calendar_populated?
-    self.is_dissolution_day?
-    or self.is_prorogation_day?
-    or self.is_commons_calendar_sitting_day?
-    or self.is_lords_calendar_sitting_day?
-    or self.is_commons_virtual_sitting_day?
-    or self.is_lords_virtual_sitting_day?
+    self.is_dissolution_day? \
+    or self.is_prorogation_day? \
+    or self.is_commons_calendar_sitting_day? \
+    or self.is_lords_calendar_sitting_day? \
+    or self.is_commons_virtual_sitting_day? \
+    or self.is_lords_virtual_sitting_day? \
     or self.is_adjournment_day?
   end
   
@@ -210,156 +219,95 @@ module DateMonkeyPatch
   end
   
   
+  # ## A set of methods to determine whether a date forms part of a break in sitting days of a determined length.
+  # Under *some* legislation, periods where the Houses are adjourned for a defined number of days count as scrutiny days for instruments laid under powers in that legislation.
+  # In the legislation we've encountered where this is set out, such periods are defined as being not more than four days.
+  # These methods allow the calculation to be adjusted by passing in a maximum day count.
   
+  # ### Methods to calculate non-sitting scrutiny days in both Houses.
   
-  
-  
-  
-  
-  
-  
-  
-  # ================== Done to here. =========
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  # ## A set of methods to determine whether a date forms part of a short break in sitting days.
-  
-  #### DO CONTINUATION SITTING DAYS COUNT IN SOME CALCULATIONS?
-  
-  #### BUT NOT IN OTHERS?
-  
-  #### DO WE NEED FOUR METHODS HERE?
-
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-
-  #### Methods to calculate non-sitting scrutiny days in both Houses.
-
-  # In [guidance issued on 16-04-2020](https://committees.parliament.uk/publications/688/documents/33426/default/) the Lords Procedure Committee stated, "A Virtual Proceeding is not a sitting of the House."
-
-  # Whilst clerks state that a virtual sitting day does not count as a sitting day for the purposes of calculating scrutiny periods, lawyers imply this would need to be tested in court.
-
-  # Unless and until this is resolved, these methods use the clerks' definition of non-sitting scrutiny day.
-
-  #### We want to check if this is a non-sitting scrutiny day in the Commons.
-
-  # During a short adjournment, adjournment days count toward the scrutiny period.
-
-  # This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.
-
-  # In all known cases “short” is defined as not more than four days.
-
-  # For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.
-  
-  
-
+  # #### We want to check if this is a non-sitting scrutiny day in the Commons.
   def is_commons_non_sitting_scrutiny_day?( maximum_day_count )
+  
+    # If this counts as an adjourned day in the Commons ...
+    if self.counts_as_commons_adjourned_day?
 
-    ##### We want to check if this is a Commons adjournment day or a Commons virtual sitting day.
-    
-   # if it's not a parl sitting day
-  #  nor a dissolution day
-  #  nor a prorogation day
-
-   # if self.continuation_sitting_day? or self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
-   
-   # these two should do the same! how many database queries? which is faster.
-    
-    
-    
-    
-    
-    if self.is_commons_adjournment_day? or self.is_commons_virtual_sitting_day?
-
-      # Having found that this is a Commons adjournment day or a Commons virtual sitting day, we start the adjournment day count at 1.
-
+      # ... wwe start the non-sitting scrutiny day count at 1.
       non_sitting_scrutiny_day_count = 1
 
       # We want to cycle through the following days until we reach the maximum day count passed into this function.
-
       date = self
-      for i in ( 1..maximum_day_count )
+      
+      # For each number between 1 and the maximum day count ...
+      for i in ( 1 .. maximum_day_count )
 
-        # Go forward one day.
-
+        # ...we go forward one day.
         date = date.next_day
 
-        # If this is a Commons adjournnment day or a Commons virtual sitting day ...
-        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+        # If this day counts as an adjourned day in the Commons ...
+        if date.counts_as_commons_adjourned_day?
 
-          # ... add one to the non-sitting scrutiny day count.
-          non_sitting_scrutiny_day_count +=1
+          # ... we add one to the non-sitting scrutiny day count.
+          non_sitting_scrutiny_day_count += 1
 
-        # If this is not a Commons adjournnment day or a Commons virtual sitting day ...
+        # Otherwise, if this day does not count as an adjourned day in the Commons ...
         else
 
-          # ... stop cycling through following days.
+          # ... we stop cycling through following days.
           break
         end
       end
 
       # We want to cycle through the preceding days until we reach the maximum day count passed into this function.
       date = self
-      for i in ( 1..maximum_day_count )
+      
+      # For each number between 1 and the maximum day count ...
+      for i in ( 1 .. maximum_day_count )
 
-        # Go back one day.
+        # ...we go back one day.
         date = date.prev_day
+        
+        # If this day counts as an adjourned day in the Commons ...
+        if date.counts_as_commons_adjourned_day?
 
-        # If this is a Commons adjournnment day or a Commons virtual sitting day ...
-        if date.is_commons_adjournment_day? or date.is_commons_virtual_sitting_day?
+          # ... we add one to the non-sitting scrutiny day count.
+          non_sitting_scrutiny_day_count += 1
 
-          # ... add one to the non-sitting scrutiny day count.
-          non_sitting_scrutiny_day_count +=1
-
-        # If this is not a Commons adjournnment day or a Commons virtual sitting day ...
+        # Otherwise, if this day does not count as an adjourned day in the Commons ...
         else
 
-          # ... stop cycling through preceding days.
+          # ... we stop cycling through preceding days.
           break
         end
       end
 
-      # If the total number of continuous non-sitting scrutiny days is more than the maximum day count ...
+      # If the total number of non-sitting scrutiny days is more than the maximum day count ...
       if non_sitting_scrutiny_day_count > maximum_day_count
 
-        # ... then this day does not count as a non-sitting scrutiny day.
+        # ... then this day *does not* count as a non-sitting scrutiny day.
         is_commons_non_sitting_scrutiny_day = false
 
-      # If the total number of continuous non-sitting scrutiny days is less than or the same as the maximum day count ...
+      # If the total number of non-sitting scrutiny days is less than or the same as the maximum day count ...
       else
 
-        # ... then this day does count as a non-sitting scrutiny day.
+        # ... then this day *does* count as a non-sitting scrutiny day.
         is_commons_non_sitting_scrutiny_day = true
       end
 
-      # Returns if this day is a Commons non-sitting scrutiny day
+      # We return if this day is a Commons non-sitting scrutiny day
       is_commons_non_sitting_scrutiny_day
     end
   end
+  
+  
+  
+  
+  
+  
+  
+    # ================== Done to here. =========
+  
+  
 
   #### We want to check if this is a non-sitting scrutiny day in the Lords.
 
