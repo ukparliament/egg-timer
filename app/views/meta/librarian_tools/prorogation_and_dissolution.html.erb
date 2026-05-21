@@ -49,7 +49,7 @@
 		<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the sessions sheet as a CSV." ) %>
 		<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/sessions.csv' )}.".html_safe ) %>
 		<%= content_tag( 'li', "Remove the first - header - row of the sessions.csv." ) %>
-		<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
+		<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', meta_prorogation_dissolution_url( :anchor => 'resetting-the-database' ) )}.".html_safe ) %>
 	</ol>
 
 	<%= content_tag( 'h2', 'What to do upon the announcement of dissolution' ) %>
@@ -63,7 +63,7 @@
 		<%= content_tag( 'li', "From the Google spreadsheet, download a copy of the Parliament periods sheet as a CSV." ) %>
 		<%= content_tag( 'li', "Copy the CSV file to #{content_tag( 'code', 'db/data/parliaments.csv' )}.".html_safe ) %>
 		<%= content_tag( 'li', "Remove the first - header - row of the parliaments.csv." ) %>
-		<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', '#resetting-the-database')}.".html_safe ) %>
+		<%= content_tag( 'li', "Continue by #{link_to( 'resetting the database', meta_prorogation_dissolution_url( :anchor => 'resetting-the-database' ) )}.".html_safe ) %>
 	</ol>
 
 	<%= content_tag( 'h2', 'Resetting the database', :id => 'resetting-the-database' ) %>
