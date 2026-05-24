@@ -87,11 +87,13 @@ module DateMonkeyPatch
   end
   
   # #### We want to determine if this is a calendar sitting day in the Commons.
+  # This method is never called so is commented out here.
   def is_commons_calendar_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
   end
   
   # #### We want to determine if this is a calendar sitting day in the Lords.
+  # This method is never called so is commented out here.
   def is_lords_calendar_sitting_day?
     SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
   end
@@ -208,7 +210,8 @@ module DateMonkeyPatch
     or self.is_lords_calendar_sitting_day? \
     or self.is_commons_virtual_sitting_day? \
     or self.is_lords_virtual_sitting_day? \
-    or self.is_adjournment_day?
+    or self.is_commons_adjournment_day? \
+    or self.is_lords_adjournment_day?
   end
   
   # ### We want to determine if this is a day for which we do not have anything in the calendar.
@@ -232,7 +235,7 @@ module DateMonkeyPatch
     # If this counts as an adjourned day in the Commons ...
     if self.counts_as_commons_adjourned_day?
 
-      # ... wwe start the non-sitting scrutiny day count at 1.
+      # ... we start the non-sitting scrutiny day count at 1.
       non_sitting_scrutiny_day_count = 1
 
       # We want to cycle through the following days until we reach the maximum day count passed into this function.
@@ -241,7 +244,7 @@ module DateMonkeyPatch
       # For each number between 1 and the maximum day count ...
       for i in ( 1 .. maximum_day_count )
 
-        # ...we go forward one day.
+        # ... we go forward one day.
         date = date.next_day
 
         # If this day counts as an adjourned day in the Commons ...
@@ -264,7 +267,7 @@ module DateMonkeyPatch
       # For each number between 1 and the maximum day count ...
       for i in ( 1 .. maximum_day_count )
 
-        # ...we go back one day.
+        # ... we go back one day.
         date = date.prev_day
         
         # If this day counts as an adjourned day in the Commons ...
@@ -299,596 +302,405 @@ module DateMonkeyPatch
     end
   end
   
-  
-  
-  
-  
-  
-  
-    # ================== Done to here. =========
-  
-  
-
-  #### We want to check if this is a non-sitting scrutiny day in the Lords.
-
-  # During a short adjournment, adjournment days count toward the scrutiny period.
-
-  # This method allows the definition of a “short” adjournment to be adjusted by passing in a maximum day count.
-
-  # In all known cases “short” is defined as not more than four days.
-
-  # For the purposes of calculating non-sitting scrutiny days, virtual sitting days also count.
-
+  # #### We want to check if this is a non-sitting scrutiny day in the Lords.
   def is_lords_non_sitting_scrutiny_day?( maximum_day_count )
+  
+    # If this counts as an adjourned day in the Lords ...
+    if self.counts_as_lords_adjourned_day?
 
-    #### We want to check if this is a Lords adjournnment day or a Lords virtual sitting day.
-
-    if self.is_lords_adjournment_day? or self.is_lords_virtual_sitting_day?
-
-      # Having found that this is a Lords adjournnment day or a Lords virtual sitting day, we start the adjournment day count at 1.
-
+      # ... we start the non-sitting scrutiny day count at 1.
       non_sitting_scrutiny_day_count = 1
 
       # We want to cycle through the following days until we reach the maximum day count passed into this function.
-
       date = self
-      for i in ( 1..maximum_day_count )
+      
+      # For each number between 1 and the maximum day count ...
+      for i in ( 1 .. maximum_day_count )
 
-        # Go forward one day.
-
+        # ... we go forward one day.
         date = date.next_day
 
-        # If this is a Lords adjournnment day or a Lords virtual sitting day ...
-        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+        # If this day counts as an adjourned day in the Lords ...
+        if date.counts_as_lords_adjourned_day?
 
-          # ... add one to the non-sitting scrutiny day count.
-          non_sitting_scrutiny_day_count +=1
+          # ... we add one to the non-sitting scrutiny day count.
+          non_sitting_scrutiny_day_count += 1
 
-        # If this is not a Lords adjournnment day or a Lords virtual sitting day ...
+        # Otherwise, if this day does not count as an adjourned day in the Lords ...
         else
 
-          # ... stop cycling through following days.
+          # ... we stop cycling through following days.
           break
         end
       end
 
       # We want to cycle through the preceding days until we reach the maximum day count passed into this function.
       date = self
-      for i in ( 1..maximum_day_count )
+      
+      # For each number between 1 and the maximum day count ...
+      for i in ( 1 .. maximum_day_count )
 
-        # Go back one day.
+        # ... we go back one day.
         date = date.prev_day
+        
+        # If this day counts as an adjourned day in the Lords ...
+        if date.counts_as_lords_adjourned_day?
 
-        # If this is a Lords adjournnment day or a Lords virtual sitting day ...
-        if date.is_lords_adjournment_day? or date.is_lords_virtual_sitting_day?
+          # ... we add one to the non-sitting scrutiny day count.
+          non_sitting_scrutiny_day_count += 1
 
-          # ... add one to the non-sitting scrutiny day count.
-          non_sitting_scrutiny_day_count +=1
-
-        # If this is not a Lords adjournnment day or a Lords virtual sitting day ...
+        # Otherwise, if this day does not count as an adjourned day in the Lords ...
         else
 
-          # ... stop cycling through preceding days.
+          # ... we stop cycling through preceding days.
           break
         end
       end
 
-      # If the total number of continuous non-sitting scrutiny days is more than the maximum day count ...
+      # If the total number of non-sitting scrutiny days is more than the maximum day count ...
       if non_sitting_scrutiny_day_count > maximum_day_count
 
-        # ... then this day does not count as a non-sitting scrutiny day.
+        # ... then this day *does not* count as a non-sitting scrutiny day.
         is_lords_non_sitting_scrutiny_day = false
 
-      # If the total number of continuous non-sitting scrutiny days is less than or the same as the maximum day count ...
+      # If the total number of non-sitting scrutiny days is less than or the same as the maximum day count ...
       else
 
-        # ... then this day does count as a non-sitting scrutiny day.
+        # ... then this day *does* count as a non-sitting scrutiny day.
         is_lords_non_sitting_scrutiny_day = true
       end
 
-      # Returns if this day is a Lords non-sitting scrutiny day
+      # We return if this day is a Lord non-sitting scrutiny day
       is_lords_non_sitting_scrutiny_day
     end
   end
-
-  # (End of methods to calculate non-sitting scrutiny days in both Houses.)
   
+  # ## A set of methods to determine if this is a scrutiny day in a House, in both Houses and in either House.
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  #### We want to check if this is a scrutiny day in the Commons.
-
-  # A scrutiny day in the Commons is either an actual sitting day in the Commons, or a non-sitting scrutiny day in the Commons.
-
-  # We pass '4' as the maximum day count to the non-sitting scrutiny day calculation, because non-sitting scrutiny days are days within a series of not more than four non-sitting days.
-
+  # ### We want to determine if this is a scrutiny day in the Commons.
   def is_commons_scrutiny_day?
-    self.is_commons_actual_sitting_day? or self.is_commons_non_sitting_scrutiny_day?( 4 )
-  end
-
-  #### We want to check if this is a scrutiny day in the Lords.
-
-  # A scrutiny day in the Lords is either an actual sitting day in the Lords, or a non-sitting scrutiny day in the Lords.
-
-  # We pass '4' as the maximum day count to the non-sitting scrutiny day calculation, because  non-sitting scrutiny days are days within a series of not more than four non-sitting days.
-
-  def is_lords_scrutiny_day?
-    self.is_lords_actual_sitting_day? or self.is_lords_non_sitting_scrutiny_day?( 4 )
-  end
-
-  #### We want to check if this is a scrutiny day in *either* House.
-
-  def is_either_house_scrutiny_day?
-    self.is_commons_scrutiny_day? or self.is_lords_scrutiny_day?
-  end
-
-  #### We want to check if this is a scrutiny day in *both* Houses.
-
-  def is_joint_scrutiny_day?
-    self.is_commons_scrutiny_day? and self.is_lords_scrutiny_day?
-  end
-
-  # (End of set of methods to work out the type of a given day.)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ### A set of methods to find the first day of a given type.
-
-  #### We want to find the first scrutiny day in *either* House.
-
-  # This method is used when a Statutory Instrument is laid outside of a scrutiny period, that is: during a non-sitting period of more than four days, or during a period in which Parliament is prorogued. In such cases, the clock starts from the first actual sitting day in either House following the laying.
-
-  # This method is used for bicameral negative SIs - and bicameral made affirmatives where the enabling legislation specifies that either House can be sitting.
-
-  def first_scrutiny_day_in_either_house
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first scrutiny day so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a scrutiny day in *either* House ...
-      unless self.is_either_house_scrutiny_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_scrutiny_day_in_either_house
-
-      # ... then if this is a scrutiny day in either House ...
-      else
-
-        # ... then return this day as the first scrutiny day in either House.
-        self
-      end
+    
+    # We set the Commons is scrutiny day boolean to false.
+    is_commons_scrutiny_day = false
+    
+    # If this is a parliamentary sitting day in the Commons ...
+    # ... or this is a non-sitting scrutiny day in the Commons ...
+    if self.is_commons_parliamentary_sitting_day? or self.is_commons_non_sitting_scrutiny_day?( 4 ) # We pass '4' as the maximum day count to the non-sitting scrutiny day calculation, because non-sitting scrutiny days are days within a series of not more than four non-sitting days.
+    
+      # ... we set the is Commons scrutiny day boolean to true.
+      is_commons_scrutiny_day = true
     end
+    
+    # We return the is Commons scrutiny day boolean.
+    is_commons_scrutiny_day
   end
-
-  #### We want to find the first scrutiny day in *both* Houses.
-
-  # This method is used when a Statutory Instrument is laid outside of a scrutiny period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first actual sitting day in both Houses following the laying.
-
-  # This method is used for bicameral made affirmatives where the enabling legislation specifies that both Houses must be sitting.
-
-  def first_joint_scrutiny_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first scrutiny day so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a scrutiny day in both Houses ...
-      unless self.is_joint_scrutiny_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_joint_scrutiny_day
-
-      # ... then if this is a scrutiny day in both Houses ...
-      else
-
-        # ... then return this day as the first scrutiny day in both Houses.
-        self
-      end
-    end
-  end
-
-  #### We want to find the first scrutiny day in the Commons.
-
-  # This method is used when a Statutory Instrument is laid outside of a scrutiny period, that is: during an adjournment of more than four days, or during a period in which Parliament is prorogued. The clock starts from the first actual sitting day in the Commons following the laying.
-
-  # This method is used for negative or made affirmative SIs - laid in the Commons and not laid in the Lords.
-
-  def first_commons_scrutiny_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first Commons scrutiny day so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a scrutiny day in the Commons ...
-      unless self.is_commons_scrutiny_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_commons_scrutiny_day
-
-      # ... then if this is a scrutiny day in the Commons ...
-      else
-
-        # ... then return this day as the first scrutiny day in the Commons.
-        self
-      end
-    end
-  end
-
-  #### We want to find the first parliamentary sitting day in both Houses.
-
-  # This method is used when a Proposed Negative Statutory Instrument is laid.
-
-  # Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.
-
-  def first_joint_parliamentary_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a parliamentary sitting day in both Houses ...
-      unless self.is_joint_parliamentary_sitting_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_joint_parliamentary_sitting_day
-
-      # ... then if this is a parliamentary sitting day in both Houses ...
-      else
-
-        # ... then return this day as the first parliamentary sitting day in both Houses.
-        self
-      end
-    end
-  end
-
-  #### We want to find the last preceding parliamentary sitting day in both Houses.
-
-  # This method is used when a Proposed Negative Statutory Instrument is laid.
-
-  # Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.
-
-  def last_joint_parliamentary_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a parliamentary sitting day in both Houses ...
-      unless self.is_joint_parliamentary_sitting_day?
-
-        # ... then go to the previous day and check that.
-        self.prev_day.last_joint_parliamentary_sitting_day
-
-      # ... then if this is a parliamentary sitting day in both Houses ...
-      else
-
-        # ... then return this day as the first parliamentary sitting day in both Houses.
-        self
-      end
-    end
-  end
-
-  #### We want to find the first actual sitting day in both Houses.
-
-  # This method is used to calculate periods A and B for treaties.
-
-  # Even if a treaty is laid or a ministerial statement is made on a joint actual sitting day, the clock does not start until the next joint actual sitting day.
-
-  def first_joint_actual_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first actual sitting day in both Houses so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not an actual sitting day in both Houses ...
-      unless self.is_joint_actual_sitting_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_joint_actual_sitting_day
-
-      # ... then if this is an actual sitting day in both Houses ...
-      else
-
-        # ... then return this day as the first actual sitting day in both Houses.
-        self
-      end
-    end
-  end
-
-  #### We want to find the first actual sitting day in the House of Commons.
-
-  # This method is used by the House of Commons only sitting day calculation.
-
-  # Even if an instrument is laid on a House of Commons actual sitting day, the clock does not start until the next House of Commons actual sitting day.
-
-  def first_commons_actual_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first actual sitting day in the House of Commons so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not an actual sitting day in the House of Commons ...
-      unless self.is_commons_actual_sitting_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_commons_actual_sitting_day
-
-      # ... then if this is an actual sitting day in the House of Commons ...
-      else
-
-        # ... then return this day as the first actual sitting day in the House of Commons.
-        self
-      end
-    end
-  end
-
-
-
-
-
-
-  # (End of set of methods to find the first day of a given type.)
-
   
+  # ### We want to determine if this is a scrutiny day in the Lords.
+  def is_lords_scrutiny_day?
+    
+    # We set the Lords is scrutiny day boolean to false.
+    is_lords_scrutiny_day = false
+    
+    # If this is a parliamentary sitting day in the Lords ...
+    # ... or this is a non-sitting scrutiny day in the Lords ...
+    if self.is_lords_parliamentary_sitting_day? or self.is_lords_non_sitting_scrutiny_day?( 4 ) # We pass '4' as the maximum day count to the non-sitting scrutiny day calculation, because non-sitting scrutiny days are days within a series of not more than four non-sitting days.
+    
+      # ... we set the Lords is scrutiny day boolean to true.
+      is_lords_scrutiny_day = true
+    end
+    
+    # We return the Lords is scrutiny day boolean.
+    is_lords_scrutiny_day
+  end
+  
+  # ### We want to check if this is a scrutiny day in *both* Houses.
+  def is_joint_scrutiny_day?
+  
+    # We set the is joint scrutiny day boolean to false.
+    is_joint_scrutiny_day = false
+    
+    # If this is a scrutiny day in the Commons *and* this is a scrutiny day in the Lords ...
+    if self.is_commons_scrutiny_day? and self.is_lords_scrutiny_day?
+  
+      # ... we set the is joint scrutiny day boolean to true.
+      is_joint_scrutiny_day = true
+    end
+    
+    # We return the is joint scrutiny day boolean.
+    is_joint_scrutiny_day
+  end
+  
+  # ### We want to check if this is a scrutiny day in *either* House.
+  def is_either_house_scrutiny_day?
+  
+    # We set the is either house scrutiny day boolean to false.
+    is_either_house_scrutiny_day = false
+    
+    # If this is a scrutiny day in the Commons *or* this is a scrutiny day in the Lords ...
+    if self.is_commons_scrutiny_day? or self.is_lords_scrutiny_day?
+  
+      # ... we set the is either house scrutiny day boolean to true.
+      is_either_house_scrutiny_day = true
+    end
+    
+    # We return the is either house scrutiny day boolean.
+    is_either_house_scrutiny_day
+  end
 
-  ### We want to find out if this is the final day of a session.
+  # ## A set of methods to determine the relationship of a day to its containing or preceding session.
+  
+  # ### We want to determine if this is the final day of a session.
   def is_final_day_of_session?
+  
+    #  We set the is final day of session boolean to false.
     is_final_day_of_session = false
-    session = Session.all.where( "end_date = ?", self )
-    is_final_day_of_session = true unless session.empty?
+    
+    # We attempt to find a session ending on this date.
+    session = Session.all.where( "end_date = ?", self ).first
+    
+    # If we find a session ending on this data ...
+    if session
+      
+      # ... we set the is final day of session boolean to true.
+      is_final_day_of_session = true
+    end
+    
+    # We return the is final day of session boolean.
     is_final_day_of_session
   end
-
-
-  ### We want to find the session immediately preceding this date.
+  
+  # ### We want to find the session immediately preceding this day.
   def preceding_session
+  
+    # We attempt to find the first session starting before this day.
     Session.all.where( "start_date < ?", self ).order( "start_date DESC" ).first
   end
-
-  ### We want to find the session immediately following this date.
+  
+  # ### We want to find the session immediately following this day.
   # This method is used to determine which session papers laid in prorogation are recorded in.
   def following_session
+  
+    # We attempt to find the next session starting after this day.
     Session.all.where( "start_date > ?", self ).order( "start_date" ).first
   end
 
-  #### Generate label for the day type in the Commons in a session.
+
+
+
+
+
+
+
+
+
+
+
+
+  ##### DONE TO HERE ##############################################
+
+
+
+
+
+
+  # ## A set of methods to apply labels to a day in the calendar views.
+  
+  # ### A method to generate a label for the type of a day in the Commons in a session.
   def commons_day_type
+  
+    # If the day is a parliamentary sitting day in the Commons ...
     if self.is_commons_parliamentary_sitting_day?
+    
+      # ... we set the day type label to 'Parliamentary sitting day'.
       day_type = 'Parliamentary sitting day'
-    elsif self.is_commons_actual_sitting_day?
+      
+    # Otherwise, if the day is a continuation sitting day in the Commons ...
+    elsif self.is_commons_continuation_sitting_day?
+    
+      # ... we set the day type label to 'Continuation sitting day'.
       day_type = "Continuation sitting day"
+      
+    # Otherwise, if the day is a virtual sitting day in the Commons ...
     elsif self.is_commons_virtual_sitting_day?
+    
+      # ... we set the day type label to 'Virtual sitting day'.
       day_type = 'Virtual sitting day'
+      
+    # Otherwise, if the day is a adjournment day in the Commons ...
     elsif self.is_commons_adjournment_day?
+    
+      # ... we want to display if the adjournment day forms part of a named recess ...
+      # ... so we call the Commons adjournment day label method.
       day_type = self.commons_adjournment_day_label
+      
+    # Otherwise, if the day is in a session but has no defined type ...
     elsif self.session
+    
+      # ... we set the day type label to 'Session day of unknown type'.
       day_type = 'Session day of unknown type'
+      
+    # Otherwise, if the day is a prorogation day ...
     elsif self.is_prorogation_day?
+    
+      # ... we set the day type label to 'Prorogation'.
       day_type = 'Prorogation'
+      
+    # Otherwise, if the day is a dissolution day ...
     elsif self.is_dissolution_day?
+    
+      # ... we set the day type label to 'Dissolution'.
       day_type = 'Dissolution'
     end
+    
+    # We return the day type label.
     day_type
   end
-
-  #### Generate label for the day type in the Lords in a session.
+  
+  # ### A method to generate a label for the type of a day in the Lords in a session.
   def lords_day_type
+  
+    # If the day is a parliamentary sitting day in the Lords ...
     if self.is_lords_parliamentary_sitting_day?
+    
+      # ... we set the day type label to 'Parliamentary sitting day'.
       day_type = 'Parliamentary sitting day'
-    elsif self.is_lords_actual_sitting_day?
+      
+    # Otherwise, if the day is a continuation sitting day in the Lords ...
+    elsif self.is_lords_continuation_sitting_day?
+    
+      # ... we set the day type label to 'Continuation sitting day'.
       day_type = "Continuation sitting day"
+      
+    # Otherwise, if the day is a virtual sitting day in the Lords ...
     elsif self.is_lords_virtual_sitting_day?
+    
+      # ... we set the day type label to 'Virtual sitting day'.
       day_type = 'Virtual sitting day'
+      
+    # Otherwise, if the day is a adjournment day in the Lords ...
     elsif self.is_lords_adjournment_day?
+    
+      # ... we want to display if the adjournment day forms part of a named recess ...
+      # ... so we call the Lords adjournment day label method.
       day_type = self.lords_adjournment_day_label
+      
+    # Otherwise, if the day is in a session but has no defined type ...
     elsif self.session
+    
+      # ... we set the day type label to 'Session day of unknown type'.
       day_type = 'Session day of unknown type'
+      
+    # Otherwise, if the day is a prorogation day ...
     elsif self.is_prorogation_day?
+    
+      # ... we set the day type label to 'Prorogation'.
       day_type = 'Prorogation'
+      
+    # Otherwise, if the day is a dissolution day ...
     elsif self.is_dissolution_day?
+    
+      # ... we set the day type label to 'Dissolution'.
       day_type = 'Dissolution'
     end
+    
+    # We return the day type label.
     day_type
   end
-
-  #### Generate a label to say whether it's a scrutiny day in the Commons or not.
-  def is_commons_scrutiny_day_label
-    if self.is_commons_scrutiny_day?
-      label = 'True'
-    else
-      label = 'False'
-    end
-    label
-  end
-
-  #### Generate a label to say whether it's a scrutiny day in the Lords or not.
-  def is_lords_scrutiny_day_label
-    if self.is_lords_scrutiny_day?
-      label = 'True'
-    else
-      label = 'False'
-    end
-    label
-  end
-
-  #### A method to label a Commons adjournment day, with recess if applicable.
+  
+  # ## A set of methods to decorate a day label for an adjournment day with the name of a recess where applicable.
+  
+  # ### A method to label a Commons adjournment day, with the name of a recess if applicable.
   def commons_adjournment_day_label
-    commons_adjournment_day_label = 'Adjournment day'
+  
+    # We set the day type label to 'Adjournment day'
+    day_type = 'Adjournment day'
 
     # We attempt to find a recess on this date, in this House.
     recess_date = RecessDate
       .all
       .where( "start_date <= ?", self )
       .where( "end_date >= ?", self )
-      .where( house_id: 1 )
+      .where( house_id: 1 ) # 1 being the ID of the House of Commons.
       .first
 
     # If we find a recess date on this day, in this House ...
     if recess_date
 
-      # ... we append the description of the recess date to the label
-      commons_adjournment_day_label += ' (' + recess_date.description + ')'
+      # ... we append the description of the recess date to the day type label.
+      day_type += ' (' + recess_date.description + ')'
     end
-    commons_adjournment_day_label
+    
+    # We return the day type label.
+    day_type
   end
-
-  #### A method to label a Lords adjournment day, with recess if applicable.
+  
+  # ### A method to label a Lords adjournment day, with the name of a recess if applicable.
   def lords_adjournment_day_label
-    lords_adjournment_day_label = 'Adjournment day'
+  
+    # We set the day type label to 'Adjournment day'
+    day_type = 'Adjournment day'
 
     # We attempt to find a recess on this date, in this House.
     recess_date = RecessDate
       .all
       .where( "start_date <= ?", self )
       .where( "end_date >= ?", self )
-      .where( house_id: 2 )
+      .where( house_id: 2 ) # 2 being the ID of the House of Lords.
       .first
 
     # If we find a recess date on this day, in this House ...
     if recess_date
 
-      # ... we append the description of the recess date to the label
-      lords_adjournment_day_label += ' (' + recess_date.description + ')'
+      # ... we append the description of the recess date to the day type label.
+      day_type += ' (' + recess_date.description + ')'
     end
-    lords_adjournment_day_label
+    
+    # We return the day type label.
+    day_type
+  end
+  
+  # ## A set of methods to generate a label for whether this day counts as a scrutiny day in a House, or not.
+  
+  # ## A method to generate a label for whether this day counts as a scrutiny day in the Commons, or not.
+  def is_commons_scrutiny_day_label
+  
+    # If this is a scrutiny day in the Commons ...
+    if self.is_commons_scrutiny_day?
+    
+      # ... we set the label to 'True'.
+      label = 'True'
+      
+    # Otherwise, if this is not a scrutiny day in the Commons ...
+    else
+    
+      # ... we set the label to 'False'.
+      label = 'False'
+    end
+    
+    # We return the label.
+    label
+  end
+  
+  # ## A method to generate a label for whether this day counts as a scrutiny day in the Lords, or not.
+  def is_lords_scrutiny_day_label
+  
+    # If this is a scrutiny day in the Lords ...
+    if self.is_lords_scrutiny_day?
+    
+      # ... we set the label to 'True'.
+      label = 'True'
+      
+    # Otherwise, if this is not a scrutiny day in the Lords ...
+    else
+    
+      # ... we set the label to 'False'.
+      label = 'False'
+    end
+    
+    # We return the label.
+    label
   end
 end
 
-# ######### DEPRECATED METHODS ###############
-
-# we've changed actual sitting day to calendar
-# parliamentary sitting day remains parliamentary sitting day.
-
-#### We want to check if this is an actual sitting day in the Commons.
-
-# We use a naive definition of a sitting day: this includes a calendar day when the Commons sits, together with following calendar days if the Commons sat through the night.
-
-# For example: if the Commons sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
-
-# If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
-
-def is_commons_actual_sitting_day?
-  SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 1 ).first
-end
-
-
-
-# #### We want to check if this is an actual sitting day in the Lords.
-
-# We use a naive definition of a sitting day: this includes a calendar day when the Lords sits, together with following calendar days if the Lords sat through the night.
-
-# For example: if the Lords sat on a Tuesday and continued to sit overnight into Wednesday, both Tuesday and Wednesday would count as actual sitting days.
-
-# If the Tuesday sitting lasted long enough to overlap the starting time of the Wednesday sitting, the Tuesday would be a parliamentary sitting day, but the Wednesday would not.
-
-def is_lords_actual_sitting_day?
-  SittingDay.all.where( 'start_date <= ?',  self ).where( 'end_date >= ?',  self ).where( house_id: 2 ).first
-end
-
-
-# ### We want to check if this is an adjournment day in either House.
-def is_adjournment_day?
-  AdjournmentDay.all.where( 'date = ?',  self ).first
-end
-
-# ### We want to check if this is an actual sitting day in *either* House.
-def is_either_house_actual_sitting_day?
-  self.is_commons_actual_sitting_day? or self.is_lords_actual_sitting_day?
-end
-
-#### We want to determine if this is an actual sitting day in *both* Houses.
-
-def is_joint_actual_sitting_day?
-  self.is_commons_actual_sitting_day? and self.is_lords_actual_sitting_day?
-end
-
-
-
-Date.include(DateMonkeyPatch)
+# We include these methods in the Ruby Data class.
+Date.include( DateMonkeyPatch )
