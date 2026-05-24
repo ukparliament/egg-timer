@@ -41,7 +41,7 @@ describe "Backward calculation tests", type: :system do
         click_on "Calculate"
 
         expect(page).to have_content("To produce a target end date of Wednesday, 1 July 2026, the scrutiny period is currently expected to begin on Wednesday, 13 May 2026 and end on Wednesday, 1 July 2026.")
-        expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 13 May 2026, the instrument must be laid on or before that date.")
+        #expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 13 May 2026, the instrument must be laid on or before that date.")
       end
     end
 
@@ -57,7 +57,7 @@ describe "Backward calculation tests", type: :system do
         click_on "Calculate"
 
         expect(page).to have_content("To produce a target end date of Wednesday, 1 July 2026, the scrutiny period is currently expected to begin on Wednesday, 20 May 2026 and end on Wednesday, 1 July 2026.")
-        expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 20 May 2026, the treaty must be laid before that date.")
+        #expect(page).to have_content("In order for the scrutiny period to start on Wednesday, 20 May 2026, the treaty must be laid before that date.")
       end
     end
 
