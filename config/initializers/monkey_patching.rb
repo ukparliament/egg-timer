@@ -2,6 +2,8 @@
 module DateMonkeyPatch
 
   # See also: [Parliamentary Time Period ontology](https://ukparliament.github.io/ontologies/time-period/time-period-ontology)
+  
+  # A Venn diagram setting out parliamentary day types is available here: [Day type Venn](/egg-timer/day-type-venn.png)
 
   # ## A set of methods to determine the type of a given day across both Houses.
   
