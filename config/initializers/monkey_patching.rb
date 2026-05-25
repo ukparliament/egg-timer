@@ -499,6 +499,81 @@ module DateMonkeyPatch
 
 
   ##### DONE TO HERE ##############################################
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # ## A set of methods to find the first following and first preceding joint sitting days.
+  
+  # ### We attempt to find the first following joint sitting day.
+  # This method is used in the forwards calculations for a Proposed Negative Statutory Instrument.
+  # Even if a PNSI is laid on a joint sitting day, the clock does not start until the next joint parliamentary sitting day.
+  def first_joint_parliamentary_sitting_day
+
+    # If this is a day on which the calendar is not yet populated ...
+    if self.is_calendar_not_populated?
+
+      # ... we cannot find a following joint sitting day, so we stop looking.
+      return nil
+
+    # Otherwise, if this is a day on which the calendar is populated ...
+    else
+
+      # ... if this is not a joint sitting day ...
+      unless self.is_joint_parliamentary_sitting_day?
+
+        # ... we go to the next day and check that.
+        self.next_day.first_joint_parliamentary_sitting_day
+
+      # Otherwise, if this is a joint sitting day ...
+      else
+
+        # ... we return this day as the first following joint sitting day.
+        self
+      end
+    end
+  end
+  
+  # ### We want to find the first preceding joint sitting day.
+  # This method is used in the backwards calculations for a Proposed Negative Statutory Instrument.
+  # The clock does not start until the next joint parliamentary sitting day following the day of laying.
+  def last_joint_parliamentary_sitting_day
+
+    # If this is a day on which the calendar is not yet populated ...
+    if self.is_calendar_not_populated?
+
+      # ... we cannot find a preceding joint sitting day, so we stop looking.
+      return nil
+
+    # Otherwise, if this is a day on which the calendar is populated ...
+    else
+
+      # ... if this is not a joint sitting day ...
+      unless self.is_joint_parliamentary_sitting_day?
+
+        # ... we go to the previous day and check that.
+        self.prev_day.last_joint_parliamentary_sitting_day
+
+      # Otherwise, if this is a joint sitting day ...
+      else
+
+        # ... we return this day as the first preceding joint sitting day.
+        self
+      end
+    end
+  end
+  
+  
+  
+  
+  
 
 
 

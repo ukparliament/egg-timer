@@ -147,69 +147,7 @@ module DateMonkeyPatchDeprecated
     end
   end
 
-  #### We want to find the first parliamentary sitting day in both Houses.
-
-  # This method is used when a Proposed Negative Statutory Instrument is laid.
-
-  # Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.
-
-  def first_joint_parliamentary_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a parliamentary sitting day in both Houses ...
-      unless self.is_joint_parliamentary_sitting_day?
-
-        # ... then go to the next day and check that.
-        self.next_day.first_joint_parliamentary_sitting_day
-
-      # ... then if this is a parliamentary sitting day in both Houses ...
-      else
-
-        # ... then return this day as the first parliamentary sitting day in both Houses.
-        self
-      end
-    end
-  end
-
-  #### We want to find the last preceding parliamentary sitting day in both Houses.
-
-  # This method is used when a Proposed Negative Statutory Instrument is laid.
-
-  # Even if a PNSI is laid on a joint parliamentary sitting day, the clock does not start until the next joint parliamentary sitting day.
-
-  def last_joint_parliamentary_sitting_day
-
-    # If this is a day on which the calendar is not yet populated ...
-    if self.is_calendar_not_populated?
-
-      # ... then we cannot find a first parliamentary sitting day in both Houses so we stop looking.
-      return nil
-
-    # If this is a day on which the calendar is populated ...
-    else
-
-      # ... then if this is not a parliamentary sitting day in both Houses ...
-      unless self.is_joint_parliamentary_sitting_day?
-
-        # ... then go to the previous day and check that.
-        self.prev_day.last_joint_parliamentary_sitting_day
-
-      # ... then if this is a parliamentary sitting day in both Houses ...
-      else
-
-        # ... then return this day as the first parliamentary sitting day in both Houses.
-        self
-      end
-    end
-  end
+  
 
   #### We want to find the first actual sitting day in both Houses.
 
