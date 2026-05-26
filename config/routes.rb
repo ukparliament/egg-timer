@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/comments' => 'code_comment#index', as: :code_comment_list
   get 'egg-timer/meta/comments/date' => 'code_comment#date', as: :code_comment_date
   get 'egg-timer/meta/comments/calculation-controller' => 'code_comment#calculation_controller', as: :code_comment_calculation_controller
+  
   get 'egg-timer/meta/comments/bicameral-both-houses-sitting' => 'code_comment#bicameral_both_houses_sitting', as: :code_comment_bicameral_both_houses_sitting
   get 'egg-timer/meta/comments/bicameral-either-house-sitting' => 'code_comment#bicameral_either_house_sitting', as: :code_comment_bicameral_either_house_sitting
   get 'egg-timer/meta/comments/commons-only-sis' => 'code_comment#commons_only_sis', as: :code_comment_commons_only_sis
@@ -97,6 +98,8 @@ Rails.application.routes.draw do
   get 'egg-timer/meta/comments/pnsis-reverse' => 'code_comment#pnsis_reverse', as: :code_comment_pnsis_reverse
   get 'egg-timer/meta/comments/treaties-reverse' => 'code_comment#treaties_reverse', as: :code_comment_treaties_reverse
   get 'egg-timer/meta/comments/commons-only-sitting-days-reverse' => 'code_comment#commons_only_sitting_days_reverse', as: :code_comment_commons_only_sitting_days_reverse
+  
+  get 'egg-timer/meta/comments/interval' => 'code_comment#interval', as: :code_comment_interval
   
   # Librarian tools
   get 'egg-timer/meta/librarian-tools' => 'meta#librarian_tools', as: :meta_librarian_tools
