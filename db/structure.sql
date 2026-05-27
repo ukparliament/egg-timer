@@ -800,18 +800,10 @@ ALTER TABLE ONLY public.dissolution_days
 
 
 --
--- Name: sitting_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: adjournment_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sitting_days
-    ADD CONSTRAINT fk_house FOREIGN KEY (house_id) REFERENCES public.houses(id);
-
-
---
--- Name: virtual_sitting_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.virtual_sitting_days
+ALTER TABLE ONLY public.adjournment_days
     ADD CONSTRAINT fk_house FOREIGN KEY (house_id) REFERENCES public.houses(id);
 
 
@@ -824,10 +816,18 @@ ALTER TABLE ONLY public.recess_dates
 
 
 --
--- Name: adjournment_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sitting_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.adjournment_days
+ALTER TABLE ONLY public.sitting_days
+    ADD CONSTRAINT fk_house FOREIGN KEY (house_id) REFERENCES public.houses(id);
+
+
+--
+-- Name: virtual_sitting_days fk_house; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.virtual_sitting_days
     ADD CONSTRAINT fk_house FOREIGN KEY (house_id) REFERENCES public.houses(id);
 
 
@@ -872,6 +872,14 @@ ALTER TABLE ONLY public.adjournment_days
 
 
 --
+-- Name: adjournment_days fk_session; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adjournment_days
+    ADD CONSTRAINT fk_session FOREIGN KEY (session_id) REFERENCES public.sessions(id);
+
+
+--
 -- Name: sitting_days fk_session; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -884,14 +892,6 @@ ALTER TABLE ONLY public.sitting_days
 --
 
 ALTER TABLE ONLY public.virtual_sitting_days
-    ADD CONSTRAINT fk_session FOREIGN KEY (session_id) REFERENCES public.sessions(id);
-
-
---
--- Name: adjournment_days fk_session; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.adjournment_days
     ADD CONSTRAINT fk_session FOREIGN KEY (session_id) REFERENCES public.sessions(id);
 
 
