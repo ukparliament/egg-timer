@@ -487,36 +487,12 @@ module DateMonkeyPatch
     # We attempt to find the next session starting after this day.
     Session.all.where( "start_date > ?", self ).order( "start_date" ).first
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ##### DONE TO HERE ##############################################
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   # ## A set of methods to find the first following and first preceding joint sitting days.
   
   # ### We attempt to find the first following joint sitting day.
   # This method is used in the forwards calculations for a Proposed Negative Statutory Instrument.
-  # Even if a PNSI is laid on a joint sitting day, the clock does not start until the next joint parliamentary sitting day.
+  # Even if a PNSI is laid on a joint sitting day, the clock does not start until the next joint sitting day.
   def first_joint_parliamentary_sitting_day
 
     # If this is a day on which the calendar is not yet populated ...
@@ -545,7 +521,7 @@ module DateMonkeyPatch
   
   # ### We want to find the first preceding joint sitting day.
   # This method is used in the backwards calculations for a Proposed Negative Statutory Instrument.
-  # The clock does not start until the next joint parliamentary sitting day following the day of laying.
+  # Even if a PNSI is laid on a joint sitting day, the clock does not start until the next joint sitting day.
   def last_joint_parliamentary_sitting_day
 
     # If this is a day on which the calendar is not yet populated ...
@@ -572,16 +548,6 @@ module DateMonkeyPatch
     end
   end
   
-  
-  
-  
-  
-
-
-
-
-
-
   # ## A set of methods to apply labels to a day in the calendar views.
   
   # ### A method to generate a label for the type of a day in the Commons in a session.
@@ -590,8 +556,8 @@ module DateMonkeyPatch
     # If the day is a parliamentary sitting day in the Commons ...
     if self.is_commons_parliamentary_sitting_day?
     
-      # ... we set the day type label to 'Parliamentary sitting day'.
-      day_type = 'Parliamentary sitting day'
+      # ... we set the day type label to 'Sitting day'.
+      day_type = 'Sitting day'
       
     # Otherwise, if the day is a continuation sitting day in the Commons ...
     elsif self.is_commons_continuation_sitting_day?
@@ -641,8 +607,8 @@ module DateMonkeyPatch
     # If the day is a parliamentary sitting day in the Lords ...
     if self.is_lords_parliamentary_sitting_day?
     
-      # ... we set the day type label to 'Parliamentary sitting day'.
-      day_type = 'Parliamentary sitting day'
+      # ... we set the day type label to 'Sitting day'.
+      day_type = 'Sitting day'
       
     # Otherwise, if the day is a continuation sitting day in the Lords ...
     elsif self.is_lords_continuation_sitting_day?
