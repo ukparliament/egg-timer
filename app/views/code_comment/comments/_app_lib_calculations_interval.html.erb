@@ -8,23 +8,25 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L2' title='View on GitHub'>2</a>   module Interval</code></pre>
 
 
-<p>We pass the start and end dates of the interval.</p>
+<p>The method is passed the start and end dates entered by the user.</p>
+
+<p>The calculation is inclusive of the start and end dates.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L7' title='View on GitHub'>7</a>     def calculate_sitting_days_in_interval( start_date, end_date )</code></pre>
-<p>We set the date to start counting from the start date to the end date.</p>
+<p>We set the date to start counting from the start date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L10' title='View on GitHub'>10</a>       date = @start_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L10' title='View on GitHub'>10</a>       date = start_date</code></pre>
 <p>Whilst the date is not later than the end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L13' title='View on GitHub'>13</a>       while date &lt;= @end_date</code></pre>
-<p>If the date is a Commons sitting day ...</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L13' title='View on GitHub'>13</a>       while date &lt;= end_date</code></pre>
+<p>... if the date is a sitting day in the Commons ...</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L16' title='View on GitHub'>16</a>         if date.is_commons_parliamentary_sitting_day?</code></pre>
 <p>... we increment the Commons sitting day count.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L19' title='View on GitHub'>19</a>           @commons_sitting_day_count += 1</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L20' title='View on GitHub'>20</a>         end</code></pre>
-<p>If the date is a Lords sitting day ...</p>
+<p>If the date is a sitting day in the Lords ...</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L23' title='View on GitHub'>23</a>         if date.is_lords_parliamentary_sitting_day?</code></pre>
 <p>... we increment the Lords sitting day count.</p>

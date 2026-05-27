@@ -172,456 +172,519 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L152' title='View on GitHub'>152</a>             when 1, 17, 18, 19, 2, 4, 21, 22, 23</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L154' title='View on GitHub'>154</a>               if @direction == &#39;reverse&#39;</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L155' title='View on GitHub'>155</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L156' title='View on GitHub'>156</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;laid on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L157' title='View on GitHub'>157</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L158' title='View on GitHub'>158</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L159' title='View on GitHub'>159</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L160' title='View on GitHub'>160</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L157' title='View on GitHub'>157</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L158' title='View on GitHub'>158</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been laid on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L159' title='View on GitHub'>159</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L160' title='View on GitHub'>160</a>                   @action_required = &#39;the instrument must be laid &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L161' title='View on GitHub'>161</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L162' title='View on GitHub'>162</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L163' title='View on GitHub'>163</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L164' title='View on GitHub'>164</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L165' title='View on GitHub'>165</a>               end</code></pre>
 <ul>
-<li>Proposed Statutory Instruments (PNSIs)</li>
+<li>Proposed Negative Statutory Instruments (PNSIs)</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L163' title='View on GitHub'>163</a>             when 3</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L165' title='View on GitHub'>165</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L166' title='View on GitHub'>166</a>                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L167' title='View on GitHub'>167</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;laid earlier than&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L168' title='View on GitHub'>168</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L169' title='View on GitHub'>169</a>                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L170' title='View on GitHub'>170</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L171' title='View on GitHub'>171</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L168' title='View on GitHub'>168</a>             when 3</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L170' title='View on GitHub'>170</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L171' title='View on GitHub'>171</a>                 @scrutiny_end_date = pnsi_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L172' title='View on GitHub'>172</a>                 @action_required = &#39;the instrument must be laid &lt;em&gt;before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L173' title='View on GitHub'>173</a>                 if Date.today &gt;= @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L174' title='View on GitHub'>174</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been laid before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L175' title='View on GitHub'>175</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L176' title='View on GitHub'>176</a>                   @action_required = &#39;the instrument must be laid &lt;em&gt;before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L177' title='View on GitHub'>177</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L178' title='View on GitHub'>178</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L179' title='View on GitHub'>179</a>                 @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L180' title='View on GitHub'>180</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L181' title='View on GitHub'>181</a>               end</code></pre>
 <ul>
 <li>Commons only negative Statutory Instruments</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L174' title='View on GitHub'>174</a>             when 5</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L176' title='View on GitHub'>176</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L177' title='View on GitHub'>177</a>                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L178' title='View on GitHub'>178</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;laid on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L179' title='View on GitHub'>179</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L180' title='View on GitHub'>180</a>                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L181' title='View on GitHub'>181</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L182' title='View on GitHub'>182</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L184' title='View on GitHub'>184</a>             when 5</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L186' title='View on GitHub'>186</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L187' title='View on GitHub'>187</a>                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L188' title='View on GitHub'>188</a>                 @twenty_one_day_rule_date = @scrutiny_end_date + 21.days</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L190' title='View on GitHub'>190</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L191' title='View on GitHub'>191</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been laid on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L192' title='View on GitHub'>192</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L193' title='View on GitHub'>193</a>                   @action_required = &#39;the instrument must be laid &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L194' title='View on GitHub'>194</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L195' title='View on GitHub'>195</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L196' title='View on GitHub'>196</a>                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L197' title='View on GitHub'>197</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L198' title='View on GitHub'>198</a>               end</code></pre>
 <ul>
-<li>Commons and Lords negative Statutory Instruments, proposed and draft affirmative remedial orders</li>
+<li>Commons and Lords negative Statutory Instruments</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L185' title='View on GitHub'>185</a>             when 6, 13, 14</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L187' title='View on GitHub'>187</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L188' title='View on GitHub'>188</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L189' title='View on GitHub'>189</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;laid on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L190' title='View on GitHub'>190</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L191' title='View on GitHub'>191</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L192' title='View on GitHub'>192</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L193' title='View on GitHub'>193</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L201' title='View on GitHub'>201</a>             when 6</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L203' title='View on GitHub'>203</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L204' title='View on GitHub'>204</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L205' title='View on GitHub'>205</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L206' title='View on GitHub'>206</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been laid on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L207' title='View on GitHub'>207</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L208' title='View on GitHub'>208</a>                   @action_required = &#39;the instrument must be laid &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L209' title='View on GitHub'>209</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L210' title='View on GitHub'>210</a>                 @twenty_one_day_rule_date = @scrutiny_end_date + 21.days</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L211' title='View on GitHub'>211</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L212' title='View on GitHub'>212</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L213' title='View on GitHub'>213</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L214' title='View on GitHub'>214</a>               end</code></pre>
+<ul>
+<li>Proposed and draft affirmative remedial orders</li>
+</ul>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L217' title='View on GitHub'>217</a>             when 13, 14</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L219' title='View on GitHub'>219</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L220' title='View on GitHub'>220</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L221' title='View on GitHub'>221</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L222' title='View on GitHub'>222</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been laid on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L223' title='View on GitHub'>223</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L224' title='View on GitHub'>224</a>                   @action_required = &#39;the instrument must be laid &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L225' title='View on GitHub'>225</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L226' title='View on GitHub'>226</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L227' title='View on GitHub'>227</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L228' title='View on GitHub'>228</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L229' title='View on GitHub'>229</a>               end</code></pre>
 <ul>
 <li>Some Commons only made affirmative Statutory Instruments</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L196' title='View on GitHub'>196</a>             when 7</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L198' title='View on GitHub'>198</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L199' title='View on GitHub'>199</a>                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L200' title='View on GitHub'>200</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;made on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L201' title='View on GitHub'>201</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L202' title='View on GitHub'>202</a>                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L203' title='View on GitHub'>203</a>                 @start_date_type = &quot;making date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L204' title='View on GitHub'>204</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L232' title='View on GitHub'>232</a>             when 7</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L234' title='View on GitHub'>234</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L235' title='View on GitHub'>235</a>                 @scrutiny_end_date = commons_only_si_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L236' title='View on GitHub'>236</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L237' title='View on GitHub'>237</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been made on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L238' title='View on GitHub'>238</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L239' title='View on GitHub'>239</a>                   @action_required = &#39;the instrument must be made &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L240' title='View on GitHub'>240</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L241' title='View on GitHub'>241</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L242' title='View on GitHub'>242</a>                 @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L243' title='View on GitHub'>243</a>                 @start_date_type = &quot;making date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L244' title='View on GitHub'>244</a>               end</code></pre>
 <ul>
 <li>Commons and Lords made affirmative Statutory Instruments where both Houses are sitting</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L207' title='View on GitHub'>207</a>             when 8</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L209' title='View on GitHub'>209</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L210' title='View on GitHub'>210</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L211' title='View on GitHub'>211</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;made on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L212' title='View on GitHub'>212</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L213' title='View on GitHub'>213</a>                 @start_date_type = &quot;making date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L214' title='View on GitHub'>214</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L215' title='View on GitHub'>215</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L247' title='View on GitHub'>247</a>             when 8</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L249' title='View on GitHub'>249</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L250' title='View on GitHub'>250</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L251' title='View on GitHub'>251</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L252' title='View on GitHub'>252</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been made on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L253' title='View on GitHub'>253</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L254' title='View on GitHub'>254</a>                   @action_required = &#39;the instrument must be made &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L255' title='View on GitHub'>255</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L256' title='View on GitHub'>256</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L257' title='View on GitHub'>257</a>                 @start_date_type = &quot;making date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L258' title='View on GitHub'>258</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L259' title='View on GitHub'>259</a>               end</code></pre>
 <ul>
 <li>Commons and Lords made affirmative Statutory Instruments where either House is sitting and made affirmative remedial orders</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L218' title='View on GitHub'>218</a>             when 9, 15, 16</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L220' title='View on GitHub'>220</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L221' title='View on GitHub'>221</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L222' title='View on GitHub'>222</a>                 @message = &quot;In order to meet the target end date, the instrument must be &lt;em&gt;made on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L223' title='View on GitHub'>223</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L224' title='View on GitHub'>224</a>                 @start_date_type = &quot;making date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L225' title='View on GitHub'>225</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L226' title='View on GitHub'>226</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L262' title='View on GitHub'>262</a>             when 9, 15, 16</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L264' title='View on GitHub'>264</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L265' title='View on GitHub'>265</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L266' title='View on GitHub'>266</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L267' title='View on GitHub'>267</a>                   @action_required = &#39;the instrument &lt;em&gt;would have been required to have been made on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L268' title='View on GitHub'>268</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L269' title='View on GitHub'>269</a>                   @action_required = &#39;the instrument must be made &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L270' title='View on GitHub'>270</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L271' title='View on GitHub'>271</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L272' title='View on GitHub'>272</a>                 @start_date_type = &quot;making date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L273' title='View on GitHub'>273</a>                 @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L274' title='View on GitHub'>274</a>               end</code></pre>
 <ul>
 <li>Treaty period A</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L229' title='View on GitHub'>229</a>             when 10</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L231' title='View on GitHub'>231</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L232' title='View on GitHub'>232</a>                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L233' title='View on GitHub'>233</a>                 @message = &quot;In order to meet the target end date, the treaty must be &lt;em&gt;laid earlier than&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L234' title='View on GitHub'>234</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L235' title='View on GitHub'>235</a>                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L236' title='View on GitHub'>236</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L237' title='View on GitHub'>237</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L277' title='View on GitHub'>277</a>             when 10</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L279' title='View on GitHub'>279</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L280' title='View on GitHub'>280</a>                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L281' title='View on GitHub'>281</a>                 if Date.today &gt;= @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L282' title='View on GitHub'>282</a>                   @action_required = &#39;the treaty &lt;em&gt;would have been required to have been laid before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L283' title='View on GitHub'>283</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L284' title='View on GitHub'>284</a>                   @action_required = &#39;the treaty must be laid &lt;em&gt;before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L285' title='View on GitHub'>285</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L286' title='View on GitHub'>286</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L287' title='View on GitHub'>287</a>                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L288' title='View on GitHub'>288</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L289' title='View on GitHub'>289</a>               end</code></pre>
 <ul>
 <li>Treaty period B</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L240' title='View on GitHub'>240</a>             when 11</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L242' title='View on GitHub'>242</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L243' title='View on GitHub'>243</a>                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L244' title='View on GitHub'>244</a>                 @message = &quot;In order to meet the target end date, the ministerial statement must be &lt;em&gt;made earlier than&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L245' title='View on GitHub'>245</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L246' title='View on GitHub'>246</a>                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L247' title='View on GitHub'>247</a>                 @start_date_type = &quot;date of Ministerial statement&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L248' title='View on GitHub'>248</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L292' title='View on GitHub'>292</a>             when 11</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L294' title='View on GitHub'>294</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L295' title='View on GitHub'>295</a>                 @scrutiny_end_date = treaty_calculation_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L296' title='View on GitHub'>296</a>                 if Date.today &gt;= @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L297' title='View on GitHub'>297</a>                   @action_required = &#39;the Minister &lt;em&gt;would have been required to have made a statement before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L298' title='View on GitHub'>298</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L299' title='View on GitHub'>299</a>                   @action_required = &#39;the Minister must make a statement &lt;em&gt;before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L300' title='View on GitHub'>300</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L301' title='View on GitHub'>301</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L302' title='View on GitHub'>302</a>                 @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L303' title='View on GitHub'>303</a>                 @start_date_type = &quot;date of Ministerial statement&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L304' title='View on GitHub'>304</a>               end</code></pre>
 <ul>
 <li>Published drafts under the European Union (Withdrawal) Act 2018</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L251' title='View on GitHub'>251</a>             when 12</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L253' title='View on GitHub'>253</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L254' title='View on GitHub'>254</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L255' title='View on GitHub'>255</a>                 @message = &quot;In order to meet the target end date, the draft must be &lt;em&gt;published on or before&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L256' title='View on GitHub'>256</a>               else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L257' title='View on GitHub'>257</a>                 @start_date_type = &quot;date of publication&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L258' title='View on GitHub'>258</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L259' title='View on GitHub'>259</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L307' title='View on GitHub'>307</a>             when 12</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L309' title='View on GitHub'>309</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L310' title='View on GitHub'>310</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L311' title='View on GitHub'>311</a>                 if Date.today &gt; @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L312' title='View on GitHub'>312</a>                   @action_required = &#39;the draft &lt;em&gt;would have been required to have been published on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L313' title='View on GitHub'>313</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L314' title='View on GitHub'>314</a>                   @action_required = &#39;the draft must be published &lt;em&gt;on or before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L315' title='View on GitHub'>315</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L316' title='View on GitHub'>316</a>               else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L317' title='View on GitHub'>317</a>                 @start_date_type = &quot;date of publication&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L318' title='View on GitHub'>318</a>                 @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L319' title='View on GitHub'>319</a>               end</code></pre>
 <ul>
 <li>National Policy Statements.</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L262' title='View on GitHub'>262</a>             when 20</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L264' title='View on GitHub'>264</a>               if @direction == &#39;reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L265' title='View on GitHub'>265</a>                 @scrutiny_end_date = commons_only_sitting_days_reverse( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L266' title='View on GitHub'>266</a>                 @message = &quot;In order to meet the target end date, the national policy statement must be &lt;em&gt;laid earlier than&lt;/em&gt; the anticipated start date of the scrutiny period.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L267' title='View on GitHub'>267</a>              else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L268' title='View on GitHub'>268</a>                 @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L269' title='View on GitHub'>269</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L270' title='View on GitHub'>270</a>               end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L271' title='View on GitHub'>271</a>           end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L322' title='View on GitHub'>322</a>             when 20</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L324' title='View on GitHub'>324</a>               if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L325' title='View on GitHub'>325</a>                 @scrutiny_end_date = commons_only_sitting_days_reverse( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L326' title='View on GitHub'>326</a>                 if Date.today &gt;= @scrutiny_end_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L327' title='View on GitHub'>327</a>                   @action_required = &#39;the statement &lt;em&gt;would have been required to have been laid before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L328' title='View on GitHub'>328</a>                 else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L329' title='View on GitHub'>329</a>                   @action_required = &#39;the statement must be laid &lt;em&gt;before&lt;/em&gt;&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L330' title='View on GitHub'>330</a>                 end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L331' title='View on GitHub'>331</a>              else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L332' title='View on GitHub'>332</a>                 @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L333' title='View on GitHub'>333</a>                 @start_date_type = &quot;laying date&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L334' title='View on GitHub'>334</a>               end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L335' title='View on GitHub'>335</a>           end</code></pre>
 <p>Otherwise, if the calculation style has been selected ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L274' title='View on GitHub'>274</a>         elsif @calculation_style</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L338' title='View on GitHub'>338</a>         elsif @calculation_style</code></pre>
 <p>... to calculate the <strong>anticipated end date</strong>, we select the calculation based on the calculation style:</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L277' title='View on GitHub'>277</a>           case @calculation_style</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L341' title='View on GitHub'>341</a>           case @calculation_style</code></pre>
 <ul>
 <li>Calculation style 1</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L280' title='View on GitHub'>280</a>             when 1</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L282' title='View on GitHub'>282</a>               @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L344' title='View on GitHub'>344</a>             when 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L346' title='View on GitHub'>346</a>               @scrutiny_end_date = bicameral_calculation_both_houses_sitting( @start_date, @day_count )</code></pre>
 <ul>
 <li>Calculation style 2</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L285' title='View on GitHub'>285</a>             when 2</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L287' title='View on GitHub'>287</a>               @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L349' title='View on GitHub'>349</a>             when 2</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L351' title='View on GitHub'>351</a>               @scrutiny_end_date = bicameral_si_either_house_sitting_calculation( @start_date, @day_count )</code></pre>
 <ul>
 <li>Calculation style 3</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L290' title='View on GitHub'>290</a>             when 3</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L292' title='View on GitHub'>292</a>               @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L354' title='View on GitHub'>354</a>             when 3</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L356' title='View on GitHub'>356</a>               @scrutiny_end_date = commons_only_si_calculation( @start_date, @day_count )</code></pre>
 <ul>
 <li>Calculation style 4</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L295' title='View on GitHub'>295</a>             when 4</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L297' title='View on GitHub'>297</a>               @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L359' title='View on GitHub'>359</a>             when 4</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L361' title='View on GitHub'>361</a>               @scrutiny_end_date = pnsi_calculation( @start_date, @day_count )</code></pre>
 <ul>
 <li>Calculation style 5</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L300' title='View on GitHub'>300</a>             when 5</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L302' title='View on GitHub'>302</a>               @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L364' title='View on GitHub'>364</a>             when 5</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L366' title='View on GitHub'>366</a>               @scrutiny_end_date = treaty_calculation( @start_date, @day_count )</code></pre>
 <ul>
 <li>Calculation style 6</li>
 </ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L305' title='View on GitHub'>305</a>             when 6</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L307' title='View on GitHub'>307</a>               @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L308' title='View on GitHub'>308</a>             else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L369' title='View on GitHub'>369</a>             when 6</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L371' title='View on GitHub'>371</a>               @scrutiny_end_date = commons_only_sitting_days( @start_date, @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L372' title='View on GitHub'>372</a>             else</code></pre>
 <p>... we add a reason to the missing information array ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L311' title='View on GitHub'>311</a>               @missing_information &lt;&lt; &#39;a valid calculation style&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L375' title='View on GitHub'>375</a>               @missing_information &lt;&lt; &#39;a valid calculation style&#39;</code></pre>
 <p>... and call the insufficient information method.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L314' title='View on GitHub'>314</a>               insufficient_information</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L315' title='View on GitHub'>315</a>           end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L316' title='View on GitHub'>316</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L378' title='View on GitHub'>378</a>               insufficient_information</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L379' title='View on GitHub'>379</a>           end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L380' title='View on GitHub'>380</a>         end</code></pre>
 <p>We set the generic meta information.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L318' title='View on GitHub'>318</a>         @json_url = request.original_fullpath.sub &#39;?&#39;, &#39;.json?&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L319' title='View on GitHub'>319</a>         @crumb &lt;&lt; { label: &#39;Calculators&#39;, url: calculator_list_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L320' title='View on GitHub'>320</a>         @section = &#39;calculators&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L382' title='View on GitHub'>382</a>         @json_url = request.original_fullpath.sub &#39;?&#39;, &#39;.json?&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L383' title='View on GitHub'>383</a>         @crumb &lt;&lt; { label: &#39;Calculators&#39;, url: calculator_list_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L384' title='View on GitHub'>384</a>         @section = &#39;calculators&#39;</code></pre>
 <p>If the direction of the calculation is reverse ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L323' title='View on GitHub'>323</a>         if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L387' title='View on GitHub'>387</a>         if @direction == &#39;reverse&#39;</code></pre>
 <p>... we set the meta information for the page.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L326' title='View on GitHub'>326</a>           @page_title = &quot;Scrutiny start date calculation&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L327' title='View on GitHub'>327</a>           @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny start date calculation&lt;/span&gt;&quot;.html_safe</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L328' title='View on GitHub'>328</a>           @description = &quot;A calculation to determine the estimated start date of scrutiny for instruments before Parliament.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L329' title='View on GitHub'>329</a>           @calendar_links &lt;&lt; [&#39;Anticipated start date of the scrutiny period&#39;, request.original_fullpath.sub( &#39;?&#39;, &#39;.ics?&#39; )]</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L330' title='View on GitHub'>330</a>           @crumb &lt;&lt; { label: &#39;Scrutiny start date&#39;, url: reverse_calculator_form_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L331' title='View on GitHub'>331</a>           @crumb &lt;&lt; { label: &#39;Calculation&#39;, url: nil }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L332' title='View on GitHub'>332</a>           @subsection = &#39;scrutiny-calculator-reverse&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L334' title='View on GitHub'>334</a>           render :template =&gt; &#39;calculator/scrutiny_reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L390' title='View on GitHub'>390</a>           @page_title = &quot;Scrutiny start date calculation&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L391' title='View on GitHub'>391</a>           @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny start date calculation&lt;/span&gt;&quot;.html_safe</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L392' title='View on GitHub'>392</a>           @description = &quot;A calculation to determine the estimated start date of scrutiny for instruments before Parliament.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L393' title='View on GitHub'>393</a>           @calendar_links &lt;&lt; [&#39;Anticipated start date of the scrutiny period&#39;, request.original_fullpath.sub( &#39;?&#39;, &#39;.ics?&#39; )]</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L394' title='View on GitHub'>394</a>           @crumb &lt;&lt; { label: &#39;Scrutiny start date&#39;, url: reverse_calculator_form_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L395' title='View on GitHub'>395</a>           @crumb &lt;&lt; { label: &#39;Calculation&#39;, url: nil }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L396' title='View on GitHub'>396</a>           @subsection = &#39;scrutiny-calculator-reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L398' title='View on GitHub'>398</a>           render :template =&gt; &#39;calculator/scrutiny_reverse&#39;</code></pre>
 <p>Otherwise, if the direction of the calculation is not reverse ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L337' title='View on GitHub'>337</a>         else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L401' title='View on GitHub'>401</a>         else</code></pre>
 <p>.. we set the meta information for the page.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L340' title='View on GitHub'>340</a>           @page_title = &quot;Scrutiny end date calculation&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L341' title='View on GitHub'>341</a>           @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny end date calculation&lt;/span&gt;&quot;.html_safe</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L342' title='View on GitHub'>342</a>           @description = &quot;A calculation to determine the anticipated end date of scrutiny for instruments before Parliament.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L343' title='View on GitHub'>343</a>           @json_url = request.original_fullpath.sub &#39;?&#39;, &#39;.json?&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L344' title='View on GitHub'>344</a>           @calendar_links &lt;&lt; [&#39;Anticipated end date of the scrutiny period&#39;, request.original_fullpath.sub( &#39;?&#39;, &#39;.ics?&#39; )]</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L345' title='View on GitHub'>345</a>           @crumb &lt;&lt; { label: &#39;Scrutiny end date&#39;, url: calculator_form_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L346' title='View on GitHub'>346</a>           @crumb &lt;&lt; { label: &#39;Calculation&#39;, url: nil }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L347' title='View on GitHub'>347</a>           @subsection = &#39;scrutiny-calculator&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L348' title='View on GitHub'>348</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L349' title='View on GitHub'>349</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L350' title='View on GitHub'>350</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L351' title='View on GitHub'>351</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L404' title='View on GitHub'>404</a>           @page_title = &quot;Scrutiny end date calculation&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L405' title='View on GitHub'>405</a>           @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny end date calculation&lt;/span&gt;&quot;.html_safe</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L406' title='View on GitHub'>406</a>           @description = &quot;A calculation to determine the anticipated end date of scrutiny for instruments before Parliament.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L407' title='View on GitHub'>407</a>           @json_url = request.original_fullpath.sub &#39;?&#39;, &#39;.json?&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L408' title='View on GitHub'>408</a>           @calendar_links &lt;&lt; [&#39;Anticipated end date of the scrutiny period&#39;, request.original_fullpath.sub( &#39;?&#39;, &#39;.ics?&#39; )]</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L409' title='View on GitHub'>409</a>           @crumb &lt;&lt; { label: &#39;Scrutiny end date&#39;, url: calculator_form_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L410' title='View on GitHub'>410</a>           @crumb &lt;&lt; { label: &#39;Calculation&#39;, url: nil }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L411' title='View on GitHub'>411</a>           @subsection = &#39;scrutiny-calculator&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L412' title='View on GitHub'>412</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L413' title='View on GitHub'>413</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L414' title='View on GitHub'>414</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L415' title='View on GitHub'>415</a>   end</code></pre>
 <h3>A method to check if the scrutiny period calculation can proceed.</h3>
 
 <p>This method also creates the start date, day count, procedure and calculation style as instance variables.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L355' title='View on GitHub'>355</a>   def calculation_can_proceed?( start_date, day_count, procedure, calculation_style )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L419' title='View on GitHub'>419</a>   def calculation_can_proceed?( start_date, day_count, procedure, calculation_style )</code></pre>
 <p>We create a variable to hold a boolean, determining if the scrutiny period calculation can proceed.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L358' title='View on GitHub'>358</a>     calculation_can_proceed = true</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L422' title='View on GitHub'>422</a>     calculation_can_proceed = true</code></pre>
 <p>We create an array to hold any errors we find as a result of missing information.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L361' title='View on GitHub'>361</a>     @missing_information = []</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L425' title='View on GitHub'>425</a>     @missing_information = []</code></pre>
 <h2>We check for the presence of a valid start date.</h2>
 
 <p>If the start date is present ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L365' title='View on GitHub'>365</a>     if start_date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L429' title='View on GitHub'>429</a>     if start_date</code></pre>
 <p>... we attempt to convert the start date string into a date, storing the result as a instance variable.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L368' title='View on GitHub'>368</a>       begin</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L369' title='View on GitHub'>369</a>          @start_date = Date.parse( start_date )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L432' title='View on GitHub'>432</a>       begin</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L433' title='View on GitHub'>433</a>          @start_date = Date.parse( start_date )</code></pre>
 <p>If the start date string cannot be converted into a date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L372' title='View on GitHub'>372</a>       rescue ArgumentError</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L436' title='View on GitHub'>436</a>       rescue ArgumentError</code></pre>
 <p>... we flag that the calculation cannot proceed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L375' title='View on GitHub'>375</a>         calculation_can_proceed = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L439' title='View on GitHub'>439</a>         calculation_can_proceed = false</code></pre>
 <p>... and add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L378' title='View on GitHub'>378</a>         @missing_information &lt;&lt; invalid_date_type_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L379' title='View on GitHub'>379</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L442' title='View on GitHub'>442</a>         @missing_information &lt;&lt; invalid_date_type_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L443' title='View on GitHub'>443</a>       end</code></pre>
 <p>Otherwise, if the start date is not present ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L382' title='View on GitHub'>382</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L446' title='View on GitHub'>446</a>     else</code></pre>
 <p>... we flag that the calculation cannot proceed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L385' title='View on GitHub'>385</a>       calculation_can_proceed = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L449' title='View on GitHub'>449</a>       calculation_can_proceed = false</code></pre>
 <p>... and add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L388' title='View on GitHub'>388</a>       @missing_information &lt;&lt; missing_date_type_label</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L389' title='View on GitHub'>389</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L452' title='View on GitHub'>452</a>       @missing_information &lt;&lt; missing_date_type_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L453' title='View on GitHub'>453</a>     end</code></pre>
 <h2>We check for the presence of a valid day count.</h2>
 
 <p>If a day count has been passed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L393' title='View on GitHub'>393</a>     if day_count</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L457' title='View on GitHub'>457</a>     if day_count</code></pre>
 <p>... we convert the day count to an integer, storing the result as a instance variable.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L396' title='View on GitHub'>396</a>       @day_count = day_count.to_i</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L460' title='View on GitHub'>460</a>       @day_count = day_count.to_i</code></pre>
 <p>If the day count is an invalid day count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L399' title='View on GitHub'>399</a>       if is_day_count_invalid?( @day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L463' title='View on GitHub'>463</a>       if is_day_count_invalid?( @day_count )</code></pre>
 <p>... we do not flag that the calculation cannot proceed because this will be picked up by the day count form.</p>
 
 <p>We add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L404' title='View on GitHub'>404</a>         @missing_information &lt;&lt; &#39;a valid day count&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L405' title='View on GitHub'>405</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L468' title='View on GitHub'>468</a>         @missing_information &lt;&lt; &#39;a valid day count&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L469' title='View on GitHub'>469</a>       end</code></pre>
 <p>Otherwise, if a day count has not been passed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L408' title='View on GitHub'>408</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L472' title='View on GitHub'>472</a>     else</code></pre>
 <p>... we do not flag that the calculation cannot proceed because this will be picked up by the day count form.</p>
 
 <p>We add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L413' title='View on GitHub'>413</a>       @missing_information &lt;&lt; &#39;a day count&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L414' title='View on GitHub'>414</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L477' title='View on GitHub'>477</a>       @missing_information &lt;&lt; &#39;a day count&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L478' title='View on GitHub'>478</a>     end</code></pre>
 <h2>We check for the presence of a valid procedure <em>or</em> a valid calculation style.</h2>
 
 <p>If the calculation has been passed neither a procedure, nor a calculation style ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L418' title='View on GitHub'>418</a>     if !procedure and !calculation_style</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L482' title='View on GitHub'>482</a>     if !procedure and !calculation_style</code></pre>
 <p>... we flag that the calculation cannot proceed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L421' title='View on GitHub'>421</a>       calculation_can_proceed = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L485' title='View on GitHub'>485</a>       calculation_can_proceed = false</code></pre>
 <p>... and add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L424' title='View on GitHub'>424</a>       @missing_information &lt;&lt; &#39;a procedure or calculation style&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L488' title='View on GitHub'>488</a>       @missing_information &lt;&lt; &#39;a procedure or calculation style&#39;</code></pre>
 <p>Otherwise, if the calculation has been passed a procedure ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L427' title='View on GitHub'>427</a>     elsif procedure</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L491' title='View on GitHub'>491</a>     elsif procedure</code></pre>
 <p>... we attempt to find the procedure, storing the result as a instance variable.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L430' title='View on GitHub'>430</a>       @procedure = Procedure.find_by_id( procedure )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L494' title='View on GitHub'>494</a>       @procedure = Procedure.find_by_id( procedure )</code></pre>
 <p>If we fail to find the procedure ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L433' title='View on GitHub'>433</a>       unless @procedure</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L497' title='View on GitHub'>497</a>       unless @procedure</code></pre>
 <p>... we flag that the calculation cannot proceed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L436' title='View on GitHub'>436</a>         calculation_can_proceed = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L500' title='View on GitHub'>500</a>         calculation_can_proceed = false</code></pre>
 <p>... and add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L439' title='View on GitHub'>439</a>         @missing_information &lt;&lt; &#39;a valid procedure&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L440' title='View on GitHub'>440</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L503' title='View on GitHub'>503</a>         @missing_information &lt;&lt; &#39;a valid procedure&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L504' title='View on GitHub'>504</a>       end</code></pre>
 <p>Otherwise, if the calculation has been passed a calculation style ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L443' title='View on GitHub'>443</a>     elsif calculation_style</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L507' title='View on GitHub'>507</a>     elsif calculation_style</code></pre>
 <p>... we convert the calculation style ID to an integer, storing the result as a instance variable.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L446' title='View on GitHub'>446</a>       @calculation_style = calculation_style.to_i</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L510' title='View on GitHub'>510</a>       @calculation_style = calculation_style.to_i</code></pre>
 <p>If the calculation style is an invalid calculation style ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L449' title='View on GitHub'>449</a>       if is_calculation_style_invalid?( @calculation_style )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L513' title='View on GitHub'>513</a>       if is_calculation_style_invalid?( @calculation_style )</code></pre>
 <p>... we flag that the calculation cannot proceed ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L452' title='View on GitHub'>452</a>         calculation_can_proceed = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L516' title='View on GitHub'>516</a>         calculation_can_proceed = false</code></pre>
 <p>... and add a reason to the missing information array.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L455' title='View on GitHub'>455</a>         @missing_information &lt;&lt; &#39;a valid calculation style&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L456' title='View on GitHub'>456</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L457' title='View on GitHub'>457</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L519' title='View on GitHub'>519</a>         @missing_information &lt;&lt; &#39;a valid calculation style&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L520' title='View on GitHub'>520</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L521' title='View on GitHub'>521</a>     end</code></pre>
 <p>We return the calculation can proceed boolean.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L460' title='View on GitHub'>460</a>     calculation_can_proceed</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L461' title='View on GitHub'>461</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L524' title='View on GitHub'>524</a>     calculation_can_proceed</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L525' title='View on GitHub'>525</a>   end</code></pre>
 <h3>A method to check if the day count is valid.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L464' title='View on GitHub'>464</a>   def is_day_count_valid?( day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L528' title='View on GitHub'>528</a>   def is_day_count_valid?( day_count )</code></pre>
 <p>We create a boolean to hold the validity of the day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L467' title='View on GitHub'>467</a>     is_day_count_valid = true</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L531' title='View on GitHub'>531</a>     is_day_count_valid = true</code></pre>
 <p>If the day count is zero or a negative number ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L470' title='View on GitHub'>470</a>     if day_count == 0 or day_count.negative?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L534' title='View on GitHub'>534</a>     if day_count == 0 or day_count.negative?</code></pre>
 <p>... we set the is day count valid boolean to false.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L473' title='View on GitHub'>473</a>       is_day_count_valid = false</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L474' title='View on GitHub'>474</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L537' title='View on GitHub'>537</a>       is_day_count_valid = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L538' title='View on GitHub'>538</a>     end</code></pre>
 <p>We return the is day count valid boolean.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L477' title='View on GitHub'>477</a>     is_day_count_valid</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L478' title='View on GitHub'>478</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L541' title='View on GitHub'>541</a>     is_day_count_valid</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L542' title='View on GitHub'>542</a>   end</code></pre>
 <h3>A method to check if the day count is invalid.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L481' title='View on GitHub'>481</a>   def is_day_count_invalid?( day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L545' title='View on GitHub'>545</a>   def is_day_count_invalid?( day_count )</code></pre>
 <p>We flip the boolean returned by the is day count valid method.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L484' title='View on GitHub'>484</a>     !is_day_count_valid?( day_count )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L485' title='View on GitHub'>485</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L548' title='View on GitHub'>548</a>     !is_day_count_valid?( day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L549' title='View on GitHub'>549</a>   end</code></pre>
 <h3>A method to check if the calculation style is valid.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L488' title='View on GitHub'>488</a>   def is_calculation_style_valid?( calculation_style )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L552' title='View on GitHub'>552</a>   def is_calculation_style_valid?( calculation_style )</code></pre>
 <p>We create a boolean to hold the validity of the calculation style.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L491' title='View on GitHub'>491</a>     is_calculation_style_valid = true</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L555' title='View on GitHub'>555</a>     is_calculation_style_valid = true</code></pre>
 <p>If the calculation style is zero or a negative number ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L494' title='View on GitHub'>494</a>     if calculation_style == 0 or calculation_style.negative?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L558' title='View on GitHub'>558</a>     if calculation_style == 0 or calculation_style.negative?</code></pre>
 <p>... we set the is calculation style valid boolean to false.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L497' title='View on GitHub'>497</a>       is_calculation_style_valid = false</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L498' title='View on GitHub'>498</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L561' title='View on GitHub'>561</a>       is_calculation_style_valid = false</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L562' title='View on GitHub'>562</a>     end</code></pre>
 <p>We return the is calculation style valid boolean.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L501' title='View on GitHub'>501</a>     is_calculation_style_valid</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L502' title='View on GitHub'>502</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L565' title='View on GitHub'>565</a>     is_calculation_style_valid</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L566' title='View on GitHub'>566</a>   end</code></pre>
 <h3>A method to check if the calculation style is invalid.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L505' title='View on GitHub'>505</a>   def is_calculation_style_invalid?( calculation_style )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L569' title='View on GitHub'>569</a>   def is_calculation_style_invalid?( calculation_style )</code></pre>
 <p>We flip the boolean returned by the is calculation style valid method.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L508' title='View on GitHub'>508</a>     !is_calculation_style_valid?( calculation_style )</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L509' title='View on GitHub'>509</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L572' title='View on GitHub'>572</a>     !is_calculation_style_valid?( calculation_style )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L573' title='View on GitHub'>573</a>   end</code></pre>
 <h3>A method to report that we have insufficient information for the scrutiny period calculation to proceed.</h3>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L512' title='View on GitHub'>512</a>   def insufficient_information</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L576' title='View on GitHub'>576</a>   def insufficient_information</code></pre>
 <p>We set the generic meta information.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L515' title='View on GitHub'>515</a>     @crumb &lt;&lt; { label: &#39;Calculators&#39;, url: calculator_list_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L516' title='View on GitHub'>516</a>     @section = &#39;calculators&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L579' title='View on GitHub'>579</a>     @crumb &lt;&lt; { label: &#39;Calculators&#39;, url: calculator_list_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L580' title='View on GitHub'>580</a>     @section = &#39;calculators&#39;</code></pre>
 <p>If the calculation is a reverse calculation ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L519' title='View on GitHub'>519</a>     if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L583' title='View on GitHub'>583</a>     if @direction == &#39;reverse&#39;</code></pre>
 <p>... we set the meta information for the page ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L522' title='View on GitHub'>522</a>       @page_title = &quot;Scrutiny start date - more information required&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L523' title='View on GitHub'>523</a>       @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny start date - more information required&lt;/span&gt;&quot;.html_safe</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L524' title='View on GitHub'>524</a>       @description = &quot;More information required for a calculation to determine the estimated start date of scrutiny for instruments before Parliament.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L525' title='View on GitHub'>525</a>       @crumb &lt;&lt; { label: &#39;Scrutiny start date&#39;, url: reverse_calculator_form_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L526' title='View on GitHub'>526</a>       @subsection = &#39;scrutiny-calculator-reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L586' title='View on GitHub'>586</a>       @page_title = &quot;Scrutiny start date - more information required&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L587' title='View on GitHub'>587</a>       @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny start date - more information required&lt;/span&gt;&quot;.html_safe</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L588' title='View on GitHub'>588</a>       @description = &quot;More information required for a calculation to determine the estimated start date of scrutiny for instruments before Parliament.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L589' title='View on GitHub'>589</a>       @crumb &lt;&lt; { label: &#39;Scrutiny start date&#39;, url: reverse_calculator_form_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L590' title='View on GitHub'>590</a>       @subsection = &#39;scrutiny-calculator-reverse&#39;</code></pre>
 <p>Otherwise, if the calculation is not a reverse calculation ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L529' title='View on GitHub'>529</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L593' title='View on GitHub'>593</a>     else</code></pre>
 <p>... we set the meta information for the page ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L532' title='View on GitHub'>532</a>       @page_title = &quot;Scrutiny end date - more information required&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L533' title='View on GitHub'>533</a>       @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny end date - more information required&lt;/span&gt;&quot;.html_safe</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L534' title='View on GitHub'>534</a>       @description = &quot;More information required for a calculation to determine the estimated end date of scrutiny for instruments before Parliament.&quot;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L535' title='View on GitHub'>535</a>       @crumb &lt;&lt; { label: &#39;Scrutiny end date&#39;, url: calculator_form_url }</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L536' title='View on GitHub'>536</a>       @subsection = &#39;scrutiny-calculator&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L537' title='View on GitHub'>537</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L596' title='View on GitHub'>596</a>       @page_title = &quot;Scrutiny end date - more information required&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L597' title='View on GitHub'>597</a>       @multiline_page_title = &quot;Calculators &lt;span class=&#39;subhead&#39;&gt;Scrutiny end date - more information required&lt;/span&gt;&quot;.html_safe</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L598' title='View on GitHub'>598</a>       @description = &quot;More information required for a calculation to determine the estimated end date of scrutiny for instruments before Parliament.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L599' title='View on GitHub'>599</a>       @crumb &lt;&lt; { label: &#39;Scrutiny end date&#39;, url: calculator_form_url }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L600' title='View on GitHub'>600</a>       @subsection = &#39;scrutiny-calculator&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L601' title='View on GitHub'>601</a>     end</code></pre>
 <p>We set more generic meta information.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L540' title='View on GitHub'>540</a>     @crumb &lt;&lt; { label: &#39;More information required&#39;, url: nil }</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L604' title='View on GitHub'>604</a>     @crumb &lt;&lt; { label: &#39;More information required&#39;, url: nil }</code></pre>
 <p>We display the not enough information message.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L543' title='View on GitHub'>543</a>     render :template =&gt; &#39;calculator/not_enough_information&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L544' title='View on GitHub'>544</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L607' title='View on GitHub'>607</a>     render :template =&gt; &#39;calculator/not_enough_information&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L608' title='View on GitHub'>608</a>   end</code></pre>
 <h3>A method to return the label of any missing date type.</h3>
 
 <p>For the end date scrutiny period calculator, this will be the start date.</p>
 
 <p>For the start date scrutiny period calculator, this will be the end date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L549' title='View on GitHub'>549</a>   def missing_date_type_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L613' title='View on GitHub'>613</a>   def missing_date_type_label</code></pre>
 <p>If the calculation is a reverse calculation, calculating a start date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L552' title='View on GitHub'>552</a>     if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L616' title='View on GitHub'>616</a>     if @direction == &#39;reverse&#39;</code></pre>
 <p>... the missing date parameter is an end date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L555' title='View on GitHub'>555</a>       &#39;an end date&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L619' title='View on GitHub'>619</a>       &#39;an end date&#39;</code></pre>
 <p>Otherwise, if the calculation is a forward calculation, calculating an end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L558' title='View on GitHub'>558</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L622' title='View on GitHub'>622</a>     else</code></pre>
 <p>... the missing date parameter is a start date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L561' title='View on GitHub'>561</a>       &#39;a start date&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L562' title='View on GitHub'>562</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L563' title='View on GitHub'>563</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L625' title='View on GitHub'>625</a>       &#39;a start date&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L626' title='View on GitHub'>626</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L627' title='View on GitHub'>627</a>   end</code></pre>
 <h3>A method to return the label of any invalid date type.</h3>
 
 <p>For the end date scrutiny period calculator, this will be the start date.</p>
 
 <p>For the start date scrutiny period calculator, this will be the end date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L568' title='View on GitHub'>568</a>   def invalid_date_type_label</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L632' title='View on GitHub'>632</a>   def invalid_date_type_label</code></pre>
 <p>If the calculation is a reverse calculation, calculating a start date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L571' title='View on GitHub'>571</a>     if @direction == &#39;reverse&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L635' title='View on GitHub'>635</a>     if @direction == &#39;reverse&#39;</code></pre>
 <p>... the missing date parameter is an end date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L574' title='View on GitHub'>574</a>       &#39;a valid end date&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L638' title='View on GitHub'>638</a>       &#39;a valid end date&#39;</code></pre>
 <p>Otherwise, if the calculation is a forward calculation, calculating an end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L577' title='View on GitHub'>577</a>     else</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L641' title='View on GitHub'>641</a>     else</code></pre>
 <p>... the missing date parameter is a start date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L580' title='View on GitHub'>580</a>       &#39;a valid start date&#39;</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L581' title='View on GitHub'>581</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L582' title='View on GitHub'>582</a>   end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L583' title='View on GitHub'>583</a> end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L644' title='View on GitHub'>644</a>       &#39;a valid start date&#39;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L645' title='View on GitHub'>645</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L646' title='View on GitHub'>646</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/controllers/calculator_controller.rb#L647' title='View on GitHub'>647</a> end</code></pre>
 

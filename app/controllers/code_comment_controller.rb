@@ -219,4 +219,19 @@ class CodeCommentController < ApplicationController
     
     render :template => 'code_comment/comment_wrapper'
   end
+
+  def interval
+
+    # Set meta information for the page.
+    @page_title = "Calculation code comments - Sitting days during an interval"
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Sitting days during an interval</span>".html_safe
+    @description = "Calculation code comments for Sitting days during an interval."
+    @crumb << { label: 'About', url: meta_list_url }
+    @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
+    @crumb << { label: 'Sitting days during an interval', url: nil }
+    @section = 'calculators'
+    @include_partial = 'app_lib_calculations_interval'
+    
+    render :template => 'code_comment/comment_wrapper'
+  end
 end
