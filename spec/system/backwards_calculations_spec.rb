@@ -128,3 +128,4 @@ describe "Backward calculation tests", type: :system do
     end
   end
 end
+
