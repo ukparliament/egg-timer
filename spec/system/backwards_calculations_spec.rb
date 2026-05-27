@@ -24,7 +24,7 @@ describe "Backward calculation tests", type: :system do
         # Date Day       Commons Day type           Commons scrutiny day  Lords day type            Lords scrutiny day
         # 1st  Wednesday Parliamentary Sitting Day  True                  Parliamentary Sitting Day True
         first_data_row = all('table tbody tr').first
-        expected_first_calendar_row = ["1st", "Wednesday", "Parliamentary sitting day", "True", "Parliamentary sitting day", "True"]
+        expected_first_calendar_row = ["1st", "Wednesday", "Sitting day", "True", "Sitting day", "True"]
 
         cells = first_data_row.all('td, th').map(&:text)
         expect(cells).to match_array(expected_first_calendar_row)
