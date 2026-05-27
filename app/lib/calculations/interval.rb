@@ -1,7 +1,7 @@
 module Calculations
   module Interval
 
-    # # A method for calculating the number of sitting days in each House between two dates.
+    # # A method to calculate the number of sitting days in each House between two dates.
     # The method is passed the start and end dates entered by the user.
     # The calculation is inclusive of the start and end dates.
     def calculate_sitting_days_in_interval( start_date, end_date )
