@@ -14,8 +14,6 @@ module Calculations
       
         #  ... if the calendar has no record of what type of day this is, we can't calculate the the number of sitting days, ...
         if date.is_calendar_not_populated?
-        
-        puts "bugger"
 
           # ... this error message is displayed to users ...
           @error_message = "It is not currently possible to calculate the number of sitting days, because the interval includes days for which the calendar is not populated."
@@ -25,8 +23,6 @@ module Calculations
           
         # Otherwise, if the calendar does have a record of what type of day this is ...
         else
-        
-        puts "good"
           
           # ... if the date is a sitting day in the Commons ...
           if date.is_commons_parliamentary_sitting_day?
