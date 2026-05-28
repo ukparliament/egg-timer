@@ -10,7 +10,9 @@ require 'erb'
 class Documenter
   def initialize(output_dir = "/app/views/code_comment/comments/", github_repo = "ukparliament/egg-timer")
     @source_dirs = [
-      Pathname.new("./app/lib/calculations/").realpath
+      Pathname.new("./app/lib/calculations").realpath,
+      Pathname.new("./app/lib/calculations/forwards").realpath,
+      Pathname.new("./app/lib/calculations/backwards").realpath
     ]
     
     # Additional specific files to include
