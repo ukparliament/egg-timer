@@ -22,38 +22,36 @@
 <p>... if the calendar has no record of what type of day this is, we can&#39;t calculate the the number of sitting days, ...</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L16' title='View on GitHub'>16</a>         if date.is_calendar_not_populated?</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L18' title='View on GitHub'>18</a>         puts &quot;bugger&quot;</code></pre>
 <p>... this error message is displayed to users ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L21' title='View on GitHub'>21</a>           @error_message = &quot;It is not currently possible to calculate the number of sitting days, because the interval includes days for which the calendar is not populated.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L19' title='View on GitHub'>19</a>           @error_message = &quot;It is not currently possible to calculate the number of sitting days, because the interval includes days for which the calendar is not populated.&quot;</code></pre>
 <p>... and we stop looking through the calendar.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L24' title='View on GitHub'>24</a>           break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L22' title='View on GitHub'>22</a>           break</code></pre>
 <p>Otherwise, if the calendar does have a record of what type of day this is ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L27' title='View on GitHub'>27</a>         else</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L29' title='View on GitHub'>29</a>         puts &quot;good&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L25' title='View on GitHub'>25</a>         else</code></pre>
 <p>... if the date is a sitting day in the Commons ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L32' title='View on GitHub'>32</a>           if date.is_commons_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L28' title='View on GitHub'>28</a>           if date.is_commons_parliamentary_sitting_day?</code></pre>
 <p>... we increment the Commons sitting day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L35' title='View on GitHub'>35</a>             @commons_sitting_day_count += 1</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L36' title='View on GitHub'>36</a>           end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L31' title='View on GitHub'>31</a>             @commons_sitting_day_count += 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L32' title='View on GitHub'>32</a>           end</code></pre>
 <p>If the date is a sitting day in the Lords ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L39' title='View on GitHub'>39</a>           if date.is_lords_parliamentary_sitting_day?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L35' title='View on GitHub'>35</a>           if date.is_lords_parliamentary_sitting_day?</code></pre>
 <p>... we increment the Lords sitting day count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L42' title='View on GitHub'>42</a>             @lords_sitting_day_count += 1</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L43' title='View on GitHub'>43</a>           end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L38' title='View on GitHub'>38</a>             @lords_sitting_day_count += 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L39' title='View on GitHub'>39</a>           end</code></pre>
 <p>We continue to the <strong>next day</strong>.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L46' title='View on GitHub'>46</a>           date = date.next_day</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L48' title='View on GitHub'>48</a>           puts date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L49' title='View on GitHub'>49</a>         end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L50' title='View on GitHub'>50</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L51' title='View on GitHub'>51</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L52' title='View on GitHub'>52</a>   end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L53' title='View on GitHub'>53</a> end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L42' title='View on GitHub'>42</a>           date = date.next_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L44' title='View on GitHub'>44</a>           puts date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L45' title='View on GitHub'>45</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L46' title='View on GitHub'>46</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L47' title='View on GitHub'>47</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L48' title='View on GitHub'>48</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/interval.rb#L49' title='View on GitHub'>49</a> end</code></pre>
 
