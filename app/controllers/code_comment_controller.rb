@@ -50,7 +50,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for bicameral instruments with both Houses sitting', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_bicameral_both_houses_sitting'
+    @include_partial = 'app_lib_calculations_forwards_bicameral_both_houses_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -65,7 +65,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for bicameral instruments with either House sitting', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_bicameral_si_either_house_sitting'
+    @include_partial = 'app_lib_calculations_forwards_bicameral_si_either_house_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -80,7 +80,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for Commons only statutory instruments', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_commons_only_si'
+    @include_partial = 'app_lib_calculations_forwards_commons_only_si'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -95,7 +95,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for proposed negative statutory instruments', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_pnsi'
+    @include_partial = 'app_lib_calculations_forwards_pnsi'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -110,7 +110,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for treaty periods A and B', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_treaty'
+    @include_partial = 'app_lib_calculations_forwards_treaty'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -125,7 +125,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny end date for Commons only sitting days', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_commons_only_sitting_days'
+    @include_partial = 'app_lib_calculations_forwards_commons_only_sitting_days'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -140,7 +140,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for bicameral instruments with both Houses sitting', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_bicameral_both_houses_sitting_reverse'
+    @include_partial = 'app_lib_calculations_backwards_bicameral_both_houses_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -155,7 +155,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for bicameral instruments with either House sitting', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_bicameral_si_either_house_sitting_reverse'
+    @include_partial = 'app_lib_calculations_backwards_bicameral_si_either_house_sitting'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -170,7 +170,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for Commons only statutory instruments', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_commons_only_si_reverse'
+    @include_partial = 'app_lib_calculations_backwards_commons_only_si'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -185,7 +185,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for proposed negative statutory instruments', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_pnsi_reverse'
+    @include_partial = 'app_lib_calculations_backwards_pnsi'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -200,7 +200,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for treaty periods A and B', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_treaty_reverse'
+    @include_partial = 'app_lib_calculations_backwards_treaty'
     
     render :template => 'code_comment/comment_wrapper'
   end
@@ -215,7 +215,7 @@ class CodeCommentController < ApplicationController
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
     @crumb << { label: 'Scrutiny start date for Commons only sitting days', url: nil }
     @section = 'calculators'
-    @include_partial = 'app_lib_calculations_commons_only_sitting_days_reverse'
+    @include_partial = 'app_lib_calculations_backwards_commons_only_sitting_days'
     
     render :template => 'code_comment/comment_wrapper'
   end
