@@ -17,7 +17,7 @@
 
 <p>The calculation counts in actual sitting days, requiring the start date and the number of days to count.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/forwards/bicameral_si_either_house_sitting.rb#L11' title='View on GitHub'>11</a>       def bicameral_si_either_house_sitting_calculation( date, target_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/forwards/bicameral_si_either_house_sitting.rb#L11' title='View on GitHub'>11</a>       def bicameral_si_either_house_sitting_calculation_forwards( date, target_day_count )</code></pre>
 <h2>We start counting on the <strong>first day either House has a scrutiny day</strong>.</h2>
 
 <p>For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is set out in <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">paragraph 1 of Section 5 of the Statutory Instruments Act 1946</a>. For draft negative Statutory Instruments, this is set out in <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1">paragraph 1 of Section 6 of the Statutory Instruments Act 1946</a>.</p>

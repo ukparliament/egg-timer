@@ -6,7 +6,7 @@ module Calculations
       # The calculation counts a day whenever the House of Commons has an actual sitting day - and requires the start date and the number of days to count.
       # The calculation is set out in [section 5 (4A) of the Planning Act 2008](https://www.legislation.gov.uk/ukpga/2008/29/section/5#section-5-4A).
 
-      def commons_only_sitting_days( date, target_day_count )
+      def commons_only_sitting_days_forwards( date, target_day_count )
 
         # ## We start counting on the **first day when the House of Commons has an actual sitting**.
 

@@ -13,7 +13,7 @@
 
 <p>The calculation is defined by paragraphs 1 and 2 of <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7">Section 7 of the Statutory Instruments Act 1946</a>, though a different calculation may be required if the instrument is laid under another Act - as per <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3">paragraph 3</a>.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/forwards/commons_only_si.rb#L8' title='View on GitHub'>8</a>       def commons_only_si_calculation(date, target_day_count)</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/forwards/commons_only_si.rb#L8' title='View on GitHub'>8</a>       def commons_only_si_calculation_forwards(date, target_day_count)</code></pre>
 <h2>We start counting on the <strong>first day the House of Commons has a scrutiny day</strong>.</h2>
 
 <p>For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is defined by the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1">Statutory Instruments Act 1946 Section 5 paragraph 1</a>. For draft negative Statutory Instruments, this is defined by the <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1">Statutory Instruments Act 1946 Section 6 paragraph 1</a>.</p>

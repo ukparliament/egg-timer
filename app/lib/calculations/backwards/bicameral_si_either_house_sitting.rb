@@ -8,7 +8,7 @@ module Calculations
       # This method is also used for calculations of scrutiny periods for proposed draft remedial orders and draft affirmative remedial orders and for scrutiny and approval periods for made affirmative remedial orders as set out in [Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2).
       # The calculation counts in actual sitting days, requiring the start date and the number of days to count.
 
-      def bicameral_si_either_house_sitting_calculation_reverse( date, target_day_count )
+      def bicameral_si_either_house_sitting_calculation_backwards( date, target_day_count )
       
         # We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.
         @scrutiny_start_date = nil

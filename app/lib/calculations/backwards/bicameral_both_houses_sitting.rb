@@ -12,7 +12,7 @@ module Calculations
       # The rules governing the time period for published drafts are set out in [paragraph 14 of schedule 8 of the European Union (Withdrawal) Act 2018](https://www.legislation.gov.uk/ukpga/2018/16/schedule/8/enacted#schedule-8-paragraph-14).
       # The rules governing the time period for enhanced affirmatives under the [Investigatory Powers Act 2016](https://www.legislation.gov.uk/id/ukpga/2016/25/) are set out in [paragraph 11 of section 268 of the Investigatory Powers Act 2016](https://www.legislation.gov.uk/ukpga/2016/25/section/268#section-268-11).
 
-      def bicameral_calculation_both_houses_sitting_reverse( date, target_day_count )
+      def bicameral_calculation_both_houses_sitting_backwards( date, target_day_count )
     
         # We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.
         @scrutiny_start_date = nil

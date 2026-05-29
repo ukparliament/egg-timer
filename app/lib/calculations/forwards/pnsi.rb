@@ -5,7 +5,7 @@ module Calculations
       # # A method for calculating the end date of committee scrutiny periods for Proposed Negative Statutory Instruments (PNSIs).
       # The calculation counts in parliamentary sitting days, requiring the laying date and the number of days to count.
       # The calculation is defined by the [European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10) (number of days to count) and [paragraph 17(11)](https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11) (definition of sitting day).
-      def pnsi_calculation( date, target_day_count )
+      def pnsi_calculation_forwards( date, target_day_count )
 
         # ## We start counting on the **first joint parliamentary sitting day following the laying of the instrument**.
         # If the date of laying is a joint parliamentary sitting day, we do not count that day.

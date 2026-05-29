@@ -8,7 +8,7 @@ module Calculations
       # For period B the start date is the day on which "a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why".
       # The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs [2](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2), [5](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5) and [9](https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9).
 
-      def treaty_calculation( date, target_day_count )
+      def treaty_calculation_forwards( date, target_day_count )
 
         # ## We start counting on the **first day when both Houses have an actual sitting**.
         # For period A this **does not** include the laying day of the treaty.

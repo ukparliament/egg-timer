@@ -6,7 +6,7 @@ module Calculations
       # The calculation counts a day whenever the House of Commons has an actual sitting day - and requires the start date and the number of days to count.
       # The calculation is set out in [section 5 (4A) of the Planning Act 2008](https://www.legislation.gov.uk/ukpga/2008/29/section/5#section-5-4A).
 
-      def commons_only_sitting_days_reverse( date, target_day_count )
+      def commons_only_sitting_days_backwards( date, target_day_count )
       
         # We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.
         @scrutiny_start_date = nil

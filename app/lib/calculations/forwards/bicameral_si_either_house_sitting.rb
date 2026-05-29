@@ -8,7 +8,7 @@ module Calculations
       # This method is also used for calculations of scrutiny periods for proposed draft remedial orders and draft affirmative remedial orders and for scrutiny and approval periods for made affirmative remedial orders as set out in [Schedule 2 of the Human Rights Act 1998](https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2).
       # The calculation counts in actual sitting days, requiring the start date and the number of days to count.
 
-      def bicameral_si_either_house_sitting_calculation( date, target_day_count )
+      def bicameral_si_either_house_sitting_calculation_forwards( date, target_day_count )
 
         # ## We start counting on the **first day either House has a scrutiny day**.
         # For negative Statutory Instruments this will be the day on which the instrument was laid, if that day was a scrutiny day. For made negative Statutory Instruments, this is set out in [paragraph 1 of Section 5 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/5#section-5-1). For draft negative Statutory Instruments, this is set out in [paragraph 1 of Section 6 of the Statutory Instruments Act 1946](https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/6#section-6-1).

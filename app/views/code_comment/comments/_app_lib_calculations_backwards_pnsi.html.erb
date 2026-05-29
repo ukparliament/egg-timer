@@ -13,7 +13,7 @@
 
 <p>The calculation is defined by the <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-10">European Union (Withdrawal) Act 2018 schedule 7 paragraph 17(10)</a> (number of days to count) and <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/7/enacted#schedule-7-paragraph-17-11">paragraph 17(11)</a> (definition of sitting day).</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/pnsi.rb#L8' title='View on GitHub'>8</a>       def pnsi_calculation_reverse( date, target_day_count )</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/pnsi.rb#L8' title='View on GitHub'>8</a>       def pnsi_calculation_backwards( date, target_day_count )</code></pre>
 <p>PNSIs are always before both Houses, so we&#39;ll get ready to start counting the sitting days in each House.</p>
 
 <p>The first joint sitting day counts as day 1 in both Houses, so we count from 1 rather than from 0.</p>
