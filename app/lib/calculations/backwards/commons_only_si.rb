@@ -47,7 +47,7 @@ module Calculations
           end
         end
 
-        # Return the anticipated end date of the scrutiny period for display.
+        # Return the anticipated start date of the scrutiny period for display.
         date
       end
     end
