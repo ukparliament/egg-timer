@@ -40,8 +40,6 @@ module Calculations
 
           # We continue to the **next day**.
           date = date.next_day
-          
-          puts date
         end
       end
     end
