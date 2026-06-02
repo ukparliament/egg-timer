@@ -9,55 +9,64 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L3' title='View on GitHub'>3</a>     module BicameralSiEitherHouseSitting</code></pre>
 
 
-<p>This method is used for bicameral negative Statutory Instruments as set out by the Statutory Instruments Act 1946 and for made affirmative Statutory Instruments as set out by their enabling Act.</p>
+<p>This method is used for:</p>
 
-<p>The calculation is set out in <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1">paragraph 1 Section 7 of the Statutory Instruments Act 1946</a>, though a different calculation may be required if the instrument is laid under another Act - as per <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-3">paragraph 3</a>.</p>
+<ul>
+<li>made affirmative Statutory Instruments as set out in their enabling Act, for example: <a href="https://www.legislation.gov.uk/ukpga/2018/13/section/55#section-55-4">paragraph 4 of section 55 of the Sanctions and Anti-Money Laundering Act 2018</a></li>
+</ul>
 
-<p>This method is also used for calculations of scrutiny periods for proposed draft remedial orders and draft affirmative remedial orders and for scrutiny and approval periods for made affirmative remedial orders as set out in <a href="https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2">Schedule 2 of the Human Rights Act 1998</a>.</p>
+<ul>
+<li>bicameral negative Statutory Instruments as set out in <a href="https://www.legislation.gov.uk/ukpga/Geo6/9-10/36/section/7#section-7-1">paragraph 1 Section 7 of the Statutory Instruments Act 1946</a></li>
+</ul>
 
-<p>The calculation counts in actual sitting days, requiring the start date and the number of days to count.</p>
+<ul>
+<li>proposed draft remedial orders, draft affirmative remedial orders and made affirmative remedial orders as set out in <a href="https://www.legislation.gov.uk/ukpga/1998/42/schedule/2#schedule-2">Schedule 2 of the Human Rights Act 1998</a></li>
+</ul>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L11' title='View on GitHub'>11</a>       def bicameral_si_either_house_sitting_calculation_backwards( date, target_day_count )</code></pre>
-<p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L10' title='View on GitHub'>10</a>       def bicameral_si_either_house_sitting_calculation_backwards( target_end_date, target_day_count )</code></pre>
+<p>Because the start of each loop causes the date to move to the preceding day and we wish to include the target end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L14' title='View on GitHub'>14</a>         @scrutiny_start_date = nil</code></pre>
-<p>We go forward one day.</p>
+<p>... we go forward one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L17' title='View on GitHub'>17</a>         date = date.next</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L14' title='View on GitHub'>14</a>         date = target_end_date.next</code></pre>
 <p>We set the day count to zero.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L20' title='View on GitHub'>20</a>         day_count = 0</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L17' title='View on GitHub'>17</a>         day_count = 0</code></pre>
 <h2>Whilst the number of days we’re counting is less than the target number of days to count ...</h2>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L23' title='View on GitHub'>23</a>         while day_count &lt; target_day_count</code></pre>
-<p>... we continue to the <strong>previous day</strong>.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L20' title='View on GitHub'>20</a>         while day_count &lt; target_day_count</code></pre>
+<p>... we move to the <strong>previous day</strong>.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L26' title='View on GitHub'>26</a>           date = date.prev_day</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L23' title='View on GitHub'>23</a>           date = date.prev_day</code></pre>
 <p>If the day is a scrutiny day in either House ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L29' title='View on GitHub'>29</a>           if date.is_either_house_scrutiny_day?</code></pre>
-<p>... we set the scrutiny start date to this date if the scrutiny start date is nil ...</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L26' title='View on GitHub'>26</a>           if date.is_either_house_scrutiny_day?</code></pre>
+<p>... if we&#39;ve not set the scrutiny end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L32' title='View on GitHub'>32</a>             @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
-<p>... and add 1 to the day count.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L29' title='View on GitHub'>29</a>             unless @scrutiny_end_date</code></pre>
+<p>... we set the scrutiny end date to this date.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L35' title='View on GitHub'>35</a>             day_count += 1</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L32' title='View on GitHub'>32</a>               @scrutiny_end_date = date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L33' title='View on GitHub'>33</a>             end</code></pre>
+<p>We add 1 to the day count.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L36' title='View on GitHub'>36</a>             day_count += 1</code></pre>
 <p>Otherwise, if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L38' title='View on GitHub'>38</a>           elsif date.is_calendar_not_populated?</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L39' title='View on GitHub'>39</a>           elsif date.is_calendar_not_populated?</code></pre>
 <p>... this error message is displayed to users ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L41' title='View on GitHub'>41</a>             @error_message = &quot;It&#39;s not currently possible to calculate an anticipated start date, as that date occurs during a period for which no sitting day information is available.&quot;</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L42' title='View on GitHub'>42</a>             @error_message = &quot;It&#39;s not currently possible to calculate an anticipated start date, as that date occurs during a period for which no sitting day information is available.&quot;</code></pre>
 <p>... and we stop looking through the calendar.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L44' title='View on GitHub'>44</a>             break</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L45' title='View on GitHub'>45</a>           end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L46' title='View on GitHub'>46</a>         end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L45' title='View on GitHub'>45</a>             break</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L46' title='View on GitHub'>46</a>           end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L47' title='View on GitHub'>47</a>         end</code></pre>
 <p>Return the anticipated start date of the scrutiny period for display.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L49' title='View on GitHub'>49</a>         date</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L50' title='View on GitHub'>50</a>       end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L51' title='View on GitHub'>51</a>     end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L52' title='View on GitHub'>52</a>   end</code></pre>
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L53' title='View on GitHub'>53</a> end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L50' title='View on GitHub'>50</a>         date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L51' title='View on GitHub'>51</a>       end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L52' title='View on GitHub'>52</a>     end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L53' title='View on GitHub'>53</a>   end</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/bicameral_si_either_house_sitting.rb#L54' title='View on GitHub'>54</a> end</code></pre>
 
