@@ -9,37 +9,38 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L3' title='View on GitHub'>3</a>     module Treaty</code></pre>
 
 
-<p>The calculation counts a day whenever both Houses have an actual sitting day - and requires the start date and the number of days to count.</p>
-
 <p>For period A the start date is the day on which &quot;a Minister of the Crown has laid before Parliament a copy of the treaty&quot;.</p>
 
 <p>For period B the start date is the day on which &quot;a Minister of the Crown has laid before Parliament a statement indicating that the Minister is of the opinion that the treaty should nevertheless be ratified and explaining why&quot;.</p>
 
-<p>The calculation is defined by Constitutional Reform and Governance Act 2010 section 20 paragraphs <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">2</a>, <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5">5</a> and <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9">9</a>.</p>
+<p>The calculation is set out in the Constitutional Reform and Governance Act 2010 section 20 paragraphs <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-2">2</a>, <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-5">5</a> and <a href="https://www.legislation.gov.uk/ukpga/2010/25/part/2#section-20-9">9</a>.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L11' title='View on GitHub'>11</a>       def treaty_calculation_backwards( date, target_day_count )</code></pre>
-<p>We set the scrutiny start date, being the start date of the calculation and the end date of the scrutiny period.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L9' title='View on GitHub'>9</a>       def treaty_calculation_backwards( target_end_date, target_day_count )</code></pre>
+<p>Because the start of each loop causes the date to move to the preceding day and we wish to include the target end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L14' title='View on GitHub'>14</a>         @scrutiny_start_date = nil</code></pre>
-<p>We go forward one day.</p>
+<p>... we go forward one day.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L17' title='View on GitHub'>17</a>         date = date.next</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L13' title='View on GitHub'>13</a>         date = target_end_date.next</code></pre>
 <p>We set the day count to zero.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L20' title='View on GitHub'>20</a>         day_count = 0</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L16' title='View on GitHub'>16</a>         day_count = 0</code></pre>
 <p>Whilst the number of days we’re counting is less than the target number of days to count ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L23' title='View on GitHub'>23</a>         while ( day_count &lt; target_day_count ) do</code></pre>
-<p>... continue to the <strong>previous day</strong>.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L19' title='View on GitHub'>19</a>         while day_count &lt; target_day_count</code></pre>
+<p>... we move to the <strong>previous day</strong>.</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L26' title='View on GitHub'>26</a>           date = date.prev_day</code></pre>
-<p>If the day is a joint actual sitting day ...</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L22' title='View on GitHub'>22</a>           date = date.prev_day</code></pre>
+<p>If the day is a joint sitting day ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L29' title='View on GitHub'>29</a>           if date.is_joint_actual_sitting_day?</code></pre>
-<p>... we set the scrutiny start date to this date if the scrutiny start date is nil ...</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L25' title='View on GitHub'>25</a>           if date.is_joint_parliamentary_sitting_day?</code></pre>
+<p>... if we&#39;ve not set the scrutiny end date ...</p>
 
-<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L32' title='View on GitHub'>32</a>             @scrutiny_start_date = date if @scrutiny_start_date.nil?</code></pre>
-<p>... and add 1 to the day count.</p>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L28' title='View on GitHub'>28</a>             unless @scrutiny_end_date</code></pre>
+<p>... we set the scrutiny end date to this date.</p>
+
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L31' title='View on GitHub'>31</a>               @scrutiny_end_date = date</code></pre>
+<pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L32' title='View on GitHub'>32</a>             end</code></pre>
+<p>We add 1 to the day count.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L35' title='View on GitHub'>35</a>             day_count +=1</code></pre>
 <p>Otherwise, if the calendar has no record of what type of day this is, we can&#39;t calculate the end date, ...</p>
@@ -53,7 +54,7 @@
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L44' title='View on GitHub'>44</a>             break</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L45' title='View on GitHub'>45</a>           end</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L46' title='View on GitHub'>46</a>         end</code></pre>
-<p>We return the calculated date.</p>
+<p>We return the anticipated start date of the scrutiny period for display.</p>
 
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L49' title='View on GitHub'>49</a>         date</code></pre>
 <pre><code><a href='https://github.com/ukparliament/egg-timer/blob/main/app/lib/calculations/backwards/treaty.rb#L50' title='View on GitHub'>50</a>       end</code></pre>
