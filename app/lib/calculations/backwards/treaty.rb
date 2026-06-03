@@ -18,7 +18,7 @@ module Calculations
         # Whilst the number of days we’re counting is less than the target number of days to count ...
         while day_count < target_day_count
 
-          # ... we move to the **previous day**.
+          # ... we move back to the **previous day**.
           date = date.prev_day
         
           # If the day is a joint sitting day ...
