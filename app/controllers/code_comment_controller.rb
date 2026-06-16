@@ -25,15 +25,15 @@ class CodeCommentController < ApplicationController
     render :template => 'code_comment/comment_wrapper'
   end
 
-  def calculation_controller
+  def calculator_controller
 
     # Set meta information for the page.
-    @page_title = "Calculation code comments - calculation controller"
-    @multiline_page_title = "Calculation code comments <span class='subhead'>Calculation controller</span>".html_safe
-    @description = "Calculation code comments for the calculation controller."
+    @page_title = "Calculation code comments - calculator controller"
+    @multiline_page_title = "Calculation code comments <span class='subhead'>Calculator controller</span>".html_safe
+    @description = "Calculation code comments for the calculator controller."
     @crumb << { label: 'About', url: meta_list_url }
     @crumb << { label: 'Calculation code comments', url: code_comment_list_url }
-    @crumb << { label: 'Calculation controller', url: nil }
+    @crumb << { label: 'Calculator controller', url: nil }
     @section = 'calculators'
     @include_partial = 'app_controllers_calculator_controller'
     

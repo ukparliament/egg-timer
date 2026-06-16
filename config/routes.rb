@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   # Code comments
   get 'egg-timer/meta/comments' => 'code_comment#index', as: :code_comment_list
   get 'egg-timer/meta/comments/date' => 'code_comment#date', as: :code_comment_date
-  get 'egg-timer/meta/comments/calculation-controller' => 'code_comment#calculation_controller', as: :code_comment_calculation_controller
+  get 'egg-timer/meta/comments/calculator-controller' => 'code_comment#calculator_controller', as: :code_comment_calculator_controller
   
   get 'egg-timer/meta/comments/bicameral-both-houses-sitting' => 'code_comment#bicameral_both_houses_sitting', as: :code_comment_bicameral_both_houses_sitting
   get 'egg-timer/meta/comments/bicameral-either-house-sitting' => 'code_comment#bicameral_either_house_sitting', as: :code_comment_bicameral_either_house_sitting
