@@ -171,8 +171,8 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_start_date = pnsi_calculation_backwards( @start_date, @day_count )
-                @action_required = 'the instrument must be laid <em>before</em>'
-                if Date.today >= @scrutiny_end_date
+                
+                if Date.today >= @scrutiny_start_date
                   @action_required = 'the instrument <em>would have been required to have been laid before</em>'
                 else
                   @action_required = 'the instrument must be laid <em>before</em>'
@@ -280,7 +280,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_start_date = treaty_calculation_backwards( @start_date, @day_count )
-                if Date.today >= @scrutiny_end_date
+                if Date.today >= @scrutiny_start_date
                   @action_required = 'the treaty <em>would have been required to have been laid before</em>'
                 else
                   @action_required = 'the treaty must be laid <em>before</em>'
@@ -295,7 +295,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_start_date = treaty_calculation_backwards( @start_date, @day_count )
-                if Date.today >= @scrutiny_end_date
+                if Date.today >= @scrutiny_start_date
                   @action_required = 'the Minister <em>would have been required to have made a statement before</em>'
                 else
                   @action_required = 'the Minister must make a statement <em>before</em>'
@@ -325,7 +325,7 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_start_date = commons_only_sitting_days_backwards( @start_date, @day_count )
-                if Date.today >= @scrutiny_end_date
+                if Date.today >= @scrutiny_state_date
                   @action_required = 'the statement <em>would have been required to have been laid before</em>'
                 else
                   @action_required = 'the statement must be laid <em>before</em>'
