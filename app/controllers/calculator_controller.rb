@@ -325,7 +325,8 @@ class CalculatorController < ApplicationController
             
               if @direction == 'reverse'
                 @scrutiny_start_date = commons_only_sitting_days_backwards( @start_date, @day_count )
-                if Date.today >= @scrutiny_state_date
+                
+                if Date.today >= @scrutiny_start_date
                   @action_required = 'the statement <em>would have been required to have been laid before</em>'
                 else
                   @action_required = 'the statement must be laid <em>before</em>'
