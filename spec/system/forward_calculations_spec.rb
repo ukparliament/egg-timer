@@ -138,7 +138,7 @@ describe "Forward calculation tests", type: :system do
 
         click_on "Calculate"
 
-        expect(page).to have_content("Unable to find a future joint sitting day")
+        expect(page).to have_content("It's not currently possible to calculate an anticipated end date, as the likely end date occurs during a period for which sitting days are yet to be announced.")
       end
     end
   end

@@ -2,7 +2,7 @@ module Calculations
   module Backwards
     module CommonsOnlySittingDays
     
-      # # A method for calculating the start date of scrutiny periods for National Policy Statements.
+      # # A method for calculating the start date of scrutiny periods for National Policy Statements (NPS).
       # The calculation is set out in [section 5 (4A) of the Planning Act 2008](https://www.legislation.gov.uk/ukpga/2008/29/section/5#section-5-4A).
       def commons_only_sitting_days_backwards( target_end_date, target_day_count )
       
