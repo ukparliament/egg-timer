@@ -1,434 +1,423 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="23.5 7.5 1348 628" width="1348" height="628">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="-1904.4147 -338.96484 2017.0527 1059.0326" width="2017.0527" height="1059.0326">
   <defs>
-    <filter id="Shadow" filterUnits="userSpaceOnUse" x="-111.3" y="-55.3">
-      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
-      <feOffset in="blur" result="offset" dx="0" dy="2"/>
-      <feFlood flood-color="black" flood-opacity=".5" result="flood"/>
-      <feComposite in="flood" in2="offset" operator="in"/>
-    </filter>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="CrowBar_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 16 10" markerWidth="16" markerHeight="10" color="black">
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="DoubleBar_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 16 10" markerWidth="16" markerHeight="10" color="black">
       <g>
-        <path d="M 14 0 L 0 0 M 14 4 L 4 0 L 14 -4 M 0 4 L 0 -4" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M 14 0 L 0 0 M 5 4 L 5 -4 M 0 4 L 0 -4" fill="none" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="DoubleBar_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-15 -5 16 10" markerWidth="16" markerHeight="10" color="black">
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="CrowBall_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-19 -5 20 10" markerWidth="20" markerHeight="10" color="black">
       <g>
-        <path d="M -14 0 L 0 0 M -5 -4 L -5 4 M 0 -4 L 0 4" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M -18 0 L -6 0 M -18 -4 L -8 0 L -18 4 M -.87868 -2.12132 C .29289 -.949747 .29289 .949747 -.87868 2.12132 C -2.05025 3.29289 -3.94975 3.29289 -5.12132 2.12132 C -6.292893 .949747 -6.292893 -.949747 -5.12132 -2.12132 C -3.94975 -3.29289 -2.05025 -3.29289 -.87868 -2.12132" fill="none" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="CrowBall_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 20 10" markerWidth="20" markerHeight="10" color="black">
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="BarBall_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 20 10" markerWidth="20" markerHeight="10" color="black">
       <g>
-        <path d="M 18 0 L 6 0 M 18 4 L 8 0 L 18 -4 M .87868 2.12132 C -.29289 .949747 -.29289 -.949747 .87868 -2.12132 C 2.05025 -3.29289 3.94975 -3.29289 5.12132 -2.12132 C 6.292893 -.949747 6.292893 .949747 5.12132 2.12132 C 3.94975 3.29289 2.05025 3.29289 .87868 2.12132" fill="none" stroke="currentColor" stroke-width="1"/>
-      </g>
-    </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="BarBall_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-19 -5 20 10" markerWidth="20" markerHeight="10" color="black">
-      <g>
-        <path d="M -18 0 L -6 0 M -9 -4 L -9 4 M -.87868 -2.12132 C .29289 -.949747 .29289 .949747 -.87868 2.12132 C -2.05025 3.29289 -3.94975 3.29289 -5.12132 2.12132 C -6.292893 .949747 -6.292893 -.949747 -5.12132 -2.12132 C -3.94975 -3.29289 -2.05025 -3.29289 -.87868 -2.12132" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M 18 0 L 6 0 M 9 4 L 9 -4 M .87868 2.12132 C -.29289 .949747 -.29289 -.949747 .87868 -2.12132 C 2.05025 -3.29289 3.94975 -3.29289 5.12132 -2.12132 C 6.292893 -.949747 6.292893 .949747 5.12132 2.12132 C 3.94975 3.29289 2.05025 3.29289 .87868 2.12132" fill="none" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
   </defs>
-  <g id="Canvas_1" stroke-dasharray="none" fill="none" fill-opacity="1" stroke-opacity="1" stroke="none">
+  <g id="Canvas_1" fill="none" stroke-dasharray="none" stroke="none" fill-opacity="1" stroke-opacity="1">
     <title>Canvas 1</title>
-    <rect fill="white" x="23.5" y="7.5" width="1348" height="628"/>
+    <rect fill="white" x="-1904.4147" y="-338.96484" width="2017.0527" height="1059.0326"/>
     <g id="Canvas_1_Layer_1">
       <title>Layer 1</title>
-      <g id="Graphic_34_shadow" filter="url(#Shadow)">
-        <rect x="639" y="9" width="198" height="14" fill="white"/>
-        <rect x="639" y="9" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_35_shadow" filter="url(#Shadow)">
-        <rect x="639" y="23" width="198" height="70" fill="white"/>
-        <rect x="639" y="23" width="198" height="70" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_70_shadow" filter="url(#Shadow)">
-        <rect x="891" y="150" width="198" height="14" fill="white"/>
-        <rect x="891" y="150" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_71_shadow" filter="url(#Shadow)">
-        <rect x="891" y="164" width="198" height="70" fill="white"/>
-        <rect x="891" y="164" width="198" height="70" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_73_shadow" filter="url(#Shadow)">
-        <rect x="333" y="135" width="198" height="14" fill="white"/>
-        <rect x="333" y="135" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_74_shadow" filter="url(#Shadow)">
-        <rect x="333" y="149" width="198" height="98" fill="white"/>
-        <rect x="333" y="149" width="198" height="98" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_77_shadow" filter="url(#Shadow)">
-        <rect x="333" y="351" width="198" height="14" fill="white"/>
-        <rect x="333" y="351" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_78_shadow" filter="url(#Shadow)">
-        <rect x="333" y="365" width="198" height="28" fill="white"/>
-        <rect x="333" y="365" width="198" height="28" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_80_shadow" filter="url(#Shadow)">
-        <rect x="639" y="320" width="198" height="14" fill="white"/>
-        <rect x="639" y="320" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_81_shadow" filter="url(#Shadow)">
-        <rect x="639" y="334" width="198" height="98" fill="white"/>
-        <rect x="639" y="334" width="198" height="98" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_86_shadow" filter="url(#Shadow)">
-        <rect x="27" y="324" width="198" height="14" fill="white"/>
-        <rect x="27" y="324" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_87_shadow" filter="url(#Shadow)">
-        <rect x="27" y="338" width="198" height="84" fill="white"/>
-        <rect x="27" y="338" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_95_shadow" filter="url(#Shadow)">
-        <rect x="891" y="342" width="198" height="14" fill="white"/>
-        <rect x="891" y="342" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_96_shadow" filter="url(#Shadow)">
-        <rect x="891" y="356" width="198" height="56" fill="white"/>
-        <rect x="891" y="356" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_100_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="29" width="198" height="14" fill="white"/>
-        <rect x="1170" y="29" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_101_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="43" width="198" height="56" fill="white"/>
-        <rect x="1170" y="43" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_103_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="342" width="198" height="14" fill="white"/>
-        <rect x="1170" y="342" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_104_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="356" width="198" height="56" fill="white"/>
-        <rect x="1170" y="356" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_108_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="484" width="198" height="14" fill="white"/>
-        <rect x="1170" y="484" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_109_shadow" filter="url(#Shadow)">
-        <rect x="1170" y="498" width="198" height="42" fill="white"/>
-        <rect x="1170" y="498" width="198" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_111_shadow" filter="url(#Shadow)">
-        <rect x="27" y="513" width="198" height="14" fill="white"/>
-        <rect x="27" y="513" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_112_shadow" filter="url(#Shadow)">
-        <rect x="27" y="527" width="198" height="84" fill="white"/>
-        <rect x="27" y="527" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_121_shadow" filter="url(#Shadow)">
-        <rect x="639" y="532" width="198" height="14" fill="yellow"/>
-        <rect x="639" y="532" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_122_shadow" filter="url(#Shadow)">
-        <rect x="639" y="546" width="198" height="84" fill="yellow"/>
-        <rect x="639" y="546" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_126_shadow" filter="url(#Shadow)">
-        <rect x="27" y="73" width="198" height="14" fill="white"/>
-        <rect x="27" y="73" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_127_shadow" filter="url(#Shadow)">
-        <rect x="27" y="87" width="198" height="28" fill="white"/>
-        <rect x="27" y="87" width="198" height="28" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_46">
-        <line x1="325.38385" y1="254.41222" x2="220.84692" y2="316.58778" marker-end="url(#CrowBar_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_47">
-        <line x1="318.50008" y1="372.3709" x2="243.4999" y2="372.616" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_58">
-        <line x1="545.49876" y1="373.48364" x2="620.5016" y2="374.46407" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_64">
-        <line x1="633.0145" y1="99.03259" x2="544.1855" y2="139.6733" marker-end="url(#CrowBar_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_65">
-        <line x1="537.03556" y1="254.5019" x2="629.5414" y2="310.42862" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Group_33">
-        <g id="Graphic_35">
-          <rect x="639" y="23" width="198" height="70" fill="white"/>
-          <rect x="639" y="23" width="198" height="70" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 23)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">number int not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">start_date date not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">wikidata_id varchar(20)</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">end_date date null</tspan>
-          </text>
-        </g>
-        <g id="Graphic_34">
-          <rect x="639" y="9" width="198" height="14" fill="white"/>
-          <rect x="639" y="9" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 9)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="38.649414" y="11" xml:space="preserve">parliament_periods</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_69">
-        <g id="Graphic_71">
-          <rect x="891" y="164" width="198" height="70" fill="white"/>
-          <rect x="891" y="164" width="198" height="70" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(896 164)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">number int not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">start_date date not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">end_date date not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">parliament_period_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_70">
-          <rect x="891" y="150" width="198" height="14" fill="white"/>
-          <rect x="891" y="150" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(896 150)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="35.33008" y="11" xml:space="preserve">prorogation_periods</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_72">
-        <g id="Graphic_74">
-          <rect x="333" y="149" width="198" height="98" fill="white"/>
-          <rect x="333" y="149" width="198" height="98" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(338 149)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">number int not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">start_date date not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">end_date date null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">citation varchar(255) not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="81" xml:space="preserve">wikidata_id varchar(20)</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="95" xml:space="preserve">parliament_period_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_73">
-          <rect x="333" y="135" width="198" height="14" fill="white"/>
-          <rect x="333" y="135" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(338 135)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="68.31836" y="11" xml:space="preserve">sessions</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Line_75">
-        <line x1="825.7177" y1="100.08016" x2="898.7915" y2="140.96669" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Group_76">
-        <g id="Graphic_78">
-          <rect x="333" y="365" width="198" height="28" fill="white"/>
-          <rect x="333" y="365" width="198" height="28" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(338 365)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">name</tspan>
-          </text>
-        </g>
-        <g id="Graphic_77">
-          <rect x="333" y="351" width="198" height="14" fill="white"/>
-          <rect x="333" y="351" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(338 351)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="72.99414" y="11" xml:space="preserve">houses</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_79">
-        <g id="Graphic_81">
-          <rect x="639" y="334" width="198" height="98" fill="white"/>
-          <rect x="639" y="334" width="198" height="98" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 334)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">session_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">house_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="81" xml:space="preserve">recess_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="95" xml:space="preserve">recess_date_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_80">
-          <rect x="639" y="320" width="198" height="14" fill="white"/>
-          <rect x="639" y="320" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 320)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="40.65332" y="11" xml:space="preserve">adjournment_days</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_85">
-        <g id="Graphic_87">
-          <rect x="27" y="338" width="198" height="84" fill="white"/>
-          <rect x="27" y="338" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 338)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">start_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">end_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">session_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="81" xml:space="preserve">house_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_86">
-          <rect x="27" y="324" width="198" height="14" fill="white"/>
-          <rect x="27" y="324" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 324)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="58.990234" y="11" xml:space="preserve">sitting_days</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_94">
-        <g id="Graphic_96">
-          <rect x="891" y="356" width="198" height="56" fill="white"/>
-          <rect x="891" y="356" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(896 356)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">prorogation_period_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_95">
-          <rect x="891" y="342" width="198" height="14" fill="white"/>
-          <rect x="891" y="342" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(896 342)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="43.325195" y="11" xml:space="preserve">prorogation_days</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Line_97">
-        <line x1="990" y1="248.5" x2="990" y2="323.5" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Group_99">
-        <g id="Graphic_101">
-          <rect x="1170" y="43" width="198" height="56" fill="white"/>
-          <rect x="1170" y="43" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 43)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">number int not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">start_date date not null</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">end_date date null</tspan>
-          </text>
-        </g>
-        <g id="Graphic_100">
-          <rect x="1170" y="29" width="198" height="14" fill="white"/>
-          <rect x="1170" y="29" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 29)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="36.99414" y="11" xml:space="preserve">dissolution_periods</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_102">
-        <g id="Graphic_104">
-          <rect x="1170" y="356" width="198" height="56" fill="white"/>
-          <rect x="1170" y="356" width="198" height="56" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 356)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">dissolution_period_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_103">
-          <rect x="1170" y="342" width="198" height="14" fill="white"/>
-          <rect x="1170" y="342" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 342)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="44.98926" y="11" xml:space="preserve">dissolution_days</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Line_105">
-        <line x1="1269" y1="113.5" x2="1269" y2="323.5" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Group_107">
-        <g id="Graphic_109">
-          <rect x="1170" y="498" width="198" height="42" fill="white"/>
-          <rect x="1170" y="498" width="198" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 498)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">google_calendar_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">token</tspan>
-          </text>
-        </g>
-        <g id="Graphic_108">
-          <rect x="1170" y="484" width="198" height="14" fill="white"/>
-          <rect x="1170" y="484" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(1175 484)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="57.64844" y="11" xml:space="preserve">sync_tokens</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Group_110">
-        <g id="Graphic_112">
-          <rect x="27" y="527" width="198" height="84" fill="white"/>
-          <rect x="27" y="527" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 527)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">start_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">end_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">session_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="81" xml:space="preserve">house_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_111">
-          <rect x="27" y="513" width="198" height="14" fill="white"/>
-          <rect x="27" y="513" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 513)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="37.64746" y="11" xml:space="preserve">virtual_sitting_days</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Line_113">
-        <path d="M 376.5851 258.18602 L 285.8077 368.2462 C 281.56473 364.7466 274.56554 373.23257 278.8085 376.73216 L 175.6413 501.814" marker-end="url(#CrowBar_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_114">
-        <line x1="385.8604" y1="400.64877" x2="217.23433" y2="505.35123" marker-end="url(#CrowBar_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Group_120">
-        <g id="Graphic_122">
-          <rect x="639" y="546" width="198" height="84" fill="yellow"/>
-          <rect x="639" y="546" width="198" height="84" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 546)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">description</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="39" xml:space="preserve">start_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="53" xml:space="preserve">end_date</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="67" xml:space="preserve">google_event_id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="81" xml:space="preserve">house_id</tspan>
-          </text>
-        </g>
-        <g id="Graphic_121">
-          <rect x="639" y="532" width="198" height="14" fill="yellow"/>
-          <rect x="639" y="532" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(644 532)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="55.969727" y="11" xml:space="preserve">recess_dates</tspan>
-          </text>
-        </g>
-      </g>
-      <g id="Line_123">
-        <line x1="738" y1="513.5" x2="738" y2="450.5" marker-end="url(#CrowBall_Marker)" marker-start="url(#BarBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_124">
-        <line x1="474.7201" y1="401.1781" x2="650.9816" y2="521.5659" marker-end="url(#CrowBall_Marker)" marker-start="url(#DoubleBar_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
       <g id="Group_125">
+        <title>Class with Attributes</title>
         <g id="Graphic_127">
-          <rect x="27" y="87" width="198" height="28" fill="white"/>
-          <rect x="27" y="87" width="198" height="28" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 87)" fill="black">
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">id</tspan>
-            <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="25" xml:space="preserve">synced_at</tspan>
+          <title>Attributes</title>
+          <rect x="-793.1432" y="-313.96484" width="314" height="108" fill="white"/>
+          <rect x="-793.1432" y="-313.96484" width="314" height="108" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-787.1432 -307.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">number</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">wikidata_id</tspan>
           </text>
         </g>
         <g id="Graphic_126">
-          <rect x="27" y="73" width="198" height="14" fill="white"/>
-          <rect x="27" y="73" width="198" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <text transform="translate(32 73)" fill="black">
-            <tspan font-family="Helvetica" font-weight="bold" font-size="12" fill="black" x="48.970703" y="11" xml:space="preserve">calendar_syncs</tspan>
+          <title>Class Name</title>
+          <rect x="-793.1432" y="-337.96484" width="314" height="24" fill="white"/>
+          <rect x="-793.1432" y="-337.96484" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-787.1432 -333.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="96.652" y="12" xml:space="preserve">parliament_periods</tspan>
           </text>
         </g>
+      </g>
+      <g id="Group_216">
+        <title>Class with Attributes</title>
+        <g id="Graphic_218">
+          <title>Attributes</title>
+          <rect x="-202.36198" y="-313.96484" width="314" height="88" fill="white"/>
+          <rect x="-202.36198" y="-313.96484" width="314" height="88" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 -307.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">number</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">end_date</tspan>
+          </text>
+        </g>
+        <g id="Graphic_217">
+          <title>Class Name</title>
+          <rect x="-202.36198" y="-337.96484" width="314" height="24" fill="white"/>
+          <rect x="-202.36198" y="-337.96484" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 -333.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="96.436" y="12" xml:space="preserve">dissolution_periods</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_219">
+        <title>Class with Attributes</title>
+        <g id="Graphic_221">
+          <title>Attributes</title>
+          <rect x="-202.36198" y="-120.22591" width="314" height="88" fill="white"/>
+          <rect x="-202.36198" y="-120.22591" width="314" height="88" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 -114.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">dissolution_period_id</tspan>
+          </text>
+        </g>
+        <g id="Graphic_220">
+          <title>Class Name</title>
+          <rect x="-202.36198" y="-144.22591" width="314" height="24" fill="white"/>
+          <rect x="-202.36198" y="-144.22591" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 -140.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="104.878" y="12" xml:space="preserve">dissolution_days</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_222">
+        <line x1="-45.36198" y1="-163.72591" x2="-45.36198" y2="-210.46484" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_223">
+        <title>Class with Attributes</title>
+        <g id="Graphic_225">
+          <title>Attributes</title>
+          <rect x="-1041.3086" y="-120.22591" width="314" height="168" fill="white"/>
+          <rect x="-1041.3086" y="-120.22591" width="314" height="168" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 -114.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">number</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">citation</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">regnal_year_citation</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">wikidata_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">parliament_period_id</tspan>
+          </text>
+        </g>
+        <g id="Graphic_224">
+          <title>Class Name</title>
+          <rect x="-1041.3086" y="-144.22591" width="314" height="24" fill="white"/>
+          <rect x="-1041.3086" y="-144.22591" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 -140.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="128.236" y="12" xml:space="preserve">sessions</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_226">
+        <line x1="-842.604" y1="-153.69267" x2="-755.887" y2="-198.32874" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_227">
+        <title>Class with Attributes</title>
+        <g id="Graphic_229">
+          <title>Attributes</title>
+          <rect x="-586.5742" y="-120.22591" width="314" height="108" fill="white"/>
+          <rect x="-586.5742" y="-120.22591" width="314" height="108" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-580.5742 -114.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">number</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">parliament_period_id</tspan>
+          </text>
+        </g>
+        <g id="Graphic_228">
+          <title>Class Name</title>
+          <rect x="-586.5742" y="-144.22591" width="314" height="24" fill="white"/>
+          <rect x="-586.5742" y="-144.22591" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-580.5742 -140.22591)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="93.22" y="12" xml:space="preserve">prorogation_periods</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_230">
+        <line x1="-466.33134" y1="-154.95592" x2="-534.8692" y2="-197.33862" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_231">
+        <title>Class with Attributes</title>
+        <g id="Graphic_233">
+          <title>Attributes</title>
+          <rect x="-1041.3086" y="631.0677" width="314" height="48" fill="white"/>
+          <rect x="-1041.3086" y="631.0677" width="314" height="48" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 637.0677)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">name</tspan>
+          </text>
+        </g>
+        <g id="Graphic_232">
+          <title>Class Name</title>
+          <rect x="-1041.3086" y="607.0677" width="314" height="24" fill="white"/>
+          <rect x="-1041.3086" y="607.0677" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 611.0677)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="131.68" y="12" xml:space="preserve">houses</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_234">
+        <title>Class with Attributes</title>
+        <g id="Graphic_236">
+          <title>Attributes</title>
+          <rect x="-586.5742" y="73.51302" width="314" height="88" fill="white"/>
+          <rect x="-586.5742" y="73.51302" width="314" height="88" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-580.5742 79.51302)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">prorogation_period_id</tspan>
+          </text>
+        </g>
+        <g id="Graphic_235">
+          <title>Class Name</title>
+          <rect x="-586.5742" y="49.51302" width="314" height="24" fill="white"/>
+          <rect x="-586.5742" y="49.51302" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-580.5742 53.51302)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="101.662" y="12" xml:space="preserve">prorogation_days</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_237">
+        <line x1="-429.5742" y1="30.01302" x2="-429.5742" y2="3.2740885" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_238">
+        <title>Class with Attributes</title>
+        <g id="Graphic_240">
+          <title>Attributes</title>
+          <rect x="-202.36198" y="335.47266" width="314" height="188" fill="white"/>
+          <rect x="-202.36198" y="335.47266" width="314" height="188" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 341.47266)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">calendar_name</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">google_calendar_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">message</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">successful</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">emailed</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">events_count</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">created_at</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="172" xml:space="preserve">updated_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_239">
+          <title>Class Name</title>
+          <rect x="-202.36198" y="311.47266" width="314" height="24" fill="white"/>
+          <rect x="-202.36198" y="311.47266" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 315.47266)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="98.098" y="12" xml:space="preserve">detailed_sync_logs</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_241">
+        <title>Class with Attributes</title>
+        <g id="Graphic_243">
+          <title>Attributes</title>
+          <rect x="-202.36198" y="219.8776" width="314" height="48" fill="white"/>
+          <rect x="-202.36198" y="219.8776" width="314" height="48" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 225.8776)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">synced_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_242">
+          <title>Class Name</title>
+          <rect x="-202.36198" y="195.8776" width="314" height="24" fill="white"/>
+          <rect x="-202.36198" y="195.8776" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 199.8776)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="109.324" y="12" xml:space="preserve">calendar_syncs</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_244">
+        <title>Class with Attributes</title>
+        <g id="Graphic_246">
+          <title>Attributes</title>
+          <rect x="-202.36198" y="591.0677" width="314" height="128" fill="white"/>
+          <rect x="-202.36198" y="591.0677" width="314" height="128" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 597.0677)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">google_calendar_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">goggle_calendar_name</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">token</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">successful</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">house_id</tspan>
+          </text>
+        </g>
+        <g id="Graphic_245">
+          <title>Class Name</title>
+          <rect x="-202.36198" y="567.0677" width="314" height="24" fill="white"/>
+          <rect x="-202.36198" y="567.0677" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-196.36198 571.0677)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="117.118" y="12" xml:space="preserve">sync_tokens</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_247">
+        <line x1="-221.86198" y1="655.0677" x2="-707.8086" y2="655.0677" marker-end="url(#BarBall_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_248">
+        <title>Class with Attributes</title>
+        <g id="Graphic_250">
+          <title>Attributes</title>
+          <rect x="-1903.4147" y="-313.96484" width="314" height="128" fill="white"/>
+          <rect x="-1903.4147" y="-313.96484" width="314" height="128" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1897.4147 -307.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">name</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">display_order</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">active</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">typical_day_count</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">has_day_count_caveats</tspan>
+          </text>
+        </g>
+        <g id="Graphic_249">
+          <title>Class Name</title>
+          <rect x="-1903.4147" y="-337.96484" width="314" height="24" fill="white"/>
+          <rect x="-1903.4147" y="-337.96484" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1897.4147 -333.96484)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="119.44" y="12" xml:space="preserve">procedures</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_251">
+        <title>Class with Attributes</title>
+        <g id="Graphic_253">
+          <title>Attributes</title>
+          <rect x="-684.8197" y="309.33464" width="314" height="168" fill="white"/>
+          <rect x="-684.8197" y="309.33464" width="314" height="168" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-678.8197 315.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">session_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">house_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">created_at</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">updated_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_252">
+          <title>Class Name</title>
+          <rect x="-684.8197" y="285.33464" width="314" height="24" fill="white"/>
+          <rect x="-684.8197" y="285.33464" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-678.8197 289.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="117.532" y="12" xml:space="preserve">sitting_days</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_254">
+        <line x1="-555.22194" y1="271.6948" x2="-782.87795" y2="58.68099" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_255">
+        <line x1="-677.6859" y1="488.23175" x2="-851.5278" y2="598.3105" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_256">
+        <title>Class with Attributes</title>
+        <g id="Graphic_258">
+          <title>Attributes</title>
+          <rect x="-1041.3086" y="309.33464" width="314" height="168" fill="white"/>
+          <rect x="-1041.3086" y="309.33464" width="314" height="168" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 315.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">session_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">house_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">created_at</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">updated_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_257">
+          <title>Class Name</title>
+          <rect x="-1041.3086" y="285.33464" width="314" height="24" fill="white"/>
+          <rect x="-1041.3086" y="285.33464" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1035.3086 289.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="96.964" y="12" xml:space="preserve">virtual_sitting_days</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_259">
+        <line x1="-884.3086" y1="496.83464" x2="-884.3086" y2="591.5677" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_260">
+        <line x1="-884.3086" y1="265.83464" x2="-884.3086" y2="63.27409" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_261">
+        <title>Class with Attributes</title>
+        <g id="Graphic_263">
+          <title>Attributes</title>
+          <rect x="-1397.7975" y="309.33464" width="314" height="168" fill="white"/>
+          <rect x="-1397.7975" y="309.33464" width="314" height="168" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1391.7975 315.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">session_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">house_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">recess_date_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">created_at</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">updated_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_262">
+          <title>Class Name</title>
+          <rect x="-1397.7975" y="285.33464" width="314" height="24" fill="white"/>
+          <rect x="-1397.7975" y="285.33464" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1391.7975 289.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="99.22" y="12" xml:space="preserve">adjournment_days</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_264">
+        <line x1="-1213.3952" y1="271.6948" x2="-985.7392" y2="58.68099" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_265">
+        <line x1="-1090.9313" y1="488.23175" x2="-917.0894" y2="598.3105" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_266">
+        <title>Class with Attributes</title>
+        <g id="Graphic_268">
+          <title>Attributes</title>
+          <rect x="-1903.4147" y="309.33464" width="314" height="168" fill="white"/>
+          <rect x="-1903.4147" y="309.33464" width="314" height="168" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1897.4147 315.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="12" xml:space="preserve">id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="32" xml:space="preserve">description</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="52" xml:space="preserve">start_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="72" xml:space="preserve">end_date</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="92" xml:space="preserve">google_event_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="112" xml:space="preserve">house_id</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="132" xml:space="preserve">created_at</tspan>
+            <tspan font-family="Avenir" font-size="12" fill="#515556" x="0" y="152" xml:space="preserve">updated_at</tspan>
+          </text>
+        </g>
+        <g id="Graphic_267">
+          <title>Class Name</title>
+          <rect x="-1903.4147" y="285.33464" width="314" height="24" fill="white"/>
+          <rect x="-1903.4147" y="285.33464" width="314" height="24" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1897.4147 289.33464)" fill="#515556">
+            <tspan font-family="Avenir" font-weight="bold" font-size="12" fill="#515556" x="115.222" y="12" xml:space="preserve">recess_dates</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_269">
+        <line x1="-1417.2975" y1="393.33464" x2="-1569.9147" y2="393.33464" marker-end="url(#BarBall_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_270">
+        <line x1="-1570.518" y1="439.39126" x2="-947.9845" y2="602.39486" marker-end="url(#DoubleBar_Marker)" marker-start="url(#CrowBall_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
     </g>
   </g>
