@@ -28,7 +28,7 @@ class IntervalCalculatorController < ApplicationController
     # * the **end date**, for example: "2021-04-11"
     end_date = params['end-date']
     
-    # If we have not been passed all the parameters to enable the calculation to proceed ...
+    # If we fail to meet these conditions ...
     unless calculation_can_proceed?( start_date, end_date )
     
       # ... we call the insufficient information method.
@@ -37,14 +37,14 @@ class IntervalCalculatorController < ApplicationController
     # Otherwise, if we have been passed all the parameters to enable the calculation to proceed ...
     else
       
-      # We parse the text of the start date and end date into date formats.
+      # ... we parse the text of the start date and end date into date formats.
       @start_date = Date.parse( start_date )
       @end_date = Date.parse( end_date )
       
-      # If the start date is the same as or after the end date ...
+      # If the start date does not precede the end date ...
       if @start_date >= @end_date
       
-        # We add a reason to the missing information array ...
+        # ... we add a reason to the missing information array ...
         @missing_information << 'the start date to precede the end date'
     
         # ... and call the insufficient information method. 
@@ -73,6 +73,27 @@ class IntervalCalculatorController < ApplicationController
     end
   end
   
+  # ### A method to report that we have insufficient information for the interval calculation to proceed.
+  def insufficient_information
+  
+    # We set the meta information for the page ...
+    @page_title = "Sitting days during an interval - more information required"
+    @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval - more information required</span>".html_safe
+    @description = "More information required for a calculation to determine the number of sitting days in both Houses during an interval."
+    @crumb << { label: 'Calculators', url: calculator_list_url }
+    @crumb << { label: 'Sitting days during an interval', url: calculator_interval_url }
+    @crumb << { label: 'More information required', url: nil }
+    @section = 'calculators'
+    @subsection = 'interval-calculator'
+
+    # ... and display the not enough information message.
+    render :template => 'interval_calculator/not_enough_information'
+  end
+  
+  
+  
+
+  
   # ### A method to check if the interval calculation can proceed.
   def calculation_can_proceed?( start_date, end_date )
   
@@ -85,7 +106,7 @@ class IntervalCalculatorController < ApplicationController
     # If the start date is present ...
     if start_date
     
-      # We attempt to parse the start date as date.
+      # ... we attempt to parse the start date as date.
       begin
          Date.parse( start_date )
   
@@ -112,7 +133,7 @@ class IntervalCalculatorController < ApplicationController
     # If the end date is present ...
     if end_date
     
-      # We attempt to parse the end date as a date.
+      # ... we attempt to parse the end date as a date.
       begin
          Date.parse( end_date )
   
@@ -138,23 +159,5 @@ class IntervalCalculatorController < ApplicationController
     
     # We return the calculation can proceed boolean.
     calculation_can_proceed
-  end
-  
-  
-  # ### A method to report that we have insufficient information for the interval calculation to proceed.
-  def insufficient_information
-  
-    # We set the meta information for the page ...
-    @page_title = "Sitting days during an interval - more information required"
-    @multiline_page_title = "Calculators <span class='subhead'>Sitting days during an interval - more information required</span>".html_safe
-    @description = "More information required for a calculation to determine the number of sitting days in both Houses during an interval."
-    @crumb << { label: 'Calculators', url: calculator_list_url }
-    @crumb << { label: 'Sitting days during an interval', url: calculator_interval_url }
-    @crumb << { label: 'More information required', url: nil }
-    @section = 'calculators'
-    @subsection = 'interval-calculator'
-
-    # ... and display the not enough information message.
-    render :template => 'interval_calculator/not_enough_information'
   end
 end

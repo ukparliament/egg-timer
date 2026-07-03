@@ -381,6 +381,7 @@ class CalculatorController < ApplicationController
               insufficient_information
           end
         end
+        
         # We set the generic meta information.
         @json_url = request.original_fullpath.sub '?', '.json?'
         @crumb << { label: 'Calculators', url: calculator_list_url }
