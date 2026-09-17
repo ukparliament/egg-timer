@@ -20,6 +20,7 @@ gem 'csv'
 
 # Best add explicitly
 gem 'irb'
+gem 'json', '~> 2'
 
 # For talking to the calendars
 gem 'google-apis-calendar_v3'
