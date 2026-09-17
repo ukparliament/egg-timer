@@ -11,7 +11,7 @@ gem 'pg'
 gem "propshaft"
 
 # Design system gem
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.10"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.14"
 
 # Required for this version of Ruby and Rails combo
 gem 'bigdecimal'
@@ -20,6 +20,7 @@ gem 'csv'
 
 # Best add explicitly
 gem 'irb'
+gem 'json', '~> 2'
 
 # For talking to the calendars
 gem 'google-apis-calendar_v3'
