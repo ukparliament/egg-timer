@@ -456,7 +456,7 @@ DEPENDENCIES
   google-apis-calendar_v3
   guard-rspec
   irb
-  json (~> 2)
+  json (< 3)
   letter_opener
   library_design!
   lograge
