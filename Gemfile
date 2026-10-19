@@ -17,6 +17,7 @@ gem "library_design", github: "ukparliament/design-assets", glob: 'library_desig
 gem 'bigdecimal'
 gem 'benchmark'
 gem 'csv'
+gem "mcp"
 
 # Best add explicitly
 gem 'irb'
