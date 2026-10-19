@@ -13,7 +13,16 @@ server = MCP::Server.new(
   name: "parliamentary_time_server",
   title: "Parliamentary Time server",
   version: "1.0.0",
-  tools: [ParliamentPeriods],
+  tools: [
+    ParliamentPeriods,
+    DissolutionPeriods,
+    Sessions,
+    ProrogationPeriods,
+    ParliamentSessions,
+    ParliamentProrogations,
+    Houses,
+    HouseRecesses
+  ],
   resources: [
     MCP::Resource.new(
       uri: "example://rails/readme",
