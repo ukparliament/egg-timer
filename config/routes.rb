@@ -21,7 +21,17 @@ server = MCP::Server.new(
     ParliamentSessions,
     ParliamentProrogations,
     Houses,
-    HouseRecesses
+    HouseRecesses,
+    HouseRecessesUpcoming,
+    HouseAdjournmentDays,
+    HouseAdjournmentDaysUpcoming,
+    HouseVirtualSittingDays,
+    HouseVirtualSittingDaysUpcoming,
+    HouseSittingDays,
+    HouseSittingDaysUpcoming,
+    HouseSittingDayIntervalCalculator,
+    HouseDayType,
+    Procedures
   ],
   resources: [
     MCP::Resource.new(

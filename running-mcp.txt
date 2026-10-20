@@ -69,6 +69,66 @@ curl -i http://localhost:3000/egg-timer/mcp \
 	-H "Accept: application/json, text/event-stream" \
 	-H "Mcp-Session-Id: $SESSION_ID" \
 	--json '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_recesses", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the upcoming recesses in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_recesses_upcoming", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the adjournment days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_adjournment_days", "arguments":{"house_name":"House of Commons"}}}'
+	
+### We list the upcoming adjournment days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_adjournment_days_upcoming", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the virtual sitting days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_virtual_sitting_days", "arguments":{"house_name":"House of Lords"}}}'
+
+### We list the upcoming virtual sitting days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_virtual_sitting_days_upcoming", "arguments":{"house_name":"House of Lords"}}}'
+
+### We list the sitting days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_days", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the upcoming sitting days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_days_upcoming", "arguments":{"house_name":"House of Commons"}}}'
+	
+### We return the type of a day in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_day_type", "arguments":{"house_name":"House of Lords", "date":"2026-10-23"}}}'
+
+### We return the number of sitting days in a House in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_day_interval_calculator", "arguments":{"house_name":"House of Lords", "start_date":"2026-10-23", "end_date":"2026-11-23"}}}'
+	
+### We list the procedures in Parliament
+curl -i http://localhost:3000/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"procedures"}}'
 	
 	
 	
@@ -151,52 +211,65 @@ curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
 	-H "Accept: application/json, text/event-stream" \
 	-H "Mcp-Session-Id: $SESSION_ID" \
 	--json '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_recesses", "arguments":{"house_name":"House of Commons"}}}'
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-# Live
+	
+### We list the upcoming recesses in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_recesses_upcoming", "arguments":{"house_name":"House of Commons"}}}'
 
-## We establish a session
-SESSION_ID=$(curl -s -D - -o /dev/null https://api.parliament.uk/egg-timer/mcp \
--H "Accept: application/json, text/event-stream" \
---json '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"curl","version":"1.0"}}}' \
-| grep -i "^mcp-session-id:" | cut -d' ' -f2 | tr -d '\r')
+### We list the adjournment days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_adjournment_days", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the upcoming adjournment days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_adjournment_days_upcoming", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the virtual sitting days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_virtual_sitting_days", "arguments":{"house_name":"House of Lords"}}}'
+
+### We list the upcoming virtual sitting days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_virtual_sitting_days_upcoming", "arguments":{"house_name":"House of Lords"}}}'
+
+### We list the sitting days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_days", "arguments":{"house_name":"House of Commons"}}}'
+
+### We list the upcoming sitting days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_days_upcoming", "arguments":{"house_name":"House of Commons"}}}'
+
+### We return the type of a day in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_day_type", "arguments":{"house_name":"House of Lords", "date":"2026-10-23"}}}'
+
+### We return the number of sitting days in a House in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"house_sitting_day_interval_calculator", "arguments":{"house_name":"House of Lords", "start_date":"2026-10-23", "end_date":"2026-11-23"}}}'
+
+### We list the procedures in Parliament
+curl -i https://egg-timer-test-5531a35f62f6.herokuapp.com/egg-timer/mcp \
+	-H "Accept: application/json, text/event-stream" \
+	-H "Mcp-Session-Id: $SESSION_ID" \
+	--json 	'{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"procedures"}}'
 
 
-## We check we're authenticated
-curl -i https://api.parliament.uk/egg-timer/mcp \
--H "Accept: application/json, text/event-stream" \
--H "Mcp-Session-Id: $SESSION_ID" \
---json '{"jsonrpc":"2.0","method":"notifications/initialized"}'
-
-
-## We list the tools
-curl https://api.parliament.uk/egg-timer/mcp \
--H "Accept: application/json, text/event-stream" \
--H "Mcp-Session-Id: $SESSION_ID" \
---json '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
-
-## The tools
-
-### We list parliament periods
-curl -i https://api.parliament.uk \
--H "Accept: application/json, text/event-stream" \
--H "Mcp-Session-Id: $SESSION_ID" \
---json '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"parliament_periods"}}'
