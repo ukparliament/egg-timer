@@ -19,7 +19,7 @@ class Procedures < MCP::Tool
         [
           {
             type: "text",
-            text: procedures.size.to_json
+            text: procedures.to_json
           }
         ]
       )
